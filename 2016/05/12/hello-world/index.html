@@ -23,7 +23,6 @@
   <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
   <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
   
-
 </head>
 
 
@@ -35,19 +34,30 @@
 <nav id="main-nav" class="alignright">
   <ul>
     
-      <li><a href="//">首页</a></li>
+      <li><a href="/">首页</a></li>
     
-      <li><a href="//archives">文章</a></li>
+      <li><a href="/archives">文章</a></li>
     
-      <li><a href="/about">关于</a></li>
+      <li><a href="about">关于</a></li>
     
   </ul>
   <div class="clearfix"></div>
 </nav>
-<div class="clearfix"></div>
-</header>
+<div class="clearfix"></div></header>
   <div id="content" class="inner">
     <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+    <div class="gallery">
+  <div class="photoset">
+    
+      <img src="">
+    
+  </div>
+  <div class="control">
+    <div class="prev"></div>
+    <div class="next"></div>
+  </div>
+</div>
   
   <div class="post-content">
     <header>
@@ -104,12 +114,22 @@
 </article>
 
 
-<section id="comment">
-  <h1 class="title">留言</h1>
 
-  
-</section>
 
+<!-- Duoshuo Comment BEGIN -->
+<div class="ds-thread" data-title="Hello World" data-url="http://yoursite.com/2016/05/12/hello-world/"></div>
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"bealin"};
+(function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+})();
+</script>
+<!-- Duoshuo Comment END -->
 </div></div>
     <aside id="sidebar" class="alignright">
   <div class="search">
@@ -124,7 +144,7 @@
   <h3 class="title">ABOUT ME</h3>
   <ul class="entry">
     
-    <li><img width="150" title="avatar" src="/uploads/2012/03/Pig.180x180-150x150.jpg" /></li>
+    <li><img width="150" title="avatar" src="/img/aboutme.png" /></li>
     
     
     <li><a href="/about" target="_BLANK">程序湲_小苾</a></li>
@@ -162,8 +182,25 @@
 
 
   
+<div class="widget tag">
+  <h3 class="title">最新文章</h3>
+  <ul class="entry">
+    
+      <li>
+        <a href="/2016/05/12/java内存模型JVM/">java内存模型JVM</a>
+      </li>
+    
+      <li>
+        <a href="/2016/05/12/hello-world/">Hello World</a>
+      </li>
+    
+  </ul>
+</div>
+
+
+  
 <div class="widget duoshuo_recent_comments">
-  <h3 class="title">duoshuo_recent_comments</h3>
+  <h3 class="title">最新评论</h3>
   <ul class="entry ds-recent-comments" data-num-items="5" data-show-avatars="0" data-show-title="1" data-show-time="1"></ul>
 </div>
 <!--多说js加载开始，一个页面只需要加载一次 -->
@@ -182,7 +219,7 @@ var duoshuoQuery = {short_name:"bealin"};
 
   
 <div class="widget links">
-  <h3 class="title">links</h3>
+  <h3 class="title">链接</h3>
   <ul class="entry">
     
     <li><a href="http://jimliu.net" target="_BLANK">Jim Liu&#39;s Blog</a></li>
@@ -199,7 +236,7 @@ var duoshuoQuery = {short_name:"bealin"};
   
 </div>
 <div class="clearfix"></div></footer>
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+  <script src="http://libs.baidu.com/jquery/2.0.3/jquery.min.js"></script>
 <script src="/js/jquery.imagesloaded.min.js"></script>
 <script src="/js/gallery.js"></script>
 
@@ -214,6 +251,9 @@ var duoshuoQuery = {short_name:"bealin"};
 })(jQuery);
 </script>
 
-  <a href="https://github.com/you"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://camo.githubusercontent.com/8b6b8ccc6da3aa5722903da7b58eb5ab1081adee/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f6c6566745f6f72616e67655f6666373630302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_left_orange_ff7600.png"></a>
+
+<div style="display:none;">
+  <!-- 你的百度统计代码 -->
+</div>
 </body>
 </html>
