@@ -35,9 +35,11 @@
 <nav id="main-nav" class="alignright">
   <ul>
     
-      <li><a href="/">Home</a></li>
+      <li><a href="//">首页</a></li>
     
-      <li><a href="/archives">Archives</a></li>
+      <li><a href="//archives">文章</a></li>
+    
+      <li><a href="/about">关于</a></li>
     
   </ul>
   <div class="clearfix"></div>
@@ -46,6 +48,43 @@
 </header>
   <div id="content" class="inner">
     <div id="main-col" class="alignleft"><div id="wrapper">
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-05-12T11:54:38.000Z"><a href="/2016/05/12/java内存模型JVM/">2016-05-12</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/05/12/java内存模型JVM/">java内存模型JVM</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>##JDK,JRE,JVM的区别</p>
+<p>###JDK——Java Development ToolKit(Java开发工具包)。<br>JDK是整个JAVA的核心。包括：<br>1.Java运行环境（Java Runtime Envirnment）。<br>2.一堆Java工具（javac/java/jdb等）<br>3.Java基础的类库（即Java API 包括rt.jar）。</p>
+<p>###JRE——Java Runtime Enviromental(java运行时环境)。<br>也就是我们说的JAVA平台，所有的Java程序都要在JRE下才能运行。包括：<br>1.JVM<br>2.JAVA核心类库和支持文件。<br>与JDK相比，它不包含开发工具——编译器、调试器和其它工具。</p>
+<p>###JVM——Java Virtual Mechinal(JAVA虚拟机)。<br>JVM是JRE的一部分，它是一个虚构出来的计算机，是通过在实际的计算机上仿真模拟各种计算机功能来实现的。<br>1.JVM有自己完善的硬件架构，如处理器、堆栈、寄存器等，还具有相应的指令系统。<br>2.JVM 的主要工作是解释自己的指令集（即字节码）并映射到本地的 CPU 的指令集或 OS 的系统调用。<br>~跨平台性： 不同的操作系统，使用不同的JVM映射规则，让其与操作系统无关</p>
+<p>##目录<br>本篇文章主要讲了以下几个部分</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
   <article class="post">
   
   <div class="post-content">
@@ -102,8 +141,76 @@
 </div>
 
   
+<div class="widget about_me">
+  <h3 class="title">ABOUT ME</h3>
+  <ul class="entry">
+    
+    <li><img width="150" title="avatar" src="/uploads/2012/03/Pig.180x180-150x150.jpg" /></li>
+    
+    
+    <li><a href="/about" target="_BLANK">程序湲_小苾</a></li>
+    
+    <li>微博：<a href="http://weibo.com/2604578131" target="_BLANK">@程序湲_小苾</a></li>
+    
+    <li>旧博客：<a href="http://www.cnblogs.com/bylin/" target="_BLANK">博客园</a></li>
+    
+  </ul>
+</div>
+
 
   
+<div class="widget tag">
+  <h3 class="title">分类</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/Java/">Java</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">标签</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/JVM/">JVM</a><small>1</small></li>
+  
+    <li><a href="/tags/Java/">Java</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget duoshuo_recent_comments">
+  <h3 class="title">duoshuo_recent_comments</h3>
+  <ul class="entry ds-recent-comments" data-num-items="5" data-show-avatars="0" data-show-title="1" data-show-time="1"></ul>
+</div>
+<!--多说js加载开始，一个页面只需要加载一次 -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"bealin"};
+(function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+})();
+</script>
+<!--多说js加载结束，一个页面只需要加载一次 -->
+
+
+  
+<div class="widget links">
+  <h3 class="title">links</h3>
+  <ul class="entry">
+    
+    <li><a href="http://jimliu.net" target="_BLANK">Jim Liu&#39;s Blog</a></li>
+    
+  </ul>
+</div>
+
 </aside>
     <div class="clearfix"></div>
   </div>
@@ -128,5 +235,6 @@
 })(jQuery);
 </script>
 
+  <a href="https://github.com/you"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://camo.githubusercontent.com/8b6b8ccc6da3aa5722903da7b58eb5ab1081adee/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f6c6566745f6f72616e67655f6666373630302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_left_orange_ff7600.png"></a>
 </body>
 </html>
