@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>java多线程 | BeaLin&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Programmer,Technology,Software Engineering">
+<meta property="og:type" content="article">
+<meta property="og:title" content="java多线程">
+<meta property="og:url" content="http://yoursite.com/2016/05/13/java多线程/index.html">
+<meta property="og:site_name" content="BeaLin's Blog">
+<meta property="og:description" content="Programmer,Technology,Software Engineering">
+<meta property="og:updated_time" content="2016-05-13T04:50:16.437Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="java多线程">
+<meta name="twitter:description" content="Programmer,Technology,Software Engineering">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  
+    <link href="//fonts.useso.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+  
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?1d80e95307276f5c52c3e32dae69f024";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">BeaLin&#39;s Blog</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Study,Think,Record</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-github-link" class="nav-icon" href="https://github.com/BeaLin" title="Github" target="_blank"></a>
+        
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-java多线程" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    
+<a href="/2016/05/13/java多线程/" class="article-date">
+  <time datetime="2016-05-13T03:25:51.000Z" itemprop="datePublished">2016-05-13</time>
+</a>
+
+
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      java多线程
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+		
+		<div id="toc" class="toc-article">
+			<h2 class="toc-title"><span>Contents</span></h2>
+		
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#JDK-JRE-JVM的区别"><span class="toc-number">1.</span> <span class="toc-text">JDK,JRE,JVM的区别</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#JDK——Java-Development-ToolKit-Java开发工具包-。"><span class="toc-number">1.1.</span> <span class="toc-text">JDK——Java Development ToolKit(Java开发工具包)。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JRE——Java-Runtime-Enviromental-java运行时环境-。"><span class="toc-number">1.2.</span> <span class="toc-text">JRE——Java Runtime Enviromental(java运行时环境)。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JVM——Java-Virtual-Mechinal-JAVA虚拟机-。"><span class="toc-number">1.3.</span> <span class="toc-text">JVM——Java Virtual Mechinal(JAVA虚拟机)。</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JDK-JRE-JVM的区别-1"><span class="toc-number">2.</span> <span class="toc-text">JDK,JRE,JVM的区别</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#JDK——Java-Development-ToolKit-Java开发工具包-。-1"><span class="toc-number">2.1.</span> <span class="toc-text">JDK——Java Development ToolKit(Java开发工具包)。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JRE——Java-Runtime-Enviromental-java运行时环境-。-1"><span class="toc-number">2.2.</span> <span class="toc-text">JRE——Java Runtime Enviromental(java运行时环境)。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JVM——Java-Virtual-Mechinal-JAVA虚拟机-。-1"><span class="toc-number">2.3.</span> <span class="toc-text">JVM——Java Virtual Mechinal(JAVA虚拟机)。</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JDK-JRE-JVM的区别-2"><span class="toc-number">3.</span> <span class="toc-text">JDK,JRE,JVM的区别</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#JDK——Java-Development-ToolKit-Java开发工具包-。-2"><span class="toc-number">3.1.</span> <span class="toc-text">JDK——Java Development ToolKit(Java开发工具包)。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JRE——Java-Runtime-Enviromental-java运行时环境-。-2"><span class="toc-number">3.2.</span> <span class="toc-text">JRE——Java Runtime Enviromental(java运行时环境)。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JVM——Java-Virtual-Mechinal-JAVA虚拟机-。-2"><span class="toc-number">3.3.</span> <span class="toc-text">JVM——Java Virtual Mechinal(JAVA虚拟机)。</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JDK-JRE-JVM的区别-3"><span class="toc-number">4.</span> <span class="toc-text">JDK,JRE,JVM的区别</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#JDK——Java-Development-ToolKit-Java开发工具包-。-3"><span class="toc-number">4.1.</span> <span class="toc-text">JDK——Java Development ToolKit(Java开发工具包)。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JRE——Java-Runtime-Enviromental-java运行时环境-。-3"><span class="toc-number">4.2.</span> <span class="toc-text">JRE——Java Runtime Enviromental(java运行时环境)。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JVM——Java-Virtual-Mechinal-JAVA虚拟机-。-3"><span class="toc-number">4.3.</span> <span class="toc-text">JVM——Java Virtual Mechinal(JAVA虚拟机)。</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JDK-JRE-JVM的区别-4"><span class="toc-number">5.</span> <span class="toc-text">JDK,JRE,JVM的区别</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#JDK——Java-Development-ToolKit-Java开发工具包-。-4"><span class="toc-number">5.1.</span> <span class="toc-text">JDK——Java Development ToolKit(Java开发工具包)。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JRE——Java-Runtime-Enviromental-java运行时环境-。-4"><span class="toc-number">5.2.</span> <span class="toc-text">JRE——Java Runtime Enviromental(java运行时环境)。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JVM——Java-Virtual-Mechinal-JAVA虚拟机-。-4"><span class="toc-number">5.3.</span> <span class="toc-text">JVM——Java Virtual Mechinal(JAVA虚拟机)。</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JDK-JRE-JVM的区别-5"><span class="toc-number">6.</span> <span class="toc-text">JDK,JRE,JVM的区别</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#JDK——Java-Development-ToolKit-Java开发工具包-。-5"><span class="toc-number">6.1.</span> <span class="toc-text">JDK——Java Development ToolKit(Java开发工具包)。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JRE——Java-Runtime-Enviromental-java运行时环境-。-5"><span class="toc-number">6.2.</span> <span class="toc-text">JRE——Java Runtime Enviromental(java运行时环境)。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JVM——Java-Virtual-Mechinal-JAVA虚拟机-。-5"><span class="toc-number">6.3.</span> <span class="toc-text">JVM——Java Virtual Mechinal(JAVA虚拟机)。</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JDK-JRE-JVM的区别-6"><span class="toc-number">7.</span> <span class="toc-text">JDK,JRE,JVM的区别</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#JDK——Java-Development-ToolKit-Java开发工具包-。-6"><span class="toc-number">7.1.</span> <span class="toc-text">JDK——Java Development ToolKit(Java开发工具包)。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JRE——Java-Runtime-Enviromental-java运行时环境-。-6"><span class="toc-number">7.2.</span> <span class="toc-text">JRE——Java Runtime Enviromental(java运行时环境)。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JVM——Java-Virtual-Mechinal-JAVA虚拟机-。-6"><span class="toc-number">7.3.</span> <span class="toc-text">JVM——Java Virtual Mechinal(JAVA虚拟机)。</span></a></li></ol></li></ol>
+		
+		</div>
+		
+        <h2 id="JDK-JRE-JVM的区别"><a href="#JDK-JRE-JVM的区别" class="headerlink" title="JDK,JRE,JVM的区别"></a>JDK,JRE,JVM的区别</h2><h3 id="JDK——Java-Development-ToolKit-Java开发工具包-。"><a href="#JDK——Java-Development-ToolKit-Java开发工具包-。" class="headerlink" title="JDK——Java Development ToolKit(Java开发工具包)。"></a>JDK——Java Development ToolKit(Java开发工具包)。</h3><p>JDK是整个JAVA的核心。包括：<br>1.Java运行环境（Java Runtime Envirnment）。<br>2.一堆Java工具（javac/java/jdb等）<br>3.Java基础的类库（即Java API 包括rt.jar）。</p>
+<h3 id="JRE——Java-Runtime-Enviromental-java运行时环境-。"><a href="#JRE——Java-Runtime-Enviromental-java运行时环境-。" class="headerlink" title="JRE——Java Runtime Enviromental(java运行时环境)。"></a>JRE——Java Runtime Enviromental(java运行时环境)。</h3><p>也就是我们说的JAVA平台，所有的Java程序都要在JRE下才能运行。包括：<br>1.JVM<br>2.JAVA核心类库和支持文件。<br>与JDK相比，它不包含开发工具——编译器、调试器和其它工具。</p>
+<h3 id="JVM——Java-Virtual-Mechinal-JAVA虚拟机-。"><a href="#JVM——Java-Virtual-Mechinal-JAVA虚拟机-。" class="headerlink" title="JVM——Java Virtual Mechinal(JAVA虚拟机)。"></a>JVM——Java Virtual Mechinal(JAVA虚拟机)。</h3><p>JVM是JRE的一部分，它是一个虚构出来的计算机，是通过在实际的计算机上仿真模拟各种计算机功能来实现的。<br>1.JVM有自己完善的硬件架构，如处理器、堆栈、寄存器等，还具有相应的指令系统。<br>2.JVM 的主要工作是解释自己的指令集（即字节码）并映射到本地的 CPU 的指令集或 OS 的系统调用。<br>~跨平台性： 不同的操作系统，使用不同的JVM映射规则，让其与操作系统无关</p>
+<h2 id="JDK-JRE-JVM的区别-1"><a href="#JDK-JRE-JVM的区别-1" class="headerlink" title="JDK,JRE,JVM的区别"></a>JDK,JRE,JVM的区别</h2><h3 id="JDK——Java-Development-ToolKit-Java开发工具包-。-1"><a href="#JDK——Java-Development-ToolKit-Java开发工具包-。-1" class="headerlink" title="JDK——Java Development ToolKit(Java开发工具包)。"></a>JDK——Java Development ToolKit(Java开发工具包)。</h3><p>JDK是整个JAVA的核心。包括：<br>1.Java运行环境（Java Runtime Envirnment）。<br>2.一堆Java工具（javac/java/jdb等）<br>3.Java基础的类库（即Java API 包括rt.jar）。</p>
+<h3 id="JRE——Java-Runtime-Enviromental-java运行时环境-。-1"><a href="#JRE——Java-Runtime-Enviromental-java运行时环境-。-1" class="headerlink" title="JRE——Java Runtime Enviromental(java运行时环境)。"></a>JRE——Java Runtime Enviromental(java运行时环境)。</h3><p>也就是我们说的JAVA平台，所有的Java程序都要在JRE下才能运行。包括：<br>1.JVM<br>2.JAVA核心类库和支持文件。<br>与JDK相比，它不包含开发工具——编译器、调试器和其它工具。</p>
+<h3 id="JVM——Java-Virtual-Mechinal-JAVA虚拟机-。-1"><a href="#JVM——Java-Virtual-Mechinal-JAVA虚拟机-。-1" class="headerlink" title="JVM——Java Virtual Mechinal(JAVA虚拟机)。"></a>JVM——Java Virtual Mechinal(JAVA虚拟机)。</h3><p>JVM是JRE的一部分，它是一个虚构出来的计算机，是通过在实际的计算机上仿真模拟各种计算机功能来实现的。<br>1.JVM有自己完善的硬件架构，如处理器、堆栈、寄存器等，还具有相应的指令系统。<br>2.JVM 的主要工作是解释自己的指令集（即字节码）并映射到本地的 CPU 的指令集或 OS 的系统调用。<br>~跨平台性： 不同的操作系统，使用不同的JVM映射规则，让其与操作系统无关</p>
+<h2 id="JDK-JRE-JVM的区别-2"><a href="#JDK-JRE-JVM的区别-2" class="headerlink" title="JDK,JRE,JVM的区别"></a>JDK,JRE,JVM的区别</h2><h3 id="JDK——Java-Development-ToolKit-Java开发工具包-。-2"><a href="#JDK——Java-Development-ToolKit-Java开发工具包-。-2" class="headerlink" title="JDK——Java Development ToolKit(Java开发工具包)。"></a>JDK——Java Development ToolKit(Java开发工具包)。</h3><p>JDK是整个JAVA的核心。包括：<br>1.Java运行环境（Java Runtime Envirnment）。<br>2.一堆Java工具（javac/java/jdb等）<br>3.Java基础的类库（即Java API 包括rt.jar）。</p>
+<h3 id="JRE——Java-Runtime-Enviromental-java运行时环境-。-2"><a href="#JRE——Java-Runtime-Enviromental-java运行时环境-。-2" class="headerlink" title="JRE——Java Runtime Enviromental(java运行时环境)。"></a>JRE——Java Runtime Enviromental(java运行时环境)。</h3><p>也就是我们说的JAVA平台，所有的Java程序都要在JRE下才能运行。包括：<br>1.JVM<br>2.JAVA核心类库和支持文件。<br>与JDK相比，它不包含开发工具——编译器、调试器和其它工具。</p>
+<h3 id="JVM——Java-Virtual-Mechinal-JAVA虚拟机-。-2"><a href="#JVM——Java-Virtual-Mechinal-JAVA虚拟机-。-2" class="headerlink" title="JVM——Java Virtual Mechinal(JAVA虚拟机)。"></a>JVM——Java Virtual Mechinal(JAVA虚拟机)。</h3><p>JVM是JRE的一部分，它是一个虚构出来的计算机，是通过在实际的计算机上仿真模拟各种计算机功能来实现的。<br>1.JVM有自己完善的硬件架构，如处理器、堆栈、寄存器等，还具有相应的指令系统。<br>2.JVM 的主要工作是解释自己的指令集（即字节码）并映射到本地的 CPU 的指令集或 OS 的系统调用。<br>~跨平台性： 不同的操作系统，使用不同的JVM映射规则，让其与操作系统无关</p>
+<h2 id="JDK-JRE-JVM的区别-3"><a href="#JDK-JRE-JVM的区别-3" class="headerlink" title="JDK,JRE,JVM的区别"></a>JDK,JRE,JVM的区别</h2><h3 id="JDK——Java-Development-ToolKit-Java开发工具包-。-3"><a href="#JDK——Java-Development-ToolKit-Java开发工具包-。-3" class="headerlink" title="JDK——Java Development ToolKit(Java开发工具包)。"></a>JDK——Java Development ToolKit(Java开发工具包)。</h3><p>JDK是整个JAVA的核心。包括：<br>1.Java运行环境（Java Runtime Envirnment）。<br>2.一堆Java工具（javac/java/jdb等）<br>3.Java基础的类库（即Java API 包括rt.jar）。</p>
+<h3 id="JRE——Java-Runtime-Enviromental-java运行时环境-。-3"><a href="#JRE——Java-Runtime-Enviromental-java运行时环境-。-3" class="headerlink" title="JRE——Java Runtime Enviromental(java运行时环境)。"></a>JRE——Java Runtime Enviromental(java运行时环境)。</h3><p>也就是我们说的JAVA平台，所有的Java程序都要在JRE下才能运行。包括：<br>1.JVM<br>2.JAVA核心类库和支持文件。<br>与JDK相比，它不包含开发工具——编译器、调试器和其它工具。</p>
+<h3 id="JVM——Java-Virtual-Mechinal-JAVA虚拟机-。-3"><a href="#JVM——Java-Virtual-Mechinal-JAVA虚拟机-。-3" class="headerlink" title="JVM——Java Virtual Mechinal(JAVA虚拟机)。"></a>JVM——Java Virtual Mechinal(JAVA虚拟机)。</h3><p>JVM是JRE的一部分，它是一个虚构出来的计算机，是通过在实际的计算机上仿真模拟各种计算机功能来实现的。<br>1.JVM有自己完善的硬件架构，如处理器、堆栈、寄存器等，还具有相应的指令系统。<br>2.JVM 的主要工作是解释自己的指令集（即字节码）并映射到本地的 CPU 的指令集或 OS 的系统调用。<br>~跨平台性： 不同的操作系统，使用不同的JVM映射规则，让其与操作系统无关</p>
+<h2 id="JDK-JRE-JVM的区别-4"><a href="#JDK-JRE-JVM的区别-4" class="headerlink" title="JDK,JRE,JVM的区别"></a>JDK,JRE,JVM的区别</h2><h3 id="JDK——Java-Development-ToolKit-Java开发工具包-。-4"><a href="#JDK——Java-Development-ToolKit-Java开发工具包-。-4" class="headerlink" title="JDK——Java Development ToolKit(Java开发工具包)。"></a>JDK——Java Development ToolKit(Java开发工具包)。</h3><p>JDK是整个JAVA的核心。包括：<br>1.Java运行环境（Java Runtime Envirnment）。<br>2.一堆Java工具（javac/java/jdb等）<br>3.Java基础的类库（即Java API 包括rt.jar）。</p>
+<h3 id="JRE——Java-Runtime-Enviromental-java运行时环境-。-4"><a href="#JRE——Java-Runtime-Enviromental-java运行时环境-。-4" class="headerlink" title="JRE——Java Runtime Enviromental(java运行时环境)。"></a>JRE——Java Runtime Enviromental(java运行时环境)。</h3><p>也就是我们说的JAVA平台，所有的Java程序都要在JRE下才能运行。包括：<br>1.JVM<br>2.JAVA核心类库和支持文件。<br>与JDK相比，它不包含开发工具——编译器、调试器和其它工具。</p>
+<h3 id="JVM——Java-Virtual-Mechinal-JAVA虚拟机-。-4"><a href="#JVM——Java-Virtual-Mechinal-JAVA虚拟机-。-4" class="headerlink" title="JVM——Java Virtual Mechinal(JAVA虚拟机)。"></a>JVM——Java Virtual Mechinal(JAVA虚拟机)。</h3><p>JVM是JRE的一部分，它是一个虚构出来的计算机，是通过在实际的计算机上仿真模拟各种计算机功能来实现的。<br>1.JVM有自己完善的硬件架构，如处理器、堆栈、寄存器等，还具有相应的指令系统。<br>2.JVM 的主要工作是解释自己的指令集（即字节码）并映射到本地的 CPU 的指令集或 OS 的系统调用。<br>~跨平台性： 不同的操作系统，使用不同的JVM映射规则，让其与操作系统无关</p>
+<h2 id="JDK-JRE-JVM的区别-5"><a href="#JDK-JRE-JVM的区别-5" class="headerlink" title="JDK,JRE,JVM的区别"></a>JDK,JRE,JVM的区别</h2><h3 id="JDK——Java-Development-ToolKit-Java开发工具包-。-5"><a href="#JDK——Java-Development-ToolKit-Java开发工具包-。-5" class="headerlink" title="JDK——Java Development ToolKit(Java开发工具包)。"></a>JDK——Java Development ToolKit(Java开发工具包)。</h3><p>JDK是整个JAVA的核心。包括：<br>1.Java运行环境（Java Runtime Envirnment）。<br>2.一堆Java工具（javac/java/jdb等）<br>3.Java基础的类库（即Java API 包括rt.jar）。</p>
+<h3 id="JRE——Java-Runtime-Enviromental-java运行时环境-。-5"><a href="#JRE——Java-Runtime-Enviromental-java运行时环境-。-5" class="headerlink" title="JRE——Java Runtime Enviromental(java运行时环境)。"></a>JRE——Java Runtime Enviromental(java运行时环境)。</h3><p>也就是我们说的JAVA平台，所有的Java程序都要在JRE下才能运行。包括：<br>1.JVM<br>2.JAVA核心类库和支持文件。<br>与JDK相比，它不包含开发工具——编译器、调试器和其它工具。</p>
+<h3 id="JVM——Java-Virtual-Mechinal-JAVA虚拟机-。-5"><a href="#JVM——Java-Virtual-Mechinal-JAVA虚拟机-。-5" class="headerlink" title="JVM——Java Virtual Mechinal(JAVA虚拟机)。"></a>JVM——Java Virtual Mechinal(JAVA虚拟机)。</h3><p>JVM是JRE的一部分，它是一个虚构出来的计算机，是通过在实际的计算机上仿真模拟各种计算机功能来实现的。<br>1.JVM有自己完善的硬件架构，如处理器、堆栈、寄存器等，还具有相应的指令系统。<br>2.JVM 的主要工作是解释自己的指令集（即字节码）并映射到本地的 CPU 的指令集或 OS 的系统调用。<br>~跨平台性： 不同的操作系统，使用不同的JVM映射规则，让其与操作系统无关</p>
+<h2 id="JDK-JRE-JVM的区别-6"><a href="#JDK-JRE-JVM的区别-6" class="headerlink" title="JDK,JRE,JVM的区别"></a>JDK,JRE,JVM的区别</h2><h3 id="JDK——Java-Development-ToolKit-Java开发工具包-。-6"><a href="#JDK——Java-Development-ToolKit-Java开发工具包-。-6" class="headerlink" title="JDK——Java Development ToolKit(Java开发工具包)。"></a>JDK——Java Development ToolKit(Java开发工具包)。</h3><p>JDK是整个JAVA的核心。包括：<br>1.Java运行环境（Java Runtime Envirnment）。<br>2.一堆Java工具（javac/java/jdb等）<br>3.Java基础的类库（即Java API 包括rt.jar）。</p>
+<h3 id="JRE——Java-Runtime-Enviromental-java运行时环境-。-6"><a href="#JRE——Java-Runtime-Enviromental-java运行时环境-。-6" class="headerlink" title="JRE——Java Runtime Enviromental(java运行时环境)。"></a>JRE——Java Runtime Enviromental(java运行时环境)。</h3><p>也就是我们说的JAVA平台，所有的Java程序都要在JRE下才能运行。包括：<br>1.JVM<br>2.JAVA核心类库和支持文件。<br>与JDK相比，它不包含开发工具——编译器、调试器和其它工具。</p>
+<h3 id="JVM——Java-Virtual-Mechinal-JAVA虚拟机-。-6"><a href="#JVM——Java-Virtual-Mechinal-JAVA虚拟机-。-6" class="headerlink" title="JVM——Java Virtual Mechinal(JAVA虚拟机)。"></a>JVM——Java Virtual Mechinal(JAVA虚拟机)。</h3><p>JVM是JRE的一部分，它是一个虚构出来的计算机，是通过在实际的计算机上仿真模拟各种计算机功能来实现的。<br>1.JVM有自己完善的硬件架构，如处理器、堆栈、寄存器等，还具有相应的指令系统。<br>2.JVM 的主要工作是解释自己的指令集（即字节码）并映射到本地的 CPU 的指令集或 OS 的系统调用。<br>~跨平台性： 不同的操作系统，使用不同的JVM映射规则，让其与操作系统无关</p>
+
+      
+    </div>
+    <footer class="article-footer">
+	  
+	  <!-- 百度分享 Start -->
+	  <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a><a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a></div>
+	  <!-- 百度分享 End -->
+	  
+      
+	  
+<span>
+Updated:<time datetime="2016-05-13T04:50:16.437Z" itemprop="dateModified">2016-05-13</time>
+</span>
+
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2016/05/13/使用Scrapy框架爬取数据/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">使用Scrapy框架爬取数据</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+<!-- 多说评论框 start -->
+<section id="comments">
+  <div class="ds-thread"  data-thread-key="/2016/05/13/java多线程/" data-title="java多线程" data-url="http://yoursite.com/2016/05/13/java多线程/" id="ds_thread">
+    <noscript>Please enable JavaScript to view the <a href="//duoshuo.com/?ref_noscript">comments powered by duoshuo.</a></noscript>
+  </div>
+</section>
+<!-- 多说评论框 end -->
+
+</section>
+        
+          
+  <div id="toc" class="toc-aside">
+  <h2 class="toc-title">Contents</h2>
+    
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#JDK-JRE-JVM的区别"><span class="toc-number">1.</span> <span class="toc-text">JDK,JRE,JVM的区别</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#JDK——Java-Development-ToolKit-Java开发工具包-。"><span class="toc-number">1.1.</span> <span class="toc-text">JDK——Java Development ToolKit(Java开发工具包)。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JRE——Java-Runtime-Enviromental-java运行时环境-。"><span class="toc-number">1.2.</span> <span class="toc-text">JRE——Java Runtime Enviromental(java运行时环境)。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JVM——Java-Virtual-Mechinal-JAVA虚拟机-。"><span class="toc-number">1.3.</span> <span class="toc-text">JVM——Java Virtual Mechinal(JAVA虚拟机)。</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JDK-JRE-JVM的区别-1"><span class="toc-number">2.</span> <span class="toc-text">JDK,JRE,JVM的区别</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#JDK——Java-Development-ToolKit-Java开发工具包-。-1"><span class="toc-number">2.1.</span> <span class="toc-text">JDK——Java Development ToolKit(Java开发工具包)。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JRE——Java-Runtime-Enviromental-java运行时环境-。-1"><span class="toc-number">2.2.</span> <span class="toc-text">JRE——Java Runtime Enviromental(java运行时环境)。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JVM——Java-Virtual-Mechinal-JAVA虚拟机-。-1"><span class="toc-number">2.3.</span> <span class="toc-text">JVM——Java Virtual Mechinal(JAVA虚拟机)。</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JDK-JRE-JVM的区别-2"><span class="toc-number">3.</span> <span class="toc-text">JDK,JRE,JVM的区别</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#JDK——Java-Development-ToolKit-Java开发工具包-。-2"><span class="toc-number">3.1.</span> <span class="toc-text">JDK——Java Development ToolKit(Java开发工具包)。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JRE——Java-Runtime-Enviromental-java运行时环境-。-2"><span class="toc-number">3.2.</span> <span class="toc-text">JRE——Java Runtime Enviromental(java运行时环境)。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JVM——Java-Virtual-Mechinal-JAVA虚拟机-。-2"><span class="toc-number">3.3.</span> <span class="toc-text">JVM——Java Virtual Mechinal(JAVA虚拟机)。</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JDK-JRE-JVM的区别-3"><span class="toc-number">4.</span> <span class="toc-text">JDK,JRE,JVM的区别</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#JDK——Java-Development-ToolKit-Java开发工具包-。-3"><span class="toc-number">4.1.</span> <span class="toc-text">JDK——Java Development ToolKit(Java开发工具包)。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JRE——Java-Runtime-Enviromental-java运行时环境-。-3"><span class="toc-number">4.2.</span> <span class="toc-text">JRE——Java Runtime Enviromental(java运行时环境)。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JVM——Java-Virtual-Mechinal-JAVA虚拟机-。-3"><span class="toc-number">4.3.</span> <span class="toc-text">JVM——Java Virtual Mechinal(JAVA虚拟机)。</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JDK-JRE-JVM的区别-4"><span class="toc-number">5.</span> <span class="toc-text">JDK,JRE,JVM的区别</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#JDK——Java-Development-ToolKit-Java开发工具包-。-4"><span class="toc-number">5.1.</span> <span class="toc-text">JDK——Java Development ToolKit(Java开发工具包)。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JRE——Java-Runtime-Enviromental-java运行时环境-。-4"><span class="toc-number">5.2.</span> <span class="toc-text">JRE——Java Runtime Enviromental(java运行时环境)。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JVM——Java-Virtual-Mechinal-JAVA虚拟机-。-4"><span class="toc-number">5.3.</span> <span class="toc-text">JVM——Java Virtual Mechinal(JAVA虚拟机)。</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JDK-JRE-JVM的区别-5"><span class="toc-number">6.</span> <span class="toc-text">JDK,JRE,JVM的区别</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#JDK——Java-Development-ToolKit-Java开发工具包-。-5"><span class="toc-number">6.1.</span> <span class="toc-text">JDK——Java Development ToolKit(Java开发工具包)。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JRE——Java-Runtime-Enviromental-java运行时环境-。-5"><span class="toc-number">6.2.</span> <span class="toc-text">JRE——Java Runtime Enviromental(java运行时环境)。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JVM——Java-Virtual-Mechinal-JAVA虚拟机-。-5"><span class="toc-number">6.3.</span> <span class="toc-text">JVM——Java Virtual Mechinal(JAVA虚拟机)。</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JDK-JRE-JVM的区别-6"><span class="toc-number">7.</span> <span class="toc-text">JDK,JRE,JVM的区别</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#JDK——Java-Development-ToolKit-Java开发工具包-。-6"><span class="toc-number">7.1.</span> <span class="toc-text">JDK——Java Development ToolKit(Java开发工具包)。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JRE——Java-Runtime-Enviromental-java运行时环境-。-6"><span class="toc-number">7.2.</span> <span class="toc-text">JRE——Java Runtime Enviromental(java运行时环境)。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JVM——Java-Virtual-Mechinal-JAVA虚拟机-。-6"><span class="toc-number">7.3.</span> <span class="toc-text">JVM——Java Virtual Mechinal(JAVA虚拟机)。</span></a></li></ol></li></ol>
+    
+  </div>
+
+<aside id="sidebar">
+
+  
+    
+<div class="widget-wrap">
+  <h3 class="widget-title">ABOUT ME</h3>
+  <ul class="widget about-me">
+    
+    <li><img class="author" title="About me" src="/images/aboutme.png" /></li>
+    
+    
+    <li>Hi,I'm BeaLin.</li>
+    
+    <li>Zhejiang University,研究生在读</li>
+    
+    <li>Email:bealin93@gmail.com</li>
+    
+    <li>微博：<a href="http://weibo.com/2604578131" target="_BLANK">@程序湲_小苾</a></li>
+    
+    <li>旧博客：<a href="http://www.cnblogs.com/bylin/" target="_BLANK">博客园</a></li>
+    
+  </ul>
+</div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/JVM/" style="font-size: 13px; color: #7dc3de">JVM</a> <a href="/tags/Java/" style="font-size: 13px; color: #7dc3de">Java</a>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">4</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2016/05/13/java多线程/">java多线程</a>
+          </li>
+        
+          <li>
+            <a href="/2016/05/13/使用Scrapy框架爬取数据/">使用Scrapy框架爬取数据</a>
+          </li>
+        
+          <li>
+            <a href="/2016/05/13/Python学习笔记/">Python学习笔记</a>
+          </li>
+        
+          <li>
+            <a href="/2016/05/12/java内存模型JVM/">java内存模型JVM</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+  
+    
+<div class="widget-wrap">
+  <h3 class="widget-title">Recent Comments</h3>
+  <ul class="widget ds-recent-comments" data-num-items="5" data-show-avatars="0" data-show-title="1" data-show-time="1"></ul>
+</div>
+<!-- 需要多说的公用代码 -->
+
+
+  
+    
+<div class="widget-wrap">
+  <h3 class="widget-title">Links</h3>
+  <ul class="widget">
+    
+    <li><a href="http://yibo.iyiyun.com/js/yibo404/key/1" target="_BLANK">404 page</a></li>
+    
+  </ul>
+</div>
+
+
+  
+
+</aside>
+
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2016 Bea Lin<br>
+      
+    
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"bealin"};
+  (function() {
+	var ds = document.createElement('script');
+	ds.type = 'text/javascript';ds.async = true;
+	ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+	ds.charset = 'UTF-8';
+	(document.getElementsByTagName('head')[0]
+		|| document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+<!-- 多说公共JS代码 end -->
+
+
+
+<!-- 百度分享 start -->
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":["mshare","douban","bdysc","sqq","qq","hi","baidu","huaban","youdao","sdo","mail","xg","diandian","fx","copy","print"],"bdPic":"","bdStyle":"1","bdSize":"16"},"share":{},"image":{"viewList":["qzone","tsina","tqq","renren","weixin"],"viewText":"分享到：","viewSize":"16"}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+<!-- 百度分享 end -->
+
+
+<script src="/js/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<div class="bottom-btn">
+
+	<a class="icon-gotop" href="javascript:void(0)" title="返回顶部"></a>
+	<script src="/js/gotop.js"></script>
+	<!--
+	<script src="/js/gotop.js"></script>
+	-->
+
+
+	<a class="icon-toc-toggle" href="javascript:void(0)" title="文章目录"></a>
+	<!--
+	<script src="/js/toc_aside_toggle.js"></script>
+	-->
+
+</div>
+<script src="/js/toc_aside_toggle.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+
+
+  </div>
+</body>
+</html>
