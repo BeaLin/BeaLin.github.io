@@ -16,7 +16,7 @@
 <meta property="og:image" content="http://o73nd1ra4.bkt.clouddn.com/blockqueue.png">
 <meta property="og:image" content="http://o73nd1ra4.bkt.clouddn.com/Executor.png">
 <meta property="og:image" content="http://o73nd1ra4.bkt.clouddn.com/tongbuqi.png">
-<meta property="og:updated_time" content="2016-05-19T06:12:54.064Z">
+<meta property="og:updated_time" content="2016-05-19T06:39:16.087Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="java多线程">
 <meta name="twitter:description" content="Programmer,Technology,Software Engineering">
@@ -148,20 +148,33 @@ var _hmt = _hmt || [];
   }
 }
 </code></pre>
-然后创建子类的实例对象，调用start()方法。<br><strong>不建议用这种方法，建议用线程池  </strong><br>不要调用Thread类或Runable对象的run方法。直接调用run方法，只会执行同一个线程中的任务，而不会启动新线程。应调用Thread.start方法。  <h3 id="中断线程-java-lang-Thread"><a href="#中断线程-java-lang-Thread" class="headerlink" title="中断线程(java.lang.Thread)"></a>中断线程(java.lang.Thread)</h3></li>
+然后创建子类的实例对象，调用start()方法。<br><strong>不建议用这种方法，建议用线程池  </strong><br>不要调用Thread类或Runable对象的run方法。直接调用run方法，只会执行同一个线程中的任务，而不会启动新线程。应调用Thread.start方法。  </li>
+</ol>
+<h3 id="中断线程-java-lang-Thread"><a href="#中断线程-java-lang-Thread" class="headerlink" title="中断线程(java.lang.Thread)"></a>中断线程(java.lang.Thread)</h3><ol>
 <li>void interrupt方法:请求终止线程,线程的中断状态将被置位为true。如果线程被阻塞(线程调用sleep或wait),就无法检测中断状态。会抛出Interrupt Exception异常。(存在不能被中断的阻塞I/O调用)  </li>
 <li>static boolean interrupted():一个静态方法，它检测当前的线程是否被中断，并且会清除该线程的中断状态，置为false。  </li>
 <li>boolean isInterrupted():一个实例方法，测试线程是否被中断。不会改变中断状态。  </li>
-<li>static Thread currentThread():返回当前执行线程的Thread对象。  <h3 id="线程状态-6种状态"><a href="#线程状态-6种状态" class="headerlink" title="线程状态(6种状态)"></a>线程状态(6种状态)</h3><img src="http://o73nd1ra4.bkt.clouddn.com/thread_status.png" alt=""><br><strong>New(新创建):</strong>程序还没有开始运行线程中的代码。<br><strong>Runable(可运行):</strong>不始终运行,采用时间片机制。在桌面以及服务器操作系统使用抢占式调度,手机等小型设备使用协作式调度。<br><strong>Blocked(被阻塞):</strong>当一个线程视图获取一个内部的对象锁，而该锁被其他线程持有，则进入阻塞状态。<br><strong>Waiting(等待):</strong>当线程等待另一个线程通知调度器一个条件时，进入等待状态。<br><strong>Timed waiting(计时等待):</strong>调用含有超时参数的方法，会导致线程进入计时等待。<br><strong>Terminated(被终止):</strong><br>(1)因为run方法正常退出而自然死亡。<br>(2)因为一个没有捕获的异常终止了run方法而意外死亡。  <h3 id="线程属性"><a href="#线程属性" class="headerlink" title="线程属性"></a>线程属性</h3>包括线程优先级、守护线程、处理未捕获异常的处理器、线程组<br><strong>1. 线程优先级：高度依赖于系统</strong><br>setpriority(int newPriority):设置线程优先级<br>MIN_PRIORITY:1;<br>NORM_PRIORITY:5(默认优先级);<br>MAX_PRIORITY:10<br>yield():导致当前执行线程处于让步状态。<br><strong>2. 守护线程：</strong><br>thread.setDaemon(true):为其他线程提供服务，如计时线程。当只剩下守护线程时，虚拟机就退出了。<br><strong>3. 未捕获异常处理器</strong><br>线程的run方法不能抛出任何被检测的异常。可以用setUncaughtExceptionHandler方法为线程安装一个处理器，来处理未捕获异常。处理器需实现Thread.UncaughtExceptionHandler接口。<br><strong>4. 线程组：</strong>一个可以统一管理的线程集合，不建议使用。<h3 id="实现线程安全的方法"><a href="#实现线程安全的方法" class="headerlink" title="实现线程安全的方法"></a>实现线程安全的方法</h3>(个人总结,不保证正确性):  </li>
+<li>static Thread currentThread():返回当前执行线程的Thread对象。</li>
+</ol>
+<h3 id="线程状态-6种状态"><a href="#线程状态-6种状态" class="headerlink" title="线程状态(6种状态)"></a>线程状态(6种状态)</h3><p><img src="http://o73nd1ra4.bkt.clouddn.com/thread_status.png" alt=""><br><strong>New(新创建):</strong>程序还没有开始运行线程中的代码。<br><strong>Runable(可运行):</strong>不始终运行,采用时间片机制。在桌面以及服务器操作系统使用抢占式调度,手机等小型设备使用协作式调度。<br><strong>Blocked(被阻塞):</strong>当一个线程视图获取一个内部的对象锁，而该锁被其他线程持有，则进入阻塞状态。<br><strong>Waiting(等待):</strong>当线程等待另一个线程通知调度器一个条件时，进入等待状态。<br><strong>Timed waiting(计时等待):</strong>调用含有超时参数的方法，会导致线程进入计时等待。<br><strong>Terminated(被终止):</strong><br>(1) 因为run方法正常退出而自然死亡。<br>(2) 因为一个没有捕获的异常终止了run方法而意外死亡。  </p>
+<h3 id="线程属性"><a href="#线程属性" class="headerlink" title="线程属性"></a>线程属性</h3><p>包括线程优先级、守护线程、处理未捕获异常的处理器、线程组<br><strong>1. 线程优先级：高度依赖于系统</strong><br>setpriority(int newPriority):设置线程优先级<br>MIN_PRIORITY:1;<br>NORM_PRIORITY:5(默认优先级);<br>MAX_PRIORITY:10<br>yield():导致当前执行线程处于让步状态。<br><strong>2. 守护线程：</strong><br>thread.setDaemon(true):为其他线程提供服务，如计时线程。当只剩下守护线程时，虚拟机就退出了。<br><strong>3. 未捕获异常处理器</strong><br>线程的run方法不能抛出任何被检测的异常。可以用setUncaughtExceptionHandler方法为线程安装一个处理器，来处理未捕获异常。处理器需实现Thread.UncaughtExceptionHandler接口。<br><strong>4. 线程组：</strong><br>一个可以统一管理的线程集合，不建议使用。  </p>
+<h3 id="实现线程安全的方法"><a href="#实现线程安全的方法" class="headerlink" title="实现线程安全的方法"></a>实现线程安全的方法</h3><p>(个人总结,不保证正确性):  </p>
+<ol>
 <li>使线程同步、同步的方法有：显式地声明锁和条件；使用synchronized关键字（隐式声明锁）；监视器（不需要程序员去考虑锁的问题）；volatile关键字（提供免锁机制）；final变量（实现内存可见性）；    </li>
 <li>阻塞队列（java.utils.concurrent包中的机制）  </li>
-<li>线程安全的集合  <h3 id="用于管理线程，提高线程执行效率："><a href="#用于管理线程，提高线程执行效率：" class="headerlink" title="用于管理线程，提高线程执行效率："></a>用于管理线程，提高线程执行效率：</h3></li>
+<li>线程安全的集合   </li>
+</ol>
+<h3 id="用于管理线程，提高线程执行效率："><a href="#用于管理线程，提高线程执行效率：" class="headerlink" title="用于管理线程，提高线程执行效率："></a>用于管理线程，提高线程执行效率：</h3><ol>
 <li>执行器（线程池）：  </li>
-<li>同步器（预置功能）：信号量、CountDownLatch、cyclicBarrier、交换器、同步队列  <h3 id="java-utils-concurrent"><a href="#java-utils-concurrent" class="headerlink" title="java.utils.concurrent"></a>java.utils.concurrent</h3>concurrent包的实现：  </li>
+<li>同步器（预置功能）：信号量、CountDownLatch、cyclicBarrier、交换器、同步队列   </li>
+</ol>
+<h3 id="java-utils-concurrent"><a href="#java-utils-concurrent" class="headerlink" title="java.utils.concurrent"></a>java.utils.concurrent</h3><p>concurrent包的实现：  </p>
+<ol>
 <li>首先，声明共享变量为volatile；  </li>
 <li>然后，使用CAS的原子条件更新来实现线程之间的同步；  </li>
-<li>同时，配合以volatile的读/写和CAS所具有的volatile读和写的内存语义来实现线程之间的通信。<br>concurrent包的实现示意图如下：<br><img src="http://o73nd1ra4.bkt.clouddn.com/Concurrent.png" alt=""><br>AQS，非阻塞数据结构和原子变量类（java.util.concurrent.atomic包中的类）  </li>
+<li>同时，配合以volatile的读/写和CAS所具有的volatile读和写的内存语义来实现线程之间的通信。  </li>
 </ol>
+<p>concurrent包的实现示意图如下：<br><img src="http://o73nd1ra4.bkt.clouddn.com/Concurrent.png" alt=""><br>AQS，非阻塞数据结构和原子变量类（java.util.concurrent.atomic包中的类）  </p>
 <hr>
 <h2 id="同步"><a href="#同步" class="headerlink" title="同步"></a>同步</h2><p>线程同步的工具:<br>(1)锁和条件型（非面向对象）；<br>(2)监视器  </p>
 <h3 id="锁和条件型"><a href="#锁和条件型" class="headerlink" title="锁和条件型"></a>锁和条件型</h3><p><strong>两种机制</strong>防止代码块受并发访问的干扰:  </p>
@@ -175,7 +188,7 @@ mylock.lock();
    mylock.unlock;
 }
 </code></pre>
-这一结构确保任何时刻只有一个线程进入临界区。一旦一个线程得到锁对象，其他任何线程都无法通过lock语句。当其他线程调用lock时，则会被阻塞，直到第一个线程释放锁对象。<br>(2)void lock():获取这个锁<br> void unlock():释放锁<br> ReentranLock():构建一个可以被用来保护临界区的可重入锁<br> ReentrantLock(boolean fair):构建一个带有公平策略的锁。一个公平锁偏爱等待时间最长的线程。会降低性能。默认非公平<br><strong>2. 条件对象</strong><br>线程进入临界区，并满足一个条件后它才能执行。可以用一个条件对象来管理那些已经获得了一个锁但是却不能做有用工作的线程。  <pre><code class="java">Condition mycond;
+这一结构确保任何时刻只有一个线程进入临界区。一旦一个线程得到锁对象，其他任何线程都无法通过lock语句。当其他线程调用lock时，则会被阻塞，直到第一个线程释放锁对象。<br>(2) void lock():获取这个锁<br> void unlock():释放锁<br> ReentranLock():构建一个可以被用来保护临界区的可重入锁<br> ReentrantLock(boolean fair):构建一个带有公平策略的锁。一个公平锁偏爱等待时间最长的线程。会降低性能。默认非公平<br><strong>2. 条件对象</strong><br>线程进入临界区，并满足一个条件后它才能执行。可以用一个条件对象来管理那些已经获得了一个锁但是却不能做有用工作的线程。  <pre><code class="java">Condition mycond;
 ReentrantLock mylock=<span class="keyword">new</span> ReentrantLock();
 mylock.lock();
 <span class="keyword">try</span>{
@@ -188,7 +201,11 @@ mylock.lock();
    mylock.unlock;
 }
 </code></pre>
-(1)<strong>等待获得锁的线程</strong>与<strong>调用await()的线程</strong>在本质上是不同。调用await（）的线程进入该条件的等待集，即使锁可用，该线程也不能立即解除阻塞。直到另一个线程调用同一条件上signalAll方法。所以这个线程的激活要依靠其他线程，如果没有其他线程重新激活，则会导致死锁现象。<br>(2)<strong>死锁</strong>：所有的线程都进入阻塞状态。没有任何线程可以解除其他线程的阻塞，程序挂起。<br>(3)<strong>siganlAll</strong>不会立即激活一个等待线程，它仅仅解除所有等待线程的阻塞，这些线程退出同步方法后，通过竞争实现对对象的访问。<br>(4)<strong>siganl与siganlAll的区别</strong>：siganl随机解除等待集中某个线程的阻塞状态。siganlAll是解除所有等待线程。signal更加有效也更危险。更容易导致死锁现象。即当它随机选择的线程发现自己仍然不满足条件对象，再次被阻塞。<br><strong>3.总结锁和条件</strong><br>(1)锁是用来保护代码片段，任何时刻只能有一个线程执行被保护的代码。<br>(2)锁可以管理试图进入被保护代码段的线程（公平锁和非公平锁。<br>(3)锁可以拥有一个或多个条件对象。<br>(4)条件对象可以管理进入临界区但不能运行的线程。<br><strong>4.synchronized关键字</strong><br><strong>java中的每一个对象都有一个对象锁。</strong><br>(1)当一个方法用synchronized关键声明，该对象的锁将保护整个方法。<pre><code class="java"><span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span>  <span class="keyword">void</span> <span class="title">method</span><span class="params">()</span></span>{
+(1) <strong>等待获得锁的线程</strong>与<strong>调用await()的线程</strong>在本质上是不同。调用await（）的线程进入该条件的等待集，即使锁可用，该线程也不能立即解除阻塞。直到另一个线程调用同一条件上signalAll方法。所以这个线程的激活要依靠其他线程，如果没有其他线程重新激活，则会导致死锁现象。<br>(2) <strong>死锁</strong>：所有的线程都进入阻塞状态。没有任何线程可以解除其他线程的阻塞，程序挂起。<br>(3) <strong>siganlAll</strong>不会立即激活一个等待线程，它仅仅解除所有等待线程的阻塞，这些线程退出同步方法后，通过竞争实现对对象的访问。<br>(4) <strong>siganl与siganlAll的区别</strong>：siganl随机解除等待集中某个线程的阻塞状态。siganlAll是解除所有等待线程。signal更加有效也更危险。更容易导致死锁现象。即当它随机选择的线程发现自己仍然不满足条件对象，再次被阻塞。<br><strong>3. 总结锁和条件</strong>  </li>
+<li>锁是用来保护代码片段，任何时刻只能有一个线程执行被保护的代码。  </li>
+<li>锁可以管理试图进入被保护代码段的线程（公平锁和非公平锁。  </li>
+<li>锁可以拥有一个或多个条件对象。  </li>
+<li>条件对象可以管理进入临界区但不能运行的线程。<br><strong>4. synchronized关键字</strong><br><strong>java中的每一个对象都有一个对象锁。</strong><br>(1) 当一个方法用synchronized关键声明，该对象的锁将保护整个方法。<pre><code class="java"><span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span>  <span class="keyword">void</span> <span class="title">method</span><span class="params">()</span></span>{
   method body
 }
 </code></pre>
@@ -200,16 +217,19 @@ mylock.lock();
   <span class="keyword">finally</span>{ <span class="keyword">this</span>.intrinisclock.unlock();  }
 }
 </code></pre>
-(2)内部对象锁只有一个相关条件：<br>wait方法添加一个线程到等待集:wait()=instrinsicCondition.await()<br>notifyAll方法解除所有等待线程的阻塞状态:notifyAll() =instrinsicCondition.signalAll()<br>notify方法随机选择一个等待线程解除其阻塞状态:notify() =instrinsicCondition.signal()<br>(3)内部锁和条件的局限<br>a. 不能中断一个正在试图获得锁的线程<br>b. 试图获得锁时不能设定超时<br>c.每个锁仅有单一的条件<br><strong>5.Lock+Condition对象还是Synchronized同步方法？</strong><br>(1)Lock+Condition 对象和ynchronized同步方法最好不使用,可以使用concurrent包中的机制。<br>(2)尽量使用synchronized而不是Lock/Condition结构。  <h3 id="监视器-monitor"><a href="#监视器-monitor" class="headerlink" title="监视器(monitor)"></a>监视器(monitor)</h3><strong>1.监视器的特性：（不需要程序员考虑如何加锁）</strong><br>(1)监视器是只包含私有域的类<br>(2)每个监视器类的对象有一个相关的锁<br>(3)使用该锁对所有的方法进行加锁，调用方法时自动获得锁，方法返回时自动释放锁。<br>(4)该锁可以有任意多个相关条件<br><strong>2.用synchronized关键字声明方法的Java对象类似于监视器，但又有不同之处：</strong><br>(1)域不要求必须是private<br>(2)方法不要求必须是synchronized<br>(3)内部锁对客户是可用的  <h3 id="volatile关键字"><a href="#volatile关键字" class="headerlink" title="volatile关键字"></a>volatile关键字</h3></li>
+(2) 内部对象锁只有一个相关条件：<br>wait方法添加一个线程到等待集:wait()=instrinsicCondition.await()<br>notifyAll方法解除所有等待线程的阻塞状态:notifyAll() =instrinsicCondition.signalAll()<br>notify方法随机选择一个等待线程解除其阻塞状态:notify() =instrinsicCondition.signal()<br>(3) 内部锁和条件的局限<br>a. 不能中断一个正在试图获得锁的线程<br>b. 试图获得锁时不能设定超时<br>c. 每个锁仅有单一的条件<br><strong>5. Lock+Condition对象还是Synchronized同步方法？</strong><br>(1) Lock+Condition 对象和ynchronized同步方法最好不使用,可以使用concurrent包中的机制。<br>(2) 尽量使用synchronized而不是Lock/Condition结构。  <h3 id="监视器-monitor"><a href="#监视器-monitor" class="headerlink" title="监视器(monitor)"></a>监视器(monitor)</h3><strong>1. 监视器的特性：（不需要程序员考虑如何加锁）</strong><br>(1) 监视器是只包含私有域的类<br>(2) 每个监视器类的对象有一个相关的锁<br>(3) 使用该锁对所有的方法进行加锁，调用方法时自动获得锁，方法返回时自动释放锁。<br>(4) 该锁可以有任意多个相关条件<br><strong>2. 用synchronized关键字声明方法的Java对象类似于监视器，但又有不同之处：</strong><br>(1) 域不要求必须是private<br>(2) 方法不要求必须是synchronized<br>(3) 内部锁对客户是可用的  <h3 id="volatile关键字"><a href="#volatile关键字" class="headerlink" title="volatile关键字"></a>volatile关键字</h3></li>
 </ul>
 <ol>
 <li>volatile关键字为实例域的同步访问提供了一种免锁机制。  </li>
-<li>volatile与synchronized关键字的区别间java内存管理。<br>具体内容见博文<a href="http://bealin.github.io/2016/05/13/java%E5%A4%9A%E7%BA%BF%E7%A8%8B/#more" target="_blank" rel="external">java内存模型</a><h3 id="final变量"><a href="#final变量" class="headerlink" title="final变量"></a>final变量</h3>对于final域，编译器和处理器要遵守两个重排序规则:  </li>
+<li>volatile与synchronized关键字的区别间java内存管理。<br>具体内容见博文<a href="http://bealin.github.io/2016/05/13/java%E5%A4%9A%E7%BA%BF%E7%A8%8B/#more" target="_blank" rel="external">java内存模型</a>   </li>
+</ol>
+<h3 id="final变量"><a href="#final变量" class="headerlink" title="final变量"></a>final变量</h3><p>对于final域，编译器和处理器要遵守两个重排序规则:  </p>
+<ol>
 <li>在构造函数内对一个final域的写入，与随后把这个被构造对象的引用赋值给一个引用变量，这两个操作之间不能重排序。  </li>
 <li>初次读一个包含final域的对象的引用，与随后初次读这个final域，这两个操作之间不能重排序。  </li>
 </ol>
 <hr>
-<h2 id="阻塞队列-blocking-queue"><a href="#阻塞队列-blocking-queue" class="headerlink" title="阻塞队列(blocking queue)"></a>阻塞队列(blocking queue)</h2><p>使用队列可以安全地从一个线程向另一个线程传递数据。<br>(1)阻塞队列在<strong>协调多个线程之间的合作</strong>上是一个有用的工具。<br>(2)当试图向队列添加元素而队列已满，或是想从队列移出元素而队列为空的时候，阻塞队列导致线程阻塞。队列会<strong>自动平衡负载</strong>。<br>(3)<strong>阻塞队列方法</strong>分三类<br><img src="http://o73nd1ra4.bkt.clouddn.com/blockqueue.png" alt=""><br>(4)<strong>阻塞队列的变种</strong><br>a.<strong>ArrayBlockingQueue</strong>：带有指定的容量和公平性设置（可选、等待时长为指标 ）的阻塞队列。该队列用循环数组实现。<br>b.<strong>LinkedBlockingQueue</strong>：无上限（或指定容量）的阻塞队列，用链表实现。<br>c.<strong>LinkedBlockingDeque</strong>：无上限（或指定容量）的双向阻塞队列，用链表实现。<br>d.<strong>DelayQueue</strong>：一个包含Delayed元素的无界的阻塞时间有限的阻塞队列。只有那些延迟已经超过时间的元素才可以从队列中移出。<br>e.<strong>PriorityBlockingQueue</strong>：带优先级的队列，按照优先级顺序被移出。用堆实现。 </p>
+<h2 id="阻塞队列-blocking-queue"><a href="#阻塞队列-blocking-queue" class="headerlink" title="阻塞队列(blocking queue)"></a>阻塞队列(blocking queue)</h2><p>使用队列可以安全地从一个线程向另一个线程传递数据。<br>(1) 阻塞队列在<strong>协调多个线程之间的合作</strong>上是一个有用的工具。<br>(2) 当试图向队列添加元素而队列已满，或是想从队列移出元素而队列为空的时候，阻塞队列导致线程阻塞。队列会<strong>自动平衡负载</strong>。<br>(3) <strong>阻塞队列方法</strong>分三类<br><img src="http://o73nd1ra4.bkt.clouddn.com/blockqueue.png" alt=""><br>(4) <strong>阻塞队列的变种</strong><br>a. <strong>ArrayBlockingQueue</strong>：带有指定的容量和公平性设置（可选、等待时长为指标 ）的阻塞队列。该队列用循环数组实现。<br>b. <strong>LinkedBlockingQueue</strong>：无上限（或指定容量）的阻塞队列，用链表实现。<br>c. <strong>LinkedBlockingDeque</strong>：无上限（或指定容量）的双向阻塞队列，用链表实现。<br>d. <strong>DelayQueue</strong>：一个包含Delayed元素的无界的阻塞时间有限的阻塞队列。只有那些延迟已经超过时间的元素才可以从队列中移出。<br>e. <strong>PriorityBlockingQueue</strong>：带优先级的队列，按照优先级顺序被移出。用堆实现。 </p>
 <hr>
 <h2 id="线程安全的集合"><a href="#线程安全的集合" class="headerlink" title="线程安全的集合"></a>线程安全的集合</h2><ol>
 <li><strong>java.util.concurrent包</strong>提供了高效的映射表、有序集和队列：ConcurrentHashMap、ConcurrentSkipListMap、ConcurrentSkipListSet和ConcurrentLinkedQueue。。这些集合允许并发地访问数据结构的不同部分来使竞争极小化。  </li>
@@ -223,7 +243,7 @@ Map&lt;K,V&gt;synchHashMap=Collections.synchronizedMap(<span class="keyword">new
 <li><strong>最好使用java.util.concurrent包中定义的集合，不使用同步包装器。</strong><br>例外：对于经常被修改的数组列表，同步的ArrayList可以胜过CopyOnWriteArrayList。  </li>
 </ol>
 <hr>
-<h2 id="执行器-线程池"><a href="#执行器-线程池" class="headerlink" title="执行器(线程池)"></a>执行器(线程池)</h2><h3 id="Callable"><a href="#Callable" class="headerlink" title="Callable"></a>Callable</h3><p>Runable封装一个异步运行的任务，可以把它想象成为一个没有参数和返回值的异步方法。Callable与Runnable类似，但是有返回值。  </p>
+<h2 id="执行器-线程池"><a href="#执行器-线程池" class="headerlink" title="执行器(线程池)"></a>执行器(线程池)</h2><h3 id="Callable"><a href="#Callable" class="headerlink" title="Callable"></a>Callable</h3><p>Runable封装一个异步运行的任务，可以把它想象成为一个没有参数和返回值的异步方法。Callable与Runnable类似，但是有返回值。    </p>
 <pre><code class="java"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Callable</span>&lt;<span class="title">V</span>&gt;</span>{
      <span class="function">V <span class="title">call</span><span class="params">()</span> <span class="keyword">throws</span> Exception</span>;
 }
@@ -265,7 +285,7 @@ Map&lt;K,V&gt;synchHashMap=Collections.synchronizedMap(<span class="keyword">new
 
 	  
 <span>
-Updated:<time datetime="2016-05-19T06:12:54.064Z" itemprop="dateModified">2016-05-19</time>
+Updated:<time datetime="2016-05-19T06:39:16.087Z" itemprop="dateModified">2016-05-19</time>
 </span>
 
 
