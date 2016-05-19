@@ -18,7 +18,7 @@
 <meta property="og:image" content="http://o73nd1ra4.bkt.clouddn.com/volatile_resort.png">
 <meta property="og:image" content="http://o73nd1ra4.bkt.clouddn.com/volatile_write.png">
 <meta property="og:image" content="http://o73nd1ra4.bkt.clouddn.com/volatile_read.png">
-<meta property="og:updated_time" content="2016-05-19T08:22:30.185Z">
+<meta property="og:updated_time" content="2016-05-19T08:44:14.619Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java内存模型JMM">
 <meta name="twitter:description" content="Programmer,Technology,Software Engineering">
@@ -124,7 +124,7 @@ var _hmt = _hmt || [];
 		
 		</div>
 		
-        <p>原文链接：<a href="http://bealin.github.io/2016/05/13/java%E5%A4%9A%E7%BA%BF%E7%A8%8B/#more" target="_blank" rel="external">java内存模型</a><br><br>在并发编程中，有两个关键问题需要处理：线程之间如何通信以及线程之间如何同步。在命令式编程中，线程之间的通信机制有两种：共享内存和消息传递。在共享内存的并发模型里，线程之间共享程序的公共状态，线程之间通过写-读内存中的公共状态来隐式进行通信。java的并发采用的是共享内存模型。本文主要介绍Java内存模型JMM以及其实现内存可见性的方式。<br>本文是在看了《Think in JAVA》、《JAVA核心技术卷》以及相关的一些博客后的总结笔记，若有错误，纯属个人理解，文末会贴出参考资料的链接。</p>
+        <p>原文链接：<a href="http://bealin.github.io/2016/05/13/java%E5%A4%9A%E7%BA%BF%E7%A8%8B/#more" target="_blank" rel="external">java内存模型</a><br><br>在并发编程中，有两个关键问题需要处理：线程之间如何通信以及线程之间如何同步。在命令式编程中，线程之间的通信机制有两种：共享内存和消息传递。在共享内存的并发模型里，线程之间共享程序的公共状态，线程之间通过写-读内存中的公共状态来隐式进行通信。java的并发采用的是共享内存模型。本文主要介绍Java内存模型JMM以及其实现内存可见性的方式。<br>本文是在看了《Think in JAVA》、《JAVA核心技术卷》以及相关的一些博客后的总结笔记，纯属个人理解。若有错误，望指出。文末会贴出参考资料的链接。</p>
 <a id="more"></a>
 <p><br></p>
 <h2 id="java内存模型"><a href="#java内存模型" class="headerlink" title="java内存模型"></a>java内存模型</h2><h3 id="什么是内存模型？"><a href="#什么是内存模型？" class="headerlink" title="什么是内存模型？"></a>什么是内存模型？</h3><p>参考文章：<a href="http://ifeve.com/memory-model/" title="http://ifeve.com/memory-model/" target="_blank" rel="external">http://ifeve.com/memory-model/</a><br>根据这篇译文以及参考资料总结：</p>
@@ -212,7 +212,7 @@ var _hmt = _hmt || [];
 
 	  
 <span>
-Updated:<time datetime="2016-05-19T08:22:30.185Z" itemprop="dateModified">2016-05-19</time>
+Updated:<time datetime="2016-05-19T08:44:14.619Z" itemprop="dateModified">2016-05-19</time>
 </span>
 
 
@@ -288,7 +288,7 @@ Updated:<time datetime="2016-05-19T08:22:30.185Z" itemprop="dateModified">2016-0
   <div class="widget-wrap">
     <h3 class="widget-title">Categories</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">2</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">2</span></li></ul>
     </div>
   </div>
 
@@ -298,7 +298,7 @@ Updated:<time datetime="2016-05-19T08:22:30.185Z" itemprop="dateModified">2016-0
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/GC/" style="font-size: 13px; color: #7dc3de">GC</a> <a href="/tags/JMM/" style="font-size: 13px; color: #7dc3de">JMM</a> <a href="/tags/JVM/" style="font-size: 13px; color: #7dc3de">JVM</a> <a href="/tags/Java/" style="font-size: 20px; color: #1db400">Java</a> <a href="/tags/Python/" style="font-size: 16.5px; color: #4dbc6f">Python</a> <a href="/tags/Scrapy/" style="font-size: 13px; color: #7dc3de">Scrapy</a> <a href="/tags/多线程/" style="font-size: 13px; color: #7dc3de">多线程</a>
+      <a href="/tags/GC/" style="font-size: 13px; color: #7dc3de">GC</a> <a href="/tags/JMM/" style="font-size: 13px; color: #7dc3de">JMM</a> <a href="/tags/JVM/" style="font-size: 13px; color: #7dc3de">JVM</a> <a href="/tags/Java/" style="font-size: 20px; color: #1db400">Java</a> <a href="/tags/Python/" style="font-size: 16.5px; color: #4dbc6f">Python</a> <a href="/tags/Scrapy/" style="font-size: 13px; color: #7dc3de">Scrapy</a> <a href="/tags/动态代理/" style="font-size: 13px; color: #7dc3de">动态代理</a> <a href="/tags/反射/" style="font-size: 13px; color: #7dc3de">反射</a> <a href="/tags/多线程/" style="font-size: 13px; color: #7dc3de">多线程</a>
     </div>
   </div>
 
@@ -308,7 +308,7 @@ Updated:<time datetime="2016-05-19T08:22:30.185Z" itemprop="dateModified">2016-0
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">5</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">6</span></li></ul>
     </div>
   </div>
 
@@ -319,6 +319,10 @@ Updated:<time datetime="2016-05-19T08:22:30.185Z" itemprop="dateModified">2016-0
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2016/05/19/反射与动态代理/">反射与动态代理</a>
+          </li>
         
           <li>
             <a href="/2016/05/18/java内存管理及垃圾回收机制/">Java内存管理及垃圾回收机制</a>
@@ -334,10 +338,6 @@ Updated:<time datetime="2016-05-19T08:22:30.185Z" itemprop="dateModified">2016-0
         
           <li>
             <a href="/2016/05/13/Python学习笔记/">Python学习笔记</a>
-          </li>
-        
-          <li>
-            <a href="/2016/05/12/java内存模型JMM/">Java内存模型JMM</a>
           </li>
         
       </ul>

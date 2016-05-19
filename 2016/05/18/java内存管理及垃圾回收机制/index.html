@@ -13,7 +13,7 @@
 <meta property="og:description" content="Programmer,Technology,Software Engineering">
 <meta property="og:image" content="http://o73nd1ra4.bkt.clouddn.com/memoryarea.png">
 <meta property="og:image" content="http://o73nd1ra4.bkt.clouddn.com/whenGC.png">
-<meta property="og:updated_time" content="2016-05-19T07:37:44.797Z">
+<meta property="og:updated_time" content="2016-05-19T08:44:13.205Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java内存管理及垃圾回收机制">
 <meta name="twitter:description" content="Programmer,Technology,Software Engineering">
@@ -119,7 +119,7 @@ var _hmt = _hmt || [];
 		
 		</div>
 		
-        <p>原文链接：<a href="http://bealin.github.io/2016/05/18/java%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86%E5%8F%8A%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E6%9C%BA%E5%88%B6/" target="_blank" rel="external">java内存管理及垃圾回收机制</a><br><br>Java语言的一大特点就是会自动进行垃圾回收处理，不像C++语言，程序员必须对内存分配与管理亲力亲为，当内存使用完后必须手工释放内存空间，否则就会引起内存泄漏，严重时甚至导致程序瘫痪。而java的垃圾回收机制大大减轻开发人员的工作量，但也增加了软件系统的负担。本文首先介绍java的内存管理，包括内存的分区，使得能够更好地理解垃圾回收机制。<br>本文是在看了《Think in JAVA》、《JAVA核心技术卷》以及相关的一些博客后的总结笔记，若有错误，纯属个人理解，文末会贴出参考资料的链接。</p>
+        <p>原文链接：<a href="http://bealin.github.io/2016/05/18/java%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86%E5%8F%8A%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E6%9C%BA%E5%88%B6/" target="_blank" rel="external">java内存管理及垃圾回收机制</a><br><br>Java语言的一大特点就是会自动进行垃圾回收处理，不像C++语言，程序员必须对内存分配与管理亲力亲为，当内存使用完后必须手工释放内存空间，否则就会引起内存泄漏，严重时甚至导致程序瘫痪。而java的垃圾回收机制大大减轻开发人员的工作量，但也增加了软件系统的负担。本文首先介绍java的内存管理，包括内存的分区，使得能够更好地理解垃圾回收机制。<br>本文是在看了《Think in JAVA》、《JAVA核心技术卷》以及相关的一些博客后的总结笔记，纯属个人理解。若有错误，望指出。文末会贴出参考资料的链接。</p>
 <a id="more"></a>
 <hr>
 <h2 id="java内存管理"><a href="#java内存管理" class="headerlink" title="java内存管理"></a>java内存管理</h2><p>在了解java内存模型JMM之前，需要先明白java的内存管理的一些基本概念，包括jvm的含义以及jvm对内存的分区。  </p>
@@ -206,7 +206,7 @@ var _hmt = _hmt || [];
 
 	  
 <span>
-Updated:<time datetime="2016-05-19T07:37:44.797Z" itemprop="dateModified">2016-05-19</time>
+Updated:<time datetime="2016-05-19T08:44:13.205Z" itemprop="dateModified">2016-05-19</time>
 </span>
 
 
@@ -215,6 +215,15 @@ Updated:<time datetime="2016-05-19T07:37:44.797Z" itemprop="dateModified">2016-0
   
     
 <nav id="article-nav">
+  
+    <a href="/2016/05/19/反射与动态代理/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">上一篇</strong>
+      <div class="article-nav-title">
+        
+          反射与动态代理
+        
+      </div>
+    </a>
   
   
     <a href="/2016/05/13/java多线程/" id="article-nav-older" class="article-nav-link-wrap">
@@ -278,7 +287,7 @@ Updated:<time datetime="2016-05-19T07:37:44.797Z" itemprop="dateModified">2016-0
   <div class="widget-wrap">
     <h3 class="widget-title">Categories</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">2</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">2</span></li></ul>
     </div>
   </div>
 
@@ -288,7 +297,7 @@ Updated:<time datetime="2016-05-19T07:37:44.797Z" itemprop="dateModified">2016-0
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/GC/" style="font-size: 13px; color: #7dc3de">GC</a> <a href="/tags/JMM/" style="font-size: 13px; color: #7dc3de">JMM</a> <a href="/tags/JVM/" style="font-size: 13px; color: #7dc3de">JVM</a> <a href="/tags/Java/" style="font-size: 20px; color: #1db400">Java</a> <a href="/tags/Python/" style="font-size: 16.5px; color: #4dbc6f">Python</a> <a href="/tags/Scrapy/" style="font-size: 13px; color: #7dc3de">Scrapy</a> <a href="/tags/多线程/" style="font-size: 13px; color: #7dc3de">多线程</a>
+      <a href="/tags/GC/" style="font-size: 13px; color: #7dc3de">GC</a> <a href="/tags/JMM/" style="font-size: 13px; color: #7dc3de">JMM</a> <a href="/tags/JVM/" style="font-size: 13px; color: #7dc3de">JVM</a> <a href="/tags/Java/" style="font-size: 20px; color: #1db400">Java</a> <a href="/tags/Python/" style="font-size: 16.5px; color: #4dbc6f">Python</a> <a href="/tags/Scrapy/" style="font-size: 13px; color: #7dc3de">Scrapy</a> <a href="/tags/动态代理/" style="font-size: 13px; color: #7dc3de">动态代理</a> <a href="/tags/反射/" style="font-size: 13px; color: #7dc3de">反射</a> <a href="/tags/多线程/" style="font-size: 13px; color: #7dc3de">多线程</a>
     </div>
   </div>
 
@@ -298,7 +307,7 @@ Updated:<time datetime="2016-05-19T07:37:44.797Z" itemprop="dateModified">2016-0
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">5</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">6</span></li></ul>
     </div>
   </div>
 
@@ -309,6 +318,10 @@ Updated:<time datetime="2016-05-19T07:37:44.797Z" itemprop="dateModified">2016-0
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2016/05/19/反射与动态代理/">反射与动态代理</a>
+          </li>
         
           <li>
             <a href="/2016/05/18/java内存管理及垃圾回收机制/">Java内存管理及垃圾回收机制</a>
@@ -324,10 +337,6 @@ Updated:<time datetime="2016-05-19T07:37:44.797Z" itemprop="dateModified">2016-0
         
           <li>
             <a href="/2016/05/13/Python学习笔记/">Python学习笔记</a>
-          </li>
-        
-          <li>
-            <a href="/2016/05/12/java内存模型JMM/">Java内存模型JMM</a>
           </li>
         
       </ul>
