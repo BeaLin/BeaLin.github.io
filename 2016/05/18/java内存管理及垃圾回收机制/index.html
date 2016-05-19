@@ -13,7 +13,7 @@
 <meta property="og:description" content="Programmer,Technology,Software Engineering">
 <meta property="og:image" content="http://o73nd1ra4.bkt.clouddn.com/memoryarea.png">
 <meta property="og:image" content="http://o73nd1ra4.bkt.clouddn.com/whenGC.png">
-<meta property="og:updated_time" content="2016-05-19T07:35:21.491Z">
+<meta property="og:updated_time" content="2016-05-19T07:37:44.797Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java内存管理及垃圾回收机制">
 <meta name="twitter:description" content="Programmer,Technology,Software Engineering">
@@ -121,6 +121,7 @@ var _hmt = _hmt || [];
 		
         <p>原文链接：<a href="http://bealin.github.io/2016/05/18/java%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86%E5%8F%8A%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E6%9C%BA%E5%88%B6/" target="_blank" rel="external">java内存管理及垃圾回收机制</a><br><br>Java语言的一大特点就是会自动进行垃圾回收处理，不像C++语言，程序员必须对内存分配与管理亲力亲为，当内存使用完后必须手工释放内存空间，否则就会引起内存泄漏，严重时甚至导致程序瘫痪。而java的垃圾回收机制大大减轻开发人员的工作量，但也增加了软件系统的负担。本文首先介绍java的内存管理，包括内存的分区，使得能够更好地理解垃圾回收机制。<br>本文是在看了《Think in JAVA》、《JAVA核心技术卷》以及相关的一些博客后的总结笔记，若有错误，纯属个人理解，文末会贴出参考资料的链接。</p>
 <a id="more"></a>
+<hr>
 <h2 id="java内存管理"><a href="#java内存管理" class="headerlink" title="java内存管理"></a>java内存管理</h2><p>在了解java内存模型JMM之前，需要先明白java的内存管理的一些基本概念，包括jvm的含义以及jvm对内存的分区。  </p>
 <h3 id="JDK-JRE-JVM的区别"><a href="#JDK-JRE-JVM的区别" class="headerlink" title="JDK,JRE,JVM的区别"></a>JDK,JRE,JVM的区别</h3><p>java内存管理中容易混淆的三个概念：jdk、jre以及jvm。<br><strong>1. JDK——Java Development ToolKit(Java开发工具包)。</strong><br>JDK是整个JAVA的核心。包括:</p>
 <ol>
@@ -176,6 +177,7 @@ var _hmt = _hmt || [];
 <li><strong>体积大小：</strong>Stack Memory体积远大于Heap Memory。由于Stack用LIFO调度，它的访问速度也快得多。可以用-Xms或者-Xmx定义Heap的初始大小，用-Xss定义Stack的初始大小。  </li>
 <li><strong>异常错误：</strong>当Stack满了，Java Runtime会抛出java.lang.StackOverFlowError。当Heap满了，会抛出java.lang.OutOfMemoryError: Java Heap Space Error。  </li>
 </ol>
+<hr>
 <h2 id="java垃圾回收机制（Garbage-Collection-GC）"><a href="#java垃圾回收机制（Garbage-Collection-GC）" class="headerlink" title="java垃圾回收机制（Garbage Collection,GC）"></a>java垃圾回收机制（Garbage Collection,GC）</h2><p>这部分内容的总结主要由四个个问题引出：为什么要进行垃圾回收？哪些垃圾需要回收？什么时候进行垃圾回收？如何进行垃圾回收？  </p>
 <h3 id="为什么要进行垃圾回收？"><a href="#为什么要进行垃圾回收？" class="headerlink" title="为什么要进行垃圾回收？"></a>为什么要进行垃圾回收？</h3><blockquote>
 <p>随着程序的运行，内存中存在的实例对象、变量等信息占据的内存越来越多，如果不及时进行垃圾回收，必然会带来程序性能的下降，甚至会因为可用内存不足造成一些不必要的系统异常。</p>
@@ -188,6 +190,7 @@ var _hmt = _hmt || [];
 <h3 id="如何进行垃圾回收？"><a href="#如何进行垃圾回收？" class="headerlink" title="如何进行垃圾回收？"></a>如何进行垃圾回收？</h3><h4 id="基于分代：新生代、老年代、持久代"><a href="#基于分代：新生代、老年代、持久代" class="headerlink" title="基于分代：新生代、老年代、持久代"></a>基于分代：新生代、老年代、持久代</h4><h4 id="常见的GC算法："><a href="#常见的GC算法：" class="headerlink" title="常见的GC算法："></a>常见的GC算法：</h4><p><strong>(1) 标记-清除算法（Mark-Sweep）</strong><br>将需要进行回收的对象做标记，之后扫描，有标记的进行回收。<br>评价：效率不高、 会产生内存碎片。<br><strong>(2) 复制算法（Copying）</strong><br>sum的JVM将Eden区和Survivor区比例调为8:1，保证有一块Survivor区是空闲的。在垃圾回收时，将不需要进行回收的对象放在空闲区，然后将Edon区和第一块Survivor区进行完全清理。若第二块Survivor区的空间不够，可借用持久代。<br>评价：复制算法的高效性是建立在存活对象少、垃圾对象多的前提下，因此适合于新生代。<br><strong>(3) 标记-整理（或叫压缩）算法（Mark-Compact）</strong><br>是一种老年代的回收算法，它在标记-清除算法的基础上做了一些优化。首先需要从根节点开始对所有可达对象做一次标记，然后将所有的存活对象压缩到内存的一端。之后，清理边界外所有的空间。<br>评价：这种方法既避免了碎片的产生，又不需要两块相同的内存空间，因此，其性价比比较高。<br><strong>(4) 分代（Generational Collecting）</strong><br>将内存区间根据对象的特点分成几块（新生代、老年代。。），每块内存区间使用不同的回收算法，以提高垃圾回收的效率。在新生代用复制算法，老年代中的对象是经过几次垃圾回收之后依然幸存的，因此可被认为是常驻内存，故可使用标记-压缩算法。<br><strong>(5) 增量算法（Incremental Collecting）</strong><br>在垃圾回收过程中，应用软件将处于一种CPU消耗高的状态下，在这种状态下，应用程序的所有线程将会挂起，等待垃圾回收完成。线程挂起太久将会严重影响用户性能和系统的稳定性。<br>增量算法的思想是：让垃圾回收线程和程序线程交替执行，每次只让垃圾回收器回收一小片区域的内存空间，然后切换到应用程序线程。此种方法能减少系统的停顿时间，但是线程切换和上下文的消耗会使得垃圾回收的总体成本上升，造成系统吞吐量的下降。  </p>
 <h4 id="垃圾回收器的类型"><a href="#垃圾回收器的类型" class="headerlink" title="垃圾回收器的类型"></a>垃圾回收器的类型</h4><p>(1) 按线程数分：串行垃圾回收器和并行垃圾回收器<br>(2) 按工作模式分：并发式垃圾回收器和独占垃圾回收器<br>(3) 按碎片处理方式分：压缩垃圾回收器和非压缩垃圾回收器<br>(4) 按工作的内存区间分：新生代垃圾回收器和老年代垃圾回收器<br><em>垃圾回收器的评判标准：吞吐量、垃圾回收器负载、停顿时间、垃圾回收频率、反应时间、堆分配。</em>  </p>
 <h4 id="GC-相关参数总结"><a href="#GC-相关参数总结" class="headerlink" title="GC 相关参数总结"></a>GC 相关参数总结</h4><p><strong>1. 与串行回收器相关的参数</strong><br>-XX:+UseSerialGC:在新生代和老年代使用串行回收器。<br>-XX:+SuivivorRatio:设置 eden 区大小和 survivor 区大小的比例。<br>-XX:+PretenureSizeThreshold:设置大对象直接进入老年代的阈值。当对象的大小超过这个值时，将直接在老年代分配。<br>-XX:MaxTenuringThreshold:设置对象进入老年代的年龄的最大值。每一次 Minor GC 后，对象年龄就加 1。任何大于这个年龄的对象，一定会进入老年代。<br><strong>2. 与并行GC相关的参数</strong><br> -XX:+UseParNewGC: 在新生代使用并行收集器。<br> -XX:+UseParallelOldGC: 老年代使用并行回收收集器。<br> -XX:ParallelGCThreads：设置用于垃圾回收的线程数。通常情况下可以和 CPU 数量相等。但在 CPU 数量比较多的情况下，设置相对较小的数值也是合理的。<br> -XX:MaxGCPauseMills：设置最大垃圾收集停顿时间。它的值是一个大于 0 的整数。收集器在工作时，会调整 Java 堆大小或者其他一些参数，尽可能地把停顿时间控制在 MaxGCPauseMills 以内。<br> -XX:GCTimeRatio:设置吞吐量大小，它的值是一个 0-100 之间的整数。假设 GCTimeRatio 的值为 n，那么系统将花费不超过 1/(1+n) 的时间用于垃圾收集。<br> -XX:+UseAdaptiveSizePolicy:打开自适应 GC 策略。在这种模式下，新生代的大小，eden 和 survivor 的比例、晋升老年代的对象年龄等参数会被自动调整，以达到在堆大小、吞吐量和停顿时间之间的平衡点。<br><strong> 3. 与CMS（Concurrent Mark Sweep）回收器相关的参数。</strong><br>CMS 收集器主要关注于系统停顿时间。 使用标记-清除算法，使用多线程并发回收的垃圾收集器<br>-XX:+UseConcMarkSweepGC: 新生代使用并行收集器，老年代使用 CMS+串行收集器。<br>-XX:+ParallelCMSThreads: 设定 CMS 的线程数量。<br>-XX:+CMSInitiatingOccupancyFraction:设置 CMS 收集器在老年代空间被使用多少后触发，默认为 68%。<br>-XX:+UseFullGCsBeforeCompaction:设定进行多少次 CMS 垃圾回收后，进行一次内存压缩。<br>-XX:+CMSClassUnloadingEnabled:允许对类元数据进行回收。<br>-XX:+CMSParallelRemarkEndable:启用并行重标记。<br>-XX:CMSInitatingPermOccupancyFraction:当永久区占用率达到这一百分比后，启动 CMS 回收 (前提是-XX:+CMSClassUnloadingEnabled 激活了)。<br>-XX:UseCMSInitatingOccupancyOnly:表示只在到达阈值的时候，才进行 CMS 回收。<br>-XX:+CMSIncrementalMode:使用增量模式，比较适合单 CPU。<br><strong>4. 与G1（(Garbage First)）回收器相关的参数。</strong><br>作为一款服务器的垃圾收集器， 吞吐量和停顿控制上，预期要优于 CMS 收集器。 基于标记-压缩算法<br>-XX:+UseG1GC：使用 G1 回收器。<br>-XX:+UnlockExperimentalVMOptions:允许使用实验性参数。<br>-XX:+MaxGCPauseMills:设置最大垃圾收集停顿时间。<br>-XX:+GCPauseIntervalMills:设置停顿间隔时间。<br><strong>5. 其他参数</strong><br>-XX:+DisableExplicitGC: 禁用显示 GC。  </p>
+<hr>
 <h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p>书本：<br><a href="https://www.amazon.cn/Java%E7%BC%96%E7%A8%8B%E6%80%9D%E6%83%B3-%E5%9F%83%E5%8F%B2%E5%B0%94/dp/B0011F7WU4?ie=UTF8&amp;camp=536&amp;creative=3132&amp;creativeASIN=B0011F7WU4&amp;linkCode=as2&amp;ref_=as_li_ss_tl&amp;tag=jtianlinsblog-23" target="_blank" rel="external">《Think in Java》</a><br>参考博文：<br><a href="https://www.ibm.com/developerworks/cn/java/j-lo-JVMGarbageCollection/" target="_blank" rel="external">https://www.ibm.com/developerworks/cn/java/j-lo-JVMGarbageCollection/</a><br><a href="http://blog.csdn.net/zhangerqing/article/details/8214365" target="_blank" rel="external">http://blog.csdn.net/zhangerqing/article/details/8214365</a>  </p>
 
       
@@ -203,7 +206,7 @@ var _hmt = _hmt || [];
 
 	  
 <span>
-Updated:<time datetime="2016-05-19T07:35:21.491Z" itemprop="dateModified">2016-05-19</time>
+Updated:<time datetime="2016-05-19T07:37:44.797Z" itemprop="dateModified">2016-05-19</time>
 </span>
 
 
