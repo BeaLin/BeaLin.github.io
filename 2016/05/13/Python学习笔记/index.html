@@ -11,10 +11,20 @@
 <meta property="og:url" content="http://yoursite.com/2016/05/13/Python学习笔记/index.html">
 <meta property="og:site_name" content="BeaLin's Blog">
 <meta property="og:description" content="Programmer,Technology,Software Engineering">
-<meta property="og:updated_time" content="2016-05-23T03:14:13.675Z">
+<meta property="og:image" content="http://o73nd1ra4.bkt.clouddn.com/Unicode.png">
+<meta property="og:image" content="http://o73nd1ra4.bkt.clouddn.com/encode1.png">
+<meta property="og:image" content="http://o73nd1ra4.bkt.clouddn.com/format.png">
+<meta property="og:image" content="http://o73nd1ra4.bkt.clouddn.com/DLanguage.png">
+<meta property="og:image" content="http://o73nd1ra4.bkt.clouddn.com/QLanguage1.png">
+<meta property="og:image" content="http://o73nd1ra4.bkt.clouddn.com/QLanguage2.png">
+<meta property="og:image" content="http://o73nd1ra4.bkt.clouddn.com/if.png">
+<meta property="og:image" content="http://o73nd1ra4.bkt.clouddn.com/for.png">
+<meta property="og:image" content="http://o73nd1ra4.bkt.clouddn.com/while.png">
+<meta property="og:updated_time" content="2016-05-23T03:26:52.344Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Python学习笔记">
 <meta name="twitter:description" content="Programmer,Technology,Software Engineering">
+<meta name="twitter:image" content="http://o73nd1ra4.bkt.clouddn.com/Unicode.png">
   
   
     <link rel="icon" href="/favicon.ico">
@@ -120,9 +130,9 @@ var _hmt = _hmt || [];
 <h2 id="Python基础"><a href="#Python基础" class="headerlink" title="Python基础"></a>Python基础</h2><h3 id="数据类型和变量"><a href="#数据类型和变量" class="headerlink" title="数据类型和变量"></a>数据类型和变量</h3><ol>
 <li>整数：十六进制用0x前缀和0-9，a-f表示</li>
 <li>浮点数：小数，科学计数法：10用e代替；整数和浮点数在计算机内部存储的方式是不同的，整数运算永远是精确的（包括除法），浮点数运算则可能会有四舍五入的误差</li>
-<li>字符串和编码<br>(1) 以单引号’或双引号”括起来的任意文本。<br>(2) 可以用转义字符\来标识’和”。(\n:换行(Python允许使用’’’…’’’格式表示多行内容,eg。’’’a…b…c’’’),\t:制表符,\:表示\,)<br>(3) r’’表示’’内部的字符默认不转义<br>(4) 编码:<br>C_Unicode</li>
+<li>字符串和编码<br>(1) 以单引号’或双引号”括起来的任意文本。<br>(2) 可以用转义字符\来标识’和”。(\n:换行(Python允许使用’’’…’’’格式表示多行内容,eg。’’’a…b…c’’’),\t:制表符,\:表示\,)<br>(3) r’’表示’’内部的字符默认不转义<br>(4) 编码:<br><img src="http://o73nd1ra4.bkt.clouddn.com/Unicode.png" alt=""></li>
 </ol>
-<p><strong>ASCII编码:</strong>1个字节（包括大小写英文字母，数字和一些符号）<br><strong>Unicode编码:</strong>把所有语言都统一到一套编码里，清除乱码问题（多为2字节，把ASCII编码的字符用Unicode编码，在前面补8个0）<br><strong>UTF-8:</strong>把Unicode编码转化为“可变长编码“，因为Unicode编码比ASCII编码需要多一倍的存储空间，若文本全为英文的话，及其不节约。<br>~~ASCII编码实际上可以被看成是UTF-8编码的一部分。<br>~~在计算机内存中，统一使用Unicode编码，当需要保存到硬盘或者需要传输的时候，就装换为UTF-8编码<br>(5) Python3版本中，字符串是以Unicode编码，即支持多语言。ord()函数获取字符的整数表示，chr()函数把编码转换为对应的字符。<br>(6) 如果要在网络上传输，或者保存到磁盘上，就需要把字符串变为以字节为单位的bytes，用带b前缀的单引号或双引号表示：x=b’ABC’。encode()将字符变为bytes，decode()将bytes变为字符。<br>C_encode<br>(7) 在操作字符串时，我们经常遇到str和bytes的互相转换。为了避免乱码问题，应当始终坚持使用UTF-8编码对str和bytes进行转换。<br>(8) 由于Python源代码也是一个文本文件，所以，当你的源代码中包含中文的时候，在保存源代码时，就需要务必指定保存为UTF-8编码。当Python解释器读取源代码时，为了让它按UTF-8编码读取，我们通常在文件开头写上这两行：</p>
+<p><strong>ASCII编码:</strong>1个字节（包括大小写英文字母，数字和一些符号）<br><strong>Unicode编码:</strong>把所有语言都统一到一套编码里，清除乱码问题（多为2字节，把ASCII编码的字符用Unicode编码，在前面补8个0）<br><strong>UTF-8:</strong>把Unicode编码转化为“可变长编码“，因为Unicode编码比ASCII编码需要多一倍的存储空间，若文本全为英文的话，及其不节约。<br>~~ASCII编码实际上可以被看成是UTF-8编码的一部分。<br>~~在计算机内存中，统一使用Unicode编码，当需要保存到硬盘或者需要传输的时候，就装换为UTF-8编码<br>(5) Python3版本中，字符串是以Unicode编码，即支持多语言。ord()函数获取字符的整数表示，chr()函数把编码转换为对应的字符。<br>(6) 如果要在网络上传输，或者保存到磁盘上，就需要把字符串变为以字节为单位的bytes，用带b前缀的单引号或双引号表示：x=b’ABC’。encode()将字符变为bytes，decode()将bytes变为字符。<br><img src="http://o73nd1ra4.bkt.clouddn.com/encode1.png" alt=""><br>(7) 在操作字符串时，我们经常遇到str和bytes的互相转换。为了避免乱码问题，应当始终坚持使用UTF-8编码对str和bytes进行转换。<br>(8) 由于Python源代码也是一个文本文件，所以，当你的源代码中包含中文的时候，在保存源代码时，就需要务必指定保存为UTF-8编码。当Python解释器读取源代码时，为了让它按UTF-8编码读取，我们通常在文件开头写上这两行：</p>
 <pre><code>#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 </code></pre><ul>
@@ -130,18 +140,18 @@ var _hmt = _hmt || [];
 <li>第二行注释是为了告诉Python解释器，按照UTF-8编码读取源代码，否则，你在源代码中写的中文输出可能会有乱码。</li>
 <li>申明了UTF-8编码并不意味着你的.py文件就是UTF-8编码的，必须并且要确保文本编辑器正在使用UTF-8 without BOM编码：</li>
 </ul>
-<p>(9) 格式化：%<br>C_formate<br>%d：整数<br>%f：浮点数<br>%s：字符串<br>%x：十六进制整数<br>%%：%</p>
+<p>(9) 格式化：%<br><img src="http://o73nd1ra4.bkt.clouddn.com/format.png" alt=""><br>%d：整数<br>%f：浮点数<br>%s：字符串<br>%x：十六进制整数<br>%%：%</p>
 <ol>
 <li>布尔值：True和False；and、or和not运算<br>在python中，and和or执行布尔逻辑运算时，并不返回布尔值，而是返回他们实际进行比较的值之一。在布尔上下文中从左到右演算表达式的值。对于and，如果布尔上下文中的所有值为真，那么and返回最后一个值；如果布尔上下文中的某个值为假，则and返回第一个假值。对于or，如果有值为真，则返回第一个真值，若所有值都为假，则返回最后一个假值。</li>
 <li>空值：None，不能理解为0。</li>
-<li>变量：变量名必须是大小写英文、数字和_的组合。<br>动态语言：<br>C_DLanguage<br>静态语言：<br>C_QLanguage1<br>C_QLanguage2<br>b:ABC</li>
+<li>变量：变量名必须是大小写英文、数字和_的组合。<br>动态语言：<br><img src="http://o73nd1ra4.bkt.clouddn.com/DLanguage.png" alt=""><br>静态语言：<br><img src="http://o73nd1ra4.bkt.clouddn.com/QLanguage1.png" alt=""><br><img src="http://o73nd1ra4.bkt.clouddn.com/QLanguage2.png" alt=""><br>b:ABC</li>
 <li>常量：通常用全部大写的变量名表示常量</li>
 <li>1.1+1.1+1.1=3.3000000000003：因为精度损失</li>
 </ol>
-<h3 id="条件判断"><a href="#条件判断" class="headerlink" title="条件判断"></a>条件判断</h3><p>C_if</p>
+<h3 id="条件判断"><a href="#条件判断" class="headerlink" title="条件判断"></a>条件判断</h3><p><img src="http://o73nd1ra4.bkt.clouddn.com/if.png" alt=""></p>
 <h3 id="循环"><a href="#循环" class="headerlink" title="循环"></a>循环</h3><ol>
-<li>for x in ..<br>C_for</li>
-<li>while<br>C_while</li>
+<li>for x in ..<br><img src="http://o73nd1ra4.bkt.clouddn.com/for.png" alt=""></li>
+<li>while<br><img src="http://o73nd1ra4.bkt.clouddn.com/while.png" alt=""></li>
 </ol>
 <h3 id="列表"><a href="#列表" class="headerlink" title="列表"></a>列表</h3><ol>
 <li>list是一种有序的集合，可以随时添加和删除其中的元素<br>classmates = [‘Michael’, ‘Bob’, ‘Tracy’]</li>
@@ -319,7 +329,7 @@ for word in words:
 
 	  
 <span>
-Updated:<time datetime="2016-05-23T03:14:13.675Z" itemprop="dateModified">2016-05-23</time>
+Updated:<time datetime="2016-05-23T03:26:52.344Z" itemprop="dateModified">2016-05-23</time>
 </span>
 
 
