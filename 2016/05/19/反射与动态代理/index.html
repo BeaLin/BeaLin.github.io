@@ -14,7 +14,7 @@
 <meta property="og:image" content="http://o73nd1ra4.bkt.clouddn.com/ShowMethod.png">
 <meta property="og:image" content="http://o73nd1ra4.bkt.clouddn.com/daili.png">
 <meta property="og:image" content="http://o73nd1ra4.bkt.clouddn.com/dtdaili.png">
-<meta property="og:updated_time" content="2016-05-19T12:01:00.953Z">
+<meta property="og:updated_time" content="2016-05-23T06:07:31.606Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="反射与动态代理">
 <meta name="twitter:description" content="Programmer,Technology,Software Engineering">
@@ -73,7 +73,7 @@ var _hmt = _hmt || [];
           <a id="nav-github-link" class="nav-icon" href="https://github.com/BeaLin" title="Github" target="_blank"></a>
         
         
-        <a id="nav-search-btn" class="nav-icon" title="Buscar"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -120,7 +120,7 @@ var _hmt = _hmt || [];
 		
 		</div>
 		
-        <p>原文链接：<a href="http://bealin.github.io/2016/05/13/java%E5%A4%9A%E7%BA%BF%E7%A8%8B/" target="_blank" rel="external">反射与动态代理</a><br>写于前面：从某个视频上看到的一句话，存在一定的争议性，有待理解：万事万物皆对象，类也是对象，是Class类型的实例对象，这个对象我们称为该类的类类型<br>本文是在看了《Think in JAVA》、《JAVA核心技术卷》以及相关的一些博客后的总结笔记，纯属个人理解。若有错误，望指出。文末会贴出参考资料的链接。<br><strong>1. java使用类的准备工作</strong><br>(1) <strong>加载</strong>:有类加载器执行，查找字节码，并从字节码中创建一个Class对象<br>(2) <strong>链接</strong>:验证类中的字节码，为静态域分配存储空间。如有必需，也会解析这个类创建的对其他类的所有引用<br>(3) <strong>初始化</strong>:如果该类具有超类，则对其初始化，执行静态初始化器和静态初始化块<br>初始化的过程和顺序见Java初始化与清理一文。<br><strong>2. java如何识别对象和类的信息</strong><br>(1) <strong>传统的RTTI</strong>（ Run-Time Type Identification）：在运行时识别对象类型，容器中Objec自动转换为具体类。所有类型转换都是在运行时进行正确性检测。<br>四个关键词:运行时识别、类型转换、类型检查（确保转换的争取性）、类型在编译时必须已知；<br>(2) <strong>反射机制</strong>：运行时获取类信息：用来检查可用的方法，并返回方法名。<br><a id="more"></a></p>
+        <p>写于前面：从某个视频上看到的一句话，存在一定的争议性，有待理解：万事万物皆对象，类也是对象，是Class类型的实例对象，这个对象我们称为该类的类类型<br>本文是在看了《Think in JAVA》、《JAVA核心技术卷》以及相关的一些博客后的总结笔记，纯属个人理解。若有错误，望指出。文末会贴出参考资料的链接。<br><strong>1. java使用类的准备工作</strong><br>(1) <strong>加载</strong>:有类加载器执行，查找字节码，并从字节码中创建一个Class对象<br>(2) <strong>链接</strong>:验证类中的字节码，为静态域分配存储空间。如有必需，也会解析这个类创建的对其他类的所有引用<br>(3) <strong>初始化</strong>:如果该类具有超类，则对其初始化，执行静态初始化器和静态初始化块<br>初始化的过程和顺序见Java初始化与清理一文。<br><strong>2. java如何识别对象和类的信息</strong><br>(1) <strong>传统的RTTI</strong>（ Run-Time Type Identification）：在运行时识别对象类型，容器中Objec自动转换为具体类。所有类型转换都是在运行时进行正确性检测。<br>四个关键词:运行时识别、类型转换、类型检查（确保转换的争取性）、类型在编译时必须已知；<br>(2) <strong>反射机制</strong>：运行时获取类信息：用来检查可用的方法，并返回方法名。<br><a id="more"></a></p>
 <hr>
 <h2 id="Class类"><a href="#Class类" class="headerlink" title="Class类"></a>Class类</h2><h3 id="Class对象："><a href="#Class对象：" class="headerlink" title="Class对象："></a>Class对象：</h3><p>Class对象:类型信息在运行时的表现；java用Class对象来执行其RTTI。  </p>
 <ol>
@@ -219,7 +219,7 @@ try {
 
 	  
 <span>
-Updated:<time datetime="2016-05-19T12:01:00.953Z" itemprop="dateModified">2016-05-19</time>
+Updated:<time datetime="2016-05-23T06:07:31.606Z" itemprop="dateModified">2016-05-23</time>
 </span>
 
 
@@ -231,7 +231,7 @@ Updated:<time datetime="2016-05-19T12:01:00.953Z" itemprop="dateModified">2016-0
   
   
     <a href="/2016/05/18/java内存管理及垃圾回收机制/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Viejo</strong>
+      <strong class="article-nav-caption">下一篇</strong>
       <div class="article-nav-title">Java内存管理及垃圾回收机制</div>
     </a>
   
@@ -289,9 +289,9 @@ Updated:<time datetime="2016-05-19T12:01:00.953Z" itemprop="dateModified">2016-0
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Categorías</h3>
+    <h3 class="widget-title">Categories</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python-Scrapy/">Python/Scrapy</a><span class="category-list-count">1</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Python/Scrapy/">Scrapy</a><span class="category-list-count">1</span></li></ul></li></ul>
     </div>
   </div>
 
@@ -299,7 +299,7 @@ Updated:<time datetime="2016-05-19T12:01:00.953Z" itemprop="dateModified">2016-0
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Nube de Tags</h3>
+    <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
       <a href="/tags/GC/" style="font-size: 13px; color: #7dc3de">GC</a> <a href="/tags/JMM/" style="font-size: 13px; color: #7dc3de">JMM</a> <a href="/tags/JVM/" style="font-size: 13px; color: #7dc3de">JVM</a> <a href="/tags/Java/" style="font-size: 20px; color: #1db400">Java</a> <a href="/tags/Python/" style="font-size: 16.5px; color: #4dbc6f">Python</a> <a href="/tags/Scrapy/" style="font-size: 13px; color: #7dc3de">Scrapy</a> <a href="/tags/动态代理/" style="font-size: 13px; color: #7dc3de">动态代理</a> <a href="/tags/反射/" style="font-size: 13px; color: #7dc3de">反射</a> <a href="/tags/多线程/" style="font-size: 13px; color: #7dc3de">多线程</a> <a href="/tags/爬虫/" style="font-size: 13px; color: #7dc3de">爬虫</a>
     </div>
@@ -309,7 +309,7 @@ Updated:<time datetime="2016-05-19T12:01:00.953Z" itemprop="dateModified">2016-0
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archivos</h3>
+    <h3 class="widget-title">Archives</h3>
     <div class="widget">
       <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">6</span></li></ul>
     </div>
@@ -319,7 +319,7 @@ Updated:<time datetime="2016-05-19T12:01:00.953Z" itemprop="dateModified">2016-0
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Posts recientes</h3>
+    <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
         
