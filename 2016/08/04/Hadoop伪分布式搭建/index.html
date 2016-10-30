@@ -3,17 +3,17 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Hadoop为分布式搭建 | BeaLin&#39;s Blog</title>
+  <title>Hadoop伪分布式搭建 | BeaLin&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="Programmer,Technology,Software Engineering">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hadoop为分布式搭建">
+<meta property="og:title" content="Hadoop伪分布式搭建">
 <meta property="og:url" content="http://yoursite.com/2016/08/04/Hadoop伪分布式搭建/index.html">
 <meta property="og:site_name" content="BeaLin's Blog">
 <meta property="og:description" content="Programmer,Technology,Software Engineering">
-<meta property="og:updated_time" content="2016-08-04T05:29:00.477Z">
+<meta property="og:updated_time" content="2016-08-04T05:42:36.493Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hadoop为分布式搭建">
+<meta name="twitter:title" content="Hadoop伪分布式搭建">
 <meta name="twitter:description" content="Programmer,Technology,Software Engineering">
   
   
@@ -88,6 +88,10 @@ var _hmt = _hmt || [];
 
 
     
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Hadoop/">Hadoop</a>
+  </div>
+
   </div>
   <div class="article-inner">
     
@@ -96,7 +100,7 @@ var _hmt = _hmt || [];
         
   
     <h1 class="article-title" itemprop="name">
-      Hadoop为分布式搭建
+      Hadoop伪分布式搭建
     </h1>
   
 
@@ -108,11 +112,79 @@ var _hmt = _hmt || [];
 		<div id="toc" class="toc-article">
 			<h2 class="toc-title"><span>Contents</span></h2>
 		
-			
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#准备Linux环境"><span class="toc-number">1.</span> <span class="toc-text">准备Linux环境</span></a></li></ol>
 		
 		</div>
 		
-        
+        <h2 id="准备Linux环境"><a href="#准备Linux环境" class="headerlink" title="准备Linux环境"></a>准备Linux环境</h2><ol>
+<li>点击VMware快捷方式，右键打开文件所在位置,然后双击vmnetcfg.exe -&gt; VMnet1 host-only -&gt;修改subnet ip 设置网段：192.168.8.0 子网掩码：255.255.255.0 -&gt; apply -&gt; ok<br>回到windows –&gt; 打开网络和共享中心 -&gt; 更改适配器设置 -&gt; 右键VMnet1 -&gt; 属性 -&gt; 双击IPv4 -&gt; 设置windows的IP：192.168.8.100 子网掩码：255.255.255.0 -&gt; 点击确定<br>在虚拟软件上 –My Computer -&gt; 选中虚拟机 -&gt; 右键 -&gt; settings -&gt; network adapter -&gt; host only -&gt; ok    <a id="more"></a></li>
+<li><p>修改主机名</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/sysconfig/network</span><br><span class="line"></span><br><span class="line">NETWORKING=yes</span><br><span class="line">HOSTNAME=centos01</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>修改IP<br>两种方式：<br>第一种：通过Linux图形界面进行修改（强烈推荐）<br>进入Linux图形界面 -&gt; 右键点击右上方的两个小电脑 -&gt; 点击Edit connections -&gt; 选中当前网络System eth0 -&gt; 点击edit按钮 -&gt; 选择IPv4 -&gt; method选择为manual -&gt; 点击add按钮 -&gt; 添加IP：192.168.8.88 子网掩码：255.255.255.0 网关：192.168.1.1 -&gt; apply<br>第二种：修改配置文件方式（屌丝程序猿专用）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/sysconfig/network-scripts/ifcfg-eth0</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">DEVICE=&quot;eth0&quot;</span><br><span class="line">BOOTPROTO=&quot;static&quot;               ###</span><br><span class="line">HWADDR=&quot;00:0C:29:3C:BF:E7&quot;</span><br><span class="line">IPV6INIT=&quot;yes&quot;</span><br><span class="line">NM_CONTROLLED=&quot;yes&quot;</span><br><span class="line">ONBOOT=&quot;yes&quot;</span><br><span class="line">TYPE=&quot;Ethernet&quot;</span><br><span class="line">UUID=&quot;ce22eeca-ecde-4536-8cc2-ef0dc36d4a8c&quot;</span><br><span class="line">IPADDR=&quot;192.168.8.88&quot;           ###</span><br><span class="line">NETMASK=&quot;255.255.255.0&quot;          ###</span><br><span class="line">GATEWAY=&quot;192.168.8.1&quot;            ###</span><br><span class="line">```			</span><br><span class="line">4. 修改主机名和IP的映射关系</span><br><span class="line">vim /etc/hosts</span><br><span class="line">			</span><br><span class="line">192.168.8.88	centos01</span><br><span class="line">	</span><br><span class="line">5. 关闭防火墙</span><br><span class="line">```		</span><br><span class="line">#查看防火墙状态</span><br><span class="line">service iptables status</span><br><span class="line">#关闭防火墙</span><br><span class="line">service iptables stop</span><br><span class="line">#查看防火墙开机启动状态</span><br><span class="line">chkconfig iptables --list</span><br><span class="line">#关闭防火墙开机启动</span><br><span class="line">chkconfig iptables off</span><br><span class="line">```	</span><br><span class="line">6. 重启Linux</span><br></pre></td></tr></table></figure>
+<p>Reboot<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">其实，不管是分布式还是伪分布式的集群搭建，1.0--1.5是基本的步骤。</span><br><span class="line"></span><br><span class="line">## 安装JDK</span><br><span class="line">1. 上传</span><br><span class="line">	</span><br><span class="line">2. 解压jdk</span><br><span class="line">		#创建文件夹</span><br><span class="line">		mkdir /ideas/java</span><br><span class="line">		#解压</span><br><span class="line">		tar -zxvf jdk-7u76-linux-i586.gz  -C /ideas/java/</span><br><span class="line">		</span><br><span class="line">3. 将java添加到环境变量中</span><br><span class="line">		vim /etc/profile</span><br><span class="line">		#在文件最后添加</span><br><span class="line">		export JAVA_HOME=/ideas/java/jdk1.7.0_76</span><br><span class="line">		export PATH=$PATH:$JAVA_HOME/bin</span><br><span class="line">	</span><br><span class="line">		#刷新配置</span><br><span class="line">		source /etc/profile</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 安装hadoop2.2.0</span><br><span class="line">注意：hadoop2.x的配置文件$HADOOP_HOME/etc/hadoop</span><br><span class="line">伪分布式需要修改5个配置文件</span><br><span class="line">1. 配置hadoop</span><br><span class="line">	第一个：hadoop-env.sh</span><br><span class="line">	```	</span><br><span class="line">	vim hadoop-env.sh</span><br><span class="line">	#第27行</span><br><span class="line">	export JAVA_HOME=/ideas/java/jdk1.7.0_76</span><br></pre></td></tr></table></figure></p>
+<pre><code>第二个：core-site.xml
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 制定HDFS的老大（NameNode）的地址 --&gt;</span><br><span class="line">&lt;property&gt;</span><br><span class="line">	&lt;name&gt;fs.defaultFS&lt;/name&gt;</span><br><span class="line">	&lt;value&gt;hdfs://centos01:9000&lt;/value&gt;</span><br><span class="line">&lt;/property&gt;</span><br><span class="line">&lt;!-- 指定hadoop运行时产生文件的存储目录 --&gt;</span><br><span class="line">&lt;property&gt;</span><br><span class="line">	&lt;name&gt;hadoop.tmp.dir&lt;/name&gt;</span><br><span class="line">	&lt;value&gt;/itcast/hadoop-2.2.0/tmp&lt;/value&gt;</span><br><span class="line">      &lt;/property&gt;</span><br></pre></td></tr></table></figure>
+
+第三个：hdfs-site.xml
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">	&lt;!-- 指定HDFS副本的数量 --&gt;</span><br><span class="line">	&lt;property&gt;</span><br><span class="line">		&lt;name&gt;dfs.replication&lt;/name&gt;</span><br><span class="line">		&lt;value&gt;1&lt;/value&gt;</span><br><span class="line">       &lt;/property&gt;</span><br><span class="line">```	</span><br><span class="line">第四个：mapred-site.xml (mv mapred-site.xml.template mapred-site.xml)</span><br></pre></td></tr></table></figure>
+
+    mv mapred-site.xml.template mapred-site.xml
+    vim mapred-site.xml
+    &lt;!-- 指定mr运行在yarn上 --&gt;
+    &lt;property&gt;
+        &lt;name&gt;mapreduce.framework.name&lt;/name&gt;
+        &lt;value&gt;yarn&lt;/value&gt;
+    &lt;/property&gt;
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">第五个：yarn-site.xml</span><br></pre></td></tr></table></figure>
+
+    &lt;!-- 指定YARN的老大（ResourceManager）的地址 --&gt;
+    &lt;property&gt;
+        &lt;name&gt;yarn.resourcemanager.hostname&lt;/name&gt;
+        &lt;value&gt;centos01&lt;/value&gt;
+    &lt;/property&gt;
+    &lt;!-- reducer获取数据的方式 --&gt;
+    &lt;property&gt;
+        &lt;name&gt;yarn.nodemanager.aux-services&lt;/name&gt;
+        &lt;value&gt;mapreduce_shuffle&lt;/value&gt;
+    &lt;/property&gt;
+```
+</code></pre><ol>
+<li><p>将hadoop添加到环境变量</p>
+<p> vim /etc/proflie</p>
+<pre><code>export JAVA_HOME=/ideas/java/jdk1.7.0_76
+export HADOOP_HOME=/itcast/hadoop-2.2.0
+export PATH=$PATH:$JAVA_HOME/bin:$HADOOP_HOME/bin:$HADOOP_HOME/sbin
+</code></pre><p> source /etc/profile</p>
+</li>
+<li><p>格式化namenode（是对namenode进行初始化）</p>
+<pre><code>hdfs namenode -format (hadoop namenode -format)
+</code></pre></li>
+<li><p>启动hadoop</p>
+<pre><code>先启动HDFS
+sbin/start-dfs.sh
+
+再启动YARN
+sbin/start-yarn.sh
+</code></pre></li>
+<li><p>验证是否启动成功</p>
+<pre><code>使用jps命令验证
+27408 NameNode
+28218 Jps
+27643 SecondaryNameNode
+28066 NodeManager
+27803 ResourceManager
+27512 DataNode
+</code></pre></li>
+</ol>
+<p>一般遇到DataNode没有启动起来，重启一下机器就行了</p>
+<pre><code>http://192.168.8.88:50070 （HDFS管理界面）
+http://192.168.8.88:8088 （MR管理界面）
+</code></pre>
       
     </div>
     <footer class="article-footer">
@@ -122,9 +194,11 @@ var _hmt = _hmt || [];
 	  <!-- 百度分享 End -->
 	  
       
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hadoop/">Hadoop</a></li></ul>
+
 	  
 <span>
-Updated:<time datetime="2016-08-04T05:29:00.477Z" itemprop="dateModified">2016-08-04</time>
+Updated:<time datetime="2016-08-04T05:42:36.493Z" itemprop="dateModified">2016-08-04</time>
 </span>
 
 
@@ -134,10 +208,19 @@ Updated:<time datetime="2016-08-04T05:29:00.477Z" itemprop="dateModified">2016-0
     
 <nav id="article-nav">
   
+    <a href="/2016/10/23/Caffe学习系列——1-介绍与安装过程/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">上一篇</strong>
+      <div class="article-nav-title">
+        
+          Caffe学习系列——1.介绍与安装过程
+        
+      </div>
+    </a>
   
-    <a href="/2016/07/30/Hadoop简介/" id="article-nav-older" class="article-nav-link-wrap">
+  
+    <a href="/2016/08/03/HDFS介绍/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">下一篇</strong>
-      <div class="article-nav-title">Hadoop简介</div>
+      <div class="article-nav-title">HDFS介绍</div>
     </a>
   
 </nav>
@@ -150,7 +233,7 @@ Updated:<time datetime="2016-08-04T05:29:00.477Z" itemprop="dateModified">2016-0
 
 <!-- 多说评论框 start -->
 <section id="comments">
-  <div class="ds-thread"  data-thread-key="/2016/08/04/Hadoop伪分布式搭建/" data-title="Hadoop为分布式搭建" data-url="http://yoursite.com/2016/08/04/Hadoop伪分布式搭建/" id="ds_thread">
+  <div class="ds-thread"  data-thread-key="/2016/08/04/Hadoop伪分布式搭建/" data-title="Hadoop伪分布式搭建" data-url="http://yoursite.com/2016/08/04/Hadoop伪分布式搭建/" id="ds_thread">
     <noscript>Please enable JavaScript to view the <a href="//duoshuo.com/?ref_noscript">comments powered by duoshuo.</a></noscript>
   </div>
 </section>
@@ -162,7 +245,7 @@ Updated:<time datetime="2016-08-04T05:29:00.477Z" itemprop="dateModified">2016-0
   <div id="toc" class="toc-aside">
   <h2 class="toc-title">Contents</h2>
     
-        
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#准备Linux环境"><span class="toc-number">1.</span> <span class="toc-text">准备Linux环境</span></a></li></ol>
     
   </div>
 
@@ -196,7 +279,7 @@ Updated:<time datetime="2016-08-04T05:29:00.477Z" itemprop="dateModified">2016-0
   <div class="widget-wrap">
     <h3 class="widget-title">Categories</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Hadoop/">Hadoop</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Python/Scrapy/">Scrapy</a><span class="category-list-count">1</span></li></ul></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Deep-Learning/">Deep Learning</a><span class="category-list-count">7</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Deep-Learning/Caffe/">Caffe</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hadoop/">Hadoop</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Python/Scrapy/">Scrapy</a><span class="category-list-count">1</span></li></ul></li></ul>
     </div>
   </div>
 
@@ -206,7 +289,7 @@ Updated:<time datetime="2016-08-04T05:29:00.477Z" itemprop="dateModified">2016-0
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/GC/" style="font-size: 13px; color: #7dc3de">GC</a> <a href="/tags/Hadoop/" style="font-size: 13px; color: #7dc3de">Hadoop</a> <a href="/tags/JMM/" style="font-size: 13px; color: #7dc3de">JMM</a> <a href="/tags/JVM/" style="font-size: 13px; color: #7dc3de">JVM</a> <a href="/tags/Java/" style="font-size: 20px; color: #1db400">Java</a> <a href="/tags/Python/" style="font-size: 16.5px; color: #4dbc6f">Python</a> <a href="/tags/Scrapy/" style="font-size: 13px; color: #7dc3de">Scrapy</a> <a href="/tags/分布式技术/" style="font-size: 13px; color: #7dc3de">分布式技术</a> <a href="/tags/多线程/" style="font-size: 13px; color: #7dc3de">多线程</a> <a href="/tags/大数据/" style="font-size: 13px; color: #7dc3de">大数据</a> <a href="/tags/爬虫/" style="font-size: 13px; color: #7dc3de">爬虫</a>
+      <a href="/tags/Caffe/" style="font-size: 18.25px; color: #35b838">Caffe</a> <a href="/tags/Deep-Learning/" style="font-size: 20px; color: #1db400">Deep Learning</a> <a href="/tags/Faster-RCNN/" style="font-size: 13px; color: #7dc3de">Faster-RCNN</a> <a href="/tags/GC/" style="font-size: 13px; color: #7dc3de">GC</a> <a href="/tags/HDFS/" style="font-size: 13px; color: #7dc3de">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 16.5px; color: #4dbc6f">Hadoop</a> <a href="/tags/JMM/" style="font-size: 13px; color: #7dc3de">JMM</a> <a href="/tags/JVM/" style="font-size: 13px; color: #7dc3de">JVM</a> <a href="/tags/Java/" style="font-size: 16.5px; color: #4dbc6f">Java</a> <a href="/tags/Object-Detection/" style="font-size: 13px; color: #7dc3de">Object Detection</a> <a href="/tags/Python/" style="font-size: 14.75px; color: #65bfa7">Python</a> <a href="/tags/Scrapy/" style="font-size: 13px; color: #7dc3de">Scrapy</a> <a href="/tags/分布式技术/" style="font-size: 13px; color: #7dc3de">分布式技术</a> <a href="/tags/分布式文件系统/" style="font-size: 13px; color: #7dc3de">分布式文件系统</a> <a href="/tags/多线程/" style="font-size: 13px; color: #7dc3de">多线程</a> <a href="/tags/大数据/" style="font-size: 13px; color: #7dc3de">大数据</a> <a href="/tags/爬虫/" style="font-size: 13px; color: #7dc3de">爬虫</a>
     </div>
   </div>
 
@@ -216,7 +299,7 @@ Updated:<time datetime="2016-08-04T05:29:00.477Z" itemprop="dateModified">2016-0
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">5</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">5</span></li></ul>
     </div>
   </div>
 
@@ -229,23 +312,23 @@ Updated:<time datetime="2016-08-04T05:29:00.477Z" itemprop="dateModified">2016-0
       <ul>
         
           <li>
-            <a href="/2016/08/04/Hadoop伪分布式搭建/">Hadoop为分布式搭建</a>
+            <a href="/2016/10/23/Caffe学习系列——6使用Faster-RCNN进行目标检测/">Cafaffe学习系列——6使用Faster-RCNN进行目标检测</a>
           </li>
         
           <li>
-            <a href="/2016/07/30/Hadoop简介/">Hadoop简介</a>
+            <a href="/2016/10/23/Caffe学习系列——5使用R-CNN进行目标检测/">Cafaffe学习系列——5使用R-CNN进行目标检测</a>
           </li>
         
           <li>
-            <a href="/2016/05/18/java内存管理及垃圾回收机制/">Java内存管理及垃圾回收机制</a>
+            <a href="/2016/10/23/目标检测方法——从RCNN、Fast-RCNN到Faster-RCNN/">目标检测方法——从RCNN、Fast-RCNN到Faster-RCNN</a>
           </li>
         
           <li>
-            <a href="/2016/05/13/java多线程/">java多线程</a>
+            <a href="/2016/10/23/Caffe学习系列——4使用训练好的模型进行分类/">Cafaffe学习系列——4使用训练好的模型进行分类</a>
           </li>
         
           <li>
-            <a href="/2016/05/13/使用Scrapy框架爬取数据/">使用Scrapy框架爬取数据</a>
+            <a href="/2016/10/23/Caffe学习系列——3Fine-tuning微调网络/">Caffe学习系列——3Fine-tuning微调网络</a>
           </li>
         
       </ul>
