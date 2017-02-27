@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>BeaLin&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Programmer,Technology,Software Engineering">
+<meta property="og:type" content="website">
+<meta property="og:title" content="BeaLin's Blog">
+<meta property="og:url" content="http://yoursite.com/page/3/index.html">
+<meta property="og:site_name" content="BeaLin's Blog">
+<meta property="og:description" content="Programmer,Technology,Software Engineering">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="BeaLin's Blog">
+<meta name="twitter:description" content="Programmer,Technology,Software Engineering">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  
+    <link href="//fonts.useso.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+  
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?1d80e95307276f5c52c3e32dae69f024";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">BeaLin&#39;s Blog</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Study, Think, Record</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-github-link" class="nav-icon" href="https://github.com/BeaLin" title="Github" target="_blank"></a>
+        
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-Caffe学习系列——2用AlexNet训练自己的数据集" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    
+<a href="/2016/10/23/Caffe学习系列——2用AlexNet训练自己的数据集/" class="article-date">
+  <time datetime="2016-10-23T02:31:28.000Z" itemprop="datePublished">2016-10-23</time>
+</a>
+
+
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Deep-Learning/">Deep Learning</a>►<a class="article-category-link" href="/categories/Deep-Learning/Caffe/">Caffe</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/10/23/Caffe学习系列——2用AlexNet训练自己的数据集/">Caffe学习系列——2用AlexNet训练自己的数据集</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>本文主要介绍AlexNet网络结构以及如何使用AlexNet来训练自己的数据集。<br>讲到AlexNet，就不得不提ImageNet以及ImageNet LSVRC大赛，ImageNet是一项大型计算机视觉系统识别项目，是目前世界上图像识别最大的数据库，截止2016年，ImageNet提供超过10亿张手工标记的图片。从2010年，ImageNet组开始一年一度的the ImageNet Large Scale Visual Recognition Challenge (大规模视觉识别大赛，简称ILSVRC)。本文要介绍的AlexNet就是由Alex提出的网络结构模型，此网络结构赢得了2112届的冠军，同时刷新了image classification的记录，奠定了deep learning在计算机视觉中的地位。<br>Alex是一个大型深度卷积神经网络，其优势在于：网络增大（5个卷积层+3个全连接层+1个softmax层），同时解决过拟合（dropout，data augmentation，LRN），并且利用多GPU加速计算，在ILSVRC-2012大赛中，以top-5测试误差率15.3%取得了胜利。<br>
+        
+          <p class="article-more-link">
+            <a href="/2016/10/23/Caffe学习系列——2用AlexNet训练自己的数据集/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+	  
+	  <a data-url="http://yoursite.com/2016/10/23/Caffe学习系列——2用AlexNet训练自己的数据集/" data-id="ciznpwt9k0000r0vy40oew1xg" data_title="Caffe学习系列——2用AlexNet训练自己的数据集" data_summary="本文主要介绍AlexNet网络结构以及如何使用Alex..." class="article-share-link">Share</a>
+      
+
+      
+        <a href="http://yoursite.com/2016/10/23/Caffe学习系列——2用AlexNet训练自己的数据集/#ds-thread" class="ds-thread-count article-comment-link" data-thread-key="/2016/10/23/Caffe学习系列——2用AlexNet训练自己的数据集/">暂无评论</a>
+      
+	  
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Caffe/">Caffe</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Deep-Learning/">Deep Learning</a></li></ul>
+
+	  
+<span>
+Updated:<time datetime="2016-10-23T03:33:21.618Z" itemprop="dateModified">2016-10-23</time>
+</span>
+
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+
+  
+    <article id="post-Caffe学习系列——1-介绍与安装过程" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    
+<a href="/2016/10/23/Caffe学习系列——1-介绍与安装过程/" class="article-date">
+  <time datetime="2016-10-23T02:30:28.000Z" itemprop="datePublished">2016-10-23</time>
+</a>
+
+
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Deep-Learning/">Deep Learning</a>►<a class="article-category-link" href="/categories/Deep-Learning/Caffe/">Caffe</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/10/23/Caffe学习系列——1-介绍与安装过程/">Caffe学习系列——1.介绍与安装过程</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><a href="http://caffe.berkeleyvision.org/">Caffe</a>是一个高效，模块化的深度学习框架，其作者是毕业于UC Berkeley的博士<a href="http://daggerfs.com/">贾扬清</a>。Cafe是纯粹的C++/CUDA架构，支持命令行、Python和MATLAB接口；可以在CPU和GPU（<a href="https://www.zhihu.com/question/19903344">CPU与GPU的区别</a>）之间无缝切换。<br>Caffe的优势：</p>
+<ol>
+<li>上手快：模型与相应优化都是以文本形式标示，方便立即上手以及调参</li>
+<li>速度快：能够运行最优化的模型与海量数据</li>
+<li>模块化：方便扩展到新的任务和设置上。可以使用Caffe提供的各层类型来定义自己的模型</li>
+<li>开放性：可以基于公开的代码和参考模型实现自己的模型</li>
+<li>社区好：可以通过BSD-2参与开发与讨论<br>学习Caffe可以看看网提供的两个文档：一个是<a href="https://docs.google.com/presentation/d/1UeKXVgRvvxg9OUdh_UiC5G71UMscNPlvArsWER41PsU/edit#slide=id.p">DIY Deep Learning for Vision with Caffe</a>，这是伯克利介绍caffe的PPT，可以快速的了解什么是Caffe。还有一个是<a href="http://caffe.berkeleyvision.org/model_zoo.html">Model Zoo</a>，这是目前基于Caffe上实现的模型与深度学习例子，可以大致浏览一下。<br>本文主要分三个部分：第一个部分是参照官网进行的安装过程，包括安装过程中遇到的问题及解决方法，第二个部分是对Caffe整个结构的介绍。
+        
+          <p class="article-more-link">
+            <a href="/2016/10/23/Caffe学习系列——1-介绍与安装过程/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+	  
+	  <a data-url="http://yoursite.com/2016/10/23/Caffe学习系列——1-介绍与安装过程/" data-id="ciznpwta00001r0vyblxnjnck" data_title="Caffe学习系列——1.介绍与安装过程" data_summary="Caffe是一个高效，模块化的深度学习框架，其作者是毕..." class="article-share-link">Share</a>
+      
+
+      
+        <a href="http://yoursite.com/2016/10/23/Caffe学习系列——1-介绍与安装过程/#ds-thread" class="ds-thread-count article-comment-link" data-thread-key="/2016/10/23/Caffe学习系列——1-介绍与安装过程/">暂无评论</a>
+      
+	  
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Caffe/">Caffe</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Deep-Learning/">Deep Learning</a></li></ul>
+
+	  
+<span>
+Updated:<time datetime="2016-10-23T03:13:49.298Z" itemprop="dateModified">2016-10-23</time>
+</span>
+
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+
+  
+    <article id="post-Hadoop伪分布式搭建" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    
+<a href="/2016/08/04/Hadoop伪分布式搭建/" class="article-date">
+  <time datetime="2016-08-04T05:29:00.000Z" itemprop="datePublished">2016-08-04</time>
+</a>
+
+
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Hadoop/">Hadoop</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/08/04/Hadoop伪分布式搭建/">Hadoop伪分布式搭建</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="准备Linux环境"><a href="#准备Linux环境" class="headerlink" title="准备Linux环境"></a>准备Linux环境</h2><ol>
+<li>点击VMware快捷方式，右键打开文件所在位置,然后双击vmnetcfg.exe -&gt; VMnet1 host-only -&gt;修改subnet ip 设置网段：192.168.8.0 子网掩码：255.255.255.0 -&gt; apply -&gt; ok<br>回到windows –&gt; 打开网络和共享中心 -&gt; 更改适配器设置 -&gt; 右键VMnet1 -&gt; 属性 -&gt; 双击IPv4 -&gt; 设置windows的IP：192.168.8.100 子网掩码：255.255.255.0 -&gt; 点击确定<br>在虚拟软件上 –My Computer -&gt; 选中虚拟机 -&gt; 右键 -&gt; settings -&gt; network adapter -&gt; host only -&gt; ok
+        
+          <p class="article-more-link">
+            <a href="/2016/08/04/Hadoop伪分布式搭建/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+	  
+	  <a data-url="http://yoursite.com/2016/08/04/Hadoop伪分布式搭建/" data-id="ciznpwtd7000kr0vykb5kpamw" data_title="Hadoop伪分布式搭建" data_summary="准备Linux环境
+点击VMware快捷方式，右键打开..." class="article-share-link">Share</a>
+      
+
+      
+        <a href="http://yoursite.com/2016/08/04/Hadoop伪分布式搭建/#ds-thread" class="ds-thread-count article-comment-link" data-thread-key="/2016/08/04/Hadoop伪分布式搭建/">暂无评论</a>
+      
+	  
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hadoop/">Hadoop</a></li></ul>
+
+	  
+<span>
+Updated:<time datetime="2016-08-04T05:42:36.493Z" itemprop="dateModified">2016-08-04</time>
+</span>
+
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+
+  
+    <article id="post-HDFS介绍" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    
+<a href="/2016/08/03/HDFS介绍/" class="article-date">
+  <time datetime="2016-08-03T14:14:26.000Z" itemprop="datePublished">2016-08-03</time>
+</a>
+
+
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Hadoop/">Hadoop</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/08/03/HDFS介绍/">HDFS介绍</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+		
+		<div id="toc" class="toc-article">
+			<h2 class="toc-title"><span>Contents</span></h2>
+		
+			
+		
+		</div>
+		
+        <p>分布式文件系统是管理网络中跨多台计算机存储的文件系统。HDFS（Hadoop Distributed File System）以流式数据访问模式来存储超大文件，运行于商用硬件集群上。其中流式数据访问指的是一次写入、多次读取是最高效的访问模式。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+	  
+	  <a data-url="http://yoursite.com/2016/08/03/HDFS介绍/" data-id="ciznpwtb90005r0vyjzrhaurs" data_title="HDFS介绍" data_summary="分布式文件系统是管理网络中跨多台计算机存储的文件系统。..." class="article-share-link">Share</a>
+      
+
+      
+        <a href="http://yoursite.com/2016/08/03/HDFS介绍/#ds-thread" class="ds-thread-count article-comment-link" data-thread-key="/2016/08/03/HDFS介绍/">暂无评论</a>
+      
+	  
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HDFS/">HDFS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hadoop/">Hadoop</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/分布式文件系统/">分布式文件系统</a></li></ul>
+
+	  
+<span>
+Updated:<time datetime="2016-08-04T05:42:40.536Z" itemprop="dateModified">2016-08-04</time>
+</span>
+
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+
+  
+    <article id="post-Hadoop简介" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    
+<a href="/2016/07/30/Hadoop简介/" class="article-date">
+  <time datetime="2016-07-30T06:00:11.000Z" itemprop="datePublished">2016-07-30</time>
+</a>
+
+
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Hadoop/">Hadoop</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/07/30/Hadoop简介/">Hadoop简介</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Hadoop是Apache基金会下的一个开源分布式计算平台，可以充分利用集群的计算和存储能力，完成海量数据的处理。Hadoop采用分布式存储方式来提高读写速度和扩大存储容量；采用MapReduce整合分布式文件系统上的数据，保证高速分析处理数据；与此同时还采用存储冗余数据来保证数据的安全性。经过几年的快速发展，Hadoop现在已经发展为包含多个相关项目的软件生态系统。狭义的Hadoop核心只包括Hadoop Common、Hadoop HDFS和Hadoop MapReduce三个子项目。而如今的Hadoop软件生态圈还包括 Avro、ZooKeeper、Hive、Pig和Hbase等项目、构建在这些项目之上，面向具体领域、应用的Machout、X-Rime、Crossbow和Ivory等项目，以及Chukwa、Flume、Sqoop、Oozie和Karmasphere等数据交换、工作流和开发环境这样的外围支撑系统。</p>
+        
+          <p class="article-more-link">
+            <a href="/2016/07/30/Hadoop简介/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+	  
+	  <a data-url="http://yoursite.com/2016/07/30/Hadoop简介/" data-id="ciznpwtcw000gr0vyccv3rdyu" data_title="Hadoop简介" data_summary="Hadoop是Apache基金会下的一个开源分布式计算..." class="article-share-link">Share</a>
+      
+
+      
+        <a href="http://yoursite.com/2016/07/30/Hadoop简介/#ds-thread" class="ds-thread-count article-comment-link" data-thread-key="/2016/07/30/Hadoop简介/">暂无评论</a>
+      
+	  
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hadoop/">Hadoop</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/分布式技术/">分布式技术</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/大数据/">大数据</a></li></ul>
+
+	  
+<span>
+Updated:<time datetime="2016-08-03T14:13:24.406Z" itemprop="dateModified">2016-08-03</time>
+</span>
+
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+
+  
+    <article id="post-java内存管理及垃圾回收机制" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    
+<a href="/2016/05/18/java内存管理及垃圾回收机制/" class="article-date">
+  <time datetime="2016-05-18T06:51:13.000Z" itemprop="datePublished">2016-05-18</time>
+</a>
+
+
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Java/">Java</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/05/18/java内存管理及垃圾回收机制/">Java内存管理及垃圾回收机制</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Java语言的一大特点就是会自动进行垃圾回收处理，不像C++语言，程序员必须对内存分配与管理亲力亲为，当内存使用完后必须手工释放内存空间，否则就会引起内存泄漏，严重时甚至导致程序瘫痪。而java的垃圾回收机制大大减轻开发人员的工作量，但也增加了软件系统的负担。本文首先介绍java的内存管理，包括内存的分区，使得能够更好地理解垃圾回收机制。<br>本文是在看了《Think in JAVA》、《JAVA核心技术卷》以及相关的一些博客后的总结笔记，纯属个人理解。若有错误，望指出。文末会贴出参考资料的链接。</p>
+        
+          <p class="article-more-link">
+            <a href="/2016/05/18/java内存管理及垃圾回收机制/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+	  
+	  <a data-url="http://yoursite.com/2016/05/18/java内存管理及垃圾回收机制/" data-id="ciznpwtis002cr0vyencg921p" data_title="Java内存管理及垃圾回收机制" data_summary="Java语言的一大特点就是会自动进行垃圾回收处理，不像..." class="article-share-link">Share</a>
+      
+
+      
+        <a href="http://yoursite.com/2016/05/18/java内存管理及垃圾回收机制/#ds-thread" class="ds-thread-count article-comment-link" data-thread-key="/2016/05/18/java内存管理及垃圾回收机制/">暂无评论</a>
+      
+	  
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/GC/">GC</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JVM/">JVM</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
+
+	  
+<span>
+Updated:<time datetime="2016-05-23T06:07:37.231Z" itemprop="dateModified">2016-05-23</time>
+</span>
+
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+
+  
+    <article id="post-java多线程" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    
+<a href="/2016/05/13/java多线程/" class="article-date">
+  <time datetime="2016-05-13T03:25:51.000Z" itemprop="datePublished">2016-05-13</time>
+</a>
+
+
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Java/">Java</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/05/13/java多线程/">java多线程</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>多线程是java的一个很重要的高级特性，本文主要归纳了线程的相关概念，包括线程的定义，与进程的区别，线程的状态和属性。同时介绍了线程中很重要的一个知识点——如何实现线程安全:1使线程同步、使用阻塞队列或线程安全的集合。除此之外，还介绍了用于管理线程，提高线程执行效率的执行器(线程池)和同步器。<br>本文是在看了《Think in JAVA》、《JAVA核心技术卷》以及相关的一些博客后的总结笔记，纯属个人理解。若有错误，望指出。文末会贴出参考资料的链接。</p>
+        
+          <p class="article-more-link">
+            <a href="/2016/05/13/java多线程/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+	  
+	  <a data-url="http://yoursite.com/2016/05/13/java多线程/" data-id="ciznpwtdd000mr0vyxqlpfi5b" data_title="java多线程" data_summary="多线程是java的一个很重要的高级特性，本文主要归纳了..." class="article-share-link">Share</a>
+      
+
+      
+        <a href="http://yoursite.com/2016/05/13/java多线程/#ds-thread" class="ds-thread-count article-comment-link" data-thread-key="/2016/05/13/java多线程/">暂无评论</a>
+      
+	  
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/多线程/">多线程</a></li></ul>
+
+	  
+<span>
+Updated:<time datetime="2016-05-23T06:07:36.091Z" itemprop="dateModified">2016-05-23</time>
+</span>
+
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+
+  
+    <article id="post-使用Scrapy框架爬取数据" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    
+<a href="/2016/05/13/使用Scrapy框架爬取数据/" class="article-date">
+  <time datetime="2016-05-13T03:25:13.000Z" itemprop="datePublished">2016-05-13</time>
+</a>
+
+
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Python/">Python</a>►<a class="article-category-link" href="/categories/Python/Scrapy/">Scrapy</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/05/13/使用Scrapy框架爬取数据/">使用Scrapy框架爬取数据</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>Scrapy是一个为了爬取网站数据，提取结构性数据而编写的应用框架。 可以应用在包括数据挖掘，信息处理或存储历史数据等一系列的程序中。</p>
+</blockquote>
+<p>上述是<a href="http://scrapy-chs.readthedocs.io/zh_CN/latest/index.html">Scrapy的官方文档</a>的解释，个人认为学习Scrapy的最好方法就是Scrapy的官方文档，写的非常清楚，而且各种功能也都写的特别详尽。推荐看官方文档学习Scrapy。本文主要是有关于我在学习Scrapy过程中遇到的坑和解决方法，以及是Scrapy入门后找的一些网站练手的代码展示。所有的代码都已经上传到我的github上了，如果感兴趣的话，可以去这个地址下载。<a href="https://github.com/BeaLin/ScrapyProgram">https://github.com/BeaLin/ScrapyProgram</a> 。使用Scrapy爬取数据的网站有<br>聚美优品、豆瓣、乐峰、蜜芽、跨境淘、欧美淘。不出意外，这些代码下载下来是可以直接运行的。这篇博文会不定时更新~^-^<br>
+        
+          <p class="article-more-link">
+            <a href="/2016/05/13/使用Scrapy框架爬取数据/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+	  
+	  <a data-url="http://yoursite.com/2016/05/13/使用Scrapy框架爬取数据/" data-id="ciznpwtki003er0vyeskx91al" data_title="使用Scrapy框架爬取数据" data_summary="
+Scrapy是一个为了爬取网站数据，提取结构性数据而..." class="article-share-link">Share</a>
+      
+
+      
+        <a href="http://yoursite.com/2016/05/13/使用Scrapy框架爬取数据/#ds-thread" class="ds-thread-count article-comment-link" data-thread-key="/2016/05/13/使用Scrapy框架爬取数据/">暂无评论</a>
+      
+	  
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Scrapy/">Scrapy</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/爬虫/">爬虫</a></li></ul>
+
+	  
+<span>
+Updated:<time datetime="2016-07-30T06:01:23.740Z" itemprop="dateModified">2016-07-30</time>
+</span>
+
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+
+  
+    <article id="post-Python学习笔记" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    
+<a href="/2016/05/13/Python学习笔记/" class="article-date">
+  <time datetime="2016-05-13T03:24:33.000Z" itemprop="datePublished">2016-05-13</time>
+</a>
+
+
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Python/">Python</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/05/13/Python学习笔记/">Python学习笔记</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>由于项目需要，最近开始学Python。Python是一种面向对象、解释型语言。也是最近非常火的一种语言。Python为我们提供了非常完善的基础代码库，涵盖了网络、文件、GUI、数据库、文本等大量内容。Python非常简单，有一定面向对象知识的同学都可以很快地入门并深入。但是Python也有缺点：一个是运行速度慢；一个是代码不能加密。因为Python是解释型语言，所以代码在执行时会一行一行地翻译成CPU能理解地机器码。这个翻译过程很耗时。我学习Python的目的主要是为了编写爬虫代码和学习机器学习知识。所以对Python的学习程度并不需要达到深层次。我为了快速入门，选择<a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000">廖雪峰的官方网站中的Python3教程</a>进行学习。本文主要是我学习过程记下的笔记，着重于与java不太一样的地方。个人笔记仅供参考。<br>
+        
+          <p class="article-more-link">
+            <a href="/2016/05/13/Python学习笔记/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+	  
+	  <a data-url="http://yoursite.com/2016/05/13/Python学习笔记/" data-id="ciznpwtij0028r0vy24e91mfq" data_title="Python学习笔记" data_summary="由于项目需要，最近开始学Python。Python是一..." class="article-share-link">Share</a>
+      
+
+      
+        <a href="http://yoursite.com/2016/05/13/Python学习笔记/#ds-thread" class="ds-thread-count article-comment-link" data-thread-key="/2016/05/13/Python学习笔记/">暂无评论</a>
+      
+	  
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li></ul>
+
+	  
+<span>
+Updated:<time datetime="2016-05-23T03:26:52.344Z" itemprop="dateModified">2016-05-23</time>
+</span>
+
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+
+  
+    <article id="post-java内存模型JMM" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    
+<a href="/2016/05/12/java内存模型JMM/" class="article-date">
+  <time datetime="2016-05-12T11:54:38.000Z" itemprop="datePublished">2016-05-12</time>
+</a>
+
+
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Java/">Java</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/05/12/java内存模型JMM/">Java内存模型JMM</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在并发编程中，有两个关键问题需要处理：线程之间如何通信以及线程之间如何同步。在命令式编程中，线程之间的通信机制有两种：共享内存和消息传递。在共享内存的并发模型里，线程之间共享程序的公共状态，线程之间通过写-读内存中的公共状态来隐式进行通信。java的并发采用的是共享内存模型。本文主要介绍Java内存模型JMM以及其实现内存可见性的方式。<br>本文是在看了《Think in JAVA》、《JAVA核心技术卷》以及相关的一些博客后的总结笔记，纯属个人理解。若有错误，望指出。文末会贴出参考资料的链接。</p>
+        
+          <p class="article-more-link">
+            <a href="/2016/05/12/java内存模型JMM/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+	  
+	  <a data-url="http://yoursite.com/2016/05/12/java内存模型JMM/" data-id="ciznpwtco000er0vytt6p33li" data_title="Java内存模型JMM" data_summary="在并发编程中，有两个关键问题需要处理：线程之间如何通信..." class="article-share-link">Share</a>
+      
+
+      
+        <a href="http://yoursite.com/2016/05/12/java内存模型JMM/#ds-thread" class="ds-thread-count article-comment-link" data-thread-key="/2016/05/12/java内存模型JMM/">暂无评论</a>
+      
+	  
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JMM/">JMM</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
+
+	  
+<span>
+Updated:<time datetime="2016-05-23T06:07:38.555Z" itemprop="dateModified">2016-05-23</time>
+</span>
+
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+
+  
+
+
+  <nav id="page-nav">
+    
+    <a class="extend prev" rel="prev" href="/page/2/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span>
+  </nav>
+
+</section>
+        
+          
+<aside id="sidebar">
+
+  
+    
+<div class="widget-wrap">
+  <h3 class="widget-title">ABOUT ME</h3>
+  <ul class="widget about-me">
+    
+    <li><img class="author" title="About me" src="/images/aboutme.png" /></li>
+    
+    
+    <li>Hi,I'm BeaLin.</li>
+    
+    <li>Zhejiang University,研究生在读</li>
+    
+    <li>Email:bealin93@gmail.com</li>
+    
+    <li>微博：<a href="http://weibo.com/2604578131" target="_BLANK">@程序湲_小苾</a></li>
+    
+    <li>旧博客：<a href="http://www.cnblogs.com/bylin/" target="_BLANK">博客园</a></li>
+    
+  </ul>
+</div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Deep-Learning/">Deep Learning</a><span class="category-list-count">7</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Deep-Learning/Caffe/">Caffe</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hadoop/">Hadoop</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Python/Scrapy/">Scrapy</a><span class="category-list-count">1</span></li></ul></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Caffe/" style="font-size: 18.25px; color: #35b838">Caffe</a> <a href="/tags/Deep-Learning/" style="font-size: 20px; color: #1db400">Deep Learning</a> <a href="/tags/Faster-RCNN/" style="font-size: 13px; color: #7dc3de">Faster-RCNN</a> <a href="/tags/GC/" style="font-size: 13px; color: #7dc3de">GC</a> <a href="/tags/HDFS/" style="font-size: 13px; color: #7dc3de">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 16.5px; color: #4dbc6f">Hadoop</a> <a href="/tags/JMM/" style="font-size: 13px; color: #7dc3de">JMM</a> <a href="/tags/JVM/" style="font-size: 13px; color: #7dc3de">JVM</a> <a href="/tags/Java/" style="font-size: 16.5px; color: #4dbc6f">Java</a> <a href="/tags/ML/" style="font-size: 13px; color: #7dc3de">ML</a> <a href="/tags/Object-Detection/" style="font-size: 13px; color: #7dc3de">Object Detection</a> <a href="/tags/Python/" style="font-size: 14.75px; color: #65bfa7">Python</a> <a href="/tags/Scrapy/" style="font-size: 13px; color: #7dc3de">Scrapy</a> <a href="/tags/分布式技术/" style="font-size: 13px; color: #7dc3de">分布式技术</a> <a href="/tags/分布式文件系统/" style="font-size: 13px; color: #7dc3de">分布式文件系统</a> <a href="/tags/多线程/" style="font-size: 13px; color: #7dc3de">多线程</a> <a href="/tags/大数据/" style="font-size: 13px; color: #7dc3de">大数据</a> <a href="/tags/机器学习/" style="font-size: 13px; color: #7dc3de">机器学习</a> <a href="/tags/爬虫/" style="font-size: 13px; color: #7dc3de">爬虫</a>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">5</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/02/27/机器学习系列—8-神经网络/">机器学习系列-8.神经网络</a>
+          </li>
+        
+          <li>
+            <a href="/2017/02/27/机器学习系列—15-概率图模型/">机器学习系列-15.概率图模型</a>
+          </li>
+        
+          <li>
+            <a href="/2017/02/27/机器学习系列—14-半监督学习/">机器学习系列-13.半监督学习</a>
+          </li>
+        
+          <li>
+            <a href="/2017/02/27/机器学习系列—13-特征选择/">机器学习系列-12.特征选择</a>
+          </li>
+        
+          <li>
+            <a href="/2017/02/27/机器学习系列—12-降维之PCA/">机器学习系列-11.降维之PCA</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+  
+    
+<div class="widget-wrap">
+  <h3 class="widget-title">Recent Comments</h3>
+  <ul class="widget ds-recent-comments" data-num-items="5" data-show-avatars="0" data-show-title="1" data-show-time="1"></ul>
+</div>
+<!-- 需要多说的公用代码 -->
+
+
+  
+    
+<div class="widget-wrap">
+  <h3 class="widget-title">Links</h3>
+  <ul class="widget">
+    
+    <li><a href="http://yibo.iyiyun.com/js/yibo404/key/1" target="_BLANK">404 page</a></li>
+    
+  </ul>
+</div>
+
+
+  
+
+</aside>
+
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 Bea Lin<br>
+      
+    
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"bealin"};
+  (function() {
+	var ds = document.createElement('script');
+	ds.type = 'text/javascript';ds.async = true;
+	ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+	ds.charset = 'UTF-8';
+	(document.getElementsByTagName('head')[0]
+		|| document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+<!-- 多说公共JS代码 end -->
+
+
+
+
+<script src="/js/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<div class="bottom-btn">
+
+	<a class="icon-gotop" href="javascript:void(0)" title="返回顶部"></a>
+	<script src="/js/gotop.js"></script>
+	<!--
+	<script src="/js/gotop.js"></script>
+	-->
+
+
+</div>
+<script src="/js/toc_aside_toggle.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+
+
+  </div>
+</body>
+</html>
