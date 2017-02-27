@@ -11,10 +11,32 @@
 <meta property="og:url" content="http://yoursite.com/2017/02/27/机器学习系列—2-模型评估与选择/index.html">
 <meta property="og:site_name" content="BeaLin's Blog">
 <meta property="og:description" content="Programmer,Technology,Software Engineering">
-<meta property="og:updated_time" content="2017-02-27T05:51:12.813Z">
+<meta property="og:image" content="http://o73nd1ra4.bkt.clouddn.com/ML2-1.png">
+<meta property="og:image" content="http://o73nd1ra4.bkt.clouddn.com/ML2-2.png">
+<meta property="og:image" content="http://o73nd1ra4.bkt.clouddn.com/ML2-3.png">
+<meta property="og:image" content="http://o73nd1ra4.bkt.clouddn.com/ML2-4.png">
+<meta property="og:image" content="http://o73nd1ra4.bkt.clouddn.com/ML2-5.png">
+<meta property="og:image" content="http://o73nd1ra4.bkt.clouddn.com/ML2-6.png">
+<meta property="og:image" content="http://o73nd1ra4.bkt.clouddn.com/ML2-7.png">
+<meta property="og:image" content="http://o73nd1ra4.bkt.clouddn.com/ML2-8.png">
+<meta property="og:image" content="http://o73nd1ra4.bkt.clouddn.com/ML2-9.png">
+<meta property="og:image" content="http://o73nd1ra4.bkt.clouddn.com/ML2-10.png">
+<meta property="og:image" content="http://o73nd1ra4.bkt.clouddn.com/ML2-11.png">
+<meta property="og:image" content="http://o73nd1ra4.bkt.clouddn.com/ML2-12.png">
+<meta property="og:image" content="http://o73nd1ra4.bkt.clouddn.com/ML2-13.png">
+<meta property="og:image" content="http://o73nd1ra4.bkt.clouddn.com/ML2-14.png">
+<meta property="og:image" content="http://o73nd1ra4.bkt.clouddn.com/ML2-15.png">
+<meta property="og:image" content="http://o73nd1ra4.bkt.clouddn.com/ML2-16.png">
+<meta property="og:image" content="http://o73nd1ra4.bkt.clouddn.com/ML2-17.png">
+<meta property="og:image" content="http://o73nd1ra4.bkt.clouddn.com/ML2-18.png">
+<meta property="og:image" content="http://o73nd1ra4.bkt.clouddn.com/ML2-19.png">
+<meta property="og:image" content="http://o73nd1ra4.bkt.clouddn.com/ML2-20.png">
+<meta property="og:image" content="http://o73nd1ra4.bkt.clouddn.com/ML2-21.png">
+<meta property="og:updated_time" content="2017-02-27T07:29:46.012Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="机器学习系列—2.模型评估与选择">
 <meta name="twitter:description" content="Programmer,Technology,Software Engineering">
+<meta name="twitter:image" content="http://o73nd1ra4.bkt.clouddn.com/ML2-1.png">
   
   
     <link rel="icon" href="/favicon.ico">
@@ -88,6 +110,10 @@ var _hmt = _hmt || [];
 
 
     
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Machine-Learning/">Machine Learning</a>
+  </div>
+
   </div>
   <div class="article-inner">
     
@@ -108,11 +134,21 @@ var _hmt = _hmt || [];
 		<div id="toc" class="toc-article">
 			<h2 class="toc-title"><span>Contents</span></h2>
 		
-			
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#训练误差与测试误差"><span class="toc-number">1.</span> <span class="toc-text">训练误差与测试误差</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#过拟合"><span class="toc-number">2.</span> <span class="toc-text">过拟合</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#正则化"><span class="toc-number">3.</span> <span class="toc-text">正则化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#评估方法"><span class="toc-number">4.</span> <span class="toc-text">评估方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#留出法（hold-out）"><span class="toc-number">4.1.</span> <span class="toc-text">留出法（hold-out）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#交叉验证法（cross-validation）"><span class="toc-number">4.2.</span> <span class="toc-text">交叉验证法（cross validation）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#自助法（bootstrapping）"><span class="toc-number">4.3.</span> <span class="toc-text">自助法（bootstrapping）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#调参与最终模型"><span class="toc-number">4.4.</span> <span class="toc-text">调参与最终模型</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#性能度量"><span class="toc-number">5.</span> <span class="toc-text">性能度量</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#偏差与方差"><span class="toc-number">6.</span> <span class="toc-text">偏差与方差</span></a></li></ol>
 		
 		</div>
 		
-        
+        <h2 id="训练误差与测试误差"><a href="#训练误差与测试误差" class="headerlink" title="训练误差与测试误差"></a>训练误差与测试误差</h2><p>当损失函数给定时，学习方法评估的标准：基于损失函数的模型的训练误差和模型的测试误差。<br>训练误差是模型关于训练数据的平均损失：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML2-1.png" alt=""><br>测试误差是模型关于测试数据集的平均损失：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML2-2.png" alt=""><br><a id="more"></a><br><br><br>当损失函数是0-1损失时，测试误差就变成了常见的测试数据集上的误差率：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML2-3.png" alt=""><br>相应的准确率：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML2-4.png" alt=""><br>测试准确率与测试误差的关系：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML2-5.png" alt=""></p>
+<h2 id="过拟合"><a href="#过拟合" class="headerlink" title="过拟合"></a>过拟合</h2><p>当学习器把训练样本学得“太好”了的时候，很可能会把训练样本自身的一些特点当作了所有潜在样本都会具有的一般性质，这样就会导致泛化性能下降。这种现象在机器学习中称为“<strong>过拟合</strong>”（overfitting）。与过拟合相对的是“<strong>欠拟合</strong>”（underfitting），指对训练样本的一般性质尚未学好。<br>欠拟合通常是因为学习能力低下导致的，比较容易克服，例如在决策树学习中扩展分支、在神经网络学习中增加训练轮数。<br>导致过拟合的因素有很多种，通常是由于学习能力过于强大。所以如果一味追求提高对训练数据的预测能力，所选择模型的复杂度往往比真模型更高，就会过拟合。下图描述了训练误差和测试误差与模型复杂度的关系<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML2-6.png" alt=""><br>由上图可知，当模型复杂度增大时，训练误差会减少并趋向于0，测试误差会先减少，达到最小值后又增大。即出现了过拟合的现象。需要知道的是，过拟合是机器学习面临的关键障碍，各类学习算法都必然带有一些针对过拟合的措施。但过拟合是无法彻底避免的，我们所能做的就是缓解或者减小其风险。防止过拟合的模型选择方法常用的有：正则化与交叉验证。</p>
+<h2 id="正则化"><a href="#正则化" class="headerlink" title="正则化"></a>正则化</h2><p>正则化是结构风险最小化策略的实现方法，即在经验风险上加一个正则化项。在回归问题中，损失函数是平方损失，正则化项可以说参数向量的L2范数。<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML2-7.png" alt=""><br>也可以是参数向量的L1范数<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML2-8.png" alt=""><br>从贝叶斯估计的角度看，正则化对应于先验概率，可以假设复制的模型具有较小的先验概率，简单的模型有较大的先验概率。</p>
+<h2 id="评估方法"><a href="#评估方法" class="headerlink" title="评估方法"></a>评估方法</h2><p>对于模型选择问题，理想的解决方案是对候选模型的泛化误差进行评估，然后选择泛化误差最小的那个模型。但是我们无法直接获得泛化误差，而训练误差又由于过拟合现象的存在而不适合作为标准。因此我们可以通过使用一个测试集来测试学习器对新样本的判别能力，测试误差近似于泛化误差。测试集应该尽可能地与训练集互斥。划分的方法：</p>
+<h3 id="留出法（hold-out）"><a href="#留出法（hold-out）" class="headerlink" title="留出法（hold-out）"></a>留出法（hold-out）</h3><p>直接将数据集D划分为两个互斥的集合。一个做为训练集S，另一个做为测试集T。训练/测试集的划分要尽可能保持数据集分布的一致性，避免因数据划分过程引入额外的偏差而对最终结果产生影响，保留类别比例的采样方法通常称为“分层采样”。两个集合划分的大小也要有一定的合理性，通常的做法是将大约2/3~4/5的样本用于训练，剩余样本用于测试。这里的划分可以从偏差-方差的角度来理解：训练集小，未能充分地拟合数据，所以偏差较大；测试集小时，数据扰动产生的影响较大，所以方差较大。</p>
+<h3 id="交叉验证法（cross-validation）"><a href="#交叉验证法（cross-validation）" class="headerlink" title="交叉验证法（cross validation）"></a>交叉验证法（cross validation）</h3><p>先将数据集D划分为kge大小相似的互斥子集。每个子集都尽可能保持数据分布的一致性，即从D中通过分层采样得到。然后每次用k-1个子集的并集作为训练集，余下的那个子集作为测试集；这样可获得k组训练/测试集，从而进行k次训练和测试，最终返回的是这k个测试结果的均值。通常把交叉验证称为“k折交叉验证（k-fold cross validation）”k最常用的取值是10。<br>为减少因样本划分不同而引入的差别，k折交叉验证通常要随机使用不同的划分重复p次，最终的评估结果是这p次k折交叉验证结果的均值。<br>假定数据集D中包含m个样本，若令k=m,则得到了交叉验证的一个特例：留一法（Leave-One-Out，LOO），显然留一法不受随机样本划分方式的影响，并且留一法中被实际评估的模型与期望评估的用D训练出来的模型很相似，因此留一法的评估结果往往被认为比较准确。然而其缺陷就是在数据集比较大时，训练m个模型的计算开销可能是难以忍受的。</p>
+<h3 id="自助法（bootstrapping）"><a href="#自助法（bootstrapping）" class="headerlink" title="自助法（bootstrapping）"></a>自助法（bootstrapping）</h3><p>以自助采样法为基础，给定一个包含m个样本的数据集D，对它进行采样产生数据集D1:每次随机从D中挑选一个样本，将其拷贝放入D1，然后再将该样本放回初始数据集D中，使得该样本在下次采样时仍有可能被采到；这个过程重复m次后，我们就得到了包含m个样本的数据集D1，但是D中有一部分样本会在D1中重复出现，而另一部分样本不出现。可以做个简单的估计，大约有36.8%的样本未出现在数据集D1中。于是可以将D1用作训练集，D\D1用作测试集；注意实际评估的模型与期望评估的模型都使用m个样本，虽然数据总量越有1/3未在训练集中而用于测试。这样的测试结果也称为“包外估计”（out-of-bag-estimate）。<br>自助法不适用与数据集较小的时候。<br>自助法能产生多个不同的训练集，对集成方法有好处<br>自助法产生的数据集改变了初始数据集的分布，会引入估计偏差。</p>
+<h3 id="调参与最终模型"><a href="#调参与最终模型" class="headerlink" title="调参与最终模型"></a>调参与最终模型</h3><p>大多数学习算法都有些参数需要设定，参数配置不同，学得模型的性能往往有显著差别。机器学习常涉及两类参数：一种是算法的参数；另一种是模型的参数；两者调参方式相似，均是产生多个模型之后基于某种评估方法来进行选择；不同之处在于前者通常是由人工设定多个参数候选值，后者则是通过学习来产生多个候选模型。<br>在实际常用的调参方法是对每个参数选定一个范围和变化步长。例如在[0,0.2]范围内以0.05为步长，则实际评估的数值有5个，从5个候选值中选择最优，显然这个值不一定是最佳的，但这是计算开销和性能估计之间进行的折中。<br>给定包含m个样本的数据集D，在模型评估与选择过程中由于需要留出一部分数据进行评估，所以我们都只使用了一部分数据训练模型。因此在模型选择完成后，学习算法和参数配置已选定，此时应该用数据集D重新训练模型。这个模型才是最终交给用户的模型。<br>另外，为了加以区分，我们通常把学得模型在实际使用中遇到的数据集称为测试集，模型评估与选择中用于评估测试的数据集常称为验证集（validation set）。也就是把训练数据另外划分为训练集和验证集，基于验证集上的性能来进行模型选择和调参。</p>
+<h2 id="性能度量"><a href="#性能度量" class="headerlink" title="性能度量"></a>性能度量</h2><p>对于二分类问题，可将样例根据其真实累呗与学习器预测类别的组合划分为真正例（true positive）、假正例（false positive）、真反例（true negative）、假反例（false negative）四种情形。分类结果的混淆矩阵如下：其中，true、false：判断正确与否；positive、negative：判断为正例还是反例。显然TP+FP+TN+FN=样例总数<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML2-9.png" alt=""><br>分类器性能指标有准确率、精确率、召回率、真正率、假正率、F1。<br><strong>1. 准确率（accuracy）</strong><br><img src="http://o73nd1ra4.bkt.clouddn.com/ML2-10.png" alt=""><br><strong>2. 精确率（Precision），也叫查准率</strong><br>表示所有预测为正例中正确的比例<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML2-11.png" alt=""><br><strong>3. 召回率（recall），也叫查全率</strong><br>表示实际为正例中预测准确的比例<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML2-12.png" alt=""><br>需要注意的是精确率与召回率是一对矛盾的度量。一般来说，精确率高时，召回率往往偏低，反之亦然。例如若希望将好瓜尽可能多地选出来，可通过增加选瓜的数量来实现，若将所有的瓜都判为好瓜，那么召回率就最高，因为好瓜全选出来了，但是精确率就降低了。若希望选出的瓜中好瓜比例尽可能地高，那可只挑选最有把握的瓜，但这样就难免会漏掉不少好瓜。这时精确率高，但是召回率就低了。<br><strong>4. PR曲线</strong><br>以查准率为纵轴，查全率为横轴的曲线图。在进行比较时，若一个学习器的P-R曲线被另一个学习器的曲线完全“包住”，则可断言后者的性能高于前者。若两个学习发生了交叉，按常理可以通过曲线下面积的大小进行判断，但这个值不太容易估计，所以引入平衡点（Break-Even-Point，BEP）的度量。即“查准率=查全率”时的取值，哪个学习器的BEP更高则性能更好。<br><strong>5. F1度量</strong><br>由于BEP过于简单，更常用的是F1度量：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML2-13.png" alt=""><br>在一些应用中，对查准率和查全率的重视程度有所不同，例如在商品推荐中，为了尽可能少打扰用户，更希望推荐内容是用户感兴趣的，此时查准率更重要，而在逃犯信息检索系统中，更希望尽可能少漏掉逃犯，此时查全率更重要。因此对于F1度量的一般形式，B（B大于0 ）是度量了查全率对查准率的相对重要性。B=1时退化为标准的F1；B大于1时查全率有更大影响；B小于1时查准率有更大影响。<br><strong>6. ROC（Receiver Operating Characteristic）与AUC（Area Under ROC Curve）</strong><br>真正率或灵敏度：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML2-14.png" alt=""><br>假正率：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML2-15.png" alt=""><br><img src="http://o73nd1ra4.bkt.clouddn.com/ML2-16.png" alt=""><br>很多学习器是为测试样本产生一个实值或者概率预测，然后将这个预测值与一个分类阈值（threshold）比较。将测试样本进行排序，最可能是正例的排前面，最不可能的排后面。这样分类过程就相当于在这个排序中找个截断点将样本分为两部分，前部分是正例，后部分是反例。ROC的绘图过程：给定m个正例和m个反例，根据学习器预测结果对样例进行排序，然后先设分类阈值为最大时，即把所有样例均预测为反例，此时的真正率和假正率都为0，然后将分类阈值依次设为每个样例的预测值，即可得到不同分类阈值下的真正率和假正率，绘图，如上。可以看出，中那天红色对角线为“随机猜测”模型。<br>进行学习器的比较时，与P-R图相似，若一个学习器的ROC曲线被另一个学习器的曲线完全“包住”，则可断言后者的性能优于前者；若两个学习的ROC曲线发生交叉，则比较ROC曲线下的面积，即为AUC。</p>
+<h2 id="偏差与方差"><a href="#偏差与方差" class="headerlink" title="偏差与方差"></a>偏差与方差</h2><p>偏差-方差分解（bias-variance decomposition）是解释学习算法泛化性能的一种重要工具。令：<br>x为测试样本<br>yD：x在数据集中的标记<br>y：x的真实标记<br>f(x;D):训练集D上学得的模型f在x上的预测输出<br>f(x)=E[f(x;D)] :期望预测<br>使用样本数相同的不同训练集产生的方差（variance）为：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML2-17.png" alt=""><br>方差描述的是预测值作为随机变量的离散程度。度量了同样大小的训练集的变动所导致的学习性能的变化，即刻画了数据扰动所造成的影响。<br>期望输出与真实标记的差别称为<strong>偏差（bias）</strong>,偏差度量了学习算法的期望预测与真实结果的偏离程度，即刻画了学习算法本身的拟合能力。偏差公式如下：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML2-18.png" alt=""><br><strong>噪声</strong>为：（表示若不为0，就是标记错了）<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML2-19.png" alt=""><br>噪声表达了在当前任务上任何学习算法所能达到的期望泛化误差的下界，即刻画了学习问题本身的难度。<br><strong>算法的期望泛化误差</strong>为：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML2-20.png" alt=""><br>即泛化误差可分解为偏差、方差与噪声之和。<br>因此泛化性能是由学习算法的能力、数据的充分性以及学习任务本身的难度锁共同决定的。在给定一个学习任务，为取得好的泛化性能，则需使偏差较少，也需使方差较小。但是一般来说，偏差与方差是有冲突的，这称为偏差-方差窘境。假定我们能控制学习算法的训练程度，则在训练不足时，学习器的拟合能力不够强，同时训练数据的扰动不足以使学习器产生显著变化，此时偏差主导泛化错误率；随着训练程度的加深，学习器的拟合能力逐渐增强，训练数据发生的扰动渐渐能被学习器学到，方差逐渐主导了泛化错误率。此时若训练数据自身的、非全局的特性被学习器学到了，则将发生过拟合如下图泛化误差与偏差、方差的关系示意图所示：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML2-21.png" alt=""></p>
+
       
     </div>
     <footer class="article-footer">
@@ -122,9 +158,11 @@ var _hmt = _hmt || [];
 	  <!-- 百度分享 End -->
 	  
       
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ML/">ML</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/机器学习/">机器学习</a></li></ul>
+
 	  
 <span>
-Updated:<time datetime="2017-02-27T05:51:12.813Z" itemprop="dateModified">2017-02-27</time>
+Updated:<time datetime="2017-02-27T07:29:46.012Z" itemprop="dateModified">2017-02-27</time>
 </span>
 
 
@@ -171,7 +209,7 @@ Updated:<time datetime="2017-02-27T05:51:12.813Z" itemprop="dateModified">2017-0
   <div id="toc" class="toc-aside">
   <h2 class="toc-title">Contents</h2>
     
-        
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#训练误差与测试误差"><span class="toc-number">1.</span> <span class="toc-text">训练误差与测试误差</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#过拟合"><span class="toc-number">2.</span> <span class="toc-text">过拟合</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#正则化"><span class="toc-number">3.</span> <span class="toc-text">正则化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#评估方法"><span class="toc-number">4.</span> <span class="toc-text">评估方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#留出法（hold-out）"><span class="toc-number">4.1.</span> <span class="toc-text">留出法（hold-out）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#交叉验证法（cross-validation）"><span class="toc-number">4.2.</span> <span class="toc-text">交叉验证法（cross validation）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#自助法（bootstrapping）"><span class="toc-number">4.3.</span> <span class="toc-text">自助法（bootstrapping）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#调参与最终模型"><span class="toc-number">4.4.</span> <span class="toc-text">调参与最终模型</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#性能度量"><span class="toc-number">5.</span> <span class="toc-text">性能度量</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#偏差与方差"><span class="toc-number">6.</span> <span class="toc-text">偏差与方差</span></a></li></ol>
     
   </div>
 
@@ -205,7 +243,7 @@ Updated:<time datetime="2017-02-27T05:51:12.813Z" itemprop="dateModified">2017-0
   <div class="widget-wrap">
     <h3 class="widget-title">Categories</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Deep-Learning/">Deep Learning</a><span class="category-list-count">7</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Deep-Learning/Caffe/">Caffe</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hadoop/">Hadoop</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Python/Scrapy/">Scrapy</a><span class="category-list-count">1</span></li></ul></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Deep-Learning/">Deep Learning</a><span class="category-list-count">7</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Deep-Learning/Caffe/">Caffe</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hadoop/">Hadoop</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Python/Scrapy/">Scrapy</a><span class="category-list-count">1</span></li></ul></li></ul>
     </div>
   </div>
 
@@ -215,7 +253,7 @@ Updated:<time datetime="2017-02-27T05:51:12.813Z" itemprop="dateModified">2017-0
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Caffe/" style="font-size: 18.25px; color: #35b838">Caffe</a> <a href="/tags/Deep-Learning/" style="font-size: 20px; color: #1db400">Deep Learning</a> <a href="/tags/Faster-RCNN/" style="font-size: 13px; color: #7dc3de">Faster-RCNN</a> <a href="/tags/GC/" style="font-size: 13px; color: #7dc3de">GC</a> <a href="/tags/HDFS/" style="font-size: 13px; color: #7dc3de">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 16.5px; color: #4dbc6f">Hadoop</a> <a href="/tags/JMM/" style="font-size: 13px; color: #7dc3de">JMM</a> <a href="/tags/JVM/" style="font-size: 13px; color: #7dc3de">JVM</a> <a href="/tags/Java/" style="font-size: 16.5px; color: #4dbc6f">Java</a> <a href="/tags/ML/" style="font-size: 13px; color: #7dc3de">ML</a> <a href="/tags/Object-Detection/" style="font-size: 13px; color: #7dc3de">Object Detection</a> <a href="/tags/Python/" style="font-size: 14.75px; color: #65bfa7">Python</a> <a href="/tags/Scrapy/" style="font-size: 13px; color: #7dc3de">Scrapy</a> <a href="/tags/分布式技术/" style="font-size: 13px; color: #7dc3de">分布式技术</a> <a href="/tags/分布式文件系统/" style="font-size: 13px; color: #7dc3de">分布式文件系统</a> <a href="/tags/多线程/" style="font-size: 13px; color: #7dc3de">多线程</a> <a href="/tags/大数据/" style="font-size: 13px; color: #7dc3de">大数据</a> <a href="/tags/机器学习/" style="font-size: 13px; color: #7dc3de">机器学习</a> <a href="/tags/爬虫/" style="font-size: 13px; color: #7dc3de">爬虫</a>
+      <a href="/tags/Bayes/" style="font-size: 13px; color: #7dc3de">Bayes</a> <a href="/tags/Caffe/" style="font-size: 18.25px; color: #35b838">Caffe</a> <a href="/tags/Deep-Learning/" style="font-size: 20px; color: #1db400">Deep Learning</a> <a href="/tags/Faster-RCNN/" style="font-size: 13px; color: #7dc3de">Faster-RCNN</a> <a href="/tags/GC/" style="font-size: 13px; color: #7dc3de">GC</a> <a href="/tags/HDFS/" style="font-size: 13px; color: #7dc3de">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 16.5px; color: #4dbc6f">Hadoop</a> <a href="/tags/JMM/" style="font-size: 13px; color: #7dc3de">JMM</a> <a href="/tags/JVM/" style="font-size: 13px; color: #7dc3de">JVM</a> <a href="/tags/Java/" style="font-size: 16.5px; color: #4dbc6f">Java</a> <a href="/tags/ML/" style="font-size: 16.5px; color: #4dbc6f">ML</a> <a href="/tags/NaiveBayes/" style="font-size: 13px; color: #7dc3de">NaiveBayes</a> <a href="/tags/Object-Detection/" style="font-size: 13px; color: #7dc3de">Object Detection</a> <a href="/tags/Python/" style="font-size: 14.75px; color: #65bfa7">Python</a> <a href="/tags/Scrapy/" style="font-size: 13px; color: #7dc3de">Scrapy</a> <a href="/tags/分布式技术/" style="font-size: 13px; color: #7dc3de">分布式技术</a> <a href="/tags/分布式文件系统/" style="font-size: 13px; color: #7dc3de">分布式文件系统</a> <a href="/tags/多线程/" style="font-size: 13px; color: #7dc3de">多线程</a> <a href="/tags/大数据/" style="font-size: 13px; color: #7dc3de">大数据</a> <a href="/tags/机器学习/" style="font-size: 16.5px; color: #4dbc6f">机器学习</a> <a href="/tags/爬虫/" style="font-size: 13px; color: #7dc3de">爬虫</a>
     </div>
   </div>
 
