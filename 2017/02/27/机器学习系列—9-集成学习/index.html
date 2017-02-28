@@ -3,18 +3,38 @@
 <head>
   <meta charset="utf-8">
   
-  <title>机器学习系列-7.集成学习 | BeaLin&#39;s Blog</title>
+  <title>机器学习系列—9.集成学习 | BeaLin&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="Programmer,Technology,Software Engineering">
 <meta property="og:type" content="article">
-<meta property="og:title" content="机器学习系列-7.集成学习">
+<meta property="og:title" content="机器学习系列—9.集成学习">
 <meta property="og:url" content="http://yoursite.com/2017/02/27/机器学习系列—9-集成学习/index.html">
 <meta property="og:site_name" content="BeaLin's Blog">
 <meta property="og:description" content="Programmer,Technology,Software Engineering">
-<meta property="og:updated_time" content="2017-02-27T05:54:40.459Z">
+<meta property="og:image" content="http://o73nd1ra4.bkt.clouddn.com/ML9-1.png">
+<meta property="og:image" content="http://o73nd1ra4.bkt.clouddn.com/ML9-2.png">
+<meta property="og:image" content="http://o73nd1ra4.bkt.clouddn.com/ML9-3.png">
+<meta property="og:image" content="http://o73nd1ra4.bkt.clouddn.com/ML9-4.png">
+<meta property="og:image" content="http://o73nd1ra4.bkt.clouddn.com/ML9-5.png">
+<meta property="og:image" content="http://o73nd1ra4.bkt.clouddn.com/ML9-6.png">
+<meta property="og:image" content="http://o73nd1ra4.bkt.clouddn.com/ML9-7.png">
+<meta property="og:image" content="http://o73nd1ra4.bkt.clouddn.com/ML9-8.png">
+<meta property="og:image" content="http://o73nd1ra4.bkt.clouddn.com/ML9-9.png">
+<meta property="og:image" content="http://o73nd1ra4.bkt.clouddn.com/ML9-10.png">
+<meta property="og:image" content="http://o73nd1ra4.bkt.clouddn.com/ML9-11.png">
+<meta property="og:image" content="http://o73nd1ra4.bkt.clouddn.com/ML9-12.png">
+<meta property="og:image" content="http://o73nd1ra4.bkt.clouddn.com/ML9-13.png">
+<meta property="og:image" content="http://o73nd1ra4.bkt.clouddn.com/ML9-14.png">
+<meta property="og:image" content="http://o73nd1ra4.bkt.clouddn.com/ML9-15.png">
+<meta property="og:image" content="http://o73nd1ra4.bkt.clouddn.com/ML9-16.png">
+<meta property="og:image" content="http://o73nd1ra4.bkt.clouddn.com/ML9-17.png">
+<meta property="og:image" content="http://o73nd1ra4.bkt.clouddn.com/ML9-18.png">
+<meta property="og:image" content="http://o73nd1ra4.bkt.clouddn.com/ML9-19.png">
+<meta property="og:updated_time" content="2017-02-28T13:20:08.440Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="机器学习系列-7.集成学习">
+<meta name="twitter:title" content="机器学习系列—9.集成学习">
 <meta name="twitter:description" content="Programmer,Technology,Software Engineering">
+<meta name="twitter:image" content="http://o73nd1ra4.bkt.clouddn.com/ML9-1.png">
   
   
     <link rel="icon" href="/favicon.ico">
@@ -88,6 +108,10 @@ var _hmt = _hmt || [];
 
 
     
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Machine-Learning/">Machine Learning</a>
+  </div>
+
   </div>
   <div class="article-inner">
     
@@ -96,7 +120,7 @@ var _hmt = _hmt || [];
         
   
     <h1 class="article-title" itemprop="name">
-      机器学习系列-7.集成学习
+      机器学习系列—9.集成学习
     </h1>
   
 
@@ -108,11 +132,38 @@ var _hmt = _hmt || [];
 		<div id="toc" class="toc-article">
 			<h2 class="toc-title"><span>Contents</span></h2>
 		
-			
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Boosting"><span class="toc-number">1.</span> <span class="toc-text">Boosting</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Bagging与随机森林"><span class="toc-number">2.</span> <span class="toc-text">Bagging与随机森林</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Bagging（Boostrap-AGGregatING）"><span class="toc-number">2.1.</span> <span class="toc-text">Bagging（Boostrap AGGregatING）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#随机森林（Random-Forest，RF）"><span class="toc-number">2.2.</span> <span class="toc-text">随机森林（Random Forest，RF）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#结合策略"><span class="toc-number">3.</span> <span class="toc-text">结合策略</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#平均法"><span class="toc-number">3.1.</span> <span class="toc-text">平均法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#投票法"><span class="toc-number">3.2.</span> <span class="toc-text">投票法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#学习法"><span class="toc-number">3.3.</span> <span class="toc-text">学习法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#多样性"><span class="toc-number">4.</span> <span class="toc-text">多样性</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#多样性度量"><span class="toc-number">4.1.</span> <span class="toc-text">多样性度量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#多样性增强"><span class="toc-number">4.2.</span> <span class="toc-text">多样性增强</span></a></li></ol></li></ol>
 		
 		</div>
 		
-        
+        <p>集成学习（ensemble learning）通过构建并结合多个学习器来完成任务，有时也被称为多分类器（multi-classifier system）、基于委员会的学习等。<br>若集成中只包含同种类型的个体学习器，则这样的集成是“同质”的，其个体学习器称为“基学习器”。若包含的是不同类型的个体学习器，则称为“异质”，其基学习器称为“组件学习器”。<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML9-1.png" alt=""><br><a id="more"></a><br>集成学习通过将多个学习器进行结合，常可获得比单一学习器显著优越的泛化性能，对“弱学习器” 尤为明显。弱学习器常指泛化性能略优于随机猜测的学习器。集成学习的结果通过投票法产生，即“少数服从多数”。个体学习不能太坏，并且要有“多样性”，即学习器间具有差异。即集成个体应“好而不同”。<br>假设及基分类器的错误率相互独立，则由Hoeffding不等式可知，随着集成中个体分类器数目T的增大，集成的错误率将指数级下降，最终趋向于零。但是这里有一个关键假设：基学习器的误差相互独立，而现实中个体学习器是为解决同一个问题训练出来的，所以不可能相互独立。因此如何产生并结合“好而不同”的个体学习器是集成学习研究的核心。<br>集成学习大致分为两大类：</p>
+<ol>
+<li>个体学习器间存在强依赖关系，必须串行生成的序列化方法。代表：Boosting</li>
+<li>个体学习器间不存在强依赖关系，可同时生成的并行化方法。代表：Bagging和随机森林（Random Forest）</li>
+</ol>
+<h2 id="Boosting"><a href="#Boosting" class="headerlink" title="Boosting"></a>Boosting</h2><p><strong>（串行，存在强依赖关系，代表：AdaBoost）</strong><br>Boosting的主要思想：先从初始训练集训练出一个基学习器，再根据学习器的表现对训练样本分布进行调整，使得先前基学习器做错的训练样本在后续受到更多关注，然后基于调整后的样本分布来训练下一个基学习器；如此重复进行直至基学习器数目达到事先指定的值T，最终将这T个基学习器进行加权结合。<br>Boosting族算法著名代表是AdaBoost，AdaBoost算法有多种推导方法，比较容易理解地是基于“加性模型”（additive model），即基学习器的线性组合来最小化指数损失函数：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML9-2.png" alt=""><br><img src="http://o73nd1ra4.bkt.clouddn.com/ML9-3.png" alt=""><br>若指数损失函数最小化，则分类错误率也将最小化；这说明指数损失函数是分类任务原本0/1算是函数的一致的替代函数，其有更好的数学性质即连续可微。<br>其算法流程：即初始化样本权值，基于分布Dt从数据集中训练出分类器ht。估计ht的误差，确定分类器ht的权重αt。该权重应使得αtht最小化指数损失函数。更新样本分布，使下一轮的基学习器能纠正Ht-1的一些错误。其中Zt是规范化因子，以确保Dt+1是一个分布。Boosting算法在训练的每一轮都要检查当前生成的基学习器是否满足基本条件（即是否比随机好，算法描述第5行），一旦条件不满足，则当前基学习器即被抛弃并停止学习。<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML9-4.png" alt=""><br>Boosting算法要求基学习器能对特定的数据分布进行学习，这可通过“重赋权法”（re-weighting）实施。对无法接受带权样本的基学习算法，则可通过“重采样法”（re-sampling）来处理。若采用“重采样法”，则可获得“重启动”机会以避免训练过程过早停止。可根据当前分布重新对训练样本进行采样，再基于新的采样结果重新训练处基学习器。<br><strong>从偏差-方差分解的角度看，Boosting主要关注降低偏差（即降低错误率），因此Boosting能基于泛化性能相当弱的学习器构建出很强的基成。</strong></p>
+<h2 id="Bagging与随机森林"><a href="#Bagging与随机森林" class="headerlink" title="Bagging与随机森林"></a>Bagging与随机森林</h2><p>欲得到泛化性能强的集成，集成中的个体学习器应尽可能相互独立；无法做到独立，也可设法使基学习器尽可能具有较大的差异：一种是对训练样本进行采样，产生不同子集，每个子集训练一个基学习器，但如果采样的子集不足以进行有效学习，就无法确保产生比较好的基学习器，因此可以考虑使用相互有交叠的采样子集。</p>
+<h3 id="Bagging（Boostrap-AGGregatING）"><a href="#Bagging（Boostrap-AGGregatING）" class="headerlink" title="Bagging（Boostrap AGGregatING）"></a>Bagging（Boostrap AGGregatING）</h3><p>Bagging是并行式集成学习方法最著名的代表，Boostrap的意思是其基于自助采样（bootstrap sampling）。即给定包含m个样本的数据集，先随机取出一个样本放入采样集中，再把该样本放回初始数据集，使得下次采样时该样本仍有可能被选中，这样经过m次随机采样操作，即可得到含m个样本的采样机（有的样本重复出现，有的样本从未出现，大体约有63.2%的样本出现在采样集中）。照此，我们可以采样出T个含m个训练样本的采样集，然后基于每个采样集训练一个基学习器，再将这些基学习器进行结合。Aggregating指的是结合基学习器，对预测输出进行结合时，Bagging通常对分类任务使用简单投票法，回归使用平均法。若分类预测时出现两个类收到同样票数的情形，则随机选择一个，也可进一步考察学习器投票的置信度来确定最终胜者。<br>训练一个Bagging集成与直接使用基学习算法训练一个学习器的复杂度同阶，这说明Bagging是一个搞笑的集成学习算法。与标准AdaBoost只适用于二分类任务不同，Bagging能不经修改地用于多分类、回归等任务。<br>自助采样过程给Bagging带来的另一个优点：由于每个基学习器只使用了初始训练集中约63.2%的样本，剩下约36.8%的样本可用作验证集来对泛化性能进行“包外估计”（out-of-bag estimate）。<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML9-5.png" alt=""><br>包外样本的其他用途：</p>
+<ol>
+<li>当基学习器是决策树时，可使用包外样本辅助剪枝，估计决策树中各结点的后验概率以辅助对零训练样本结点的处理；</li>
+<li>当基学习器是神经网络时，可使用包外样本来辅助早期停止以减小过拟合风险。</li>
+</ol>
+<p><strong>从偏差-方差分解的角度看，Bagging主要关注降低方差。当基学习器不稳定（large varance）时，Bagging带来的性能提升尤为明显。因此它在不剪枝决策树、神经网络等易受样本扰动的学习器上效用更为明显。</strong></p>
+<h3 id="随机森林（Random-Forest，RF）"><a href="#随机森林（Random-Forest，RF）" class="headerlink" title="随机森林（Random Forest，RF）"></a>随机森林（Random Forest，RF）</h3><p>随机森林是Bagging的一个扩展变体，其进一步在决策树的训练过程中引入了随机属性选择。传统决策树在选择划分属性时在当前结点的属性集合（假定有d个属性）中选择一个最优属性；而在RF中，对基决策树的每个结点，先从该结点的属性集合中随机选择一个包含k个属性的子集，然后再从这个子集中选择一个最优属性用于划分。推荐值为：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML9-6.png" alt=""><br>随机森林对Bagging只做了小改动，但是与Bagging中基学习器的“多样性”仅通过样本扰动（通过对初始训练集采样）而来不同，随机森林中基学习器的多样性不仅来自样本扰动，还来自属性扰动，这就使得最终集成的泛化性能可通过个体学习器之间的差异度的增加而进一步提升。随机森林的训练效率常优于Bagging，因为在个体决策树的构建过程中，Bagging使用的是“确定型”决策树，在选择划分属性时要对结点的所有属性进行考察，而随机森林使用的“随机型”决策树则只需考虑一个属性子集。随机森林的收敛性与Bagging相似。</p>
+<h2 id="结合策略"><a href="#结合策略" class="headerlink" title="结合策略"></a>结合策略</h2><p>学习器结合从三个方面带来好处：</p>
+<ol>
+<li>统计的原因：提升泛化性能。</li>
+<li>计算的原因：降低陷入局部极小点的风险。</li>
+<li>表示的原因：扩大假设空间，更好的近似。</li>
+</ol>
+<h3 id="平均法"><a href="#平均法" class="headerlink" title="平均法"></a>平均法</h3><p><strong>1. 简单平均法（simple averaging）</strong><br><img src="http://o73nd1ra4.bkt.clouddn.com/ML9-7.png" alt=""><br><strong>2. 加权平均法（weighted averaging）</strong><br><img src="http://o73nd1ra4.bkt.clouddn.com/ML9-8.png" alt=""><br>注意：必须使用非负权重才能确保集成性能优于单一最佳个体学习器，因此在集成学习中一般对学习器的权重法以非负约束。<br>简单平均法其实是加权平均法令w=1/T的特例。集成学习中的各种结合方法其实都可以视为加权平均法的特例或变体。加权平均法的权重一般是从训练数据中学习而得。由于现实任务中样本不充分或存在噪声，使得学得的权重不完全可靠，有时加权平均法未必一定优于简单平均法。</p>
+<h3 id="投票法"><a href="#投票法" class="headerlink" title="投票法"></a>投票法</h3><p>对分类任务来说，最常见的结合策略使用投票法<br><strong>1. 绝对多数投票法（majority voting）</strong><br>即若某标记得票过半数，则预测为该标记；否则拒绝预测<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML9-9.png" alt=""><br><strong>2. 相对多数投票法（plurality voting）</strong><br>即预测为得票最多的标记，若同时有多个标记获最高票，则从中随机选取一个。<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML9-10.png" alt=""><br><strong>3. 加权投票法（weighted voting）</strong><br>与加权平均法类似<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML9-11.png" alt=""></p>
+<p>绝对多数投票法在可靠性要求较高的学习任务中是一个很好的机制，若必须提供结果，则使用相对多数投票法。</p>
+<ul>
+<li>类标记：使用类标记的投票亦称“硬投票”（hard voting）。</li>
+<li>类概率：使用类概率的投票亦称“软投票”（soft voting）。<br>以上两种不能混用，若基学习器产生分类置信度，例如支持向量机的分类间隔值，需使用一些技术如Platt缩放、等分回归、等进行校准后才能作为类概率使用。若基学习器的类型不同，则其类概率值不能直接进行比较，可将类概率输出转化为类标记输出然后再投票。  <h3 id="学习法"><a href="#学习法" class="headerlink" title="学习法"></a>学习法</h3>当训练数据很多时，更为强大的结合策略是使用“学习法”。Stacking是学习法的典型代表，这里把个体学习器称为初级学习器，用于结合的学习器称为次级学习器或元学习器（meta-learner）<br>Stacking本身是一种著名的集成学习方法，且有不少集成算法可视为其变体或特例。周志华教授的书中视为特殊的结合策略。<br>Stacking先从初始数据集训练出初级学习器，然后“生成”一个新数据集用于训练次级学习器。在这个新数据集中，初级学习器的输出被当做样例输入特征，而初始样本的标记仍被当做样例标记。<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML9-12.png" alt=""><br>在训练阶段，次级训练集是利用初级学习器产生的，若直接用初级学习器的训练集来产生次级训练集，则过拟合风险会比较大。一般通过使用交叉验证或留一法这样的方式，用训练初级学习器未使用的样本来产生次级学习器的训练样本。以k折交叉验证为例（如下图所示），对训练集划分为5份（5折）；对每一折Dk为测试集，D-Dk为训练集，训练第一种初级学习器5次，将5次的结果拼接起来即可得到一个N×1的矩阵，以此往复训练5种初级学习器，得到5个N×1矩阵，将其横向拼接，即可得到N×5矩阵，将其作为次级学习器的训练集来训练次级学习器。<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML9-13.png" alt=""><br>次级学习器的输入属性表示和次级学习器算法对Stacking集成的泛化性能有很大影响，将初级学习器的输出类概率作为次级学习器的输入属性，用多响应线性回归（Multi-response Linear Regression，简称MLR）作为次级学习算法效果较好。在MLR中使用不同的属性集效果更佳。<h2 id="多样性"><a href="#多样性" class="headerlink" title="多样性"></a>多样性</h2>欲构建泛化能力强的集成，个体学习器应“好而不同”。根据误差-分歧分解：个体学习器准确性越高、多样性越大，则集成越好。如何度量个体分类器的多样性？典型做法是考虑个体分类器的两两相似/不相似性。<h3 id="多样性度量"><a href="#多样性度量" class="headerlink" title="多样性度量"></a>多样性度量</h3>给定数据集D={(X1,y1),(x2,y2),…,(xm,ym)}，对二分类任务，yi∈{-1,+1}，分类器hi与hj的预测结果列联表(contingency table)为：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML9-14.png" alt=""><br><strong>1. 不合度量（disagreement measure）</strong><br><img src="http://o73nd1ra4.bkt.clouddn.com/ML9-15.png" alt=""><br>disij的值域为[0,1]。值越大则多样性越大。<br><strong>2. 相关系数（correlation coefficient）</strong><br><img src="http://o73nd1ra4.bkt.clouddn.com/ML9-16.png" alt=""><br>ρij的值域为[-1,1]。若hi与hj无关，则值为0；若hi与hj正相关则值为正，否则为负。<br><strong>3. Q-统计量（Q-statistic）</strong><br><img src="http://o73nd1ra4.bkt.clouddn.com/ML9-17.png" alt=""><br><strong>4. k-统计量（k-statistic）</strong><br><img src="http://o73nd1ra4.bkt.clouddn.com/ML9-18.png" alt=""><br><img src="http://o73nd1ra4.bkt.clouddn.com/ML9-19.png" alt=""><h3 id="多样性增强"><a href="#多样性增强" class="headerlink" title="多样性增强"></a>多样性增强</h3>在集成学习中需有效地生成多样性大的个体学习器，如何增强多样性？一般思路在学习过程中引入随机性，常见主要做法是对数据样本、输入属性、输出表示、算法参数进行扰动。<br><strong>1. 数据样本扰动</strong><br>从初始数据集中产生不同的数据子集，再利用不同的数据子集训练处不同的个体学习器。例如采样法。<br>适合不稳定基学习器：决策树、神经网络。训练样本稍加变化就会导致学习器有显著变动。<br><strong>2. 输入属性扰动</strong><br>从初始属性集中抽取出若干个属性子集，在基于每个属性子集训练基学习器。因此对于包含大量冗余属性的数据，不仅能产生多样性大的个体，还会因属性数的减少而大幅节省时间开销，同时减少一些属性后训练出的个体学习器也不至于太差。冗余属性很少的不宜使用输入属性扰动<br>适合稳定基学习器：线性学习器、支持向量机、朴素贝叶斯、k近邻学习器。<br><strong>3. 输出表示扰动</strong><br>对输出表示进行操纵以增强多样性，可对训练样本的类标记稍作变动，如<br>a。翻转法：随机改变一些训练样本的标记；<br>b。输出调制法：将分类输出转化为回归输出后构建个体学习器<br>c。将原任务拆解为多个可同时求解的子任务：ECOC法，多分类拆解为一系列的二分类。<br><strong>4. 算法参数扰动</strong><br>基学习算法一般都有参数需进行设置，如神经网络的隐层神经元数、初始连接权值等。通过随机设置不同的参数，往往可产生差别较大的个体学习器。</li>
+</ul>
+
       
     </div>
     <footer class="article-footer">
@@ -122,9 +173,11 @@ var _hmt = _hmt || [];
 	  <!-- 百度分享 End -->
 	  
       
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Bagging/">Bagging</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Boosting/">Boosting</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ML/">ML</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Stacking/">Stacking</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/机器学习/">机器学习</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/集成方法/">集成方法</a></li></ul>
+
 	  
 <span>
-Updated:<time datetime="2017-02-27T05:54:40.459Z" itemprop="dateModified">2017-02-27</time>
+Updated:<time datetime="2017-02-28T13:20:08.440Z" itemprop="dateModified">2017-02-28</time>
 </span>
 
 
@@ -138,7 +191,7 @@ Updated:<time datetime="2017-02-27T05:54:40.459Z" itemprop="dateModified">2017-0
       <strong class="article-nav-caption">上一篇</strong>
       <div class="article-nav-title">
         
-          机器学习系列-7.决策树
+          机器学习系列—5.决策树
         
       </div>
     </a>
@@ -146,7 +199,7 @@ Updated:<time datetime="2017-02-27T05:54:40.459Z" itemprop="dateModified">2017-0
   
     <a href="/2017/02/27/机器学习系列—7-支持向量机SVM/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">下一篇</strong>
-      <div class="article-nav-title">机器学习系列-6.支持向量机SVM</div>
+      <div class="article-nav-title">机器学习系列—7.支持向量机SVM</div>
     </a>
   
 </nav>
@@ -159,7 +212,7 @@ Updated:<time datetime="2017-02-27T05:54:40.459Z" itemprop="dateModified">2017-0
 
 <!-- 多说评论框 start -->
 <section id="comments">
-  <div class="ds-thread"  data-thread-key="/2017/02/27/机器学习系列—9-集成学习/" data-title="机器学习系列-7.集成学习" data-url="http://yoursite.com/2017/02/27/机器学习系列—9-集成学习/" id="ds_thread">
+  <div class="ds-thread"  data-thread-key="/2017/02/27/机器学习系列—9-集成学习/" data-title="机器学习系列—9.集成学习" data-url="http://yoursite.com/2017/02/27/机器学习系列—9-集成学习/" id="ds_thread">
     <noscript>Please enable JavaScript to view the <a href="//duoshuo.com/?ref_noscript">comments powered by duoshuo.</a></noscript>
   </div>
 </section>
@@ -171,7 +224,7 @@ Updated:<time datetime="2017-02-27T05:54:40.459Z" itemprop="dateModified">2017-0
   <div id="toc" class="toc-aside">
   <h2 class="toc-title">Contents</h2>
     
-        
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Boosting"><span class="toc-number">1.</span> <span class="toc-text">Boosting</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Bagging与随机森林"><span class="toc-number">2.</span> <span class="toc-text">Bagging与随机森林</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Bagging（Boostrap-AGGregatING）"><span class="toc-number">2.1.</span> <span class="toc-text">Bagging（Boostrap AGGregatING）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#随机森林（Random-Forest，RF）"><span class="toc-number">2.2.</span> <span class="toc-text">随机森林（Random Forest，RF）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#结合策略"><span class="toc-number">3.</span> <span class="toc-text">结合策略</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#平均法"><span class="toc-number">3.1.</span> <span class="toc-text">平均法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#投票法"><span class="toc-number">3.2.</span> <span class="toc-text">投票法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#学习法"><span class="toc-number">3.3.</span> <span class="toc-text">学习法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#多样性"><span class="toc-number">4.</span> <span class="toc-text">多样性</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#多样性度量"><span class="toc-number">4.1.</span> <span class="toc-text">多样性度量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#多样性增强"><span class="toc-number">4.2.</span> <span class="toc-text">多样性增强</span></a></li></ol></li></ol>
     
   </div>
 
@@ -205,7 +258,7 @@ Updated:<time datetime="2017-02-27T05:54:40.459Z" itemprop="dateModified">2017-0
   <div class="widget-wrap">
     <h3 class="widget-title">Categories</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Deep-Learning/">Deep Learning</a><span class="category-list-count">7</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Deep-Learning/Caffe/">Caffe</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hadoop/">Hadoop</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Python/Scrapy/">Scrapy</a><span class="category-list-count">1</span></li></ul></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Deep-Learning/">Deep Learning</a><span class="category-list-count">7</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Deep-Learning/Caffe/">Caffe</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hadoop/">Hadoop</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Python/Scrapy/">Scrapy</a><span class="category-list-count">1</span></li></ul></li></ul>
     </div>
   </div>
 
@@ -215,7 +268,7 @@ Updated:<time datetime="2017-02-27T05:54:40.459Z" itemprop="dateModified">2017-0
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Bayes/" style="font-size: 13px; color: #7dc3de">Bayes</a> <a href="/tags/Caffe/" style="font-size: 18.25px; color: #35b838">Caffe</a> <a href="/tags/Deep-Learning/" style="font-size: 20px; color: #1db400">Deep Learning</a> <a href="/tags/Faster-RCNN/" style="font-size: 13px; color: #7dc3de">Faster-RCNN</a> <a href="/tags/GC/" style="font-size: 13px; color: #7dc3de">GC</a> <a href="/tags/HDFS/" style="font-size: 13px; color: #7dc3de">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 16.5px; color: #4dbc6f">Hadoop</a> <a href="/tags/JMM/" style="font-size: 13px; color: #7dc3de">JMM</a> <a href="/tags/JVM/" style="font-size: 13px; color: #7dc3de">JVM</a> <a href="/tags/Java/" style="font-size: 16.5px; color: #4dbc6f">Java</a> <a href="/tags/ML/" style="font-size: 16.5px; color: #4dbc6f">ML</a> <a href="/tags/NaiveBayes/" style="font-size: 13px; color: #7dc3de">NaiveBayes</a> <a href="/tags/Object-Detection/" style="font-size: 13px; color: #7dc3de">Object Detection</a> <a href="/tags/Python/" style="font-size: 14.75px; color: #65bfa7">Python</a> <a href="/tags/Scrapy/" style="font-size: 13px; color: #7dc3de">Scrapy</a> <a href="/tags/分布式技术/" style="font-size: 13px; color: #7dc3de">分布式技术</a> <a href="/tags/分布式文件系统/" style="font-size: 13px; color: #7dc3de">分布式文件系统</a> <a href="/tags/多线程/" style="font-size: 13px; color: #7dc3de">多线程</a> <a href="/tags/大数据/" style="font-size: 13px; color: #7dc3de">大数据</a> <a href="/tags/机器学习/" style="font-size: 16.5px; color: #4dbc6f">机器学习</a> <a href="/tags/爬虫/" style="font-size: 13px; color: #7dc3de">爬虫</a>
+      <a href="/tags/BE/" style="font-size: 13px; color: #7dc3de">BE</a> <a href="/tags/Bagging/" style="font-size: 13px; color: #7dc3de">Bagging</a> <a href="/tags/Bayes/" style="font-size: 14.4px; color: #6ac0b2">Bayes</a> <a href="/tags/Boosting/" style="font-size: 13px; color: #7dc3de">Boosting</a> <a href="/tags/Caffe/" style="font-size: 17.2px; color: #43ba59">Caffe</a> <a href="/tags/Deep-Learning/" style="font-size: 18.6px; color: #30b72c">Deep Learning</a> <a href="/tags/Faster-RCNN/" style="font-size: 13px; color: #7dc3de">Faster-RCNN</a> <a href="/tags/GC/" style="font-size: 13px; color: #7dc3de">GC</a> <a href="/tags/HDFS/" style="font-size: 13px; color: #7dc3de">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 15.8px; color: #57bd85">Hadoop</a> <a href="/tags/JMM/" style="font-size: 13px; color: #7dc3de">JMM</a> <a href="/tags/JVM/" style="font-size: 13px; color: #7dc3de">JVM</a> <a href="/tags/Java/" style="font-size: 15.8px; color: #57bd85">Java</a> <a href="/tags/ML/" style="font-size: 20px; color: #1db400">ML</a> <a href="/tags/MLE/" style="font-size: 13px; color: #7dc3de">MLE</a> <a href="/tags/NaiveBayes/" style="font-size: 13px; color: #7dc3de">NaiveBayes</a> <a href="/tags/Object-Detection/" style="font-size: 13px; color: #7dc3de">Object Detection</a> <a href="/tags/Python/" style="font-size: 14.4px; color: #6ac0b2">Python</a> <a href="/tags/SVM/" style="font-size: 13px; color: #7dc3de">SVM</a> <a href="/tags/Scrapy/" style="font-size: 13px; color: #7dc3de">Scrapy</a> <a href="/tags/Stacking/" style="font-size: 13px; color: #7dc3de">Stacking</a> <a href="/tags/决策树/" style="font-size: 13px; color: #7dc3de">决策树</a> <a href="/tags/分布式技术/" style="font-size: 13px; color: #7dc3de">分布式技术</a> <a href="/tags/分布式文件系统/" style="font-size: 13px; color: #7dc3de">分布式文件系统</a> <a href="/tags/多线程/" style="font-size: 13px; color: #7dc3de">多线程</a> <a href="/tags/大数据/" style="font-size: 13px; color: #7dc3de">大数据</a> <a href="/tags/感知机/" style="font-size: 13px; color: #7dc3de">感知机</a> <a href="/tags/机器学习/" style="font-size: 20px; color: #1db400">机器学习</a> <a href="/tags/核方法/" style="font-size: 13px; color: #7dc3de">核方法</a> <a href="/tags/深度学习/" style="font-size: 13px; color: #7dc3de">深度学习</a> <a href="/tags/爬虫/" style="font-size: 13px; color: #7dc3de">爬虫</a> <a href="/tags/神经网络/" style="font-size: 13px; color: #7dc3de">神经网络</a> <a href="/tags/集成方法/" style="font-size: 13px; color: #7dc3de">集成方法</a>
     </div>
   </div>
 
@@ -238,7 +291,7 @@ Updated:<time datetime="2017-02-27T05:54:40.459Z" itemprop="dateModified">2017-0
       <ul>
         
           <li>
-            <a href="/2017/02/27/机器学习系列—8-神经网络/">机器学习系列-8.神经网络</a>
+            <a href="/2017/02/27/机器学习系列—8-神经网络/">机器学习系列—8.神经网络</a>
           </li>
         
           <li>

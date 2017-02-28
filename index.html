@@ -89,6 +89,10 @@ var _hmt = _hmt || [];
 
 
     
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Machine-Learning/">Machine Learning</a>
+  </div>
+
   </div>
   <div class="article-inner">
     
@@ -97,7 +101,7 @@ var _hmt = _hmt || [];
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/02/27/机器学习系列—8-神经网络/">机器学习系列-8.神经网络</a>
+      <a class="article-title" href="/2017/02/27/机器学习系列—8-神经网络/">机器学习系列—8.神经网络</a>
     </h1>
   
 
@@ -105,20 +109,17 @@ var _hmt = _hmt || [];
     
     <div class="article-entry" itemprop="articleBody">
       
-		
-		<div id="toc" class="toc-article">
-			<h2 class="toc-title"><span>Contents</span></h2>
-		
-			
-		
-		</div>
-		
+        <p>本文主要分为以下几个部分。首先对神经网络进行概述。由此引出由两层神经元组成的感知机，并介绍了感知机的学习规则。但感知机学习能力有限，要解决非线性可分问题需引入多层网络，多层网络增加了隐层。误差逆传播算法（BP算法）可用于训练多层前馈神经网络，第三部分重点介绍了使用BP算法训练网络的过程。神经网络的训练过程就是个参数寻优的过程，第四部分介绍了全局最小与局部极小，并介绍了四个策略用于跳出局部极小，分别是：1.以多组不同参数值初始化多个神经网络；2.使用模拟退火算法；3.使用随机梯度下降；4.使用遗传算法。第五部分介绍了 一些其他常见的神经网络，有RBF网络、ART网络、SOM网络、级联相关网络、Elman网络、Boltzmann机，分别介绍了他们的网络机构以及训练过程。第六部分简单介绍了深度学习与神经网络的关系，构建深层神经网络的两个方法，并介绍了训练深层神经网络的两种常用的方法：1。无监督逐层训练（预训练+微调）；2.权共享。<br>
+        
+          <p class="article-more-link">
+            <a href="/2017/02/27/机器学习系列—8-神经网络/#more">Read More</a>
+          </p>
         
       
     </div>
     <footer class="article-footer">
 	  
-	  <a data-url="http://yoursite.com/2017/02/27/机器学习系列—8-神经网络/" data-id="ciznpwthw001xr0vyi0pv2m49" data_title="机器学习系列-8.神经网络" data_summary="" class="article-share-link">Share</a>
+	  <a data-url="http://yoursite.com/2017/02/27/机器学习系列—8-神经网络/" data-id="ciznpwthw001xr0vyi0pv2m49" data_title="机器学习系列—8.神经网络" data_summary="本文主要分为以下几个部分。首先对神经网络进行概述。由此..." class="article-share-link">Share</a>
       
 
       
@@ -126,9 +127,11 @@ var _hmt = _hmt || [];
       
 	  
       
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ML/">ML</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/感知机/">感知机</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/机器学习/">机器学习</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/深度学习/">深度学习</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/神经网络/">神经网络</a></li></ul>
+
 	  
 <span>
-Updated:<time datetime="2017-02-27T05:59:32.175Z" itemprop="dateModified">2017-02-27</time>
+Updated:<time datetime="2017-02-28T12:50:46.067Z" itemprop="dateModified">2017-02-28</time>
 </span>
 
 
@@ -523,6 +526,10 @@ Updated:<time datetime="2017-02-27T05:56:06.644Z" itemprop="dateModified">2017-0
 
 
     
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Machine-Learning/">Machine Learning</a>
+  </div>
+
   </div>
   <div class="article-inner">
     
@@ -531,7 +538,7 @@ Updated:<time datetime="2017-02-27T05:56:06.644Z" itemprop="dateModified">2017-0
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/02/27/机器学习系列—5-决策树/">机器学习系列-7.决策树</a>
+      <a class="article-title" href="/2017/02/27/机器学习系列—5-决策树/">机器学习系列—5.决策树</a>
     </h1>
   
 
@@ -539,20 +546,17 @@ Updated:<time datetime="2017-02-27T05:56:06.644Z" itemprop="dateModified">2017-0
     
     <div class="article-entry" itemprop="articleBody">
       
-		
-		<div id="toc" class="toc-article">
-			<h2 class="toc-title"><span>Contents</span></h2>
-		
-			
-		
-		</div>
-		
+        <h2 id="基本流程"><a href="#基本流程" class="headerlink" title="基本流程"></a>基本流程</h2><p>决策树（decision）是一类常见的机器学习方法，其时基于树结构来进行决策的，这恰是人类在面临决策问题时一种很自然的处理机制。<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML5-1.png" alt=""><br>一般的，一颗决策树包含一个根结点、若干个内部结点和若干个叶结点。叶结点对应于决策结果，其他每个结点则对应于一个属性测试；决策树学习的目的是为了产生一颗泛化能力强，即处理未见实例能力强的决策树，其基本流程遵循简单且直观的“分而治之”（divide-and-conquer）策略。<br>
+        
+          <p class="article-more-link">
+            <a href="/2017/02/27/机器学习系列—5-决策树/#more">Read More</a>
+          </p>
         
       
     </div>
     <footer class="article-footer">
 	  
-	  <a data-url="http://yoursite.com/2017/02/27/机器学习系列—5-决策树/" data-id="ciznpwtgg001gr0vy4jbx787p" data_title="机器学习系列-7.决策树" data_summary="" class="article-share-link">Share</a>
+	  <a data-url="http://yoursite.com/2017/02/27/机器学习系列—5-决策树/" data-id="ciznpwtgg001gr0vy4jbx787p" data_title="机器学习系列—5.决策树" data_summary="基本流程决策树（decision）是一类常见的机器学习..." class="article-share-link">Share</a>
       
 
       
@@ -560,9 +564,11 @@ Updated:<time datetime="2017-02-27T05:56:06.644Z" itemprop="dateModified">2017-0
       
 	  
       
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ML/">ML</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/决策树/">决策树</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/机器学习/">机器学习</a></li></ul>
+
 	  
 <span>
-Updated:<time datetime="2017-02-27T05:55:32.838Z" itemprop="dateModified">2017-02-27</time>
+Updated:<time datetime="2017-02-28T11:57:19.518Z" itemprop="dateModified">2017-02-28</time>
 </span>
 
 
@@ -585,6 +591,10 @@ Updated:<time datetime="2017-02-27T05:55:32.838Z" itemprop="dateModified">2017-0
 
 
     
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Machine-Learning/">Machine Learning</a>
+  </div>
+
   </div>
   <div class="article-inner">
     
@@ -593,7 +603,7 @@ Updated:<time datetime="2017-02-27T05:55:32.838Z" itemprop="dateModified">2017-0
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/02/27/机器学习系列—9-集成学习/">机器学习系列-7.集成学习</a>
+      <a class="article-title" href="/2017/02/27/机器学习系列—9-集成学习/">机器学习系列—9.集成学习</a>
     </h1>
   
 
@@ -601,20 +611,17 @@ Updated:<time datetime="2017-02-27T05:55:32.838Z" itemprop="dateModified">2017-0
     
     <div class="article-entry" itemprop="articleBody">
       
-		
-		<div id="toc" class="toc-article">
-			<h2 class="toc-title"><span>Contents</span></h2>
-		
-			
-		
-		</div>
-		
+        <p>集成学习（ensemble learning）通过构建并结合多个学习器来完成任务，有时也被称为多分类器（multi-classifier system）、基于委员会的学习等。<br>若集成中只包含同种类型的个体学习器，则这样的集成是“同质”的，其个体学习器称为“基学习器”。若包含的是不同类型的个体学习器，则称为“异质”，其基学习器称为“组件学习器”。<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML9-1.png" alt=""><br>
+        
+          <p class="article-more-link">
+            <a href="/2017/02/27/机器学习系列—9-集成学习/#more">Read More</a>
+          </p>
         
       
     </div>
     <footer class="article-footer">
 	  
-	  <a data-url="http://yoursite.com/2017/02/27/机器学习系列—9-集成学习/" data-id="ciznpwtia0024r0vyz5mgcjkl" data_title="机器学习系列-7.集成学习" data_summary="" class="article-share-link">Share</a>
+	  <a data-url="http://yoursite.com/2017/02/27/机器学习系列—9-集成学习/" data-id="ciznpwtia0024r0vyz5mgcjkl" data_title="机器学习系列—9.集成学习" data_summary="集成学习（ensemble learning）通过构建..." class="article-share-link">Share</a>
       
 
       
@@ -622,9 +629,11 @@ Updated:<time datetime="2017-02-27T05:55:32.838Z" itemprop="dateModified">2017-0
       
 	  
       
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Bagging/">Bagging</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Boosting/">Boosting</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ML/">ML</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Stacking/">Stacking</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/机器学习/">机器学习</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/集成方法/">集成方法</a></li></ul>
+
 	  
 <span>
-Updated:<time datetime="2017-02-27T05:54:40.459Z" itemprop="dateModified">2017-02-27</time>
+Updated:<time datetime="2017-02-28T13:20:08.440Z" itemprop="dateModified">2017-02-28</time>
 </span>
 
 
@@ -647,6 +656,10 @@ Updated:<time datetime="2017-02-27T05:54:40.459Z" itemprop="dateModified">2017-0
 
 
     
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Machine-Learning/">Machine Learning</a>
+  </div>
+
   </div>
   <div class="article-inner">
     
@@ -655,7 +668,7 @@ Updated:<time datetime="2017-02-27T05:54:40.459Z" itemprop="dateModified">2017-0
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/02/27/机器学习系列—7-支持向量机SVM/">机器学习系列-6.支持向量机SVM</a>
+      <a class="article-title" href="/2017/02/27/机器学习系列—7-支持向量机SVM/">机器学习系列—7.支持向量机SVM</a>
     </h1>
   
 
@@ -663,20 +676,17 @@ Updated:<time datetime="2017-02-27T05:54:40.459Z" itemprop="dateModified">2017-0
     
     <div class="article-entry" itemprop="articleBody">
       
-		
-		<div id="toc" class="toc-article">
-			<h2 class="toc-title"><span>Contents</span></h2>
-		
-			
-		
-		</div>
-		
+        <p>本文主要介绍以下内容，对于分类任务，最基本的想法就是找到一个划分平面，离超平面最近的样本点称为支持向量，支持向量到超平面的距离称为间隔，支持向量机的核心思想就是找到间隔最大的超平面，这是一个凸优化问题（即带约束的优化问题），使用拉格朗日乘子法引入拉格朗日乘子求得拉个朗日函数，对其求偏低得到其对偶问题，通过求解对偶问题得到主问题的解。因为支持向量的约束是不等式约束，所以还需满足KKT条件。现实任务通常是线性不可分的，可以采用将特征空间从高维映射到低维的方法。因此引入核函数的概念。为了防止过拟合，可以采用软间隔和正则化，软间隔是相对于硬间隔的概念，硬间隔是要求所有样本都分类正确，软间隔允许部分分类错误。正则化是引入结构风险，以期希望得到复杂度低一点的模型。最后描述了支持向量回归，用于解决回归问题。<br>
+        
+          <p class="article-more-link">
+            <a href="/2017/02/27/机器学习系列—7-支持向量机SVM/#more">Read More</a>
+          </p>
         
       
     </div>
     <footer class="article-footer">
 	  
-	  <a data-url="http://yoursite.com/2017/02/27/机器学习系列—7-支持向量机SVM/" data-id="ciznpwth7001pr0vy63fwvjut" data_title="机器学习系列-6.支持向量机SVM" data_summary="" class="article-share-link">Share</a>
+	  <a data-url="http://yoursite.com/2017/02/27/机器学习系列—7-支持向量机SVM/" data-id="ciznpwth7001pr0vy63fwvjut" data_title="机器学习系列—7.支持向量机SVM" data_summary="本文主要介绍以下内容，对于分类任务，最基本的想法就是找..." class="article-share-link">Share</a>
       
 
       
@@ -684,9 +694,11 @@ Updated:<time datetime="2017-02-27T05:54:40.459Z" itemprop="dateModified">2017-0
       
 	  
       
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ML/">ML</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SVM/">SVM</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/机器学习/">机器学习</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/核方法/">核方法</a></li></ul>
+
 	  
 <span>
-Updated:<time datetime="2017-02-27T05:54:20.818Z" itemprop="dateModified">2017-02-27</time>
+Updated:<time datetime="2017-02-28T11:57:43.783Z" itemprop="dateModified">2017-02-28</time>
 </span>
 
 
@@ -740,7 +752,7 @@ Updated:<time datetime="2017-02-27T05:54:20.818Z" itemprop="dateModified">2017-0
   <div class="widget-wrap">
     <h3 class="widget-title">Categories</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Deep-Learning/">Deep Learning</a><span class="category-list-count">7</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Deep-Learning/Caffe/">Caffe</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hadoop/">Hadoop</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Python/Scrapy/">Scrapy</a><span class="category-list-count">1</span></li></ul></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Deep-Learning/">Deep Learning</a><span class="category-list-count">7</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Deep-Learning/Caffe/">Caffe</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hadoop/">Hadoop</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Python/Scrapy/">Scrapy</a><span class="category-list-count">1</span></li></ul></li></ul>
     </div>
   </div>
 
@@ -750,7 +762,7 @@ Updated:<time datetime="2017-02-27T05:54:20.818Z" itemprop="dateModified">2017-0
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Bayes/" style="font-size: 13px; color: #7dc3de">Bayes</a> <a href="/tags/Caffe/" style="font-size: 18.25px; color: #35b838">Caffe</a> <a href="/tags/Deep-Learning/" style="font-size: 20px; color: #1db400">Deep Learning</a> <a href="/tags/Faster-RCNN/" style="font-size: 13px; color: #7dc3de">Faster-RCNN</a> <a href="/tags/GC/" style="font-size: 13px; color: #7dc3de">GC</a> <a href="/tags/HDFS/" style="font-size: 13px; color: #7dc3de">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 16.5px; color: #4dbc6f">Hadoop</a> <a href="/tags/JMM/" style="font-size: 13px; color: #7dc3de">JMM</a> <a href="/tags/JVM/" style="font-size: 13px; color: #7dc3de">JVM</a> <a href="/tags/Java/" style="font-size: 16.5px; color: #4dbc6f">Java</a> <a href="/tags/ML/" style="font-size: 16.5px; color: #4dbc6f">ML</a> <a href="/tags/NaiveBayes/" style="font-size: 13px; color: #7dc3de">NaiveBayes</a> <a href="/tags/Object-Detection/" style="font-size: 13px; color: #7dc3de">Object Detection</a> <a href="/tags/Python/" style="font-size: 14.75px; color: #65bfa7">Python</a> <a href="/tags/Scrapy/" style="font-size: 13px; color: #7dc3de">Scrapy</a> <a href="/tags/分布式技术/" style="font-size: 13px; color: #7dc3de">分布式技术</a> <a href="/tags/分布式文件系统/" style="font-size: 13px; color: #7dc3de">分布式文件系统</a> <a href="/tags/多线程/" style="font-size: 13px; color: #7dc3de">多线程</a> <a href="/tags/大数据/" style="font-size: 13px; color: #7dc3de">大数据</a> <a href="/tags/机器学习/" style="font-size: 16.5px; color: #4dbc6f">机器学习</a> <a href="/tags/爬虫/" style="font-size: 13px; color: #7dc3de">爬虫</a>
+      <a href="/tags/BE/" style="font-size: 13px; color: #7dc3de">BE</a> <a href="/tags/Bagging/" style="font-size: 13px; color: #7dc3de">Bagging</a> <a href="/tags/Bayes/" style="font-size: 14.4px; color: #6ac0b2">Bayes</a> <a href="/tags/Boosting/" style="font-size: 13px; color: #7dc3de">Boosting</a> <a href="/tags/Caffe/" style="font-size: 17.2px; color: #43ba59">Caffe</a> <a href="/tags/Deep-Learning/" style="font-size: 18.6px; color: #30b72c">Deep Learning</a> <a href="/tags/Faster-RCNN/" style="font-size: 13px; color: #7dc3de">Faster-RCNN</a> <a href="/tags/GC/" style="font-size: 13px; color: #7dc3de">GC</a> <a href="/tags/HDFS/" style="font-size: 13px; color: #7dc3de">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 15.8px; color: #57bd85">Hadoop</a> <a href="/tags/JMM/" style="font-size: 13px; color: #7dc3de">JMM</a> <a href="/tags/JVM/" style="font-size: 13px; color: #7dc3de">JVM</a> <a href="/tags/Java/" style="font-size: 15.8px; color: #57bd85">Java</a> <a href="/tags/ML/" style="font-size: 20px; color: #1db400">ML</a> <a href="/tags/MLE/" style="font-size: 13px; color: #7dc3de">MLE</a> <a href="/tags/NaiveBayes/" style="font-size: 13px; color: #7dc3de">NaiveBayes</a> <a href="/tags/Object-Detection/" style="font-size: 13px; color: #7dc3de">Object Detection</a> <a href="/tags/Python/" style="font-size: 14.4px; color: #6ac0b2">Python</a> <a href="/tags/SVM/" style="font-size: 13px; color: #7dc3de">SVM</a> <a href="/tags/Scrapy/" style="font-size: 13px; color: #7dc3de">Scrapy</a> <a href="/tags/Stacking/" style="font-size: 13px; color: #7dc3de">Stacking</a> <a href="/tags/决策树/" style="font-size: 13px; color: #7dc3de">决策树</a> <a href="/tags/分布式技术/" style="font-size: 13px; color: #7dc3de">分布式技术</a> <a href="/tags/分布式文件系统/" style="font-size: 13px; color: #7dc3de">分布式文件系统</a> <a href="/tags/多线程/" style="font-size: 13px; color: #7dc3de">多线程</a> <a href="/tags/大数据/" style="font-size: 13px; color: #7dc3de">大数据</a> <a href="/tags/感知机/" style="font-size: 13px; color: #7dc3de">感知机</a> <a href="/tags/机器学习/" style="font-size: 20px; color: #1db400">机器学习</a> <a href="/tags/核方法/" style="font-size: 13px; color: #7dc3de">核方法</a> <a href="/tags/深度学习/" style="font-size: 13px; color: #7dc3de">深度学习</a> <a href="/tags/爬虫/" style="font-size: 13px; color: #7dc3de">爬虫</a> <a href="/tags/神经网络/" style="font-size: 13px; color: #7dc3de">神经网络</a> <a href="/tags/集成方法/" style="font-size: 13px; color: #7dc3de">集成方法</a>
     </div>
   </div>
 
@@ -773,7 +785,7 @@ Updated:<time datetime="2017-02-27T05:54:20.818Z" itemprop="dateModified">2017-0
       <ul>
         
           <li>
-            <a href="/2017/02/27/机器学习系列—8-神经网络/">机器学习系列-8.神经网络</a>
+            <a href="/2017/02/27/机器学习系列—8-神经网络/">机器学习系列—8.神经网络</a>
           </li>
         
           <li>

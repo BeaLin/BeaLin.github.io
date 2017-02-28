@@ -3,18 +3,47 @@
 <head>
   <meta charset="utf-8">
   
-  <title>机器学习系列-8.神经网络 | BeaLin&#39;s Blog</title>
+  <title>机器学习系列—8.神经网络 | BeaLin&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="Programmer,Technology,Software Engineering">
 <meta property="og:type" content="article">
-<meta property="og:title" content="机器学习系列-8.神经网络">
+<meta property="og:title" content="机器学习系列—8.神经网络">
 <meta property="og:url" content="http://yoursite.com/2017/02/27/机器学习系列—8-神经网络/index.html">
 <meta property="og:site_name" content="BeaLin's Blog">
 <meta property="og:description" content="Programmer,Technology,Software Engineering">
-<meta property="og:updated_time" content="2017-02-27T05:59:32.175Z">
+<meta property="og:image" content="http://o73nd1ra4.bkt.clouddn.com/ML8-1.png">
+<meta property="og:image" content="http://o73nd1ra4.bkt.clouddn.com/ML8-2.png">
+<meta property="og:image" content="http://o73nd1ra4.bkt.clouddn.com/ML8-3.png">
+<meta property="og:image" content="http://o73nd1ra4.bkt.clouddn.com/ML8-4.png">
+<meta property="og:image" content="http://o73nd1ra4.bkt.clouddn.com/ML8-5.png">
+<meta property="og:image" content="http://o73nd1ra4.bkt.clouddn.com/ML8-6.png">
+<meta property="og:image" content="http://o73nd1ra4.bkt.clouddn.com/ML8-7.png">
+<meta property="og:image" content="http://o73nd1ra4.bkt.clouddn.com/ML8-8.png">
+<meta property="og:image" content="http://o73nd1ra4.bkt.clouddn.com/ML8-9.png">
+<meta property="og:image" content="http://o73nd1ra4.bkt.clouddn.com/ML8-10.png">
+<meta property="og:image" content="http://o73nd1ra4.bkt.clouddn.com/ML8-11.png">
+<meta property="og:image" content="http://o73nd1ra4.bkt.clouddn.com/ML8-12.png">
+<meta property="og:image" content="http://o73nd1ra4.bkt.clouddn.com/ML8-13.png">
+<meta property="og:image" content="http://o73nd1ra4.bkt.clouddn.com/ML8-14.png">
+<meta property="og:image" content="http://o73nd1ra4.bkt.clouddn.com/ML8-15.png">
+<meta property="og:image" content="http://o73nd1ra4.bkt.clouddn.com/ML8-16.png">
+<meta property="og:image" content="http://o73nd1ra4.bkt.clouddn.com/ML8-17.png">
+<meta property="og:image" content="http://o73nd1ra4.bkt.clouddn.com/ML8-18.png">
+<meta property="og:image" content="http://o73nd1ra4.bkt.clouddn.com/ML8-19.png">
+<meta property="og:image" content="http://o73nd1ra4.bkt.clouddn.com/ML8-20.png">
+<meta property="og:image" content="http://o73nd1ra4.bkt.clouddn.com/ML8-21.png">
+<meta property="og:image" content="http://o73nd1ra4.bkt.clouddn.com/ML8-22.png">
+<meta property="og:image" content="http://o73nd1ra4.bkt.clouddn.com/ML8-23.png">
+<meta property="og:image" content="http://o73nd1ra4.bkt.clouddn.com/ML8-24.png">
+<meta property="og:image" content="http://o73nd1ra4.bkt.clouddn.com/ML8-25.png">
+<meta property="og:image" content="http://o73nd1ra4.bkt.clouddn.com/ML8-26.png">
+<meta property="og:image" content="http://o73nd1ra4.bkt.clouddn.com/ML8-27.png">
+<meta property="og:image" content="http://o73nd1ra4.bkt.clouddn.com/ML8-28.png">
+<meta property="og:updated_time" content="2017-02-28T12:50:46.067Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="机器学习系列-8.神经网络">
+<meta name="twitter:title" content="机器学习系列—8.神经网络">
 <meta name="twitter:description" content="Programmer,Technology,Software Engineering">
+<meta name="twitter:image" content="http://o73nd1ra4.bkt.clouddn.com/ML8-1.png">
   
   
     <link rel="icon" href="/favicon.ico">
@@ -88,6 +117,10 @@ var _hmt = _hmt || [];
 
 
     
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Machine-Learning/">Machine Learning</a>
+  </div>
+
   </div>
   <div class="article-inner">
     
@@ -96,7 +129,7 @@ var _hmt = _hmt || [];
         
   
     <h1 class="article-title" itemprop="name">
-      机器学习系列-8.神经网络
+      机器学习系列—8.神经网络
     </h1>
   
 
@@ -108,11 +141,36 @@ var _hmt = _hmt || [];
 		<div id="toc" class="toc-article">
 			<h2 class="toc-title"><span>Contents</span></h2>
 		
-			
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#神经网络概述"><span class="toc-number">1.</span> <span class="toc-text">神经网络概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#感知机与多层网络"><span class="toc-number">2.</span> <span class="toc-text">感知机与多层网络</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#误差逆传播算法（BP）"><span class="toc-number">3.</span> <span class="toc-text">误差逆传播算法（BP）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#全局最小与局部极小"><span class="toc-number">4.</span> <span class="toc-text">全局最小与局部极小</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#其他常见神经网络"><span class="toc-number">5.</span> <span class="toc-text">其他常见神经网络</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#RBF网络"><span class="toc-number">5.1.</span> <span class="toc-text">RBF网络</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ART网络（结构自适应网络）"><span class="toc-number">5.2.</span> <span class="toc-text">ART网络（结构自适应网络）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SOM网络"><span class="toc-number">5.3.</span> <span class="toc-text">SOM网络</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#级联相关网络（结构自适应网络）"><span class="toc-number">5.4.</span> <span class="toc-text">级联相关网络（结构自适应网络）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Elman网络"><span class="toc-number">5.5.</span> <span class="toc-text">Elman网络</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Boltzman机"><span class="toc-number">5.6.</span> <span class="toc-text">Boltzman机</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#深度学习"><span class="toc-number">6.</span> <span class="toc-text">深度学习</span></a></li></ol>
 		
 		</div>
 		
-        
+        <p>本文主要分为以下几个部分。首先对神经网络进行概述。由此引出由两层神经元组成的感知机，并介绍了感知机的学习规则。但感知机学习能力有限，要解决非线性可分问题需引入多层网络，多层网络增加了隐层。误差逆传播算法（BP算法）可用于训练多层前馈神经网络，第三部分重点介绍了使用BP算法训练网络的过程。神经网络的训练过程就是个参数寻优的过程，第四部分介绍了全局最小与局部极小，并介绍了四个策略用于跳出局部极小，分别是：1.以多组不同参数值初始化多个神经网络；2.使用模拟退火算法；3.使用随机梯度下降；4.使用遗传算法。第五部分介绍了 一些其他常见的神经网络，有RBF网络、ART网络、SOM网络、级联相关网络、Elman网络、Boltzmann机，分别介绍了他们的网络机构以及训练过程。第六部分简单介绍了深度学习与神经网络的关系，构建深层神经网络的两个方法，并介绍了训练深层神经网络的两种常用的方法：1。无监督逐层训练（预训练+微调）；2.权共享。<br><a id="more"></a></p>
+<h2 id="神经网络概述"><a href="#神经网络概述" class="headerlink" title="神经网络概述"></a>神经网络概述</h2><blockquote>
+<p>”神经网络是由具有适应性的简单单元组成的广泛并行互连的网络，它的组织能够模拟生物神经系统对真实世界物体所作出的交互反应。“[Kohonen,1988].<br>机器学习中谈论的神经网络通常是指神经网络学习。<br>神经网络中最基本的成分是神经元（neuron）模型。如果某神经元的电位超过了一个”阈值“（threshold），那么它就会被激活，即”兴奋“，下图是”M-P神经元模型”。<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML8-1.png" alt=""><br>在这个模型中，神经元接收到来自其他神经元传递过来的输入信号，这些输入信号通过带权重的连接进行传递，神经元接收到的总输入值与神经元的阈值进行比较，然后通过“激活函数”处理以产生神经元的输出。理想的激活函数是阶跃函数，但阶跃函数具有不连续、不光滑等不太好的性质，因此常用Sigmoid函数作为激活函数，其可以把输入值挤压到（0,1）输出值范围内。<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML8-2.png" alt=""></p>
+<h2 id="感知机与多层网络"><a href="#感知机与多层网络" class="headerlink" title="感知机与多层网络"></a>感知机与多层网络</h2><p><strong>感知机（Perceptron）</strong>由两层神经元组成，如下图，输入层接收外界输入信号后传递给输出层，输出层是M-P神经元，亦称“阈值逻辑单元”（threshold logic unit）。感知机能容易地实现逻辑与、或、非运算。给定训练数据集，权重Wi(i=1,2,..,n)以及阈值可通过学习得到。<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML8-3.png" alt=""><br>感知机的学习规则非常简单（最简单），对训练样例（x，y），若当前感知机的输出为ý，则感知机权重将这样调整：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML8-4.png" alt=""><br>其中η∈(0,1)称为<strong>学习率</strong>（learning rate）。从式（5.1）可看出，若感知机对训练样例(x,y)预测正确，即ý=y，则感知机不发生变化，否则将根绝错误的程度进行权重调整。<br>感知机只有输入层神经元进行激活函数处理，即只拥有一层功能神经元，学习能力有限。若两类模式是线性可分的，即存在一个线性超平面将它们分开，则感知机的学习过程一定收敛（converge）并求得适当的权向量W；否则感知机学习过程将会发生振荡，权重难以稳定下来。<br>要解决非线性可分问题，需考虑使用多层功能神经元。输出层与输入层之间的一层神经元被称为隐层或隐含层（hiden layer），隐含层和输出层神经元都是拥有激活函数的功能神经元。<br>常见的神经网络如图5.6所示的层级结构。被称为<strong>“多层前馈神经网络”</strong>（multi-layer feedforward neural networks）不存在同层连接以及跨层连接。其中输入层神经元接收外界输入，隐层与输出层神经元对信号进行加工，最终结果由输出层神经元输出；即输入层仅是接收输入，不进行函数处理。神经网络学到的东西，蕴含在连接权与阈值中。<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML8-5.png" alt=""></p>
+<h2 id="误差逆传播算法（BP）"><a href="#误差逆传播算法（BP）" class="headerlink" title="误差逆传播算法（BP）"></a>误差逆传播算法（BP）</h2><p>简单感知机学习规则不够用于训练多层网络。误差逆传播（error BackPropagation，简称BP）算法是迄今最成功的神经网络学习算法。BP算法不仅可用于多层前馈神经网络，还可用于其他类型的神经网络，如递归神经网络。通常所说的“BP网络”指用BP算法训练的多层前馈神经网络。<br>对训练样例(xk,yk),假定神经网络的输出为<strong>ý</strong>k=(ý1k,ý2k,…,ýlk),即<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML8-6.png" alt=""><br>则网络在(xk,yk)上的均方误差为<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML8-7.png" alt=""><br><img src="http://o73nd1ra4.bkt.clouddn.com/ML8-8.png" alt=""><br>图5.7的网络中有(d+l+1)q+l个参数需确定：输入层到隐层的d×q个权值、隐层到输出层的q×l个权值、q个隐层神经元的阈值、l个输出层神经元的阈值。BP是一个迭代学习算法，在迭代的每一轮中采用广义的感知机学习规则对参数进行更新估计，即与式(5.1)类似，任意参数v的更新估计式为<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML8-9.png" alt=""><br>以下是更新估计式的推导，若不感兴趣，可以直接跳到误差逆传播算法描述那里<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML8-10.png" alt=""><br><img src="http://o73nd1ra4.bkt.clouddn.com/ML8-11.png" alt=""><br>其中<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML8-12.png" alt=""><br>——————————推导分割线结束————————<br>学习率（范围0~1）控制着算法每一轮迭代中的更新步长，若太大则容易振荡。太小则收敛速度又会过慢。BP算法的工作流程：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML8-13.png" alt=""><br>第4步：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML8-14.png" alt=""><br>第5步：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML8-15.png" alt=""><br>第6步：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML8-16.png" alt=""><br>第7步：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML8-17.png" alt=""><br>BP算法的目标是要最小化训练集D上的累积误差<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML8-18.png" alt=""><br>其中均方误差是：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML8-19.png" alt=""><br>上述介绍的“标准BP算法”每次仅针对一个训练样例更新连接权和阈值。类似的，基于累积误差最小化的更新规则，就有累积误差逆传播（accumulated error backpropagation）算法。标准BP算法每次更新只针对单个样例，更新频繁，可能出现抵消现象，为达到同样的累积误差极小点，需进行更多次迭代。累积BP算法直接针对累积误差最小化，它在读取整个训练集D一遍后才对参数进行更新，更新频率更低。。累积误差下降到一定程度后，进一步下降会非常缓慢。这时标准BP算更快获得好的解，尤其是在训练集D非常大时更明显。<br>只需包含足够多神经元的隐层，多层前馈网络就能以任意精度逼近任意复杂度的连续函数。目前通常使用“试错法”来设置隐层神经元的个数。<br>由于其强大的表示能力，所有BP神经网络经常遭遇过拟合，其训练误差持续降低，但测试误差却可能上升。有两种策略来缓解BP网络的过拟合。<br>第一种：早停（early stopping）：将数据分成训练集和验证集，训练集用来计算梯度、更新连接权和阈值，验证集用来估计误差，若训练集误差降低但验证集误差升高，则停止训练，同时返回具有最小验证机误差的连接权和阈值<br>第二种：正则化（regularization）：在误差目标函数中增加一个用于描述网络复杂度的部分。例如连接权与阈值的平方和，则误差目标函数改为：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML8-20.png" alt=""><br>其中λ∈(0,1)用于对经验误差与网络复杂度这两项进行折中，常通过交叉验证法来估计</p>
+<h2 id="全局最小与局部极小"><a href="#全局最小与局部极小" class="headerlink" title="全局最小与局部极小"></a>全局最小与局部极小</h2><p>神经网络的训练过程可看作一个参数寻优过程，即在参数空间中，寻找一组最优参数使得E最小。基于梯度的搜索是使用最为广泛的参数寻优方法。由于负梯度方向是函数值下降最快的方向，因此梯度下降法就是沿着负梯度方向搜索最优解，若误差函数在当前点的梯度为零，则已达到局部极小，更新量将为零，显然，如果误差函数仅有一个局部极小，那么此时找到的局部极小就是全局最小。但如果误差函数具有多个局部极小，则找到的解不能保证是全局最小，即陷入了局部极小。可采用以下策略来”跳出“局部极小。</p>
+<ol>
+<li><strong>以多组不同参数值初始化多个神经网络</strong>，按标准方法训练后，取其中误差最小的解作为最终参数，</li>
+<li><strong>使用”模拟退火“（simulated annealing）技术</strong>。模拟退火在每一步都以一定的概率接受比当前解更差的结果，从而有助于”跳出”局部极小。接受“次优解”的概率要随时间的推移递减，从而保证算法稳定、</li>
+<li><strong>使用随机梯度下降</strong>。与标准梯度下降法精确计算梯度不同，随机梯度下降在计算梯度是加入随机因素，于是，即便陷入局部极小点，它计算出的梯度仍可能不为零，则有机会跳出局部极小继续搜索。</li>
+<li><strong>遗传算法</strong>：一种启发式搜索算法， 核心思想在于先产生一定量的随机状态， 计算其优化程度（或者叫适应度），保留优质的状态，并通过不断微调较优的状态来获得新状态加入竞争。 优势状态有更大概率保留和产生子状态，劣势状态虽然保留概率不高但也不是不可能保留，因此可以避免陷入局部最优解，同时人为加入了基因池容量限制（资源有限），保证了运转效率。</li>
+</ol>
+</blockquote>
+<h2 id="其他常见神经网络"><a href="#其他常见神经网络" class="headerlink" title="其他常见神经网络"></a>其他常见神经网络</h2><h3 id="RBF网络"><a href="#RBF网络" class="headerlink" title="RBF网络"></a>RBF网络</h3><p>RBF（Radial Basis Function，径向基函数）网络，一种单隐层前馈神经网络，使用径向基函数作为隐层神经元激活函数，而输出层是对隐层神经元输出的线性组合。RBF网络表示为<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML8-21.png" alt=""><br>其中q为隐层神经元个数，ci和wi分别是第i个隐层神经元所对应的中心和权重ρ(x,ci)是径向基函数，这是某种沿径向对称的标量函数，通常定义为x到数据中心ci之间欧式距离的单调函数，常用的高斯径向基函数形如：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML8-22.png" alt=""><br>通常采用两步过程来训练RBF网络：<br>第一步：确定神经元中心ci常用的方式包括随机采样、聚类等；<br>第二步：利用BP算法等来确定参数ωi和βi。</p>
+<h3 id="ART网络（结构自适应网络）"><a href="#ART网络（结构自适应网络）" class="headerlink" title="ART网络（结构自适应网络）"></a>ART网络（结构自适应网络）</h3><p>竞争性学习是神经网络中一种常用的无监督学习策略，网络的输出神经元相互竞争，每一时刻仅有一个竞争获胜的神经元被激活，其他神经元的状态呗抑制。<br>ART（Adaptive Resonance Theory，自适应谐振理论）网络是竞争型学习的重要代表。该网络由比较层、识别层、识别阈值和重置模块构成。比较层约等于输入层，识别层约等于隐层加输出层。识别层每个神经元对应一个模式类，神经元数目可在训练过程中动态增长以增加新的模式类。<br>竞争方式：</p>
+<ol>
+<li>计算输入向量与每个识别层神经元所对应的模式类的代表向量之间的距离</li>
+<li>取距离最小的输入向量，计算与代表向量的相似度<br>a.若相似度大于识别阈值，判为该类，更新连接权，使得往后被判为该类的输入向量与代表向量的相似度更大<br>b.若相似度小于 识别阈值，重置模块增设新神经元，当前输入向量为代表向量</li>
+</ol>
+<p>识别阈值对ART网络的性能有重要影响，当识别阈值较高时，输入样本将会被分成比较多、比较精细的模式类，如果识别阈值较低，则会产生比较少、比较粗略的模式类。<br>ART比较好地缓解了竞争型学习中的“可塑性-稳定性窘境”（可塑性：学习新知识的能力；稳定性：学习新知识时保持对旧知识的记忆的能力）。因此ART网络具有很重要的优点：可进行增量学习或在线学习。<br>小衍生：增量学习：根据新样例对模型进行更新，不必重新训练整个模型。在线学习：每获得一个新样本就进行一次模型更新。在线学习是增量学习的特例，增量学习是“批模式”的在线学习。</p>
+<h3 id="SOM网络"><a href="#SOM网络" class="headerlink" title="SOM网络"></a>SOM网络</h3><p>SOM（Self-Organizing Map，自组织映射）网络是一种竞争学习型的无监督神经网络。它将高维输入数据映射到低维空间，同时保持在高维空间的拓扑结构。SOM的训练目标就是为每个输出层神经元找到合适的权向量，以达到保持拓扑结构的目的。<br>训练过程：接收到一个训练样本后，每个输出层神经元会计算样本与自身携带的权向量之间的距离，距离最近的神经元称为竞争获胜者，称为最佳匹配单元。然后，最佳匹配单元及其邻近神经元的权向量将被调整，以使得这些权向量与当前输入样本的距离缩小。这个过程不断迭代直至收敛。</p>
+<h3 id="级联相关网络（结构自适应网络）"><a href="#级联相关网络（结构自适应网络）" class="headerlink" title="级联相关网络（结构自适应网络）"></a>级联相关网络（结构自适应网络）</h3><p>一般的神经网络模型通常假定网络结构是事先固定的，而结构自适应网络将网络结构也当作学习的目标之一。级联相关（Cascade-Correlation）网络是结构自适应网络的重要代表。<br>级联是指建立层次连接的层级结构。开始训练时，网络只有输入层和输出层，处于最小拓扑结构；随着训练的进行，新的隐层神经元逐渐加入，从而创建起层级结构。相关是指通过最大化新神经元的输出与网络误差之间的相关性来训练相关的参数。<br>与一般的前馈神经网络相比，级联相关网络无需设置网络层数、隐层神经元数目，且训练速度较快，但其在数据较小时易陷入过拟合</p>
+<h3 id="Elman网络"><a href="#Elman网络" class="headerlink" title="Elman网络"></a>Elman网络</h3><p>与前馈神经网络不同，“递归神经网络”（recurrent neural networks）允许网络中出现环形结构，从而可让一些神经元的输出反馈回来作为输入信号。Elman网络是最常用的递归神经网络之一，隐层神经元的输出被反馈回来，与下一时刻输入层神经元提供的信号一起，作为隐层神经元在下一时刻的输入。隐层神经元通常采用Sigmoid激活函数。网络的训练采用推广的BP算法。<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML8-23.png" alt=""></p>
+<h3 id="Boltzman机"><a href="#Boltzman机" class="headerlink" title="Boltzman机"></a>Boltzman机</h3><p>为网络状态定义一个“能量”，能量最小化时网络达到理想状态，而网络的训练就是在最小化这个能量函数。Boltzmann机就是一种“基于能量的模型”。常见结构如t图a所示，其神经元分为两层：显层与隐层。显层用于表示数据的输入与输出，隐层则被理解为数据的内在表达。Boltzmann机中的神经元都是布尔型的。令向量s表示n个神经元的状态，则状态向量s所对应的Boltzmann机能量定义为<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML8-24.png" alt=""><br>若网络中的神经元以任意不依赖于输入值的顺序进行更新，则网络最终将达到Boltzmann分布，此时状态向量s出现的概率将仅由其能量与所有可能状态向量的能量确定：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML8-25.png" alt=""><br>训练过程：将每个训练样本视为一个状态向量，使其出现的概率尽可能大。标准的Boltzmann机是一个全连接图，训练网络的复杂度很高，故难以用于解决现实任务。现实常采用受限Boltzmann机（Restricted Boltzmann Machine，简称RBM），如图b，受限Boltzmann机仅保留显层与隐层之间的连接。<br>受限Boltzmann机常采用“对比散度”（Contrastive Divergence，CD）算法进行训练。假定网络中有d个显层神经元，q个隐层神经元。v和h分别表示显层与隐层的状态向量，则<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML8-26.png" alt=""><br>CD算法对每个训练样本v，先根据式(5.23)计算出隐层神经元状态的概率分布，然后根据这个概率分布采样得到h；此后，类似地根据式(5.22)从h产生v’，再从v’产生h’；连接权的更新公式为：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML8-27.png" alt=""><br><img src="http://o73nd1ra4.bkt.clouddn.com/ML8-28.png" alt=""></p>
+<h2 id="深度学习"><a href="#深度学习" class="headerlink" title="深度学习"></a>深度学习</h2><p>典型的深度学习模型就是很深层的神经网络，对神经网络模型提高容量的两个办法，一个是增加隐层的数目，相应的神经元连接权、阈值等参数就会更多。还有一个办法是通过单纯增加隐层神经元的数目。前者更有效，因为增加隐层数不仅增加了拥有激活函数的神经元数目，还增加了激活函数嵌套的层数。<br>如何训练深层神经网络？<br>主要有两种办法：一种是<strong>无监督逐层训练</strong>，一种是<strong>权共享</strong>；<br>无监督逐层训练每次训练一层隐结点，训练时将上一层隐结点的输出作为输入，本层隐结点的输出作为下一层的输入，称为“预训练”（pre-training）;在预训练全部完成后，再对整个网络“微调”（fine-tuning）。“预训练+微调”的做法可视为将大量参数分组，对每组先找到局部看来比较好的设置，然后再基于这些局部较优的结构联合起来进行全局寻优。深度信念网络（deep belief network，DBN）即采用该种方法训练。<br>“权共享”上一组神经元使用相同的连接权，这个策略在卷积神经网络（Convolutional Neural Network，CNN）中发挥了重要的作用。对深度学习感兴趣可以移步深度学习系列：<br>深度学习对输入信号进行逐层加工，从而把初始的，与输出目标之间联系不太密切的输入表示，转化成与输出目标联系更密切的表示，使得原来进基于最后一层输出映射难以完成的任务成为可能。因此深度学习也可以理解为特征学习或表示学习。</p>
+
       
     </div>
     <footer class="article-footer">
@@ -122,9 +180,11 @@ var _hmt = _hmt || [];
 	  <!-- 百度分享 End -->
 	  
       
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ML/">ML</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/感知机/">感知机</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/机器学习/">机器学习</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/深度学习/">深度学习</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/神经网络/">神经网络</a></li></ul>
+
 	  
 <span>
-Updated:<time datetime="2017-02-27T05:59:32.175Z" itemprop="dateModified">2017-02-27</time>
+Updated:<time datetime="2017-02-28T12:50:46.067Z" itemprop="dateModified">2017-02-28</time>
 </span>
 
 
@@ -150,7 +210,7 @@ Updated:<time datetime="2017-02-27T05:59:32.175Z" itemprop="dateModified">2017-0
 
 <!-- 多说评论框 start -->
 <section id="comments">
-  <div class="ds-thread"  data-thread-key="/2017/02/27/机器学习系列—8-神经网络/" data-title="机器学习系列-8.神经网络" data-url="http://yoursite.com/2017/02/27/机器学习系列—8-神经网络/" id="ds_thread">
+  <div class="ds-thread"  data-thread-key="/2017/02/27/机器学习系列—8-神经网络/" data-title="机器学习系列—8.神经网络" data-url="http://yoursite.com/2017/02/27/机器学习系列—8-神经网络/" id="ds_thread">
     <noscript>Please enable JavaScript to view the <a href="//duoshuo.com/?ref_noscript">comments powered by duoshuo.</a></noscript>
   </div>
 </section>
@@ -162,7 +222,7 @@ Updated:<time datetime="2017-02-27T05:59:32.175Z" itemprop="dateModified">2017-0
   <div id="toc" class="toc-aside">
   <h2 class="toc-title">Contents</h2>
     
-        
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#神经网络概述"><span class="toc-number">1.</span> <span class="toc-text">神经网络概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#感知机与多层网络"><span class="toc-number">2.</span> <span class="toc-text">感知机与多层网络</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#误差逆传播算法（BP）"><span class="toc-number">3.</span> <span class="toc-text">误差逆传播算法（BP）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#全局最小与局部极小"><span class="toc-number">4.</span> <span class="toc-text">全局最小与局部极小</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#其他常见神经网络"><span class="toc-number">5.</span> <span class="toc-text">其他常见神经网络</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#RBF网络"><span class="toc-number">5.1.</span> <span class="toc-text">RBF网络</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ART网络（结构自适应网络）"><span class="toc-number">5.2.</span> <span class="toc-text">ART网络（结构自适应网络）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SOM网络"><span class="toc-number">5.3.</span> <span class="toc-text">SOM网络</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#级联相关网络（结构自适应网络）"><span class="toc-number">5.4.</span> <span class="toc-text">级联相关网络（结构自适应网络）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Elman网络"><span class="toc-number">5.5.</span> <span class="toc-text">Elman网络</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Boltzman机"><span class="toc-number">5.6.</span> <span class="toc-text">Boltzman机</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#深度学习"><span class="toc-number">6.</span> <span class="toc-text">深度学习</span></a></li></ol>
     
   </div>
 
@@ -196,7 +256,7 @@ Updated:<time datetime="2017-02-27T05:59:32.175Z" itemprop="dateModified">2017-0
   <div class="widget-wrap">
     <h3 class="widget-title">Categories</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Deep-Learning/">Deep Learning</a><span class="category-list-count">7</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Deep-Learning/Caffe/">Caffe</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hadoop/">Hadoop</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Python/Scrapy/">Scrapy</a><span class="category-list-count">1</span></li></ul></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Deep-Learning/">Deep Learning</a><span class="category-list-count">7</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Deep-Learning/Caffe/">Caffe</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hadoop/">Hadoop</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Python/Scrapy/">Scrapy</a><span class="category-list-count">1</span></li></ul></li></ul>
     </div>
   </div>
 
@@ -206,7 +266,7 @@ Updated:<time datetime="2017-02-27T05:59:32.175Z" itemprop="dateModified">2017-0
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Bayes/" style="font-size: 13px; color: #7dc3de">Bayes</a> <a href="/tags/Caffe/" style="font-size: 18.25px; color: #35b838">Caffe</a> <a href="/tags/Deep-Learning/" style="font-size: 20px; color: #1db400">Deep Learning</a> <a href="/tags/Faster-RCNN/" style="font-size: 13px; color: #7dc3de">Faster-RCNN</a> <a href="/tags/GC/" style="font-size: 13px; color: #7dc3de">GC</a> <a href="/tags/HDFS/" style="font-size: 13px; color: #7dc3de">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 16.5px; color: #4dbc6f">Hadoop</a> <a href="/tags/JMM/" style="font-size: 13px; color: #7dc3de">JMM</a> <a href="/tags/JVM/" style="font-size: 13px; color: #7dc3de">JVM</a> <a href="/tags/Java/" style="font-size: 16.5px; color: #4dbc6f">Java</a> <a href="/tags/ML/" style="font-size: 16.5px; color: #4dbc6f">ML</a> <a href="/tags/NaiveBayes/" style="font-size: 13px; color: #7dc3de">NaiveBayes</a> <a href="/tags/Object-Detection/" style="font-size: 13px; color: #7dc3de">Object Detection</a> <a href="/tags/Python/" style="font-size: 14.75px; color: #65bfa7">Python</a> <a href="/tags/Scrapy/" style="font-size: 13px; color: #7dc3de">Scrapy</a> <a href="/tags/分布式技术/" style="font-size: 13px; color: #7dc3de">分布式技术</a> <a href="/tags/分布式文件系统/" style="font-size: 13px; color: #7dc3de">分布式文件系统</a> <a href="/tags/多线程/" style="font-size: 13px; color: #7dc3de">多线程</a> <a href="/tags/大数据/" style="font-size: 13px; color: #7dc3de">大数据</a> <a href="/tags/机器学习/" style="font-size: 16.5px; color: #4dbc6f">机器学习</a> <a href="/tags/爬虫/" style="font-size: 13px; color: #7dc3de">爬虫</a>
+      <a href="/tags/BE/" style="font-size: 13px; color: #7dc3de">BE</a> <a href="/tags/Bagging/" style="font-size: 13px; color: #7dc3de">Bagging</a> <a href="/tags/Bayes/" style="font-size: 14.4px; color: #6ac0b2">Bayes</a> <a href="/tags/Boosting/" style="font-size: 13px; color: #7dc3de">Boosting</a> <a href="/tags/Caffe/" style="font-size: 17.2px; color: #43ba59">Caffe</a> <a href="/tags/Deep-Learning/" style="font-size: 18.6px; color: #30b72c">Deep Learning</a> <a href="/tags/Faster-RCNN/" style="font-size: 13px; color: #7dc3de">Faster-RCNN</a> <a href="/tags/GC/" style="font-size: 13px; color: #7dc3de">GC</a> <a href="/tags/HDFS/" style="font-size: 13px; color: #7dc3de">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 15.8px; color: #57bd85">Hadoop</a> <a href="/tags/JMM/" style="font-size: 13px; color: #7dc3de">JMM</a> <a href="/tags/JVM/" style="font-size: 13px; color: #7dc3de">JVM</a> <a href="/tags/Java/" style="font-size: 15.8px; color: #57bd85">Java</a> <a href="/tags/ML/" style="font-size: 20px; color: #1db400">ML</a> <a href="/tags/MLE/" style="font-size: 13px; color: #7dc3de">MLE</a> <a href="/tags/NaiveBayes/" style="font-size: 13px; color: #7dc3de">NaiveBayes</a> <a href="/tags/Object-Detection/" style="font-size: 13px; color: #7dc3de">Object Detection</a> <a href="/tags/Python/" style="font-size: 14.4px; color: #6ac0b2">Python</a> <a href="/tags/SVM/" style="font-size: 13px; color: #7dc3de">SVM</a> <a href="/tags/Scrapy/" style="font-size: 13px; color: #7dc3de">Scrapy</a> <a href="/tags/Stacking/" style="font-size: 13px; color: #7dc3de">Stacking</a> <a href="/tags/决策树/" style="font-size: 13px; color: #7dc3de">决策树</a> <a href="/tags/分布式技术/" style="font-size: 13px; color: #7dc3de">分布式技术</a> <a href="/tags/分布式文件系统/" style="font-size: 13px; color: #7dc3de">分布式文件系统</a> <a href="/tags/多线程/" style="font-size: 13px; color: #7dc3de">多线程</a> <a href="/tags/大数据/" style="font-size: 13px; color: #7dc3de">大数据</a> <a href="/tags/感知机/" style="font-size: 13px; color: #7dc3de">感知机</a> <a href="/tags/机器学习/" style="font-size: 20px; color: #1db400">机器学习</a> <a href="/tags/核方法/" style="font-size: 13px; color: #7dc3de">核方法</a> <a href="/tags/深度学习/" style="font-size: 13px; color: #7dc3de">深度学习</a> <a href="/tags/爬虫/" style="font-size: 13px; color: #7dc3de">爬虫</a> <a href="/tags/神经网络/" style="font-size: 13px; color: #7dc3de">神经网络</a> <a href="/tags/集成方法/" style="font-size: 13px; color: #7dc3de">集成方法</a>
     </div>
   </div>
 
@@ -229,7 +289,7 @@ Updated:<time datetime="2017-02-27T05:59:32.175Z" itemprop="dateModified">2017-0
       <ul>
         
           <li>
-            <a href="/2017/02/27/机器学习系列—8-神经网络/">机器学习系列-8.神经网络</a>
+            <a href="/2017/02/27/机器学习系列—8-神经网络/">机器学习系列—8.神经网络</a>
           </li>
         
           <li>

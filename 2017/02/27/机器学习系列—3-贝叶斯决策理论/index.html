@@ -56,7 +56,7 @@
 <meta property="og:image" content="http://o73nd1ra4.bkt.clouddn.com/ML3-43.png">
 <meta property="og:image" content="http://o73nd1ra4.bkt.clouddn.com/ML3-44.png">
 <meta property="og:image" content="http://o73nd1ra4.bkt.clouddn.com/ML3-45.png">
-<meta property="og:updated_time" content="2017-02-27T09:45:18.992Z">
+<meta property="og:updated_time" content="2017-02-27T09:57:36.713Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="机器学习系列—3.贝叶斯决策理论">
 <meta name="twitter:description" content="Programmer,Technology,Software Engineering">
@@ -175,6 +175,7 @@ var _hmt = _hmt || [];
 <h3 id="针对多分类"><a href="#针对多分类" class="headerlink" title="针对多分类"></a>针对多分类</h3><p>将上述针对二分类的贝叶斯决策规则正式化，即多于两种类别：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML3-5.png" alt=""><br>根据贝叶斯公式可以得到后验概率：其中x是一个2维以上的向量<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML3-6.png" alt=""><br>证据因子 Evidence：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML3-7.png" alt=""></p>
 <h3 id="最小化总风险"><a href="#最小化总风险" class="headerlink" title="最小化总风险"></a>最小化总风险</h3><p>与行为相关联的损失为条件风险（conditional risk）<br>贝叶斯决策过程：提供了一个总风险的优化过程，以最小化总风险来替代先验概率。<br>贝叶斯决策规则：为了最小化总风险，对所有i=1,…,a计算条件风险<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML3-8.png" alt=""><br>并选择行为使条件风险最小化，最小化后的总风险值称为贝叶斯风险记为R*，即最优结果。<br>对于二分类：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML3-9.png" alt=""><br>所以Conditional risk：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML3-10.png" alt=""><br>判别形式有两种：<br>第一种：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML3-11.png" alt=""><br>第二种：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML3-12.png" alt=""><br>判别形式（2）主要依赖于x的概率密度，作为w的函数可构成“似然比”：，<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML3-13.png" alt=""><br>所以贝叶斯规则可转换为：如果似然比超过某个不依赖观测值x的阈值，那么可判决为w</p>
 <h3 id="最小误差分类"><a href="#最小误差分类" class="headerlink" title="最小误差分类"></a>最小误差分类</h3><p>对称损失、0-1损失函数：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML3-14.png" alt=""><br>因为误判是等代价的，所以损失函数对应的风险是平均误差概率。其中行为ai通常解释为类别状态被判决为wi。<br>因为条件风险的公式如下：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML3-15.png" alt=""><br><img src="http://o73nd1ra4.bkt.clouddn.com/ML3-16.png" alt=""></p>
+<hr>
 <h2 id="分类器、判别函数及判定面"><a href="#分类器、判别函数及判定面" class="headerlink" title="分类器、判别函数及判定面"></a>分类器、判别函数及判定面</h2><p>有很多种方式来表述模式分类器，其中用的最多的是一种判别函数的形式如下：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML3-17.png" alt=""><br>这里的分类器可定义为计算c个判别函数并选取与最大判别值对应的网络，如下图所示：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML3-18.png" alt=""><br>对于<strong>贝叶斯分类器</strong>来说，其判别函数是什么呢？</p>
 <ol>
 <li>可以是最小化条件风险：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML3-19.png" alt=""><br>（注意！是判别函数最大值对应最小的条件风险）</li>
@@ -188,7 +189,9 @@ var _hmt = _hmt || [];
 <p>综上所述：由<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML3-27.png" alt=""><br>和<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML3-28.png" alt=""><br>可以推出贝叶斯分类器在正太分布下的<strong>判别函数</strong>：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML3-29.png" alt=""><br>对上述判别函数进行讨论：<br><strong>第一种情况：</strong><br><img src="http://o73nd1ra4.bkt.clouddn.com/ML3-30.png" alt=""><br>这种情况表明各特征统计独立，并具有相同的方差。此时协方差矩阵式对角矩阵。几何上，样本落于相等大小的超球体聚类中。<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML3-31.png" alt=""><br>使用线性判别函数的分类器也称为线性及其，其判定面是一些超平面，这些超平面可由能够获得最大后验概率的线性方程（下式）来确定。<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML3-32.png" alt=""><br>即<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML3-33.png" alt=""><br>即X0位于两中心的中点，超平面垂直平分两中心的连线。<br>如果P(wi)不等于P(wj)，则X0远离可能的均值。<br><strong>综上所述：</strong>若所有c类的先验概率P(wi)已知且相等，那么lnP(wi)项为可忽略的附加常量，此时的最优判决规则如下：将某特征向量X归类，通过测量每一个X到c个均值向量的欧式距离，并将x归为离他最近的哪一类中。这种分类器也称为”最小距离分类器“，KNN最近邻算法可用到此方法。</p>
 <p><strong>第二种情况：</strong><br><img src="http://o73nd1ra4.bkt.clouddn.com/ML3-34.png" alt=""><br>该情况表明所有类的协方差矩阵都相等，但各自的均值向量是任意的，几何上，样本落于相同大小和相同形状的超椭球求聚类中。<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML3-35.png" alt=""><br>若C类别的先验概率P(wi)相等，那么lnP(wi)可省，最优判决规则为：将向量X归类，计算从X到每一个C均值向量的平方马氏距离:<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML3-36.png" alt=""><br>将X归于离他最近的均值所属类，与Case1相同：不相等的P(wi)会将判定面移向远离先验概率较大的类的一边。<br>根据以下推导：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML3-37.png" alt=""><br>令gi(x)=gj(x)可以得到X0的值。其中若P(wi)相等，判定面与均值连线交于其中点X0出，但不垂直；若P(wi)不相等，最优边界超平面将远离可能性较大的均值。</p>
 <p><strong>第三种情况：</strong><br><img src="http://o73nd1ra4.bkt.clouddn.com/ML3-38.png" alt=""><br>在一般的多元正态分布情况下，其判定函数也是二次型，<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML3-39.png" alt=""><br>其中<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML3-40.png" alt=""><br>所以：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML3-41.png" alt=""><br>即当在两类问题中的时候，其判定面是超二次曲面</p>
+<hr>
 <h2 id="误差概率和误差积分"><a href="#误差概率和误差积分" class="headerlink" title="误差概率和误差积分"></a>误差概率和误差积分</h2><p>针对二分类器：误差概率为：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML3-42.png" alt=""><br>相等P(wi)下，若判决边界定于相等后验概率点XB处，可去误差区将消失，可使误差区域减到最小。</p>
+<hr>
 <h2 id="朴素贝叶斯NaiveBayes"><a href="#朴素贝叶斯NaiveBayes" class="headerlink" title="朴素贝叶斯NaiveBayes"></a>朴素贝叶斯NaiveBayes</h2><h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p><img src="http://o73nd1ra4.bkt.clouddn.com/ML3-43.png" alt=""><br>朴素贝叶斯之所以称之为朴素，即该算法简化了一些条件，以便于贝叶斯决策理论更好地计算、其朴素之处就是假设各特征之间是相互独立的，则<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML3-44.png" alt=""></p>
 <h3 id="计算类条件概率密度"><a href="#计算类条件概率密度" class="headerlink" title="计算类条件概率密度"></a>计算类条件概率密度</h3><p>对于特征值为连续值的特征，计算P(X1|w)的方法：</p>
 <ol>
@@ -199,6 +202,7 @@ var _hmt = _hmt || [];
 <li>在概率估计计算过程中，可以通过忽视这个实例来处理缺失值</li>
 <li>确保属性之间是不相干的</li>
 </ol>
+<hr>
 <h2 id="贝叶斯决策论总结"><a href="#贝叶斯决策论总结" class="headerlink" title="贝叶斯决策论总结"></a>贝叶斯决策论总结</h2><ol>
 <li>基本思想：为最小化总风险，总是选择那些能够最小化条件风险的行为。</li>
 <li>为了最小化分类问题中的误差概率，总是选择那些使后验概率P(w|x)最大的类别。</li>
@@ -224,7 +228,7 @@ var _hmt = _hmt || [];
 
 	  
 <span>
-Updated:<time datetime="2017-02-27T09:45:18.992Z" itemprop="dateModified">2017-02-27</time>
+Updated:<time datetime="2017-02-27T09:57:36.713Z" itemprop="dateModified">2017-02-27</time>
 </span>
 
 
@@ -305,7 +309,7 @@ Updated:<time datetime="2017-02-27T09:45:18.992Z" itemprop="dateModified">2017-0
   <div class="widget-wrap">
     <h3 class="widget-title">Categories</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Deep-Learning/">Deep Learning</a><span class="category-list-count">7</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Deep-Learning/Caffe/">Caffe</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hadoop/">Hadoop</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Python/Scrapy/">Scrapy</a><span class="category-list-count">1</span></li></ul></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Deep-Learning/">Deep Learning</a><span class="category-list-count">7</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Deep-Learning/Caffe/">Caffe</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hadoop/">Hadoop</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Python/Scrapy/">Scrapy</a><span class="category-list-count">1</span></li></ul></li></ul>
     </div>
   </div>
 
@@ -315,7 +319,7 @@ Updated:<time datetime="2017-02-27T09:45:18.992Z" itemprop="dateModified">2017-0
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Bayes/" style="font-size: 13px; color: #7dc3de">Bayes</a> <a href="/tags/Caffe/" style="font-size: 18.25px; color: #35b838">Caffe</a> <a href="/tags/Deep-Learning/" style="font-size: 20px; color: #1db400">Deep Learning</a> <a href="/tags/Faster-RCNN/" style="font-size: 13px; color: #7dc3de">Faster-RCNN</a> <a href="/tags/GC/" style="font-size: 13px; color: #7dc3de">GC</a> <a href="/tags/HDFS/" style="font-size: 13px; color: #7dc3de">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 16.5px; color: #4dbc6f">Hadoop</a> <a href="/tags/JMM/" style="font-size: 13px; color: #7dc3de">JMM</a> <a href="/tags/JVM/" style="font-size: 13px; color: #7dc3de">JVM</a> <a href="/tags/Java/" style="font-size: 16.5px; color: #4dbc6f">Java</a> <a href="/tags/ML/" style="font-size: 16.5px; color: #4dbc6f">ML</a> <a href="/tags/NaiveBayes/" style="font-size: 13px; color: #7dc3de">NaiveBayes</a> <a href="/tags/Object-Detection/" style="font-size: 13px; color: #7dc3de">Object Detection</a> <a href="/tags/Python/" style="font-size: 14.75px; color: #65bfa7">Python</a> <a href="/tags/Scrapy/" style="font-size: 13px; color: #7dc3de">Scrapy</a> <a href="/tags/分布式技术/" style="font-size: 13px; color: #7dc3de">分布式技术</a> <a href="/tags/分布式文件系统/" style="font-size: 13px; color: #7dc3de">分布式文件系统</a> <a href="/tags/多线程/" style="font-size: 13px; color: #7dc3de">多线程</a> <a href="/tags/大数据/" style="font-size: 13px; color: #7dc3de">大数据</a> <a href="/tags/机器学习/" style="font-size: 16.5px; color: #4dbc6f">机器学习</a> <a href="/tags/爬虫/" style="font-size: 13px; color: #7dc3de">爬虫</a>
+      <a href="/tags/BE/" style="font-size: 13px; color: #7dc3de">BE</a> <a href="/tags/Bagging/" style="font-size: 13px; color: #7dc3de">Bagging</a> <a href="/tags/Bayes/" style="font-size: 14.4px; color: #6ac0b2">Bayes</a> <a href="/tags/Boosting/" style="font-size: 13px; color: #7dc3de">Boosting</a> <a href="/tags/Caffe/" style="font-size: 17.2px; color: #43ba59">Caffe</a> <a href="/tags/Deep-Learning/" style="font-size: 18.6px; color: #30b72c">Deep Learning</a> <a href="/tags/Faster-RCNN/" style="font-size: 13px; color: #7dc3de">Faster-RCNN</a> <a href="/tags/GC/" style="font-size: 13px; color: #7dc3de">GC</a> <a href="/tags/HDFS/" style="font-size: 13px; color: #7dc3de">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 15.8px; color: #57bd85">Hadoop</a> <a href="/tags/JMM/" style="font-size: 13px; color: #7dc3de">JMM</a> <a href="/tags/JVM/" style="font-size: 13px; color: #7dc3de">JVM</a> <a href="/tags/Java/" style="font-size: 15.8px; color: #57bd85">Java</a> <a href="/tags/ML/" style="font-size: 20px; color: #1db400">ML</a> <a href="/tags/MLE/" style="font-size: 13px; color: #7dc3de">MLE</a> <a href="/tags/NaiveBayes/" style="font-size: 13px; color: #7dc3de">NaiveBayes</a> <a href="/tags/Object-Detection/" style="font-size: 13px; color: #7dc3de">Object Detection</a> <a href="/tags/Python/" style="font-size: 14.4px; color: #6ac0b2">Python</a> <a href="/tags/SVM/" style="font-size: 13px; color: #7dc3de">SVM</a> <a href="/tags/Scrapy/" style="font-size: 13px; color: #7dc3de">Scrapy</a> <a href="/tags/Stacking/" style="font-size: 13px; color: #7dc3de">Stacking</a> <a href="/tags/决策树/" style="font-size: 13px; color: #7dc3de">决策树</a> <a href="/tags/分布式技术/" style="font-size: 13px; color: #7dc3de">分布式技术</a> <a href="/tags/分布式文件系统/" style="font-size: 13px; color: #7dc3de">分布式文件系统</a> <a href="/tags/多线程/" style="font-size: 13px; color: #7dc3de">多线程</a> <a href="/tags/大数据/" style="font-size: 13px; color: #7dc3de">大数据</a> <a href="/tags/感知机/" style="font-size: 13px; color: #7dc3de">感知机</a> <a href="/tags/机器学习/" style="font-size: 20px; color: #1db400">机器学习</a> <a href="/tags/核方法/" style="font-size: 13px; color: #7dc3de">核方法</a> <a href="/tags/深度学习/" style="font-size: 13px; color: #7dc3de">深度学习</a> <a href="/tags/爬虫/" style="font-size: 13px; color: #7dc3de">爬虫</a> <a href="/tags/神经网络/" style="font-size: 13px; color: #7dc3de">神经网络</a> <a href="/tags/集成方法/" style="font-size: 13px; color: #7dc3de">集成方法</a>
     </div>
   </div>
 
@@ -338,7 +342,7 @@ Updated:<time datetime="2017-02-27T09:45:18.992Z" itemprop="dateModified">2017-0
       <ul>
         
           <li>
-            <a href="/2017/02/27/机器学习系列—8-神经网络/">机器学习系列-8.神经网络</a>
+            <a href="/2017/02/27/机器学习系列—8-神经网络/">机器学习系列—8.神经网络</a>
           </li>
         
           <li>
