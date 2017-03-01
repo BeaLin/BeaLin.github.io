@@ -3,18 +3,25 @@
 <head>
   <meta charset="utf-8">
   
-  <title>机器学习系列-12.特征选择 | BeaLin&#39;s Blog</title>
+  <title>机器学习系列—13.特征选择 | BeaLin&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="Programmer,Technology,Software Engineering">
 <meta property="og:type" content="article">
-<meta property="og:title" content="机器学习系列-12.特征选择">
+<meta property="og:title" content="机器学习系列—13.特征选择">
 <meta property="og:url" content="http://yoursite.com/2017/02/27/机器学习系列—13-特征选择/index.html">
 <meta property="og:site_name" content="BeaLin's Blog">
 <meta property="og:description" content="Programmer,Technology,Software Engineering">
-<meta property="og:updated_time" content="2017-02-27T05:57:01.373Z">
+<meta property="og:image" content="http://o73nd1ra4.bkt.clouddn.com/ML13-1.png">
+<meta property="og:image" content="http://o73nd1ra4.bkt.clouddn.com/ML13-2.png">
+<meta property="og:image" content="http://o73nd1ra4.bkt.clouddn.com/ML13-3.png">
+<meta property="og:image" content="http://o73nd1ra4.bkt.clouddn.com/ML13-4.png">
+<meta property="og:image" content="http://o73nd1ra4.bkt.clouddn.com/ML13-5.png">
+<meta property="og:image" content="http://o73nd1ra4.bkt.clouddn.com/ML13-6.png">
+<meta property="og:updated_time" content="2017-03-01T04:59:14.684Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="机器学习系列-12.特征选择">
+<meta name="twitter:title" content="机器学习系列—13.特征选择">
 <meta name="twitter:description" content="Programmer,Technology,Software Engineering">
+<meta name="twitter:image" content="http://o73nd1ra4.bkt.clouddn.com/ML13-1.png">
   
   
     <link rel="icon" href="/favicon.ico">
@@ -88,6 +95,10 @@ var _hmt = _hmt || [];
 
 
     
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Machine-Learning/">Machine Learning</a>
+  </div>
+
   </div>
   <div class="article-inner">
     
@@ -96,7 +107,7 @@ var _hmt = _hmt || [];
         
   
     <h1 class="article-title" itemprop="name">
-      机器学习系列-12.特征选择
+      机器学习系列—13.特征选择
     </h1>
   
 
@@ -108,11 +119,13 @@ var _hmt = _hmt || [];
 		<div id="toc" class="toc-article">
 			<h2 class="toc-title"><span>Contents</span></h2>
 		
-			
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#特征选择方法"><span class="toc-number">1.</span> <span class="toc-text">特征选择方法</span></a></li></ol>
 		
 		</div>
 		
-        
+        <p>特征选择是一个重要的“数据预处理”（data preprocessing）过程，即从给定的特征集合中选择与当前学习任务相关的特征的过程。特征选择中所谓的“无关特征”是指与当前学习任务无关，有一类特征称为“冗余特征”（redundant feature），他们所包含的信息能从其他特征中推演出来。冗余特征很多时候是不起作用的，它们有时会增加学习过程的负担，有时会降低学习任务的难度。因此冗余特征的情况较为复杂，本文所讲述的内容中的数据集均不涉及冗余特征。<br>从初始的特征集合中选取包含重要信息的特征子集，若遍历所有可能的子集，会遭遇组合爆炸，可行的做法是产生一个“候选子集”，评价出它的好坏，基于评价结果产生下一个候选子集。。。循环往复。这里会涉及两个关键环节：如何根据评价产生下一候选子集？如何评价子集的好坏？<br><a id="more"></a><br><strong>1.“子集搜索”（subset search）问题</strong>：有三种搜索方式：（1）将特征集中的每一个特征均看作一个候选子集，从中选出最优的候选子集，然后再在其中加入一个特征，若加入的特征优于原先的候选子集，则将后者作为本轮的选定集。。。假定在第k+1轮时，最优的候选（k+1）特征子集不如上一轮的选定集，则停止生产候选子集，并将上一轮选定的k特征集合作为特征选择结果。这样逐渐增加相关特征的策略称为“前向”搜索。类似的“后向搜索”是从完整的特征集合开始，每次尝试去掉一个无关特征，这样逐渐减少 特征。也可将二者结合起来，每一轮逐渐增加选定相关特征（这些特征在后续轮中将确定不会被去除）、同时减少无关特征，这样的策略称为“双向搜索”。这三种策略均是贪心的。<br><strong>2.“子集评价”（subset evaluation）问题</strong>，假定样本属性均为离散型，对属性子集A，假定根据其取值将D分成了V个子集，每个子集中的样本在A上取值相同，于是可计算属性子集A的信息增益：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML13-1.png" alt=""><br>信息熵定义：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML13-2.png" alt=""><br>信息增益Gain(A)越大，意味着特征子集A包含的有助于分类的信息越多，于是，对每个候选特征子集，我们可基于训练数据集D来计算其信息增益。<br>将特征子集搜索机制与子集评价机制相结合，即可得到特征选择方法。例如将前向搜索与信息熵想结合与决策树算法非常相似，事实上，决策树可用于特征选择。常见的特征选择方法大致可分为三类：过滤式、包裹式和嵌入式。</p>
+<h2 id="特征选择方法"><a href="#特征选择方法" class="headerlink" title="特征选择方法"></a>特征选择方法</h2><p><strong>1. 过滤式选择</strong><br>过滤式方法先对数据集进行特征选择，然后再训练学习器，特征选择过程与后续学习器无关。<br>Relief（Relevant Features）是一种著名的过滤式特征选择方法，该方法设计了一个“相关统计量”来度量特征的重要性。该统计量是一个向量，其每个分量分别对应于一个初始特征，而特征子集的重要性则是由子集中每个特征所对应的相关统计量分量之和来决定。对每个实例x，在x的同类样本中寻找最近邻，称为“猜中近邻”（near-hit）。在x的异类样本中寻找其最近邻，称为“猜错近邻”（near-miss），相关统计量对应于属性j的分量为：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML13-3.png" alt=""><br><strong>2. 包裹式选择</strong><br>与过滤式特征选择不考虑后续学习器不同，包裹式特征选择直接把最终将要使用的学习器的性能作为特征子集的评价标准。包裹式特征选择方法直接针对给定学习器进行优化，从最终学习器性能来看，包裹式特征选择比过滤式特征选择更好。但是包裹式特征选择的计算开销通常比过滤式特征选择大得多。<br>LVM（Las Vegas Wrapper）是一个典型的包裹式特征选择方法。它在拉斯维加斯方法框架下使用随机策略来进行子集搜索，并以最终分类器的误差为特征子集评价标准。LVW的计算开销很大，需要设置停止条件控制参数。<br><strong>3. 嵌入式选择与L1正则化</strong><br>嵌入式特征选择是将特征选择过程与学习器训练过程融为一体，两者在同一个优化过程中完成，即在学习器训练过程中自动地进行了特征选择。<br>以最简单的线性回归模型为例，其以平方误差为损失函数，则优化目标为：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML13-4.png" alt=""><br>在样本数较少，样本特征很多的时候，容易陷入过拟合，因此可引入正则化来防止过拟合，<br>若使用L2范数正则化，则此时优化目标的公式即为<strong>岭回归（ridge regression）</strong>，<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML13-5.png" alt=""><br>若是L1范数正则化，则是LASSO回归（Least Absolute Shrinkage and Selection Operator）。<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML13-6.png" alt=""><br>L1范数和L2范数正则化都有助于降低过拟合风险，但前者还会带来一个额外的好处，它比后者更易于获得“稀疏”（sparse）解，即它求得的w会有更少的非零分类。换言之，采用L1范数比L2范数更易于得到稀疏解。<br>注意到w取得稀疏解意味着初始的d个特征中仅有对应着w的非零分量的特征才会出现在最终模型中，于是，求解L1范数正则化的结果是得到了仅采用一部分初始特征的模型；所以，基于L1正则化的学习方法就是一种嵌入式特征选择方法，其特征选择过程与学习器训练过程融为一体，同时完成。<br>此外，L1正则化问题的求解可使用近端梯度下降（Proximal Gradient Descent，PGD），即在每一步对f(x)进行梯度下降迭代的同时考虑L1范数最小化。通过PGD能使LASSO和其它基于L1范数最小化的方法得以快速求解。</p>
+
       
     </div>
     <footer class="article-footer">
@@ -122,9 +135,11 @@ var _hmt = _hmt || [];
 	  <!-- 百度分享 End -->
 	  
       
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ML/">ML</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/机器学习/">机器学习</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/特征选择/">特征选择</a></li></ul>
+
 	  
 <span>
-Updated:<time datetime="2017-02-27T05:57:01.373Z" itemprop="dateModified">2017-02-27</time>
+Updated:<time datetime="2017-03-01T04:59:14.684Z" itemprop="dateModified">2017-03-01</time>
 </span>
 
 
@@ -138,7 +153,7 @@ Updated:<time datetime="2017-02-27T05:57:01.373Z" itemprop="dateModified">2017-0
       <strong class="article-nav-caption">上一篇</strong>
       <div class="article-nav-title">
         
-          机器学习系列-13.半监督学习
+          机器学习系列—14.半监督学习
         
       </div>
     </a>
@@ -146,7 +161,7 @@ Updated:<time datetime="2017-02-27T05:57:01.373Z" itemprop="dateModified">2017-0
   
     <a href="/2017/02/27/机器学习系列—12-降维之PCA/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">下一篇</strong>
-      <div class="article-nav-title">机器学习系列-11.降维之PCA</div>
+      <div class="article-nav-title">机器学习系列—12.降维之PCA</div>
     </a>
   
 </nav>
@@ -159,7 +174,7 @@ Updated:<time datetime="2017-02-27T05:57:01.373Z" itemprop="dateModified">2017-0
 
 <!-- 多说评论框 start -->
 <section id="comments">
-  <div class="ds-thread"  data-thread-key="/2017/02/27/机器学习系列—13-特征选择/" data-title="机器学习系列-12.特征选择" data-url="http://yoursite.com/2017/02/27/机器学习系列—13-特征选择/" id="ds_thread">
+  <div class="ds-thread"  data-thread-key="/2017/02/27/机器学习系列—13-特征选择/" data-title="机器学习系列—13.特征选择" data-url="http://yoursite.com/2017/02/27/机器学习系列—13-特征选择/" id="ds_thread">
     <noscript>Please enable JavaScript to view the <a href="//duoshuo.com/?ref_noscript">comments powered by duoshuo.</a></noscript>
   </div>
 </section>
@@ -171,7 +186,7 @@ Updated:<time datetime="2017-02-27T05:57:01.373Z" itemprop="dateModified">2017-0
   <div id="toc" class="toc-aside">
   <h2 class="toc-title">Contents</h2>
     
-        
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#特征选择方法"><span class="toc-number">1.</span> <span class="toc-text">特征选择方法</span></a></li></ol>
     
   </div>
 
@@ -205,7 +220,7 @@ Updated:<time datetime="2017-02-27T05:57:01.373Z" itemprop="dateModified">2017-0
   <div class="widget-wrap">
     <h3 class="widget-title">Categories</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Deep-Learning/">Deep Learning</a><span class="category-list-count">7</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Deep-Learning/Caffe/">Caffe</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hadoop/">Hadoop</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Python/Scrapy/">Scrapy</a><span class="category-list-count">1</span></li></ul></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Deep-Learning/">Deep Learning</a><span class="category-list-count">7</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Deep-Learning/Caffe/">Caffe</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hadoop/">Hadoop</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Python/Scrapy/">Scrapy</a><span class="category-list-count">1</span></li></ul></li></ul>
     </div>
   </div>
 
@@ -215,7 +230,7 @@ Updated:<time datetime="2017-02-27T05:57:01.373Z" itemprop="dateModified">2017-0
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/BE/" style="font-size: 13px; color: #7dc3de">BE</a> <a href="/tags/Bagging/" style="font-size: 13px; color: #7dc3de">Bagging</a> <a href="/tags/Bayes/" style="font-size: 14.4px; color: #6ac0b2">Bayes</a> <a href="/tags/Boosting/" style="font-size: 13px; color: #7dc3de">Boosting</a> <a href="/tags/Caffe/" style="font-size: 17.2px; color: #43ba59">Caffe</a> <a href="/tags/Deep-Learning/" style="font-size: 18.6px; color: #30b72c">Deep Learning</a> <a href="/tags/Faster-RCNN/" style="font-size: 13px; color: #7dc3de">Faster-RCNN</a> <a href="/tags/GC/" style="font-size: 13px; color: #7dc3de">GC</a> <a href="/tags/HDFS/" style="font-size: 13px; color: #7dc3de">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 15.8px; color: #57bd85">Hadoop</a> <a href="/tags/JMM/" style="font-size: 13px; color: #7dc3de">JMM</a> <a href="/tags/JVM/" style="font-size: 13px; color: #7dc3de">JVM</a> <a href="/tags/Java/" style="font-size: 15.8px; color: #57bd85">Java</a> <a href="/tags/ML/" style="font-size: 20px; color: #1db400">ML</a> <a href="/tags/MLE/" style="font-size: 13px; color: #7dc3de">MLE</a> <a href="/tags/NaiveBayes/" style="font-size: 13px; color: #7dc3de">NaiveBayes</a> <a href="/tags/Object-Detection/" style="font-size: 13px; color: #7dc3de">Object Detection</a> <a href="/tags/Python/" style="font-size: 14.4px; color: #6ac0b2">Python</a> <a href="/tags/SVM/" style="font-size: 13px; color: #7dc3de">SVM</a> <a href="/tags/Scrapy/" style="font-size: 13px; color: #7dc3de">Scrapy</a> <a href="/tags/Stacking/" style="font-size: 13px; color: #7dc3de">Stacking</a> <a href="/tags/决策树/" style="font-size: 13px; color: #7dc3de">决策树</a> <a href="/tags/分布式技术/" style="font-size: 13px; color: #7dc3de">分布式技术</a> <a href="/tags/分布式文件系统/" style="font-size: 13px; color: #7dc3de">分布式文件系统</a> <a href="/tags/多线程/" style="font-size: 13px; color: #7dc3de">多线程</a> <a href="/tags/大数据/" style="font-size: 13px; color: #7dc3de">大数据</a> <a href="/tags/感知机/" style="font-size: 13px; color: #7dc3de">感知机</a> <a href="/tags/机器学习/" style="font-size: 20px; color: #1db400">机器学习</a> <a href="/tags/核方法/" style="font-size: 13px; color: #7dc3de">核方法</a> <a href="/tags/深度学习/" style="font-size: 13px; color: #7dc3de">深度学习</a> <a href="/tags/爬虫/" style="font-size: 13px; color: #7dc3de">爬虫</a> <a href="/tags/神经网络/" style="font-size: 13px; color: #7dc3de">神经网络</a> <a href="/tags/集成方法/" style="font-size: 13px; color: #7dc3de">集成方法</a>
+      <a href="/tags/BE/" style="font-size: 13px; color: #7dc3de">BE</a> <a href="/tags/Bagging/" style="font-size: 13px; color: #7dc3de">Bagging</a> <a href="/tags/Bayes/" style="font-size: 14.4px; color: #6ac0b2">Bayes</a> <a href="/tags/Boosting/" style="font-size: 13px; color: #7dc3de">Boosting</a> <a href="/tags/Caffe/" style="font-size: 17.2px; color: #43ba59">Caffe</a> <a href="/tags/Deep-Learning/" style="font-size: 18.6px; color: #30b72c">Deep Learning</a> <a href="/tags/Faster-RCNN/" style="font-size: 13px; color: #7dc3de">Faster-RCNN</a> <a href="/tags/GC/" style="font-size: 13px; color: #7dc3de">GC</a> <a href="/tags/HDFS/" style="font-size: 13px; color: #7dc3de">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 15.8px; color: #57bd85">Hadoop</a> <a href="/tags/JMM/" style="font-size: 13px; color: #7dc3de">JMM</a> <a href="/tags/JVM/" style="font-size: 13px; color: #7dc3de">JVM</a> <a href="/tags/Java/" style="font-size: 15.8px; color: #57bd85">Java</a> <a href="/tags/K近邻/" style="font-size: 13px; color: #7dc3de">K近邻</a> <a href="/tags/ML/" style="font-size: 20px; color: #1db400">ML</a> <a href="/tags/MLE/" style="font-size: 13px; color: #7dc3de">MLE</a> <a href="/tags/NaiveBayes/" style="font-size: 13px; color: #7dc3de">NaiveBayes</a> <a href="/tags/Object-Detection/" style="font-size: 13px; color: #7dc3de">Object Detection</a> <a href="/tags/PCA/" style="font-size: 13px; color: #7dc3de">PCA</a> <a href="/tags/Python/" style="font-size: 14.4px; color: #6ac0b2">Python</a> <a href="/tags/SVM/" style="font-size: 13px; color: #7dc3de">SVM</a> <a href="/tags/Scrapy/" style="font-size: 13px; color: #7dc3de">Scrapy</a> <a href="/tags/Stacking/" style="font-size: 13px; color: #7dc3de">Stacking</a> <a href="/tags/决策树/" style="font-size: 13px; color: #7dc3de">决策树</a> <a href="/tags/分布式技术/" style="font-size: 13px; color: #7dc3de">分布式技术</a> <a href="/tags/分布式文件系统/" style="font-size: 13px; color: #7dc3de">分布式文件系统</a> <a href="/tags/半监督学习/" style="font-size: 13px; color: #7dc3de">半监督学习</a> <a href="/tags/多线程/" style="font-size: 13px; color: #7dc3de">多线程</a> <a href="/tags/大数据/" style="font-size: 13px; color: #7dc3de">大数据</a> <a href="/tags/感知机/" style="font-size: 14.4px; color: #6ac0b2">感知机</a> <a href="/tags/机器学习/" style="font-size: 20px; color: #1db400">机器学习</a> <a href="/tags/核方法/" style="font-size: 13px; color: #7dc3de">核方法</a> <a href="/tags/概率图模型/" style="font-size: 13px; color: #7dc3de">概率图模型</a> <a href="/tags/深度学习/" style="font-size: 14.4px; color: #6ac0b2">深度学习</a> <a href="/tags/爬虫/" style="font-size: 13px; color: #7dc3de">爬虫</a> <a href="/tags/特征选择/" style="font-size: 13px; color: #7dc3de">特征选择</a> <a href="/tags/神经网络/" style="font-size: 13px; color: #7dc3de">神经网络</a> <a href="/tags/聚类/" style="font-size: 13px; color: #7dc3de">聚类</a> <a href="/tags/降维/" style="font-size: 13px; color: #7dc3de">降维</a> <a href="/tags/集成方法/" style="font-size: 13px; color: #7dc3de">集成方法</a>
     </div>
   </div>
 
@@ -242,19 +257,19 @@ Updated:<time datetime="2017-02-27T05:57:01.373Z" itemprop="dateModified">2017-0
           </li>
         
           <li>
-            <a href="/2017/02/27/机器学习系列—15-概率图模型/">机器学习系列-15.概率图模型</a>
+            <a href="/2017/02/27/机器学习系列—15-概率图模型/">机器学习系列—15.概率图模型</a>
           </li>
         
           <li>
-            <a href="/2017/02/27/机器学习系列—14-半监督学习/">机器学习系列-13.半监督学习</a>
+            <a href="/2017/02/27/机器学习系列—14-半监督学习/">机器学习系列—14.半监督学习</a>
           </li>
         
           <li>
-            <a href="/2017/02/27/机器学习系列—13-特征选择/">机器学习系列-12.特征选择</a>
+            <a href="/2017/02/27/机器学习系列—13-特征选择/">机器学习系列—13.特征选择</a>
           </li>
         
           <li>
-            <a href="/2017/02/27/机器学习系列—12-降维之PCA/">机器学习系列-11.降维之PCA</a>
+            <a href="/2017/02/27/机器学习系列—12-降维之PCA/">机器学习系列—12.降维之PCA</a>
           </li>
         
       </ul>

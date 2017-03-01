@@ -3,18 +3,32 @@
 <head>
   <meta charset="utf-8">
   
-  <title>机器学习系列-15.概率图模型 | BeaLin&#39;s Blog</title>
+  <title>机器学习系列—15.概率图模型 | BeaLin&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="Programmer,Technology,Software Engineering">
 <meta property="og:type" content="article">
-<meta property="og:title" content="机器学习系列-15.概率图模型">
+<meta property="og:title" content="机器学习系列—15.概率图模型">
 <meta property="og:url" content="http://yoursite.com/2017/02/27/机器学习系列—15-概率图模型/index.html">
 <meta property="og:site_name" content="BeaLin's Blog">
 <meta property="og:description" content="Programmer,Technology,Software Engineering">
-<meta property="og:updated_time" content="2017-02-27T05:58:56.105Z">
+<meta property="og:image" content="http://o73nd1ra4.bkt.clouddn.com/ML15-1.png">
+<meta property="og:image" content="http://o73nd1ra4.bkt.clouddn.com/ML15-2.png">
+<meta property="og:image" content="http://o73nd1ra4.bkt.clouddn.com/ML15-3.png">
+<meta property="og:image" content="http://o73nd1ra4.bkt.clouddn.com/ML15-4.png">
+<meta property="og:image" content="http://o73nd1ra4.bkt.clouddn.com/ML15-5.png">
+<meta property="og:image" content="http://o73nd1ra4.bkt.clouddn.com/ML15-6.png">
+<meta property="og:image" content="http://o73nd1ra4.bkt.clouddn.com/ML15-7.png">
+<meta property="og:image" content="http://o73nd1ra4.bkt.clouddn.com/ML15-8.png">
+<meta property="og:image" content="http://o73nd1ra4.bkt.clouddn.com/ML15-9.png">
+<meta property="og:image" content="http://o73nd1ra4.bkt.clouddn.com/ML15-10.png">
+<meta property="og:image" content="http://o73nd1ra4.bkt.clouddn.com/ML15-11.png">
+<meta property="og:image" content="http://o73nd1ra4.bkt.clouddn.com/ML15-12.png">
+<meta property="og:image" content="http://o73nd1ra4.bkt.clouddn.com/ML15-13.png">
+<meta property="og:updated_time" content="2017-03-01T05:35:31.604Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="机器学习系列-15.概率图模型">
+<meta name="twitter:title" content="机器学习系列—15.概率图模型">
 <meta name="twitter:description" content="Programmer,Technology,Software Engineering">
+<meta name="twitter:image" content="http://o73nd1ra4.bkt.clouddn.com/ML15-1.png">
   
   
     <link rel="icon" href="/favicon.ico">
@@ -88,6 +102,10 @@ var _hmt = _hmt || [];
 
 
     
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Machine-Learning/">Machine Learning</a>
+  </div>
+
   </div>
   <div class="article-inner">
     
@@ -96,7 +114,7 @@ var _hmt = _hmt || [];
         
   
     <h1 class="article-title" itemprop="name">
-      机器学习系列-15.概率图模型
+      机器学习系列—15.概率图模型
     </h1>
   
 
@@ -108,11 +126,25 @@ var _hmt = _hmt || [];
 		<div id="toc" class="toc-article">
 			<h2 class="toc-title"><span>Contents</span></h2>
 		
-			
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#隐马尔可夫模型"><span class="toc-number">1.</span> <span class="toc-text">隐马尔可夫模型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#马尔可夫随机场"><span class="toc-number">2.</span> <span class="toc-text">马尔可夫随机场</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#条件随机场"><span class="toc-number">3.</span> <span class="toc-text">条件随机场</span></a></li></ol>
 		
 		</div>
 		
-        
+        <p>机器学习最重要的任务是根据一些已观察到的证据（例如训练样本）来对感兴趣的未知变量（例如类别标记）进行估计和推断。概率模型（probabilistic model）将学习任务归结于计算变量的概率分布，主要分为两种模型：判别式模型和生成式模型。判别式模型是对条件分布进行建模（即有条件分布推断条件概率分布）；生成式模型直接对联合分布进行建模。但是这些概率模型的属性变量之间往往存在复杂的联系，因此概率模型的学习，即基于训练样本来估计变量分布的参数往往相当困难。因此有了概率图模型（probabilistic graphical model），其能简洁紧凑地表达变量间关系的工具。<br><a id="more"></a><br>概率图模型是一类用图来表达变量相关关系的概率模型，以图为工具，最常见是用一个结点表示一个或一组随机变量，结点之间的边表示变量间的概率相关关系，即“变量关系图”，根据边的性质不同，概率图模型可大致分为两类：</p>
+<ol>
+<li>使用有向无环图表示变量间的依赖关系：称为有向图模型或贝叶斯网（Bayesian network），主要代表是隐马尔可夫模型。</li>
+<li>使用无向图表示变量间的相关关系：称为无向图模型或马尔可夫网（Markov network），主要代表是使用生成式模型的马尔可夫随机场和使用判别式模型的条件随机场。</li>
+</ol>
+<p>下面将依次简单介绍上面所提到的隐马尔可夫模型、马尔可夫随机场以及条件随机场。</p>
+<h2 id="隐马尔可夫模型"><a href="#隐马尔可夫模型" class="headerlink" title="隐马尔可夫模型"></a>隐马尔可夫模型</h2><p>隐马尔可夫模型（Hidden Markov Mode，HMM）是结构最简单的动态贝叶斯网（dynamic Bayesian network），这是一种著名的有向图模型，主要用于时序数据建模，在语音识别、自然语言处理等领域有广泛应用。隐马尔可夫模型中的变量可分为两组，第一组是状态变量，表示第i时刻的系统状态，通常假定状态变量是隐藏的、不可被观测的，因此状态变量亦称隐变量（hidden variable）。第二组是观测变量，表示第i时刻的观测值。<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML15-1.png" alt=""><br>图14.1中的箭头表示了变量间的依赖关系，在任一时刻，观测变量的取值仅依赖于状态变量，即Xt由Yt确定，与其他状态变量及观测变量的取值无关。同时，t时刻的状态Yt仅依赖于t-1时刻的状态Yt-1，与其余n-2个状态无关。这就是所谓的“<strong>马尔可夫链”（Markov chain），即：系统下一时刻的状态仅由当前状态决定，不依赖于以往的任何状态。</strong>基于这种依赖关系，所有变量的联合概率分布为：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML15-2.png" alt=""><br>除了结构信息，欲确定一个隐马尔可夫模型还需要三组参数：</p>
+<ol>
+<li>状态转移概率：模型在各个状态间转换的概率A</li>
+<li>输出观测概率：模型根据当前状态获得各个观测值的概率B</li>
+<li>初始状态概率：模型在初始时刻各状态出现的概率π<br>通过指定状态空间Y、观测空间X和上述三组参数，就能确定一个隐马尔可夫模型。给定隐马尔可夫模型，它按如下过程产生观测序列{x1，x2，…，xn}：<br>（1）设置t=1，并根据初始状态概率π选择初始状态Y1<br>（2）根据状态Yt和输出观测概率B选择观测变量取值Xt；<br>（3）根据状态Yt和状态转移矩阵A转移模型状态，确定Y(t+1);<br>（4）若t&lt;n，设置t=t+1，并转到第（2）步，否则停止。</li>
+</ol>
+<h2 id="马尔可夫随机场"><a href="#马尔可夫随机场" class="headerlink" title="马尔可夫随机场"></a>马尔可夫随机场</h2><p>马尔可夫随机场（Markov Random Field，MRF）是典型的马尔可夫网，这是一种著名的无向图模型。马尔可夫随机场有一组势函数（potential function），亦称“因子”（factor），这是定义在变量子集上的非负实函数，主要用于定义概率分布函数。<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML15-3.png" alt=""><br>对于图14.2中结点的一个子集，若其中任意两节点间都有边连接，则成该结点子集为一个“团”（clique）。若在一个团中加入另外任何一个结点都不再形成团，则称该团为“极大团”（maximal clique），换言之，极大团就是不能被其他团所包含的团。<br>在马尔可夫随机场中，多个变量之间的联合概率分布能基于团分解为多个因子的乘积：联合概率P(x)的定义如下<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML15-4.png" alt=""><br>对于n个变量x={x1,x2,…,xn}，所有团构成的集合为C，与团Q∈C对应的变量集合记为XQ，ψQ为与团Q对应的势函数，Z为规范化因子：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML15-5.png" alt=""><br>在实际应用中，精确计算Z通常很困难，注意到若团Q不是极大团，则它必被一个极大团Q<em>所包含，意味着变量XQ之间的关系还可以用团Q</em>对应的势函数体现。则基于极大团定义的联合概率P(X)为：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML15-6.png" alt=""><br>在马尔可夫随机场中，可借助“分离”的概念来得到“条件独立性”。若从结点集A中的结点到B中的结点都必须经过结点集C中的结点，则称结点集A和B被结点集C分离，C称为“分离集”（separating set）。因此可推出以下性质：<br><strong>1.全局马尔可夫性（global Markov property）</strong>：给定两个变量子集的分离集，则这两个变量子集条件独立。<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML15-7.png" alt=""><br>其公式为如下，即XA和XB在给定XC时条件独立。<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML15-8.png" alt=""><br>由全局马尔可夫性可得到两个很有用的推论：<br><strong>2. 局部马尔可夫性（local Markov property）</strong>：给定某变量的邻接变量，则该变量条件独立于其他变量。<br><strong>3. 成对马尔可夫性（pairwise Markov property）</strong>：给定所有其他变量，两个非邻接变量条件独立。<br>为了满足非负性，指数函数常被用于定义势函数，即<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML15-9.png" alt=""><br>HQ（XQ）是一个定义在变量XQ上的实值函数，常见形式为：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML15-10.png" alt=""><br>上式中第二项仅考虑单节点，第一项则考虑每一对结点的关系。</p>
+<h2 id="条件随机场"><a href="#条件随机场" class="headerlink" title="条件随机场"></a>条件随机场</h2><p>条件随机场（Conditional Random Field，CRF）是一种判别式无向图模型。前面介绍的隐马尔可夫模型和马尔可夫随机场都是生成式模型。条件随机场试图对多个变量在给定观测值后的条件概率进行建模，其目标是构建条件概率模型P(y|x)。<br>令G=<v,e>表示结点与标记变量y中元素一一对应的无向图，yv表示与结点v对应的标记变量，n(v)表示结点v的邻接结点，若图G的每个变量yv都满足马尔可夫性，即<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML15-11.png" alt=""><br>则（y,x）构成一个条件随机场。图G可具有任意结构，只要能表示标记变量之间的条件独立性关系即可。现实应用中最常用的是链式结构，即“链式条件随机场”，如下所示：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML15-12.png" alt=""><br>与马尔可夫随机场定义联合概率的方式类似，条件随机场使用势函数和图结构上的团来定义条件概率P(y|x)，势函数选用的是指数势函数并引入了特征函数。特征函数通常是实值函数，以刻画数据的一些很可能成立或期望成立的经验特性。定义如下：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML15-13.png" alt=""><br>其中tj(yi+1,yi,X,i)是定义在观测序列的两个相邻标记位置上的转移特征函数(transition feature function)，用于刻画相邻标记变量之间的相关关系以及观测序列对它们的影响，Sk(yi,X,i)是定义在观测序列的标记位置i上的状态特征函数(status feature function)，用于刻画观测序列对标记变量的影响，λj和μk为参数，Z为规范化因子，用于确保式(14.11)是正确定义的概率。</v,e></p>
+
       
     </div>
     <footer class="article-footer">
@@ -122,9 +154,11 @@ var _hmt = _hmt || [];
 	  <!-- 百度分享 End -->
 	  
       
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ML/">ML</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/机器学习/">机器学习</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/概率图模型/">概率图模型</a></li></ul>
+
 	  
 <span>
-Updated:<time datetime="2017-02-27T05:58:56.105Z" itemprop="dateModified">2017-02-27</time>
+Updated:<time datetime="2017-03-01T05:35:31.604Z" itemprop="dateModified">2017-03-01</time>
 </span>
 
 
@@ -146,7 +180,7 @@ Updated:<time datetime="2017-02-27T05:58:56.105Z" itemprop="dateModified">2017-0
   
     <a href="/2017/02/27/机器学习系列—14-半监督学习/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">下一篇</strong>
-      <div class="article-nav-title">机器学习系列-13.半监督学习</div>
+      <div class="article-nav-title">机器学习系列—14.半监督学习</div>
     </a>
   
 </nav>
@@ -159,7 +193,7 @@ Updated:<time datetime="2017-02-27T05:58:56.105Z" itemprop="dateModified">2017-0
 
 <!-- 多说评论框 start -->
 <section id="comments">
-  <div class="ds-thread"  data-thread-key="/2017/02/27/机器学习系列—15-概率图模型/" data-title="机器学习系列-15.概率图模型" data-url="http://yoursite.com/2017/02/27/机器学习系列—15-概率图模型/" id="ds_thread">
+  <div class="ds-thread"  data-thread-key="/2017/02/27/机器学习系列—15-概率图模型/" data-title="机器学习系列—15.概率图模型" data-url="http://yoursite.com/2017/02/27/机器学习系列—15-概率图模型/" id="ds_thread">
     <noscript>Please enable JavaScript to view the <a href="//duoshuo.com/?ref_noscript">comments powered by duoshuo.</a></noscript>
   </div>
 </section>
@@ -171,7 +205,7 @@ Updated:<time datetime="2017-02-27T05:58:56.105Z" itemprop="dateModified">2017-0
   <div id="toc" class="toc-aside">
   <h2 class="toc-title">Contents</h2>
     
-        
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#隐马尔可夫模型"><span class="toc-number">1.</span> <span class="toc-text">隐马尔可夫模型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#马尔可夫随机场"><span class="toc-number">2.</span> <span class="toc-text">马尔可夫随机场</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#条件随机场"><span class="toc-number">3.</span> <span class="toc-text">条件随机场</span></a></li></ol>
     
   </div>
 
@@ -205,7 +239,7 @@ Updated:<time datetime="2017-02-27T05:58:56.105Z" itemprop="dateModified">2017-0
   <div class="widget-wrap">
     <h3 class="widget-title">Categories</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Deep-Learning/">Deep Learning</a><span class="category-list-count">7</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Deep-Learning/Caffe/">Caffe</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hadoop/">Hadoop</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Python/Scrapy/">Scrapy</a><span class="category-list-count">1</span></li></ul></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Deep-Learning/">Deep Learning</a><span class="category-list-count">7</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Deep-Learning/Caffe/">Caffe</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hadoop/">Hadoop</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Python/Scrapy/">Scrapy</a><span class="category-list-count">1</span></li></ul></li></ul>
     </div>
   </div>
 
@@ -215,7 +249,7 @@ Updated:<time datetime="2017-02-27T05:58:56.105Z" itemprop="dateModified">2017-0
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/BE/" style="font-size: 13px; color: #7dc3de">BE</a> <a href="/tags/Bagging/" style="font-size: 13px; color: #7dc3de">Bagging</a> <a href="/tags/Bayes/" style="font-size: 14.4px; color: #6ac0b2">Bayes</a> <a href="/tags/Boosting/" style="font-size: 13px; color: #7dc3de">Boosting</a> <a href="/tags/Caffe/" style="font-size: 17.2px; color: #43ba59">Caffe</a> <a href="/tags/Deep-Learning/" style="font-size: 18.6px; color: #30b72c">Deep Learning</a> <a href="/tags/Faster-RCNN/" style="font-size: 13px; color: #7dc3de">Faster-RCNN</a> <a href="/tags/GC/" style="font-size: 13px; color: #7dc3de">GC</a> <a href="/tags/HDFS/" style="font-size: 13px; color: #7dc3de">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 15.8px; color: #57bd85">Hadoop</a> <a href="/tags/JMM/" style="font-size: 13px; color: #7dc3de">JMM</a> <a href="/tags/JVM/" style="font-size: 13px; color: #7dc3de">JVM</a> <a href="/tags/Java/" style="font-size: 15.8px; color: #57bd85">Java</a> <a href="/tags/ML/" style="font-size: 20px; color: #1db400">ML</a> <a href="/tags/MLE/" style="font-size: 13px; color: #7dc3de">MLE</a> <a href="/tags/NaiveBayes/" style="font-size: 13px; color: #7dc3de">NaiveBayes</a> <a href="/tags/Object-Detection/" style="font-size: 13px; color: #7dc3de">Object Detection</a> <a href="/tags/Python/" style="font-size: 14.4px; color: #6ac0b2">Python</a> <a href="/tags/SVM/" style="font-size: 13px; color: #7dc3de">SVM</a> <a href="/tags/Scrapy/" style="font-size: 13px; color: #7dc3de">Scrapy</a> <a href="/tags/Stacking/" style="font-size: 13px; color: #7dc3de">Stacking</a> <a href="/tags/决策树/" style="font-size: 13px; color: #7dc3de">决策树</a> <a href="/tags/分布式技术/" style="font-size: 13px; color: #7dc3de">分布式技术</a> <a href="/tags/分布式文件系统/" style="font-size: 13px; color: #7dc3de">分布式文件系统</a> <a href="/tags/多线程/" style="font-size: 13px; color: #7dc3de">多线程</a> <a href="/tags/大数据/" style="font-size: 13px; color: #7dc3de">大数据</a> <a href="/tags/感知机/" style="font-size: 13px; color: #7dc3de">感知机</a> <a href="/tags/机器学习/" style="font-size: 20px; color: #1db400">机器学习</a> <a href="/tags/核方法/" style="font-size: 13px; color: #7dc3de">核方法</a> <a href="/tags/深度学习/" style="font-size: 13px; color: #7dc3de">深度学习</a> <a href="/tags/爬虫/" style="font-size: 13px; color: #7dc3de">爬虫</a> <a href="/tags/神经网络/" style="font-size: 13px; color: #7dc3de">神经网络</a> <a href="/tags/集成方法/" style="font-size: 13px; color: #7dc3de">集成方法</a>
+      <a href="/tags/BE/" style="font-size: 13px; color: #7dc3de">BE</a> <a href="/tags/Bagging/" style="font-size: 13px; color: #7dc3de">Bagging</a> <a href="/tags/Bayes/" style="font-size: 14.4px; color: #6ac0b2">Bayes</a> <a href="/tags/Boosting/" style="font-size: 13px; color: #7dc3de">Boosting</a> <a href="/tags/Caffe/" style="font-size: 17.2px; color: #43ba59">Caffe</a> <a href="/tags/Deep-Learning/" style="font-size: 18.6px; color: #30b72c">Deep Learning</a> <a href="/tags/Faster-RCNN/" style="font-size: 13px; color: #7dc3de">Faster-RCNN</a> <a href="/tags/GC/" style="font-size: 13px; color: #7dc3de">GC</a> <a href="/tags/HDFS/" style="font-size: 13px; color: #7dc3de">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 15.8px; color: #57bd85">Hadoop</a> <a href="/tags/JMM/" style="font-size: 13px; color: #7dc3de">JMM</a> <a href="/tags/JVM/" style="font-size: 13px; color: #7dc3de">JVM</a> <a href="/tags/Java/" style="font-size: 15.8px; color: #57bd85">Java</a> <a href="/tags/K近邻/" style="font-size: 13px; color: #7dc3de">K近邻</a> <a href="/tags/ML/" style="font-size: 20px; color: #1db400">ML</a> <a href="/tags/MLE/" style="font-size: 13px; color: #7dc3de">MLE</a> <a href="/tags/NaiveBayes/" style="font-size: 13px; color: #7dc3de">NaiveBayes</a> <a href="/tags/Object-Detection/" style="font-size: 13px; color: #7dc3de">Object Detection</a> <a href="/tags/PCA/" style="font-size: 13px; color: #7dc3de">PCA</a> <a href="/tags/Python/" style="font-size: 14.4px; color: #6ac0b2">Python</a> <a href="/tags/SVM/" style="font-size: 13px; color: #7dc3de">SVM</a> <a href="/tags/Scrapy/" style="font-size: 13px; color: #7dc3de">Scrapy</a> <a href="/tags/Stacking/" style="font-size: 13px; color: #7dc3de">Stacking</a> <a href="/tags/决策树/" style="font-size: 13px; color: #7dc3de">决策树</a> <a href="/tags/分布式技术/" style="font-size: 13px; color: #7dc3de">分布式技术</a> <a href="/tags/分布式文件系统/" style="font-size: 13px; color: #7dc3de">分布式文件系统</a> <a href="/tags/半监督学习/" style="font-size: 13px; color: #7dc3de">半监督学习</a> <a href="/tags/多线程/" style="font-size: 13px; color: #7dc3de">多线程</a> <a href="/tags/大数据/" style="font-size: 13px; color: #7dc3de">大数据</a> <a href="/tags/感知机/" style="font-size: 14.4px; color: #6ac0b2">感知机</a> <a href="/tags/机器学习/" style="font-size: 20px; color: #1db400">机器学习</a> <a href="/tags/核方法/" style="font-size: 13px; color: #7dc3de">核方法</a> <a href="/tags/概率图模型/" style="font-size: 13px; color: #7dc3de">概率图模型</a> <a href="/tags/深度学习/" style="font-size: 14.4px; color: #6ac0b2">深度学习</a> <a href="/tags/爬虫/" style="font-size: 13px; color: #7dc3de">爬虫</a> <a href="/tags/特征选择/" style="font-size: 13px; color: #7dc3de">特征选择</a> <a href="/tags/神经网络/" style="font-size: 13px; color: #7dc3de">神经网络</a> <a href="/tags/聚类/" style="font-size: 13px; color: #7dc3de">聚类</a> <a href="/tags/降维/" style="font-size: 13px; color: #7dc3de">降维</a> <a href="/tags/集成方法/" style="font-size: 13px; color: #7dc3de">集成方法</a>
     </div>
   </div>
 
@@ -242,19 +276,19 @@ Updated:<time datetime="2017-02-27T05:58:56.105Z" itemprop="dateModified">2017-0
           </li>
         
           <li>
-            <a href="/2017/02/27/机器学习系列—15-概率图模型/">机器学习系列-15.概率图模型</a>
+            <a href="/2017/02/27/机器学习系列—15-概率图模型/">机器学习系列—15.概率图模型</a>
           </li>
         
           <li>
-            <a href="/2017/02/27/机器学习系列—14-半监督学习/">机器学习系列-13.半监督学习</a>
+            <a href="/2017/02/27/机器学习系列—14-半监督学习/">机器学习系列—14.半监督学习</a>
           </li>
         
           <li>
-            <a href="/2017/02/27/机器学习系列—13-特征选择/">机器学习系列-12.特征选择</a>
+            <a href="/2017/02/27/机器学习系列—13-特征选择/">机器学习系列—13.特征选择</a>
           </li>
         
           <li>
-            <a href="/2017/02/27/机器学习系列—12-降维之PCA/">机器学习系列-11.降维之PCA</a>
+            <a href="/2017/02/27/机器学习系列—12-降维之PCA/">机器学习系列—12.降维之PCA</a>
           </li>
         
       </ul>
