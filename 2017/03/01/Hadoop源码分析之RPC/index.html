@@ -3,28 +3,21 @@
 <head>
   <meta charset="utf-8">
   
-  <title>机器学习系列—14.半监督学习 | BeaLin&#39;s Blog</title>
+  <title>Hadoop源码分析之RPC | BeaLin&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="Programmer,Technology,Software Engineering">
 <meta property="og:type" content="article">
-<meta property="og:title" content="机器学习系列—14.半监督学习">
-<meta property="og:url" content="http://yoursite.com/2017/02/27/机器学习系列—14-半监督学习/index.html">
+<meta property="og:title" content="Hadoop源码分析之RPC">
+<meta property="og:url" content="http://yoursite.com/2017/03/01/Hadoop源码分析之RPC/index.html">
 <meta property="og:site_name" content="BeaLin's Blog">
 <meta property="og:description" content="Programmer,Technology,Software Engineering">
-<meta property="og:image" content="http://o73nd1ra4.bkt.clouddn.com/ML14-1.png">
-<meta property="og:image" content="http://o73nd1ra4.bkt.clouddn.com/ML14-2.png">
-<meta property="og:image" content="http://o73nd1ra4.bkt.clouddn.com/ML14-3.png">
-<meta property="og:image" content="http://o73nd1ra4.bkt.clouddn.com/ML14-4.png">
-<meta property="og:image" content="http://o73nd1ra4.bkt.clouddn.com/ML14-5.png">
-<meta property="og:image" content="http://o73nd1ra4.bkt.clouddn.com/ML14-6.png">
-<meta property="og:image" content="http://o73nd1ra4.bkt.clouddn.com/ML14-7.png">
-<meta property="og:image" content="http://o73nd1ra4.bkt.clouddn.com/ML14-8.png">
-<meta property="og:image" content="http://o73nd1ra4.bkt.clouddn.com/ML14-9.png">
-<meta property="og:updated_time" content="2017-03-01T05:16:48.681Z">
+<meta property="og:image" content="http://1">
+<meta property="og:image" content="http://2">
+<meta property="og:updated_time" content="2017-03-01T13:29:42.738Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="机器学习系列—14.半监督学习">
+<meta name="twitter:title" content="Hadoop源码分析之RPC">
 <meta name="twitter:description" content="Programmer,Technology,Software Engineering">
-<meta name="twitter:image" content="http://o73nd1ra4.bkt.clouddn.com/ML14-1.png">
+<meta name="twitter:image" content="http://1">
   
   
     <link rel="icon" href="/favicon.ico">
@@ -89,17 +82,17 @@ var _hmt = _hmt || [];
 </header>
 
       <div class="outer">
-        <section id="main"><article id="post-机器学习系列—14-半监督学习" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-Hadoop源码分析之RPC" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     
-<a href="/2017/02/27/机器学习系列—14-半监督学习/" class="article-date">
-  <time datetime="2017-02-27T05:57:17.000Z" itemprop="datePublished">2017-02-27</time>
+<a href="/2017/03/01/Hadoop源码分析之RPC/" class="article-date">
+  <time datetime="2017-03-01T13:13:45.000Z" itemprop="datePublished">2017-03-01</time>
 </a>
 
 
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/Machine-Learning/">Machine Learning</a>
+    <a class="article-category-link" href="/categories/Hadoop/">Hadoop</a>
   </div>
 
   </div>
@@ -110,7 +103,7 @@ var _hmt = _hmt || [];
         
   
     <h1 class="article-title" itemprop="name">
-      机器学习系列—14.半监督学习
+      Hadoop源码分析之RPC
     </h1>
   
 
@@ -122,15 +115,16 @@ var _hmt = _hmt || [];
 		<div id="toc" class="toc-article">
 			<h2 class="toc-title"><span>Contents</span></h2>
 		
-			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#生成式方法"><span class="toc-number">1.</span> <span class="toc-text">生成式方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#半监督SVM"><span class="toc-number">2.</span> <span class="toc-text">半监督SVM</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#基于分歧的方法"><span class="toc-number">3.</span> <span class="toc-text">基于分歧的方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#半监督聚类"><span class="toc-number">4.</span> <span class="toc-text">半监督聚类</span></a></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#远程过程调用"><span class="toc-number">1.</span> <span class="toc-text">远程过程调用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#RPC原理"><span class="toc-number">1.1.</span> <span class="toc-text">RPC原理</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JAVA远程方法调用RMI"><span class="toc-number">2.</span> <span class="toc-text">JAVA远程方法调用RMI</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Java动态代理和Java-NIO"><span class="toc-number">3.</span> <span class="toc-text">Java动态代理和Java NIO</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#java动态代理"><span class="toc-number">3.1.</span> <span class="toc-text">java动态代理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Java-NIO"><span class="toc-number">3.2.</span> <span class="toc-text">Java NIO</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#java基本套接字"><span class="toc-number">3.2.1.</span> <span class="toc-text">java基本套接字</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Java-NIO基础"><span class="toc-number">3.2.2.</span> <span class="toc-text">Java NIO基础</span></a></li></ol></li></ol></li></ol>
 		
 		</div>
 		
-        <p>当训练样本不足时，学得模型的泛化能力也往往不佳。因此可以采用主动学习的方法，即引入额外的专家知识，通过与外界的交互来将部分未标记样本转变为有标记样本。但若不与专家交互，没有获得额外信息，还能利用未标记样本来提高泛化性能吗？回答是可以的。让学习器不依赖外界交互、自动地利用未标记样本来提升学习性能，就是半监督学习（semi-supervised）。要利用未标记样本，要做一些将未标记样本所揭示的数据分布信息与类别标记相联系的假设。最常见的是“聚类假设”（cluster assumption），即假设数据存在簇结构，同一个簇的样本属于同一个类别。另一种常见的假设是“流形假设”（manifold assumption），即假设数据分布在一个流形结构上，邻近的样本拥有相似的输出值。“邻近”程度常用“相似”程度来刻画，因此，流形假设可看作聚类假设的推广，但流形假设对输出值没有限制，比聚类假设的适用范围更广，但是二者的本质都是“相似的样本拥有相似的输出”这个基本假设。<br><a id="more"></a><br>半监督学习可进一步划分为<strong>纯（pure）半监督学习</strong>和<strong>直推学习（transductive learning）</strong>。前者假定训练数据中的未标记样本并非待预测的数据，而后者则假定学习过程中所考虑的未标记样本恰是待预测数据。纯半监督学习是基于“开放世界”假设，希望学得模型能适用于训练过程中未观察到的数据，而直推学习是基于“封闭世界”假设，仅试图对学习过程中观察到的未标记数据进行预测。下图直观的表现出<strong>主动学习</strong>、<strong>纯半监督学习</strong>、<strong>直推学习</strong>的区别：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML14-1.png" alt=""><br>接下来介绍几种半监督方法</p>
-<h2 id="生成式方法"><a href="#生成式方法" class="headerlink" title="生成式方法"></a>生成式方法</h2><p>生成式方法（generative methods）是直接基于生成式模型的方法，此类方法假设所有数据（无论是否有标记）都是由同一个潜在的模型“生成”的。因此我们可以通过潜在模型的参数将未标记数据与学习目标联系起来，而未标记数据的标记则可看作模型的缺失参数，通常可基于EM算法进行极大似然估计求解。此类方法的区别主要在于生成式模型的假设，不同的模型假设将产生不同的方法。<br>假设样本由高斯混合模型生成，且每个类别对应一个高斯混合成分，换言之，数据样本是基于如下概率密度生成<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML14-2.png" alt=""><br>由最大化后验概率可知<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML14-3.png" alt=""><br>其中p(y=j|θ=i,x)为x由第i个高斯混合成分生成且类别为j的概率，需知道样本的标记，因此仅能使用有标记数据:<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML14-4.png" alt=""><br>是样本x有第i个高斯混合成分生成的后验概率，不涉及样本标记，已标记数据与未标记均可。<br>以上公式用极大似然法来估计高斯混合模型的参数的对数似然是：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML14-5.png" alt=""><br>上式有两项组成：基于有标记数据的有监督项和基于未标记数据的无监督项。可用EM算法求解。首先是E步：根据当前模型参数计算未标记样本属于各高斯混合成分的后验概率，即上面的公式（13.3）；然后是M步：基于求得的后验概率更新模型参数。具体推导过程可参考前面博文曾讲过的EM算法。<br>若将上述过程中的高斯混合模型换成混合专家模型、朴素贝叶斯模型即可推导出其他的生成式半监督学习方法。此类方法简单，易于实现，在有标记数据极少的情形往往比其他方法性能更好，但有一个关键：模型假设必须准确，即假设的生成式模型必须与真实数据分布吻合；否则利用未标记数据反倒会较低泛化性能。</p>
-<h2 id="半监督SVM"><a href="#半监督SVM" class="headerlink" title="半监督SVM"></a>半监督SVM</h2><p>半监督支持向量机（Semi-Supervised Support Vector Machine,S3VM）是支持向量机在半监督学习上的推广。半监督支持向量机中最著名的是TSVM（Transductive Support Vector Machine），TSVM针对二分类问题，其试图考虑对未标记样本进行各种可能的标记指标（label assignment），即尝试将每个未标记样本分别作为正例或反例，然后在所有这些结果中，寻求一个在所有样本上间隔最大化的划分超平面。一旦划分超平面得以确定，未标记样本的最终标记指派就是其预测结果。<br>TSVM的学习目标是<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML14-6.png" alt=""><br>其中，(w,b)确定了一个划分超平面；ξ为松弛向量，ξi(i=1,2,…,l)对应于有标记样本，ξi(i=l+1,l+2,…,m)对应于未标记样本；Cl与Cu是由用户指定的用于平衡模型复杂度、有标记样本与未标记样本重要程度的折中参数。显然，尝试未标记样本的各种标记指派是一个穷举过程，必须考虑优化策略。因此TSVM采用局部搜索来迭代寻找式（13.9）的近似解，其具体算法步骤如下：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML14-7.png" alt=""><br>第6-9行的意思是TSVM找出两个标记指派为异类且很可能发生错误的未标记样本，交换它们的标记，再重新基于式（13.9）求解出更新后的划分超平面和松弛向量，然后再找可能发生错误的标记。。。标记指派调整完成后，逐渐增大Cu以提高未标记样本对优化目标的影响，进行下一轮标记指派调整，直至Cu=Cl为止。如何判断哪些样本极有可能发生错误呢？算法（第6行）中的判断是：若存在一对未标记样本Xi与Xj，其标记指派Yi与Yj不同，且对应的松弛变量满足两者相加大于2，则意味着Yi和Yj很可能是错误的。<br>搜寻标记指派可能出错的每一对未标记样本进行调整，是一个涉及巨大计算开销的大规模优化问题。基于图核函数梯度下降的LDS、基于标记均值估计的meanS3VM均是针对其的优化求解策略。</p>
-<h2 id="基于分歧的方法"><a href="#基于分歧的方法" class="headerlink" title="基于分歧的方法"></a>基于分歧的方法</h2><p>与生成式方法、半监督SVM、图半监督学习等基于单学习器利用未标记数据不同，基于分歧的方法（disagreement-based methods）使用多学习器，而学习器之间的“分歧”对未标记数据的利用至关重要。<br>“协同训练”是此类方法的重要代表，其很好的利用了多视图的“相容互补性”。假设数据拥有两个充分（sufficient）且条件独立视图，首先在每个视图上基于有标记样本分别训练处一个分类器，然后让每个分类器分别去挑选自己“最有把握的”未标记样本用于训练更新。。。这个“互相学习、共同进步”的过程不断迭代进行，直到两个分类器都不再发生变化，或达到预先设定的迭代轮数为止。协同训练过程虽简单，但若两个视图充分且条件独立，则可利用未标记样本通过协同训练将弱分类器的泛化性能提升到任意高。不过，视图的条件独立性在现实任务中通常很难满足，因此性能提升幅度不会那么大。后来又出现了能在单视图数据上使用的变体算法，它们或是使用不同的学习算法，或使用不同的数据采样，或使用不同的参数设置来产生不同的学习器，也能有效地利用未标记数据来提升性能。无需数据拥有多视图，仅需弱学习器之间具有显著的分歧（或差异），即可通过相互提供未标记样本的方式来提升泛化性能。</p>
-<h2 id="半监督聚类"><a href="#半监督聚类" class="headerlink" title="半监督聚类"></a>半监督聚类</h2><p>聚类是一种典型的无监督学习器任务，然而在现实聚类任务中我们往往能获得一些额外的监督信息，于是可通过半监督聚类（semi-supervised clustering）来利用监督信息以获得更好的聚类效果。<br>聚类任务中获得的监督信息大致有两种类型。第一种类型是“必连”（must-link）与“勿连”（cannot-link）约束，前者是指样本必属于同一个簇，后者是指样本必不属于同一个簇；第二种类型的监督信息则是少量的有标记样本。<br><strong>约束k均值（Constrainedd k-means）算法</strong>是利用第一类监督信息的代表。该算法是k均值算法的扩展，它的聚类过程中要确保M（必连）与C（勿连）的约束得以满足，否则将返回错误提示。下图是约束k均值算法的算法流程图。<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML14-8.png" alt=""><br>第二种监督信息是少量有标记样本，可以直接将它们作为“种子”，用它们初始化k均值算法的k个聚类中，并且在聚类簇迭代更新过程中不改变种子样本的簇隶属关系。这就是约束种子k均值算法，其算法描述如下<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML14-9.png" alt=""></p>
+        <p>Hadoop中各个实体间存在大量的交互，远程过程调用让用户可以像调用本地方法一样调用另外一个应用程序提供的服务，而不必设计和开发相关的消息发送、处理和接收等具体代码。是一种重要的分布式计算技术，它提高了程序的互操作性，在Hadoop的实现中得到了广泛地应用。<br><a id="more"></a></p>
+<h2 id="远程过程调用"><a href="#远程过程调用" class="headerlink" title="远程过程调用"></a>远程过程调用</h2><h3 id="RPC原理"><a href="#RPC原理" class="headerlink" title="RPC原理"></a>RPC原理</h3><p><strong>传统的过程调用：</strong>主程序将参数压入栈内并调用过程，这时候主程序停止执行并开始执行相应的过程。被调用的过程从栈中获取参数，然后执行过程函数；执行完毕后，将返回参数入栈，并将控制权交还给调用方。调用方获取返回参数并继续执行。<br><strong>RPC：</strong>当RPC客户需要调用一个远程过程的时候，将参数打包为一个消息，并附加被调用过程的名字，然后发送消息到服务器，然后等待服务器的应答。RPC服务器接收到客户端的请求后，它会解包以获取请求参数，类似传统过程调用，被调用函数从栈中接收参数，确定调用过程并执行，最后返回结果。</p>
+<h2 id="JAVA远程方法调用RMI"><a href="#JAVA远程方法调用RMI" class="headerlink" title="JAVA远程方法调用RMI"></a>JAVA远程方法调用RMI</h2><p>JAVA远程方法调用（Remote Method Invocation，RMI）是java的一个核心API和类库，它允许一个java虚拟机上运行的Java程序调用不同虚拟机上运行的对象中的方法，既是这两个虚拟机运行于物理隔离的不同主机上。<br>RMI提供了和RPC中类似的、标准的<strong>Stub/Skeleton机制</strong>。Stub代表可以被客户端引用的远程对象，位于客户端中并保存着远程对象的接口和方法列表。客户端应用调用远程对象时，Stub将调用请求，通过RMI的基础结构转发到远程对象上。接收到调用请求时，服务器端的Skeleton对象处理有关调用“远方”对象中的所有细节，并调用Skeleton对象。调用远程方法和调用本地方法有着近乎相同的“感观”，一个主要的差别在需要通过命名服务获得远程对象的引用，Java引入了RMI远端对象注册点（registry），RMI服务器创建远程对象类的对象，并将这些对象绑定到注册服务上；RMI客户程序则通过注册点，利用名字查找远程对象，并构造出相应地本地存根对象。另外，和本地方法调用不一样的是，远程方法可能抛出RemoteException异常，客户端程序需要处理该异常<br><strong>Java.io.Serialization：</strong>用于对调用参数和返回值进行序列化和反序列化<br><strong>Java.rmi.Remote：</strong>用于标识作为远程对象的对象<br><strong>抽象类RemoteObject</strong>是作用于远程对象的特殊版本的java.lang.Object，提供了对远程对象有意义的toString（），hashCode（）等方法。<br><strong>RemoteServer</strong>扩展了RemoteObject并提供了大多数服务器对象需要的工具方法。<br><strong>UnicastRemoteObject</strong>类实现了处理一般远程对象的任务。如序列化和反序列化参数及返回值，使用TCP和客户端通信等功能。<br><strong>客户端RMIQueryStatusClient</strong>的工作依赖于RMI存根，这个存根是通过Java的代理机制java.lang.reflect.Proxy动态生成的。<br><img src="http://1" alt=""><br><strong>Observer 设计模式</strong><br>Command 模式将调用操作的对象与如何实现该操作的对象解耦。在运行时，TestCase 或 TestSuite 被当作 Test 命令对象，可以像一般对象那样进行操作和扩展，也可以在实现 Composite 模式时将多个命令复合成一个命令。另外，增加新的命令十分容易，隔离了现有类的影响，今后，也可以与备忘录模式结合，实现 undo 等高级功能。</p>
+<h2 id="Java动态代理和Java-NIO"><a href="#Java动态代理和Java-NIO" class="headerlink" title="Java动态代理和Java NIO"></a>Java动态代理和Java NIO</h2><h3 id="java动态代理"><a href="#java动态代理" class="headerlink" title="java动态代理"></a>java动态代理</h3><p>在Java中，代理对象往往实现和目标对象一致的接口，并作为目标对象的代替，接收对象用户（Client）的调用，并将全部或部分调用转发给目标对象，在这个过程中，实现代理接口和调用转发，是代理对象必须完成的两个重要任务。代理对象可以在调用转发之前或者之后执行一些功能，如输出日志、实施访问控制、访问数据库、加载远程资源。<br>Java.lang.reflect.Proxy中的另一个关键字是reflect反射，反射提供了一个非常丰富而精心设计的工具集，以便编写能够动态操作Java代码的程序。即通过Java.lang.reflect.Proxy可以动态地创建某个接口实现。<br>通过java.lang.reflect.InvocationHandler的实例完成调用转发。InvocationHandler的实例也叫调用句柄实例，其实一个接口，invoke()是其唯一方法。当用户调用newProxyInstance()返回的对象上的方法时，该对象将方法调用转发给调用句柄实例，即invoke()，而invoke()的返回值将作为代理对象方法的调用结果返回给用户，其中参数Method是Java反射中的一个重要抽象，它提供了关于类或接口上某个方法以及如何访问该方法的信息.</p>
+<h3 id="Java-NIO"><a href="#Java-NIO" class="headerlink" title="Java NIO"></a>Java NIO</h3><h4 id="java基本套接字"><a href="#java基本套接字" class="headerlink" title="java基本套接字"></a>java基本套接字</h4><p>socket是两台主机间的一个连接，可以进行7项基本操作：连接远程机器、发送数据、接收数据、关闭连接、绑定端口、监听入站数据、在所绑定端口上接受来自远程机器的连接。其中，前四项用于客户端，后六项用于服务器，最后三项只有服务器才需要。<br><img src="http://2" alt=""></p>
+<h4 id="Java-NIO基础"><a href="#Java-NIO基础" class="headerlink" title="Java NIO基础"></a>Java NIO基础</h4><p>当需要实现同时处理上千个客户请求的服务器时，Java基本套接字会产生一些问题：由于OutputStream的write()方法、InputStream的read()方法和ServerSocket的accept()方法都是阻塞方法，往往需要采用一个客户对应一个线程的服务器系统，虽然使用线程池在某种程度上能够节省部分系统开销，但对于生存期很长的协议来说，大量的闲置客户端限制了系统可以同时服务的客户端总数。为了解决这样的问题，JDK1.4中引入了Java新输入输出系统（New Input/Output，NIO）。非阻塞是NIO实现的重要功能之一，为了实现非阻塞，NIO引入了选择器（Selector）和通道（Channel）的概念。通道表示到实体的开发连接，如硬件设备、文件、网络套接字或可以执行一个或多个不同I/O操作（如读取或写入）的程序组件。一些通道，如文件、网络套接字，允许选择器对通道进行轮询。也就是说，通道能搞注册一个选择器实例，通过该实例的select()方法，用户可以询问“在（一个或一组）通道中，哪一个是当前需要的服务（即被读、写或接受）”。在一个准备好的通道上进行相应地I/O操作，就不需要等待，也就不会阻塞了。</p>
 
       
     </div>
@@ -141,11 +135,11 @@ var _hmt = _hmt || [];
 	  <!-- 百度分享 End -->
 	  
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ML/">ML</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/半监督学习/">半监督学习</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/机器学习/">机器学习</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hadoop/">Hadoop</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/RPC/">RPC</a></li></ul>
 
 	  
 <span>
-Updated:<time datetime="2017-03-01T05:16:48.681Z" itemprop="dateModified">2017-03-01</time>
+Updated:<time datetime="2017-03-01T13:29:42.738Z" itemprop="dateModified">2017-03-01</time>
 </span>
 
 
@@ -155,19 +149,10 @@ Updated:<time datetime="2017-03-01T05:16:48.681Z" itemprop="dateModified">2017-0
     
 <nav id="article-nav">
   
-    <a href="/2017/02/27/机器学习系列—15-概率图模型/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">上一篇</strong>
-      <div class="article-nav-title">
-        
-          机器学习系列—15.概率图模型
-        
-      </div>
-    </a>
   
-  
-    <a href="/2017/02/27/机器学习系列—13-特征选择/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2017/02/27/机器学习系列—8-神经网络/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">下一篇</strong>
-      <div class="article-nav-title">机器学习系列—13.特征选择</div>
+      <div class="article-nav-title">机器学习系列—8.神经网络</div>
     </a>
   
 </nav>
@@ -180,7 +165,7 @@ Updated:<time datetime="2017-03-01T05:16:48.681Z" itemprop="dateModified">2017-0
 
 <!-- 多说评论框 start -->
 <section id="comments">
-  <div class="ds-thread"  data-thread-key="/2017/02/27/机器学习系列—14-半监督学习/" data-title="机器学习系列—14.半监督学习" data-url="http://yoursite.com/2017/02/27/机器学习系列—14-半监督学习/" id="ds_thread">
+  <div class="ds-thread"  data-thread-key="/2017/03/01/Hadoop源码分析之RPC/" data-title="Hadoop源码分析之RPC" data-url="http://yoursite.com/2017/03/01/Hadoop源码分析之RPC/" id="ds_thread">
     <noscript>Please enable JavaScript to view the <a href="//duoshuo.com/?ref_noscript">comments powered by duoshuo.</a></noscript>
   </div>
 </section>
@@ -192,7 +177,7 @@ Updated:<time datetime="2017-03-01T05:16:48.681Z" itemprop="dateModified">2017-0
   <div id="toc" class="toc-aside">
   <h2 class="toc-title">Contents</h2>
     
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#生成式方法"><span class="toc-number">1.</span> <span class="toc-text">生成式方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#半监督SVM"><span class="toc-number">2.</span> <span class="toc-text">半监督SVM</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#基于分歧的方法"><span class="toc-number">3.</span> <span class="toc-text">基于分歧的方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#半监督聚类"><span class="toc-number">4.</span> <span class="toc-text">半监督聚类</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#远程过程调用"><span class="toc-number">1.</span> <span class="toc-text">远程过程调用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#RPC原理"><span class="toc-number">1.1.</span> <span class="toc-text">RPC原理</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JAVA远程方法调用RMI"><span class="toc-number">2.</span> <span class="toc-text">JAVA远程方法调用RMI</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Java动态代理和Java-NIO"><span class="toc-number">3.</span> <span class="toc-text">Java动态代理和Java NIO</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#java动态代理"><span class="toc-number">3.1.</span> <span class="toc-text">java动态代理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Java-NIO"><span class="toc-number">3.2.</span> <span class="toc-text">Java NIO</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#java基本套接字"><span class="toc-number">3.2.1.</span> <span class="toc-text">java基本套接字</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Java-NIO基础"><span class="toc-number">3.2.2.</span> <span class="toc-text">Java NIO基础</span></a></li></ol></li></ol></li></ol>
     
   </div>
 
