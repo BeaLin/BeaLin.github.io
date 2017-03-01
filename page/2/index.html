@@ -442,7 +442,13 @@ Updated:<time datetime="2017-02-27T09:57:02.297Z" itemprop="dateModified">2017-0
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>由于要实现服装的目标检测，所以一直在研究Faster-RCNN 。讲到目标检测，不得不提到rbg大神的深度神经网络检测算法系列RCNN、Fast-RCNN、Faster-RCNN，其还在github上开源了自己的代码，造福广大码农。这是rbg大神的主页 <a href="https://people.eecs.berkeley.edu/~rbg/index.html">https://people.eecs.berkeley.edu/~rbg/index.html</a> ，以及本篇博文会用到的Faster-RCNN的github源码地址 <a href="https://github.com/rbgirshick/py-faster-rcnn">https://github.com/rbgirshick/py-faster-rcnn</a>，欢迎前去膜拜学习。对于RCNN、Fast-RCNN、Faster-RCNN的介绍就不在这里赘述了，可以看看我的上一篇博文 。该github源码是Faster-RCNN python版本的实现，并使用caffe。除了python版本，rbg大神还提供了matlab代码。这两种实现方式有些许的不同，主要体现在以下几点：<br>1.由于使用了python layer，python版本的在测试时间上会比matlab版本的慢10%左右，但是准确率差不多甚至略高一点。<br>2.由于在实现方式上有一点点不同，所以使用MATLAB代码训练的模型与Python版本的不兼容<br>3.目前已经实现的方式有两种：Alternative training和Approximate join training。推荐使用第二种，因为第二种使用的显存更小，而且训练会更快。<br>本篇博文主要分为两部分，第一部分讲如何配置py-faster-rcnn并训练PASCALVOC2007，运行demo。第二部分讲如何对代码和数据集进行修改实现自己数据的训练与检测。<br>
+        <p>由于要实现服装的目标检测，所以一直在研究Faster-RCNN 。讲到目标检测，不得不提到rbg大神的深度神经网络检测算法系列RCNN、Fast-RCNN、Faster-RCNN，其还在github上开源了自己的代码，造福广大码农。这是rbg大神的主页 <a href="https://people.eecs.berkeley.edu/~rbg/index.html">https://people.eecs.berkeley.edu/~rbg/index.html</a> ，以及本篇博文会用到的Faster-RCNN的github源码地址 <a href="https://github.com/rbgirshick/py-faster-rcnn">https://github.com/rbgirshick/py-faster-rcnn</a>，欢迎前去膜拜学习。对于RCNN、Fast-RCNN、Faster-RCNN的介绍就不在这里赘述了，可以看看我的上一篇博文 。该github源码是Faster-RCNN python版本的实现，并使用caffe。除了python版本，rbg大神还提供了matlab代码。这两种实现方式有些许的不同，主要体现在以下几点：</p>
+<ol>
+<li>由于使用了python layer，python版本的在测试时间上会比matlab版本的慢10%左右，但是准确率差不多甚至略高一点。</li>
+<li>由于在实现方式上有一点点不同，所以使用MATLAB代码训练的模型与Python版本的不兼容</li>
+<li>目前已经实现的方式有两种：Alternative training和Approximate join training。推荐使用第二种，因为第二种使用的显存更小，而且训练会更快。</li>
+</ol>
+<p>本篇博文主要分为两部分，第一部分讲如何配置py-faster-rcnn并训练PASCALVOC2007，运行demo。第二部分讲如何对代码和数据集进行修改实现自己数据的训练与检测。<br>
         
           <p class="article-more-link">
             <a href="/2016/10/23/Caffe学习系列——6使用Faster-RCNN进行目标检测/#more">Read More</a>
@@ -464,7 +470,7 @@ Updated:<time datetime="2017-02-27T09:57:02.297Z" itemprop="dateModified">2017-0
 
 	  
 <span>
-Updated:<time datetime="2016-10-30T04:54:23.951Z" itemprop="dateModified">2016-10-30</time>
+Updated:<time datetime="2017-03-01T06:03:05.736Z" itemprop="dateModified">2017-03-01</time>
 </span>
 
 
@@ -529,7 +535,7 @@ Updated:<time datetime="2016-10-30T04:54:23.951Z" itemprop="dateModified">2016-1
 
 	  
 <span>
-Updated:<time datetime="2016-10-30T04:54:13.194Z" itemprop="dateModified">2016-10-30</time>
+Updated:<time datetime="2017-03-01T05:59:47.885Z" itemprop="dateModified">2017-03-01</time>
 </span>
 
 
@@ -661,7 +667,7 @@ Updated:<time datetime="2016-10-23T05:54:25.424Z" itemprop="dateModified">2016-1
 
 	  
 <span>
-Updated:<time datetime="2016-10-30T04:54:03.681Z" itemprop="dateModified">2016-10-30</time>
+Updated:<time datetime="2017-03-01T05:58:11.688Z" itemprop="dateModified">2017-03-01</time>
 </span>
 
 
@@ -722,11 +728,11 @@ Updated:<time datetime="2016-10-30T04:54:03.681Z" itemprop="dateModified">2016-1
       
 	  
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Caffe/">Caffe</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Deep-Learning/">Deep Learning</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Caffe/">Caffe</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Deep-Learning/">Deep Learning</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Fine-tuning/">Fine-tuning</a></li></ul>
 
 	  
 <span>
-Updated:<time datetime="2016-10-23T03:43:32.319Z" itemprop="dateModified">2016-10-23</time>
+Updated:<time datetime="2017-03-01T05:55:57.555Z" itemprop="dateModified">2017-03-01</time>
 </span>
 
 
@@ -790,7 +796,7 @@ Updated:<time datetime="2016-10-23T03:43:32.319Z" itemprop="dateModified">2016-1
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/BE/" style="font-size: 13px; color: #7dc3de">BE</a> <a href="/tags/Bagging/" style="font-size: 13px; color: #7dc3de">Bagging</a> <a href="/tags/Bayes/" style="font-size: 14.4px; color: #6ac0b2">Bayes</a> <a href="/tags/Boosting/" style="font-size: 13px; color: #7dc3de">Boosting</a> <a href="/tags/Caffe/" style="font-size: 17.2px; color: #43ba59">Caffe</a> <a href="/tags/Deep-Learning/" style="font-size: 18.6px; color: #30b72c">Deep Learning</a> <a href="/tags/Faster-RCNN/" style="font-size: 13px; color: #7dc3de">Faster-RCNN</a> <a href="/tags/GC/" style="font-size: 13px; color: #7dc3de">GC</a> <a href="/tags/HDFS/" style="font-size: 13px; color: #7dc3de">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 15.8px; color: #57bd85">Hadoop</a> <a href="/tags/JMM/" style="font-size: 13px; color: #7dc3de">JMM</a> <a href="/tags/JVM/" style="font-size: 13px; color: #7dc3de">JVM</a> <a href="/tags/Java/" style="font-size: 15.8px; color: #57bd85">Java</a> <a href="/tags/K近邻/" style="font-size: 13px; color: #7dc3de">K近邻</a> <a href="/tags/ML/" style="font-size: 20px; color: #1db400">ML</a> <a href="/tags/MLE/" style="font-size: 13px; color: #7dc3de">MLE</a> <a href="/tags/NaiveBayes/" style="font-size: 13px; color: #7dc3de">NaiveBayes</a> <a href="/tags/Object-Detection/" style="font-size: 13px; color: #7dc3de">Object Detection</a> <a href="/tags/PCA/" style="font-size: 13px; color: #7dc3de">PCA</a> <a href="/tags/Python/" style="font-size: 14.4px; color: #6ac0b2">Python</a> <a href="/tags/SVM/" style="font-size: 13px; color: #7dc3de">SVM</a> <a href="/tags/Scrapy/" style="font-size: 13px; color: #7dc3de">Scrapy</a> <a href="/tags/Stacking/" style="font-size: 13px; color: #7dc3de">Stacking</a> <a href="/tags/决策树/" style="font-size: 13px; color: #7dc3de">决策树</a> <a href="/tags/分布式技术/" style="font-size: 13px; color: #7dc3de">分布式技术</a> <a href="/tags/分布式文件系统/" style="font-size: 13px; color: #7dc3de">分布式文件系统</a> <a href="/tags/半监督学习/" style="font-size: 13px; color: #7dc3de">半监督学习</a> <a href="/tags/多线程/" style="font-size: 13px; color: #7dc3de">多线程</a> <a href="/tags/大数据/" style="font-size: 13px; color: #7dc3de">大数据</a> <a href="/tags/感知机/" style="font-size: 14.4px; color: #6ac0b2">感知机</a> <a href="/tags/机器学习/" style="font-size: 20px; color: #1db400">机器学习</a> <a href="/tags/核方法/" style="font-size: 13px; color: #7dc3de">核方法</a> <a href="/tags/概率图模型/" style="font-size: 13px; color: #7dc3de">概率图模型</a> <a href="/tags/深度学习/" style="font-size: 14.4px; color: #6ac0b2">深度学习</a> <a href="/tags/爬虫/" style="font-size: 13px; color: #7dc3de">爬虫</a> <a href="/tags/特征选择/" style="font-size: 13px; color: #7dc3de">特征选择</a> <a href="/tags/神经网络/" style="font-size: 13px; color: #7dc3de">神经网络</a> <a href="/tags/聚类/" style="font-size: 13px; color: #7dc3de">聚类</a> <a href="/tags/降维/" style="font-size: 13px; color: #7dc3de">降维</a> <a href="/tags/集成方法/" style="font-size: 13px; color: #7dc3de">集成方法</a>
+      <a href="/tags/AlexNet/" style="font-size: 13px; color: #7dc3de">AlexNet</a> <a href="/tags/BE/" style="font-size: 13px; color: #7dc3de">BE</a> <a href="/tags/Bagging/" style="font-size: 13px; color: #7dc3de">Bagging</a> <a href="/tags/Bayes/" style="font-size: 14.4px; color: #6ac0b2">Bayes</a> <a href="/tags/Boosting/" style="font-size: 13px; color: #7dc3de">Boosting</a> <a href="/tags/Caffe/" style="font-size: 17.2px; color: #43ba59">Caffe</a> <a href="/tags/Deep-Learning/" style="font-size: 18.6px; color: #30b72c">Deep Learning</a> <a href="/tags/Faster-RCNN/" style="font-size: 13px; color: #7dc3de">Faster-RCNN</a> <a href="/tags/Fine-tuning/" style="font-size: 13px; color: #7dc3de">Fine-tuning</a> <a href="/tags/GC/" style="font-size: 13px; color: #7dc3de">GC</a> <a href="/tags/HDFS/" style="font-size: 13px; color: #7dc3de">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 15.8px; color: #57bd85">Hadoop</a> <a href="/tags/JMM/" style="font-size: 13px; color: #7dc3de">JMM</a> <a href="/tags/JVM/" style="font-size: 13px; color: #7dc3de">JVM</a> <a href="/tags/Java/" style="font-size: 15.8px; color: #57bd85">Java</a> <a href="/tags/K近邻/" style="font-size: 13px; color: #7dc3de">K近邻</a> <a href="/tags/ML/" style="font-size: 20px; color: #1db400">ML</a> <a href="/tags/MLE/" style="font-size: 13px; color: #7dc3de">MLE</a> <a href="/tags/NaiveBayes/" style="font-size: 13px; color: #7dc3de">NaiveBayes</a> <a href="/tags/Object-Detection/" style="font-size: 13px; color: #7dc3de">Object Detection</a> <a href="/tags/PCA/" style="font-size: 13px; color: #7dc3de">PCA</a> <a href="/tags/Python/" style="font-size: 14.4px; color: #6ac0b2">Python</a> <a href="/tags/SVM/" style="font-size: 13px; color: #7dc3de">SVM</a> <a href="/tags/Scrapy/" style="font-size: 13px; color: #7dc3de">Scrapy</a> <a href="/tags/Stacking/" style="font-size: 13px; color: #7dc3de">Stacking</a> <a href="/tags/决策树/" style="font-size: 13px; color: #7dc3de">决策树</a> <a href="/tags/分布式技术/" style="font-size: 13px; color: #7dc3de">分布式技术</a> <a href="/tags/分布式文件系统/" style="font-size: 13px; color: #7dc3de">分布式文件系统</a> <a href="/tags/半监督学习/" style="font-size: 13px; color: #7dc3de">半监督学习</a> <a href="/tags/多线程/" style="font-size: 13px; color: #7dc3de">多线程</a> <a href="/tags/大数据/" style="font-size: 13px; color: #7dc3de">大数据</a> <a href="/tags/感知机/" style="font-size: 14.4px; color: #6ac0b2">感知机</a> <a href="/tags/机器学习/" style="font-size: 20px; color: #1db400">机器学习</a> <a href="/tags/核方法/" style="font-size: 13px; color: #7dc3de">核方法</a> <a href="/tags/概率图模型/" style="font-size: 13px; color: #7dc3de">概率图模型</a> <a href="/tags/深度学习/" style="font-size: 14.4px; color: #6ac0b2">深度学习</a> <a href="/tags/爬虫/" style="font-size: 13px; color: #7dc3de">爬虫</a> <a href="/tags/特征选择/" style="font-size: 13px; color: #7dc3de">特征选择</a> <a href="/tags/神经网络/" style="font-size: 13px; color: #7dc3de">神经网络</a> <a href="/tags/聚类/" style="font-size: 13px; color: #7dc3de">聚类</a> <a href="/tags/降维/" style="font-size: 13px; color: #7dc3de">降维</a> <a href="/tags/集成方法/" style="font-size: 13px; color: #7dc3de">集成方法</a>
     </div>
   </div>
 
