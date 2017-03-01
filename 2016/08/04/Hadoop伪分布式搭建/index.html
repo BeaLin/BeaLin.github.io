@@ -11,7 +11,7 @@
 <meta property="og:url" content="http://yoursite.com/2016/08/04/Hadoop伪分布式搭建/index.html">
 <meta property="og:site_name" content="BeaLin's Blog">
 <meta property="og:description" content="Programmer,Technology,Software Engineering">
-<meta property="og:updated_time" content="2017-03-01T06:07:59.990Z">
+<meta property="og:updated_time" content="2017-03-01T06:19:41.121Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hadoop伪分布式搭建">
 <meta name="twitter:description" content="Programmer,Technology,Software Engineering">
@@ -119,25 +119,30 @@ var _hmt = _hmt || [];
         <h2 id="准备Linux环境"><a href="#准备Linux环境" class="headerlink" title="准备Linux环境"></a>准备Linux环境</h2><ol>
 <li>点击VMware快捷方式，右键打开文件所在位置,然后双击vmnetcfg.exe -&gt; VMnet1 host-only -&gt;修改subnet ip 设置网段：192.168.8.0 子网掩码：255.255.255.0 -&gt; apply -&gt; ok<br>回到windows –&gt; 打开网络和共享中心 -&gt; 更改适配器设置 -&gt; 右键VMnet1 -&gt; 属性 -&gt; 双击IPv4 -&gt; 设置windows的IP：192.168.8.100 子网掩码：255.255.255.0 -&gt; 点击确定<br>在虚拟软件上 –My Computer -&gt; 选中虚拟机 -&gt; 右键 -&gt; settings -&gt; network adapter -&gt; host only -&gt; ok    <a id="more"></a></li>
 <li><p>修改主机名</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/sysconfig/network</span><br><span class="line">NETWORKING=yes</span><br><span class="line">HOSTNAME=centos01</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/sysconfig/network</span><br><span class="line"></span><br><span class="line">NETWORKING=yes</span><br><span class="line">HOSTNAME=centos01</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>修改IP<br>两种方式：<br>第一种：通过Linux图形界面进行修改（强烈推荐）<br>进入Linux图形界面 -&gt; 右键点击右上方的两个小电脑 -&gt; 点击Edit connections -&gt; 选中当前网络System eth0 -&gt; 点击edit按钮 -&gt; 选择IPv4 -&gt; method选择为manual -&gt; 点击add按钮 -&gt; 添加IP：192.168.8.88 子网掩码：255.255.255.0 网关：192.168.1.1 -&gt; apply<br>第二种：修改配置文件方式（屌丝程序猿专用）</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/sysconfig/network-scripts/ifcfg-eth0</span><br><span class="line">			</span><br><span class="line">DEVICE=&quot;eth0&quot;</span><br><span class="line">BOOTPROTO=&quot;static&quot;               ###</span><br><span class="line">HWADDR=&quot;00:0C:29:3C:BF:E7&quot;</span><br><span class="line">IPV6INIT=&quot;yes&quot;</span><br><span class="line">NM_CONTROLLED=&quot;yes&quot;</span><br><span class="line">ONBOOT=&quot;yes&quot;</span><br><span class="line">TYPE=&quot;Ethernet&quot;</span><br><span class="line">UUID=&quot;ce22eeca-ecde-4536-8cc2-ef0dc36d4a8c&quot;</span><br><span class="line">IPADDR=&quot;192.168.8.88&quot;           ###</span><br><span class="line">NETMASK=&quot;255.255.255.0&quot;          ###</span><br><span class="line">GATEWAY=&quot;192.168.8.1&quot;            ###</span><br><span class="line">```			</span><br><span class="line">4. 修改主机名和IP的映射关系</span><br><span class="line">vim /etc/hosts</span><br><span class="line">192.168.8.88	centos01	</span><br><span class="line">5. 关闭防火墙</span><br><span class="line">```		</span><br><span class="line">#查看防火墙状态</span><br><span class="line">service iptables status</span><br><span class="line">#关闭防火墙</span><br><span class="line">service iptables stop</span><br><span class="line">#查看防火墙开机启动状态</span><br><span class="line">chkconfig iptables --list</span><br><span class="line">#关闭防火墙开机启动</span><br><span class="line">chkconfig iptables off</span><br><span class="line">```	</span><br><span class="line">6. 重启Linux</span><br></pre></td></tr></table></figure>
+<li><p>修改IP<br>两种方式：<br><strong>第一种</strong>：通过Linux图形界面进行修改（强烈推荐）<br>进入Linux图形界面 -&gt; 右键点击右上方的两个小电脑 -&gt; 点击Edit connections -&gt; 选中当前网络System eth0 -&gt; 点击edit按钮 -&gt; 选择IPv4 -&gt; method选择为manual -&gt; 点击add按钮 -&gt; 添加IP：192.168.8.88 子网掩码：255.255.255.0 网关：192.168.1.1 -&gt; apply<br><strong>第二种</strong>：修改配置文件方式（屌丝程序猿专用）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/sysconfig/network-scripts/ifcfg-eth0</span><br><span class="line">			</span><br><span class="line">DEVICE=&quot;eth0&quot;</span><br><span class="line">BOOTPROTO=&quot;static&quot;               ###</span><br><span class="line">HWADDR=&quot;00:0C:29:3C:BF:E7&quot;</span><br><span class="line">IPV6INIT=&quot;yes&quot;</span><br><span class="line">NM_CONTROLLED=&quot;yes&quot;</span><br><span class="line">ONBOOT=&quot;yes&quot;</span><br><span class="line">TYPE=&quot;Ethernet&quot;</span><br><span class="line">UUID=&quot;ce22eeca-ecde-4536-8cc2-ef0dc36d4a8c&quot;</span><br><span class="line">IPADDR=&quot;192.168.8.88&quot;           ###</span><br><span class="line">NETMASK=&quot;255.255.255.0&quot;          ###</span><br><span class="line">GATEWAY=&quot;192.168.8.1&quot;            ###</span><br><span class="line">```			</span><br><span class="line"></span><br><span class="line">4. 修改主机名和IP的映射关系</span><br></pre></td></tr></table></figure>
 </li>
 </ol>
-<p>Reboot<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">其实，不管是分布式还是伪分布式的集群搭建，1.0--1.5是基本的步骤。</span><br><span class="line"></span><br><span class="line">## 安装JDK</span><br><span class="line">1. 上传</span><br><span class="line">2. 解压jdk</span><br><span class="line">		#创建文件夹</span><br><span class="line">		mkdir /ideas/java</span><br><span class="line">		#解压</span><br><span class="line">		tar -zxvf jdk-7u76-linux-i586.gz  -C /ideas/java/		</span><br><span class="line">3. 将java添加到环境变量中</span><br><span class="line">		vim /etc/profile</span><br><span class="line">		#在文件最后添加</span><br><span class="line">		export JAVA_HOME=/ideas/java/jdk1.7.0_76</span><br><span class="line">		export PATH=$PATH:$JAVA_HOME/bin</span><br><span class="line">	</span><br><span class="line">		#刷新配置</span><br><span class="line">		source /etc/profile</span><br><span class="line"></span><br><span class="line">## 安装hadoop2.2.0</span><br><span class="line">注意：hadoop2.x的配置文件$HADOOP_HOME/etc/hadoop</span><br><span class="line">伪分布式需要修改5个配置文件</span><br><span class="line">1. 配置hadoop</span><br><span class="line">第一个：hadoop-env.sh</span><br><span class="line">	```	</span><br><span class="line">	vim hadoop-env.sh</span><br><span class="line">	#第27行</span><br><span class="line">	export JAVA_HOME=/ideas/java/jdk1.7.0_76</span><br></pre></td></tr></table></figure></p>
-<p>第二个：core-site.xml<br>    <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 制定HDFS的老大（NameNode）的地址 --&gt;</span><br><span class="line">&lt;property&gt;</span><br><span class="line">	&lt;name&gt;fs.defaultFS&lt;/name&gt;</span><br><span class="line">	&lt;value&gt;hdfs://centos01:9000&lt;/value&gt;</span><br><span class="line">&lt;/property&gt;</span><br><span class="line">&lt;!-- 指定hadoop运行时产生文件的存储目录 --&gt;</span><br><span class="line">&lt;property&gt;</span><br><span class="line">	&lt;name&gt;hadoop.tmp.dir&lt;/name&gt;</span><br><span class="line">	&lt;value&gt;/itcast/hadoop-2.2.0/tmp&lt;/value&gt;</span><br><span class="line">      &lt;/property&gt;</span><br></pre></td></tr></table></figure></p>
-<p>第三个：hdfs-site.xml<br>    <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">		&lt;!-- 指定HDFS副本的数量 --&gt;</span><br><span class="line">		&lt;property&gt;</span><br><span class="line">			&lt;name&gt;dfs.replication&lt;/name&gt;</span><br><span class="line">			&lt;value&gt;1&lt;/value&gt;</span><br><span class="line">        &lt;/property&gt;</span><br><span class="line">	```	</span><br><span class="line">第四个：mapred-site.xml (mv mapred-site.xml.template mapred-site.xml)</span><br></pre></td></tr></table></figure></p>
-<pre><code>    mv mapred-site.xml.template mapred-site.xml
-    vim mapred-site.xml
-    &lt;!-- 指定mr运行在yarn上 --&gt;
-    &lt;property&gt;
-        &lt;name&gt;mapreduce.framework.name&lt;/name&gt;
-        &lt;value&gt;yarn&lt;/value&gt;
-    &lt;/property&gt;
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">第五个：yarn-site.xml</span><br></pre></td></tr></table></figure>
-
-    &lt;!-- 指定YARN的老大（ResourceManager）的地址 --&gt;
+<p>vim /etc/hosts<br>192.168.8.88    centos01<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">5. 关闭防火墙</span><br><span class="line">```		</span><br><span class="line">#查看防火墙状态</span><br><span class="line">service iptables status</span><br><span class="line">#关闭防火墙</span><br><span class="line">service iptables stop</span><br><span class="line">#查看防火墙开机启动状态</span><br><span class="line">chkconfig iptables --list</span><br><span class="line">#关闭防火墙开机启动</span><br><span class="line">chkconfig iptables off</span><br><span class="line">```	</span><br><span class="line"></span><br><span class="line">6. 重启Linux</span><br></pre></td></tr></table></figure></p>
+<p>Reboot<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">其实，不管是分布式还是伪分布式的集群搭建，1.0--1.5是基本的步骤。</span><br><span class="line"></span><br><span class="line">## 安装JDK</span><br><span class="line">1. 上传</span><br><span class="line">2. 解压jdk</span><br></pre></td></tr></table></figure></p>
+<p>#创建文件夹<br>mkdir /ideas/java</p>
+<p>#解压<br>tar -zxvf jdk-7u76-linux-i586.gz  -C /ideas/java/<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">3. 将java添加到环境变量中</span><br></pre></td></tr></table></figure></p>
+<p>vim /etc/profile</p>
+<p>#在文件最后添加<br>export JAVA_HOME=/ideas/java/jdk1.7.0_76<br>export PATH=$PATH:$JAVA_HOME/bin</p>
+<p>#刷新配置<br>source /etc/profile<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">## 安装hadoop2.2.0</span><br><span class="line">注意：hadoop2.x的配置文件$HADOOP_HOME/etc/hadoop</span><br><span class="line">伪分布式需要修改5个配置文件</span><br><span class="line">1. 配置hadoop</span><br><span class="line">**第一个：hadoop-env.sh**</span><br><span class="line">```	</span><br><span class="line">vim hadoop-env.sh</span><br><span class="line">#第27行</span><br><span class="line">export JAVA_HOME=/ideas/java/jdk1.7.0_76</span><br></pre></td></tr></table></figure></p>
+<p><strong>第二个：core-site.xml</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 制定HDFS的老大（NameNode）的地址 --&gt;</span><br><span class="line">&lt;property&gt;</span><br><span class="line">	&lt;name&gt;fs.defaultFS&lt;/name&gt;</span><br><span class="line">	&lt;value&gt;hdfs://centos01:9000&lt;/value&gt;</span><br><span class="line">&lt;/property&gt;</span><br><span class="line">&lt;!-- 指定hadoop运行时产生文件的存储目录 --&gt;</span><br><span class="line">&lt;property&gt;</span><br><span class="line">	&lt;name&gt;hadoop.tmp.dir&lt;/name&gt;</span><br><span class="line">	&lt;value&gt;/itcast/hadoop-2.2.0/tmp&lt;/value&gt;</span><br><span class="line">&lt;/property&gt;</span><br></pre></td></tr></table></figure></p>
+<p><strong>第三个：hdfs-site.xml</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">	&lt;!-- 指定HDFS副本的数量 --&gt;</span><br><span class="line">	&lt;property&gt;</span><br><span class="line">		&lt;name&gt;dfs.replication&lt;/name&gt;</span><br><span class="line">		&lt;value&gt;1&lt;/value&gt;</span><br><span class="line">    &lt;/property&gt;</span><br><span class="line">```	</span><br><span class="line">**第四个：mapred-site.xml (mv mapred-site.xml.template mapred-site.xml)**</span><br></pre></td></tr></table></figure></p>
+<pre><code>mv mapred-site.xml.template mapred-site.xml
+vim mapred-site.xml
+&lt;!-- 指定mr运行在yarn上 --&gt;
+&lt;property&gt;
+    &lt;name&gt;mapreduce.framework.name&lt;/name&gt;
+    &lt;value&gt;yarn&lt;/value&gt;
+&lt;/property&gt;
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">**第五个：yarn-site.xml**</span><br></pre></td></tr></table></figure>
+<pre><code>    &lt;!-- 指定YARN的老大（ResourceManager）的地址 --&gt;
     &lt;property&gt;
         &lt;name&gt;yarn.resourcemanager.hostname&lt;/name&gt;
         &lt;value&gt;centos01&lt;/value&gt;
@@ -147,32 +152,24 @@ var _hmt = _hmt || [];
         &lt;name&gt;yarn.nodemanager.aux-services&lt;/name&gt;
         &lt;value&gt;mapreduce_shuffle&lt;/value&gt;
     &lt;/property&gt;
-```
-</code></pre><ol>
-<li><p>将hadoop添加到环境变量<br> vim /etc/proflie</p>
-<pre><code>export JAVA_HOME=/ideas/java/jdk1.7.0_76
-export HADOOP_HOME=/itcast/hadoop-2.2.0
-export PATH=$PATH:$JAVA_HOME/bin:$HADOOP_HOME/bin:$HADOOP_HOME/sbin
-</code></pre><p> source /etc/profile</p>
-</li>
-<li>格式化namenode（是对namenode进行初始化）<pre><code>hdfs namenode -format (hadoop namenode -format)        
-</code></pre></li>
-<li>启动hadoop<pre><code>先启动HDFS
-sbin/start-dfs.sh    
-再启动YARN
-sbin/start-yarn.sh        
-</code></pre></li>
-<li>验证是否启动成功<pre><code>使用jps命令验证
-27408 NameNode
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">2. 将hadoop添加到环境变量</span><br></pre></td></tr></table></figure>
+
+vim /etc/proflie
+    export JAVA_HOME=/ideas/java/jdk1.7.0_76
+    export HADOOP_HOME=/itcast/hadoop-2.2.0
+    export PATH=$PATH:$JAVA_HOME/bin:$HADOOP_HOME/bin:$HADOOP_HOME/sbin
+
+source /etc/profile
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">3. 格式化namenode（是对namenode进行初始化）</span><br></pre></td></tr></table></figure>
+<pre><code>hdfs namenode -format (hadoop namenode -format)        
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">4. 启动hadoop</span><br><span class="line">先启动HDFS:sbin/start-dfs.sh	</span><br><span class="line">再启动YARN:sbin/start-yarn.sh		</span><br><span class="line">5. 验证是否启动成功</span><br><span class="line">使用jps命令验证</span><br></pre></td></tr></table></figure>
+<pre><code>27408 NameNode
 28218 Jps
 27643 SecondaryNameNode
 28066 NodeManager
 27803 ResourceManager
 27512 DataNode    
-</code></pre>一般遇到DataNode没有启动起来，重启一下机器就行了<pre><code>http://192.168.8.88:50070 （HDFS管理界面）
-http://192.168.8.88:8088 （MR管理界面）
-</code></pre></li>
-</ol>
+</code></pre><p>```<br>一般遇到DataNode没有启动起来，重启一下机器就行了<br><a href="http://192.168.8.88:50070" target="_blank" rel="external">http://192.168.8.88:50070</a> （HDFS管理界面）<br><a href="http://192.168.8.88:8088" target="_blank" rel="external">http://192.168.8.88:8088</a> （MR管理界面）</p>
 
       
     </div>
@@ -187,7 +184,7 @@ http://192.168.8.88:8088 （MR管理界面）
 
 	  
 <span>
-Updated:<time datetime="2017-03-01T06:07:59.990Z" itemprop="dateModified">2017-03-01</time>
+Updated:<time datetime="2017-03-01T06:19:41.121Z" itemprop="dateModified">2017-03-01</time>
 </span>
 
 
