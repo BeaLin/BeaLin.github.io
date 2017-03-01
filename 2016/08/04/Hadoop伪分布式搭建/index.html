@@ -11,7 +11,7 @@
 <meta property="og:url" content="http://yoursite.com/2016/08/04/Hadoop伪分布式搭建/index.html">
 <meta property="og:site_name" content="BeaLin's Blog">
 <meta property="og:description" content="Programmer,Technology,Software Engineering">
-<meta property="og:updated_time" content="2017-03-01T06:45:30.814Z">
+<meta property="og:updated_time" content="2017-03-01T06:47:35.779Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hadoop伪分布式搭建">
 <meta name="twitter:description" content="Programmer,Technology,Software Engineering">
@@ -118,9 +118,7 @@ var _hmt = _hmt || [];
 		
         <h2 id="准备Linux环境"><a href="#准备Linux环境" class="headerlink" title="准备Linux环境"></a>准备Linux环境</h2><ol>
 <li>点击VMware快捷方式，右键打开文件所在位置,然后双击vmnetcfg.exe -&gt; VMnet1 host-only -&gt;修改subnet ip 设置网段：192.168.8.0 子网掩码：255.255.255.0 -&gt; apply -&gt; ok<br>回到windows –&gt; 打开网络和共享中心 -&gt; 更改适配器设置 -&gt; 右键VMnet1 -&gt; 属性 -&gt; 双击IPv4 -&gt; 设置windows的IP：192.168.8.100 子网掩码：255.255.255.0 -&gt; 点击确定<br>在虚拟软件上 –My Computer -&gt; 选中虚拟机 -&gt; 右键 -&gt; settings -&gt; network adapter -&gt; host only -&gt; ok    <a id="more"></a></li>
-<li><p>修改主机名</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/sysconfig/network</span><br><span class="line"></span><br><span class="line">NETWORKING=yes</span><br><span class="line">HOSTNAME=centos01</span><br></pre></td></tr></table></figure>
-</li>
+<li>修改主机名<br>vim /etc/sysconfig/network<br>NETWORKING=yes<br>HOSTNAME=centos01   </li>
 <li><p>修改IP<br>两种方式：<br><strong>第一种</strong>：通过Linux图形界面进行修改（强烈推荐）<br>进入Linux图形界面 -&gt; 右键点击右上方的两个小电脑 -&gt; 点击Edit connections -&gt; 选中当前网络System eth0 -&gt; 点击edit按钮 -&gt; 选择IPv4 -&gt; method选择为manual -&gt; 点击add按钮 -&gt; 添加IP：192.168.8.88 子网掩码：255.255.255.0 网关：192.168.1.1 -&gt; apply<br><strong>第二种</strong>：修改配置文件方式（屌丝程序猿专用）：<br>vim /etc/sysconfig/network-scripts/ifcfg-eth0<br>DEVICE=”eth0”<br>BOOTPROTO=”static”               ###<br>HWADDR=”00:0C:29:3C:BF:E7”<br>IPV6INIT=”yes”<br>NM_CONTROLLED=”yes”<br>ONBOOT=”yes”<br>TYPE=”Ethernet”<br>UUID=”ce22eeca-ecde-4536-8cc2-ef0dc36d4a8c”<br>IPADDR=”192.168.8.88”           ###<br>NETMASK=”255.255.255.0”          ###<br>GATEWAY=”192.168.8.1”            ###</p>
 </li>
 <li><p>修改主机名和IP的映射关系<br>vim /etc/hosts<br>192.168.8.88    centos01    </p>
@@ -163,7 +161,7 @@ var _hmt = _hmt || [];
 
 	  
 <span>
-Updated:<time datetime="2017-03-01T06:45:30.814Z" itemprop="dateModified">2017-03-01</time>
+Updated:<time datetime="2017-03-01T06:47:35.779Z" itemprop="dateModified">2017-03-01</time>
 </span>
 
 
