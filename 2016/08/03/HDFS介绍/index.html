@@ -18,7 +18,7 @@
 <meta property="og:image" content="http://o73nd1ra4.bkt.clouddn.com/Hadoop1-5.png">
 <meta property="og:image" content="http://o73nd1ra4.bkt.clouddn.com/Hadoop1-6.png">
 <meta property="og:image" content="http://o73nd1ra4.bkt.clouddn.com/Hadoop1-7.png">
-<meta property="og:updated_time" content="2017-03-01T13:26:06.145Z">
+<meta property="og:updated_time" content="2017-03-02T03:13:40.836Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="HDFS介绍">
 <meta name="twitter:description" content="Programmer,Technology,Software Engineering">
@@ -131,17 +131,24 @@ var _hmt = _hmt || [];
 <li>超大数据集</li>
 <li>流式数据访问</li>
 <li>移动计算优于移动数据</li>
-<li>轻便访问异构的软硬件平台<a id="more"></a>
-<h2 id="主从结构"><a href="#主从结构" class="headerlink" title="主从结构"></a>主从结构</h2>HDFS采用主从结构，即1个namenode，多个datanode。<h3 id="NameNode（管理节点）"><a href="#NameNode（管理节点）" class="headerlink" title="NameNode（管理节点）"></a>NameNode（管理节点）</h3><h4 id="NameNode-Metadata"><a href="#NameNode-Metadata" class="headerlink" title="NameNode Metadata"></a>NameNode Metadata</h4>元数据存储方式NameNode(FileName, replicas, block-ids,id2host…)<br>/test/a.log, 3 ,{blk_1,blk_2}, [{blk_1:[h0,h1,h3]},{blk_2:[h0,h2,h4]}]<br><img src="http://o73nd1ra4.bkt.clouddn.com/Hadoop1-1.png" alt="NameNode中的存储情况"><h4 id="功能"><a href="#功能" class="headerlink" title="功能"></a>功能</h4>NameNode的功能主要有以下几点：</li>
+<li>轻便访问异构的软硬件平台</li>
+</ol>
+<a id="more"></a>
+<h2 id="主从结构"><a href="#主从结构" class="headerlink" title="主从结构"></a>主从结构</h2><p>HDFS采用主从结构，即1个namenode，多个datanode。</p>
+<h3 id="NameNode（管理节点）"><a href="#NameNode（管理节点）" class="headerlink" title="NameNode（管理节点）"></a>NameNode（管理节点）</h3><h4 id="NameNode-Metadata"><a href="#NameNode-Metadata" class="headerlink" title="NameNode Metadata"></a>NameNode Metadata</h4><p>元数据存储方式NameNode(FileName, replicas, block-ids,id2host…)<br>/test/a.log, 3 ,{blk_1,blk_2}, [{blk_1:[h0,h1,h3]},{blk_2:[h0,h2,h4]}]<br><img src="http://o73nd1ra4.bkt.clouddn.com/Hadoop1-1.png" alt="NameNode中的存储情况"></p>
+<h4 id="功能"><a href="#功能" class="headerlink" title="功能"></a>功能</h4><p>NameNode的功能主要有以下几点：</p>
+<ol>
 <li>维护着整个文件系统的文件目录树，文件/目录的元信息和每个文件对应的数据块列表。</li>
 <li>调节客户端访问文件的主服务器（提供名称查询服务、保存metadata、启动后加载metadata至内存）</li>
 </ol>
 <p>同时它周期性地从集群中的每个Datanode接收心跳信号和块状态报告(Blockreport)。接收到心跳信号意味着该Datanode节点工作正常。块状态报告包含了一个该Datanode上所有数据块的列表。读取文件时NameNode尽量让用户先读取最近的副本，降低带块消耗和读取时延。</p>
 <h4 id="NameNode的工作特点"><a href="#NameNode的工作特点" class="headerlink" title="NameNode的工作特点"></a>NameNode的工作特点</h4><p>NameNode中元数据的持久化：：<br><strong>Fsimage：元数据镜像文件</strong>。在本地文件系统中：存储某一时段NameNode内存元数据信息。包括完整的文件系统命名空间、文件块的映射和文件系统的配置。<br><strong>Edits：操作日志文件</strong>。（用于持久化每一个对文件系统的元数据的改变。<br><strong>Fstime：保存最近一次checkpoint的时间</strong>。检查点发生在NameNode启动时。<br>以上这些文件是保存在linux的文件系统中。<br>Namenode始终在内存中保存metedata，用于处理“读请求”。有“写请求”到来时，namenode会首先写editlog到磁盘，即向edits文件中写日志，成功返回后，才会修改内存，并且向客户端返回<br>Hadoop会维护一个fsimage文件，也就是namenode中metedata的镜像，但是fsimage不会随时与namenode内存中的metedata保持一致，而是每隔一段时间通过合并edits文件来更新内容。<strong>Secondary namenode</strong>就是用来合并fsimage和edits文件来更新NameNode的metedata的。</p>
-<h4 id="Secondary-NameNode"><a href="#Secondary-NameNode" class="headerlink" title="Secondary NameNode"></a>Secondary NameNode</h4><p>Secondary NameNode是HA（高可靠性）的一个解决方案。<br><strong>执行过程：</strong>周期性从NameNode上下载元数据信息（fsimage, edits），然后把二者合并，生成新的fsimage，在本地保存，并将其推送到NameNode（Namenode启动时加载最新的FSImage），替换旧的fsimage。<br>默认在安装在NameNode节点上，但这样不安全！<br><strong>1. secondary namenode的工作流程</strong><br><img src="http://o73nd1ra4.bkt.clouddn.com/Hadoop1-2.jpg" alt=""><br>1、secondary通知namenode切换edits文件<br>2、secondary从namenode获得fsimage和edits(通过http)<br>3、secondary将fsimage载入内存，然后开始合并edits<br>4、secondary将新的fsimage发回给namenode<br>5、namenode用新的fsimage替换旧的fsimage</p>
-<ol>
-<li>什么时候checkpiont<br>复制触发的条件在core-site.xml中<br>fs.checkpoint.period指定两次checkpoint的最大时间间隔，默认3600秒。<br>fs.checkpoint.size 规定edits文件的最大值，一旦超过这个值则强制checkpoint，不管是否到达最大时间间隔。默认大小是64M。即当EditsLog&gt;64MB时，触发两文件合并<h3 id="DataNode"><a href="#DataNode" class="headerlink" title="DataNode"></a>DataNode</h3><h4 id="存储形式：块"><a href="#存储形式：块" class="headerlink" title="存储形式：块"></a>存储形式：块</h4>文件块（block）：最基本的存储单位。磁盘块一般为512字节，文件系统块一般为几千字节，为前者的整数倍。对于文件内容而言，一个文件的长度大小是size，那么从文件的0偏移开始，按照固定的大小，顺序对文件进行划分并编号，划分好的每一个块称一个Block。HDFS默认Block大小是64MB（可使寻道时间最小化），以一个256MB文件，共有256/64=4个Block.。一个HDFS文件最多切分为128块。<br>PS：若上传文件&lt;64MB，仍占用一个Block的Namenode Metadata，但物理空间不占用64MB<br>Fsck：查看块信息<br><strong>优点</strong>：:简化存储子系统的设计；大于网络中任意一个磁盘的容量<h4 id="存储内容"><a href="#存储内容" class="headerlink" title="存储内容"></a>存储内容</h4>一个数据块在DataNode以文件存储在磁盘上，包括两个文件，一个是数据本身，一个是元数据包括数据块的长度，块数据的校验和，以及时间戳<h4 id="心跳机制"><a href="#心跳机制" class="headerlink" title="心跳机制"></a>心跳机制</h4>DataNode启动后向NameNode注册，通过后，周期性（1小时）的向NameNode上报所有的块信息。<br>心跳是每3秒一次，心跳返回结果带有NameNode给该DataNode的命令，如复制块数据到另一台机器，或删除某个数据块。<br>如果超过10分钟没有收到某个DataNode 的心跳，则认为该节点不可用。<br>~集群运行中可以安全加入和退出一些机<h2 id="保证可靠性的措施"><a href="#保证可靠性的措施" class="headerlink" title="保证可靠性的措施"></a>保证可靠性的措施</h2>HDFS保证可靠性的措施主要有以下几种方式<h3 id="一个名字节点和多个数据节点"><a href="#一个名字节点和多个数据节点" class="headerlink" title="一个名字节点和多个数据节点"></a>一个名字节点和多个数据节点</h3><h3 id="数据复制（冗余机制）（保证容错）"><a href="#数据复制（冗余机制）（保证容错）" class="headerlink" title="数据复制（冗余机制）（保证容错）"></a>数据复制（冗余机制）（保证容错）</h3><strong>1. 三复本存放策略</strong><br>将数据复制三份分别保存在以下三个地方：<br>1.本地机器的HDFS目录下<br>2.不同机架的某个DataNode<br>3.同一机架的某台机器上<br><strong>2. 备份机制</strong><br>如下图所示，由DataNode1流式传至DataNode2，再流式传至DataNode3<br><img src="http://o73nd1ra4.bkt.clouddn.com/Hadoop1-3.png" alt=""><br><strong>3. 存放的位置（机架感知策略）</strong><br>机架感知：非自适应，通常情况，Hadoop随机选择机器，若数据量大，会造成性能瓶颈</li>
-</ol>
+<h4 id="Secondary-NameNode"><a href="#Secondary-NameNode" class="headerlink" title="Secondary NameNode"></a>Secondary NameNode</h4><p>Secondary NameNode是HA（高可靠性）的一个解决方案。<br><strong>执行过程：</strong>周期性从NameNode上下载元数据信息（fsimage, edits），然后把二者合并，生成新的fsimage，在本地保存，并将其推送到NameNode（Namenode启动时加载最新的FSImage），替换旧的fsimage。<br>默认在安装在NameNode节点上，但这样不安全！<br><strong>1. secondary namenode的工作流程</strong><br><img src="http://o73nd1ra4.bkt.clouddn.com/Hadoop1-2.jpg" alt=""><br>1、secondary通知namenode切换edits文件<br>2、secondary从namenode获得fsimage和edits(通过http)<br>3、secondary将fsimage载入内存，然后开始合并edits<br>4、secondary将新的fsimage发回给namenode<br>5、namenode用新的fsimage替换旧的fsimage<br><strong>2. 什么时候checkpiont</strong><br>复制触发的条件在core-site.xml中<br>fs.checkpoint.period指定两次checkpoint的最大时间间隔，默认3600秒。<br>fs.checkpoint.size 规定edits文件的最大值，一旦超过这个值则强制checkpoint，不管是否到达最大时间间隔。默认大小是64M。即当EditsLog&gt;64MB时，触发两文件合并</p>
+<h3 id="DataNode"><a href="#DataNode" class="headerlink" title="DataNode"></a>DataNode</h3><h4 id="存储形式：块"><a href="#存储形式：块" class="headerlink" title="存储形式：块"></a>存储形式：块</h4><p>文件块（block）：最基本的存储单位。磁盘块一般为512字节，文件系统块一般为几千字节，为前者的整数倍。对于文件内容而言，一个文件的长度大小是size，那么从文件的0偏移开始，按照固定的大小，顺序对文件进行划分并编号，划分好的每一个块称一个Block。HDFS默认Block大小是64MB（可使寻道时间最小化），以一个256MB文件，共有256/64=4个Block.。一个HDFS文件最多切分为128块。<br>PS：若上传文件&lt;64MB，仍占用一个Block的Namenode Metadata，但物理空间不占用64MB<br>Fsck：查看块信息<br><strong>优点</strong>：:简化存储子系统的设计；大于网络中任意一个磁盘的容量</p>
+<h4 id="存储内容"><a href="#存储内容" class="headerlink" title="存储内容"></a>存储内容</h4><p>一个数据块在DataNode以文件存储在磁盘上，包括两个文件，一个是数据本身，一个是元数据包括数据块的长度，块数据的校验和，以及时间戳</p>
+<h4 id="心跳机制"><a href="#心跳机制" class="headerlink" title="心跳机制"></a>心跳机制</h4><p>DataNode启动后向NameNode注册，通过后，周期性（1小时）的向NameNode上报所有的块信息。<br>心跳是每3秒一次，心跳返回结果带有NameNode给该DataNode的命令，如复制块数据到另一台机器，或删除某个数据块。<br>如果超过10分钟没有收到某个DataNode 的心跳，则认为该节点不可用。<br>~集群运行中可以安全加入和退出一些机</p>
+<h2 id="保证可靠性的措施"><a href="#保证可靠性的措施" class="headerlink" title="保证可靠性的措施"></a>保证可靠性的措施</h2><p>HDFS保证可靠性的措施主要有以下几种方式</p>
+<h3 id="一个名字节点和多个数据节点"><a href="#一个名字节点和多个数据节点" class="headerlink" title="一个名字节点和多个数据节点"></a>一个名字节点和多个数据节点</h3><h3 id="数据复制（冗余机制）（保证容错）"><a href="#数据复制（冗余机制）（保证容错）" class="headerlink" title="数据复制（冗余机制）（保证容错）"></a>数据复制（冗余机制）（保证容错）</h3><p><strong>1. 三复本存放策略</strong><br>将数据复制三份分别保存在以下三个地方：<br>1.本地机器的HDFS目录下<br>2.不同机架的某个DataNode<br>3.同一机架的某台机器上<br><strong>2. 备份机制</strong><br>如下图所示，由DataNode1流式传至DataNode2，再流式传至DataNode3<br><img src="http://o73nd1ra4.bkt.clouddn.com/Hadoop1-3.png" alt=""><br><strong>3. 存放的位置（机架感知策略）</strong><br>机架感知：非自适应，通常情况，Hadoop随机选择机器，若数据量大，会造成性能瓶颈</p>
 <h3 id="故障检测"><a href="#故障检测" class="headerlink" title="故障检测"></a>故障检测</h3><ol>
 <li>DataNode<br>DataNode主要有以下几种方式<br><strong>心跳机制：</strong>心跳包检测是否宕机）——<br><strong>安全模式</strong>下检测：块报告<br>数据完整性检测（<strong>校验和</strong>比较）</li>
 <li>NameNode<br>NameNode使用Secondary NameNode机制来保证故障检测。</li>
@@ -200,7 +207,7 @@ var _hmt = _hmt || [];
 
 	  
 <span>
-Updated:<time datetime="2017-03-01T13:26:06.145Z" itemprop="dateModified">2017-03-01</time>
+Updated:<time datetime="2017-03-02T03:13:40.836Z" itemprop="dateModified">2017-03-02</time>
 </span>
 
 
@@ -314,7 +321,7 @@ Updated:<time datetime="2017-03-01T13:26:06.145Z" itemprop="dateModified">2017-0
       <ul>
         
           <li>
-            <a href="/2017/03/01/Hadoop源码分析之RPC/">Hadoop源码分析之RPC</a>
+            <a href="/2017/03/01/Hadoop源码分析之RPC/">Hadoop源码分析之RPC一</a>
           </li>
         
           <li>
