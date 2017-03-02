@@ -68,7 +68,7 @@ var _hmt = _hmt || [];
           <a id="nav-github-link" class="nav-icon" href="https://github.com/BeaLin" title="Github" target="_blank"></a>
         
         
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Zoeken"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -79,6 +79,71 @@ var _hmt = _hmt || [];
 
       <div class="outer">
         <section id="main">
+  
+    <article id="post-MapReduce介绍" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    
+<a href="/2017/03/02/MapReduce介绍/" class="article-date">
+  <time datetime="2017-03-02T08:17:07.000Z" itemprop="datePublished">2017-03-02</time>
+</a>
+
+
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Hadoop/">Hadoop</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/03/02/MapReduce介绍/">MapReduce介绍</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>本文主要简要介绍MapReduce的思想和工作机制。参考的文献是Hadoop权威指南，本文偏向于个人看完书的笔记总结，若有不足或错误之处，还望指出。<br>MapReduce和关系型数据库的主要差别是：MapReduce适合一次写入、多次读取数据的应用，而关系型数据库更适合持续更新的数据集；MapReduce对于非结构化或半结构化数据非常有效。其有两个核心特性：数据本地化和无共享框架。数据本地化指的是在计算节点上存储数据，以实现数据的本地快速访问。无共享框架指的是各个任务之间彼此独立。<br>MapReduce作业（job）是客户端需要执行的一个工作单元，包括输入数据、MapReduce程序和配置信息。有两类节点控制作业执行过程：一个jobtracker及一系列tasktracker。jobtracker调度任务来协调所有运行在系统上的作业，tasktracker运行任务并将运行进度报告发送给jobtracker。<br>MapReduce采用”分而治之”的思想，把对大规模数据集的操作，分发给一个主节点管理下的各个分节点共同完成，然后通过整合各个节点的中间结果，得到最终结果。Hadoop将作业分成若干个小任务（task），其中包括两类任务：map任务和reduce任务。Hadoop将MapReduce的输入数据划分成等长的小数据块，称为输入分片（input split）简称分片。Hadoop为每个分片构建一个map任务来运行用户自定义的map函数。Map任务的输出结果写入本地硬盘，而非HDFS。为了减少数据通信开销,中间结果数据进入reduce节点前需要进行合并(combine)处理,把具有同样主键的数据合并到一起避免重复传送; 一个reducer节点所处理的数据可能会来自多个map节点, 因此, map节点输出的中间结果需使用一定的策略进行适当的划分(partitioner)处理，保证相关数据发送到同一个reducer节点。<br>
+        
+          <p class="article-more-link">
+            <a href="/2017/03/02/MapReduce介绍/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+	  
+	  <a data-url="http://yoursite.com/2017/03/02/MapReduce介绍/" data-id="cizsblrxq000e2gvy1shg2x0i" data_title="MapReduce介绍" data_summary="本文主要简要介绍MapReduce的思想和工作机制。参..." class="article-share-link">Delen</a>
+      
+
+      
+        <a href="http://yoursite.com/2017/03/02/MapReduce介绍/#ds-thread" class="ds-thread-count article-comment-link" data-thread-key="/2017/03/02/MapReduce介绍/">暂无评论</a>
+      
+	  
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hadoop/">Hadoop</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MapReduce/">MapReduce</a></li></ul>
+
+	  
+<span>
+更新日期:<time datetime="2017-03-02T11:39:34.510Z" itemprop="dateModified">2017-03-02</time>
+</span>
+
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+
   
     <article id="post-Hadoop源码分析之RPC" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
@@ -119,7 +184,7 @@ var _hmt = _hmt || [];
     </div>
     <footer class="article-footer">
 	  
-	  <a data-url="http://yoursite.com/2017/03/01/Hadoop源码分析之RPC/" data-id="cizr01khl000gm8vyx59epriz" data_title="Hadoop源码分析之RPC一" data_summary="Hadoop中各个实体间存在大量的交互，远程过程调用让..." class="article-share-link">Share</a>
+	  <a data-url="http://yoursite.com/2017/03/01/Hadoop源码分析之RPC/" data-id="cizsblrxx000g2gvyaf6iqqdi" data_title="Hadoop源码分析之RPC一" data_summary="Hadoop中各个实体间存在大量的交互，远程过程调用让..." class="article-share-link">Delen</a>
       
 
       
@@ -131,7 +196,7 @@ var _hmt = _hmt || [];
 
 	  
 <span>
-Updated:<time datetime="2017-03-02T06:28:25.138Z" itemprop="dateModified">2017-03-02</time>
+更新日期:<time datetime="2017-03-02T08:18:10.526Z" itemprop="dateModified">2017-03-02</time>
 </span>
 
 
@@ -184,7 +249,7 @@ Updated:<time datetime="2017-03-02T06:28:25.138Z" itemprop="dateModified">2017-0
     </div>
     <footer class="article-footer">
 	  
-	  <a data-url="http://yoursite.com/2017/02/27/机器学习系列—8-神经网络/" data-id="cizr01kox0026m8vy9h43jwp4" data_title="机器学习系列—8.神经网络" data_summary="本文主要分为以下几个部分。首先对神经网络进行概述。由此..." class="article-share-link">Share</a>
+	  <a data-url="http://yoursite.com/2017/02/27/机器学习系列—8-神经网络/" data-id="cizsblsaq002h2gvy3384ef7a" data_title="机器学习系列—8.神经网络" data_summary="本文主要分为以下几个部分。首先对神经网络进行概述。由此..." class="article-share-link">Delen</a>
       
 
       
@@ -196,7 +261,7 @@ Updated:<time datetime="2017-03-02T06:28:25.138Z" itemprop="dateModified">2017-0
 
 	  
 <span>
-Updated:<time datetime="2017-03-02T01:46:22.863Z" itemprop="dateModified">2017-03-02</time>
+更新日期:<time datetime="2017-03-02T01:46:22.863Z" itemprop="dateModified">2017-03-02</time>
 </span>
 
 
@@ -249,7 +314,7 @@ Updated:<time datetime="2017-03-02T01:46:22.863Z" itemprop="dateModified">2017-0
     </div>
     <footer class="article-footer">
 	  
-	  <a data-url="http://yoursite.com/2017/02/27/机器学习系列—15-概率图模型/" data-id="cizr01kmr001lm8vyybjv2sxn" data_title="机器学习系列—15.概率图模型" data_summary="机器学习最重要的任务是根据一些已观察到的证据（例如训练..." class="article-share-link">Share</a>
+	  <a data-url="http://yoursite.com/2017/02/27/机器学习系列—15-概率图模型/" data-id="cizsbls4r001i2gvyenb2w0o6" data_title="机器学习系列—15.概率图模型" data_summary="机器学习最重要的任务是根据一些已观察到的证据（例如训练..." class="article-share-link">Delen</a>
       
 
       
@@ -261,7 +326,7 @@ Updated:<time datetime="2017-03-02T01:46:22.863Z" itemprop="dateModified">2017-0
 
 	  
 <span>
-Updated:<time datetime="2017-03-01T05:35:31.604Z" itemprop="dateModified">2017-03-01</time>
+更新日期:<time datetime="2017-03-01T05:35:31.604Z" itemprop="dateModified">2017-03-01</time>
 </span>
 
 
@@ -314,7 +379,7 @@ Updated:<time datetime="2017-03-01T05:35:31.604Z" itemprop="dateModified">2017-0
     </div>
     <footer class="article-footer">
 	  
-	  <a data-url="http://yoursite.com/2017/02/27/机器学习系列—14-半监督学习/" data-id="cizr01kmg001gm8vybi680nds" data_title="机器学习系列—14.半监督学习" data_summary="当训练样本不足时，学得模型的泛化能力也往往不佳。因此可..." class="article-share-link">Share</a>
+	  <a data-url="http://yoursite.com/2017/02/27/机器学习系列—14-半监督学习/" data-id="cizsbls5o001q2gvy07rw6934" data_title="机器学习系列—14.半监督学习" data_summary="当训练样本不足时，学得模型的泛化能力也往往不佳。因此可..." class="article-share-link">Delen</a>
       
 
       
@@ -326,7 +391,7 @@ Updated:<time datetime="2017-03-01T05:35:31.604Z" itemprop="dateModified">2017-0
 
 	  
 <span>
-Updated:<time datetime="2017-03-01T05:16:48.681Z" itemprop="dateModified">2017-03-01</time>
+更新日期:<time datetime="2017-03-01T05:16:48.681Z" itemprop="dateModified">2017-03-01</time>
 </span>
 
 
@@ -379,7 +444,7 @@ Updated:<time datetime="2017-03-01T05:16:48.681Z" itemprop="dateModified">2017-0
     </div>
     <footer class="article-footer">
 	  
-	  <a data-url="http://yoursite.com/2017/02/27/机器学习系列—13-特征选择/" data-id="cizr01km0001dm8vyrb7xjymd" data_title="机器学习系列—13.特征选择" data_summary="特征选择是一个重要的“数据预处理”（data prep..." class="article-share-link">Share</a>
+	  <a data-url="http://yoursite.com/2017/02/27/机器学习系列—13-特征选择/" data-id="cizsbls35001b2gvyutc504kw" data_title="机器学习系列—13.特征选择" data_summary="特征选择是一个重要的“数据预处理”（data prep..." class="article-share-link">Delen</a>
       
 
       
@@ -391,7 +456,7 @@ Updated:<time datetime="2017-03-01T05:16:48.681Z" itemprop="dateModified">2017-0
 
 	  
 <span>
-Updated:<time datetime="2017-03-01T04:59:14.684Z" itemprop="dateModified">2017-03-01</time>
+更新日期:<time datetime="2017-03-01T04:59:14.684Z" itemprop="dateModified">2017-03-01</time>
 </span>
 
 
@@ -444,7 +509,7 @@ Updated:<time datetime="2017-03-01T04:59:14.684Z" itemprop="dateModified">2017-0
     </div>
     <footer class="article-footer">
 	  
-	  <a data-url="http://yoursite.com/2017/02/27/机器学习系列—12-降维之PCA/" data-id="cizr01klq0019m8vytr7xu464" data_title="机器学习系列—12.降维之PCA" data_summary="许多学习方法都涉及距离计算，而高维空间会给距离计算带来..." class="article-share-link">Share</a>
+	  <a data-url="http://yoursite.com/2017/02/27/机器学习系列—12-降维之PCA/" data-id="cizsbls57001n2gvyvyvx2bu8" data_title="机器学习系列—12.降维之PCA" data_summary="许多学习方法都涉及距离计算，而高维空间会给距离计算带来..." class="article-share-link">Delen</a>
       
 
       
@@ -456,7 +521,7 @@ Updated:<time datetime="2017-03-01T04:59:14.684Z" itemprop="dateModified">2017-0
 
 	  
 <span>
-Updated:<time datetime="2017-03-01T03:33:00.697Z" itemprop="dateModified">2017-03-01</time>
+更新日期:<time datetime="2017-03-01T03:33:00.697Z" itemprop="dateModified">2017-03-01</time>
 </span>
 
 
@@ -509,7 +574,7 @@ Updated:<time datetime="2017-03-01T03:33:00.697Z" itemprop="dateModified">2017-0
     </div>
     <footer class="article-footer">
 	  
-	  <a data-url="http://yoursite.com/2017/02/27/机器学习系列—11-k近邻/" data-id="cizr01klf0017m8vy5o21wmfk" data_title="机器学习系列—11.k近邻" data_summary="k近邻（k-Nearest Neighbor，kNN）..." class="article-share-link">Share</a>
+	  <a data-url="http://yoursite.com/2017/02/27/机器学习系列—11-k近邻/" data-id="cizsbls2h00192gvy322kjq0u" data_title="机器学习系列—11.k近邻" data_summary="k近邻（k-Nearest Neighbor，kNN）..." class="article-share-link">Delen</a>
       
 
       
@@ -521,7 +586,7 @@ Updated:<time datetime="2017-03-01T03:33:00.697Z" itemprop="dateModified">2017-0
 
 	  
 <span>
-Updated:<time datetime="2017-03-01T03:34:23.485Z" itemprop="dateModified">2017-03-01</time>
+更新日期:<time datetime="2017-03-01T03:34:23.485Z" itemprop="dateModified">2017-03-01</time>
 </span>
 
 
@@ -578,7 +643,7 @@ Updated:<time datetime="2017-03-01T03:34:23.485Z" itemprop="dateModified">2017-0
     </div>
     <footer class="article-footer">
 	  
-	  <a data-url="http://yoursite.com/2017/02/27/机器学习系列—10-聚类/" data-id="cizr01kl10013m8vyzuzk6o0s" data_title="机器学习系列—10.聚类" data_summary="在“无监督学习”中，训练样本的标记信息是未知的，目标是..." class="article-share-link">Share</a>
+	  <a data-url="http://yoursite.com/2017/02/27/机器学习系列—10-聚类/" data-id="cizsbls0d000x2gvyxy7ej0jj" data_title="机器学习系列—10.聚类" data_summary="在“无监督学习”中，训练样本的标记信息是未知的，目标是..." class="article-share-link">Delen</a>
       
 
       
@@ -590,7 +655,7 @@ Updated:<time datetime="2017-03-01T03:34:23.485Z" itemprop="dateModified">2017-0
 
 	  
 <span>
-Updated:<time datetime="2017-03-01T03:15:26.047Z" itemprop="dateModified">2017-03-01</time>
+更新日期:<time datetime="2017-03-01T03:15:26.047Z" itemprop="dateModified">2017-03-01</time>
 </span>
 
 
@@ -643,7 +708,7 @@ Updated:<time datetime="2017-03-01T03:15:26.047Z" itemprop="dateModified">2017-0
     </div>
     <footer class="article-footer">
 	  
-	  <a data-url="http://yoursite.com/2017/02/27/机器学习系列—5-决策树/" data-id="cizr01kob0020m8vy2sv0atce" data_title="机器学习系列—5.决策树" data_summary="基本流程决策树（decision）是一类常见的机器学习..." class="article-share-link">Share</a>
+	  <a data-url="http://yoursite.com/2017/02/27/机器学习系列—5-决策树/" data-id="cizsbls8g001w2gvy2xcwmv39" data_title="机器学习系列—5.决策树" data_summary="基本流程决策树（decision）是一类常见的机器学习..." class="article-share-link">Delen</a>
       
 
       
@@ -655,72 +720,7 @@ Updated:<time datetime="2017-03-01T03:15:26.047Z" itemprop="dateModified">2017-0
 
 	  
 <span>
-Updated:<time datetime="2017-02-28T11:57:19.518Z" itemprop="dateModified">2017-02-28</time>
-</span>
-
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-
-  
-    <article id="post-机器学习系列—9-集成学习" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    
-<a href="/2017/02/27/机器学习系列—9-集成学习/" class="article-date">
-  <time datetime="2017-02-27T05:54:40.000Z" itemprop="datePublished">2017-02-27</time>
-</a>
-
-
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Machine-Learning/">Machine Learning</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/02/27/机器学习系列—9-集成学习/">机器学习系列—9.集成学习</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>集成学习（ensemble learning）通过构建并结合多个学习器来完成任务，有时也被称为多分类器（multi-classifier system）、基于委员会的学习等。<br>若集成中只包含同种类型的个体学习器，则这样的集成是“同质”的，其个体学习器称为“基学习器”。若包含的是不同类型的个体学习器，则称为“异质”，其基学习器称为“组件学习器”。<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML9-1.png" alt=""><br>
-        
-          <p class="article-more-link">
-            <a href="/2017/02/27/机器学习系列—9-集成学习/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-	  
-	  <a data-url="http://yoursite.com/2017/02/27/机器学习系列—9-集成学习/" data-id="cizr01kp7002am8vyjdl0u50m" data_title="机器学习系列—9.集成学习" data_summary="集成学习（ensemble learning）通过构建..." class="article-share-link">Share</a>
-      
-
-      
-        <a href="http://yoursite.com/2017/02/27/机器学习系列—9-集成学习/#ds-thread" class="ds-thread-count article-comment-link" data-thread-key="/2017/02/27/机器学习系列—9-集成学习/">暂无评论</a>
-      
-	  
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Bagging/">Bagging</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Boosting/">Boosting</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ML/">ML</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Stacking/">Stacking</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/机器学习/">机器学习</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/集成方法/">集成方法</a></li></ul>
-
-	  
-<span>
-Updated:<time datetime="2017-02-28T13:20:08.440Z" itemprop="dateModified">2017-02-28</time>
+更新日期:<time datetime="2017-02-28T11:57:19.518Z" itemprop="dateModified">2017-02-28</time>
 </span>
 
 
@@ -738,7 +738,7 @@ Updated:<time datetime="2017-02-28T13:20:08.440Z" itemprop="dateModified">2017-0
 
   <nav id="page-nav">
     
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/">Volgende &raquo;</a>
   </nav>
 
 </section>
@@ -772,9 +772,9 @@ Updated:<time datetime="2017-02-28T13:20:08.440Z" itemprop="dateModified">2017-0
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Categories</h3>
+    <h3 class="widget-title">Categorieën</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Deep-Learning/">Deep Learning</a><span class="category-list-count">7</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Deep-Learning/Caffe/">Caffe</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hadoop/">Hadoop</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Python/Scrapy/">Scrapy</a><span class="category-list-count">1</span></li></ul></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Deep-Learning/">Deep Learning</a><span class="category-list-count">7</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Deep-Learning/Caffe/">Caffe</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hadoop/">Hadoop</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Python/Scrapy/">Scrapy</a><span class="category-list-count">1</span></li></ul></li></ul>
     </div>
   </div>
 
@@ -784,7 +784,7 @@ Updated:<time datetime="2017-02-28T13:20:08.440Z" itemprop="dateModified">2017-0
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/AlexNet/" style="font-size: 13px; color: #7dc3de">AlexNet</a> <a href="/tags/BE/" style="font-size: 13px; color: #7dc3de">BE</a> <a href="/tags/Bagging/" style="font-size: 13px; color: #7dc3de">Bagging</a> <a href="/tags/Bayes/" style="font-size: 14.17px; color: #6dc1b9">Bayes</a> <a href="/tags/Boosting/" style="font-size: 13px; color: #7dc3de">Boosting</a> <a href="/tags/Caffe/" style="font-size: 17.67px; color: #3db94a">Caffe</a> <a href="/tags/Deep-Learning/" style="font-size: 18.83px; color: #2db725">Deep Learning</a> <a href="/tags/Faster-RCNN/" style="font-size: 13px; color: #7dc3de">Faster-RCNN</a> <a href="/tags/Fine-tuning/" style="font-size: 13px; color: #7dc3de">Fine-tuning</a> <a href="/tags/GC/" style="font-size: 13px; color: #7dc3de">GC</a> <a href="/tags/HDFS/" style="font-size: 13px; color: #7dc3de">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 16.5px; color: #4dbc6f">Hadoop</a> <a href="/tags/JMM/" style="font-size: 13px; color: #7dc3de">JMM</a> <a href="/tags/JVM/" style="font-size: 13px; color: #7dc3de">JVM</a> <a href="/tags/Java/" style="font-size: 15.33px; color: #5dbe94">Java</a> <a href="/tags/K近邻/" style="font-size: 13px; color: #7dc3de">K近邻</a> <a href="/tags/ML/" style="font-size: 20px; color: #1db400">ML</a> <a href="/tags/MLE/" style="font-size: 13px; color: #7dc3de">MLE</a> <a href="/tags/NaiveBayes/" style="font-size: 13px; color: #7dc3de">NaiveBayes</a> <a href="/tags/Object-Detection/" style="font-size: 13px; color: #7dc3de">Object Detection</a> <a href="/tags/PCA/" style="font-size: 13px; color: #7dc3de">PCA</a> <a href="/tags/Python/" style="font-size: 14.17px; color: #6dc1b9">Python</a> <a href="/tags/RPC/" style="font-size: 13px; color: #7dc3de">RPC</a> <a href="/tags/SVM/" style="font-size: 13px; color: #7dc3de">SVM</a> <a href="/tags/Scrapy/" style="font-size: 13px; color: #7dc3de">Scrapy</a> <a href="/tags/Stacking/" style="font-size: 13px; color: #7dc3de">Stacking</a> <a href="/tags/决策树/" style="font-size: 13px; color: #7dc3de">决策树</a> <a href="/tags/分布式技术/" style="font-size: 13px; color: #7dc3de">分布式技术</a> <a href="/tags/分布式文件系统/" style="font-size: 13px; color: #7dc3de">分布式文件系统</a> <a href="/tags/半监督学习/" style="font-size: 13px; color: #7dc3de">半监督学习</a> <a href="/tags/多线程/" style="font-size: 13px; color: #7dc3de">多线程</a> <a href="/tags/大数据/" style="font-size: 13px; color: #7dc3de">大数据</a> <a href="/tags/感知机/" style="font-size: 14.17px; color: #6dc1b9">感知机</a> <a href="/tags/机器学习/" style="font-size: 20px; color: #1db400">机器学习</a> <a href="/tags/核方法/" style="font-size: 13px; color: #7dc3de">核方法</a> <a href="/tags/概率图模型/" style="font-size: 13px; color: #7dc3de">概率图模型</a> <a href="/tags/深度学习/" style="font-size: 14.17px; color: #6dc1b9">深度学习</a> <a href="/tags/爬虫/" style="font-size: 13px; color: #7dc3de">爬虫</a> <a href="/tags/特征选择/" style="font-size: 13px; color: #7dc3de">特征选择</a> <a href="/tags/神经网络/" style="font-size: 13px; color: #7dc3de">神经网络</a> <a href="/tags/聚类/" style="font-size: 13px; color: #7dc3de">聚类</a> <a href="/tags/降维/" style="font-size: 13px; color: #7dc3de">降维</a> <a href="/tags/集成方法/" style="font-size: 13px; color: #7dc3de">集成方法</a>
+      <a href="/tags/AlexNet/" style="font-size: 13px; color: #7dc3de">AlexNet</a> <a href="/tags/BE/" style="font-size: 13px; color: #7dc3de">BE</a> <a href="/tags/Bagging/" style="font-size: 13px; color: #7dc3de">Bagging</a> <a href="/tags/Bayes/" style="font-size: 14.17px; color: #6dc1b9">Bayes</a> <a href="/tags/Boosting/" style="font-size: 13px; color: #7dc3de">Boosting</a> <a href="/tags/Caffe/" style="font-size: 17.67px; color: #3db94a">Caffe</a> <a href="/tags/Deep-Learning/" style="font-size: 18.83px; color: #2db725">Deep Learning</a> <a href="/tags/Faster-RCNN/" style="font-size: 13px; color: #7dc3de">Faster-RCNN</a> <a href="/tags/Fine-tuning/" style="font-size: 13px; color: #7dc3de">Fine-tuning</a> <a href="/tags/GC/" style="font-size: 13px; color: #7dc3de">GC</a> <a href="/tags/HDFS/" style="font-size: 13px; color: #7dc3de">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 16.5px; color: #4dbc6f">Hadoop</a> <a href="/tags/JMM/" style="font-size: 13px; color: #7dc3de">JMM</a> <a href="/tags/JVM/" style="font-size: 13px; color: #7dc3de">JVM</a> <a href="/tags/Java/" style="font-size: 15.33px; color: #5dbe94">Java</a> <a href="/tags/K近邻/" style="font-size: 13px; color: #7dc3de">K近邻</a> <a href="/tags/ML/" style="font-size: 20px; color: #1db400">ML</a> <a href="/tags/MLE/" style="font-size: 13px; color: #7dc3de">MLE</a> <a href="/tags/MapReduce/" style="font-size: 13px; color: #7dc3de">MapReduce</a> <a href="/tags/NaiveBayes/" style="font-size: 13px; color: #7dc3de">NaiveBayes</a> <a href="/tags/Object-Detection/" style="font-size: 13px; color: #7dc3de">Object Detection</a> <a href="/tags/PCA/" style="font-size: 13px; color: #7dc3de">PCA</a> <a href="/tags/Python/" style="font-size: 14.17px; color: #6dc1b9">Python</a> <a href="/tags/RPC/" style="font-size: 13px; color: #7dc3de">RPC</a> <a href="/tags/SVM/" style="font-size: 13px; color: #7dc3de">SVM</a> <a href="/tags/Scrapy/" style="font-size: 13px; color: #7dc3de">Scrapy</a> <a href="/tags/Stacking/" style="font-size: 13px; color: #7dc3de">Stacking</a> <a href="/tags/决策树/" style="font-size: 13px; color: #7dc3de">决策树</a> <a href="/tags/分布式技术/" style="font-size: 13px; color: #7dc3de">分布式技术</a> <a href="/tags/分布式文件系统/" style="font-size: 13px; color: #7dc3de">分布式文件系统</a> <a href="/tags/半监督学习/" style="font-size: 13px; color: #7dc3de">半监督学习</a> <a href="/tags/多线程/" style="font-size: 13px; color: #7dc3de">多线程</a> <a href="/tags/大数据/" style="font-size: 13px; color: #7dc3de">大数据</a> <a href="/tags/感知机/" style="font-size: 14.17px; color: #6dc1b9">感知机</a> <a href="/tags/机器学习/" style="font-size: 20px; color: #1db400">机器学习</a> <a href="/tags/核方法/" style="font-size: 13px; color: #7dc3de">核方法</a> <a href="/tags/概率图模型/" style="font-size: 13px; color: #7dc3de">概率图模型</a> <a href="/tags/深度学习/" style="font-size: 14.17px; color: #6dc1b9">深度学习</a> <a href="/tags/爬虫/" style="font-size: 13px; color: #7dc3de">爬虫</a> <a href="/tags/特征选择/" style="font-size: 13px; color: #7dc3de">特征选择</a> <a href="/tags/神经网络/" style="font-size: 13px; color: #7dc3de">神经网络</a> <a href="/tags/聚类/" style="font-size: 13px; color: #7dc3de">聚类</a> <a href="/tags/降维/" style="font-size: 13px; color: #7dc3de">降维</a> <a href="/tags/集成方法/" style="font-size: 13px; color: #7dc3de">集成方法</a>
     </div>
   </div>
 
@@ -792,9 +792,9 @@ Updated:<time datetime="2017-02-28T13:20:08.440Z" itemprop="dateModified">2017-0
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
+    <h3 class="widget-title">Archieven</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">5</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">5</span></li></ul>
     </div>
   </div>
 
@@ -802,9 +802,13 @@ Updated:<time datetime="2017-02-28T13:20:08.440Z" itemprop="dateModified">2017-0
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
+    <h3 class="widget-title">Recente berichten</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2017/03/02/MapReduce介绍/">MapReduce介绍</a>
+          </li>
         
           <li>
             <a href="/2017/03/01/Hadoop源码分析之RPC/">Hadoop源码分析之RPC一</a>
@@ -822,10 +826,6 @@ Updated:<time datetime="2017-02-28T13:20:08.440Z" itemprop="dateModified">2017-0
             <a href="/2017/02/27/机器学习系列—14-半监督学习/">机器学习系列—14.半监督学习</a>
           </li>
         
-          <li>
-            <a href="/2017/02/27/机器学习系列—13-特征选择/">机器学习系列—13.特征选择</a>
-          </li>
-        
       </ul>
     </div>
   </div>
@@ -834,7 +834,7 @@ Updated:<time datetime="2017-02-28T13:20:08.440Z" itemprop="dateModified">2017-0
   
     
 <div class="widget-wrap">
-  <h3 class="widget-title">Recent Comments</h3>
+  <h3 class="widget-title">最新评论</h3>
   <ul class="widget ds-recent-comments" data-num-items="5" data-show-avatars="0" data-show-title="1" data-show-time="1"></ul>
 </div>
 <!-- 需要多说的公用代码 -->
@@ -843,7 +843,7 @@ Updated:<time datetime="2017-02-28T13:20:08.440Z" itemprop="dateModified">2017-0
   
     
 <div class="widget-wrap">
-  <h3 class="widget-title">Links</h3>
+  <h3 class="widget-title">友情链接</h3>
   <ul class="widget">
     
     <li><a href="http://yibo.iyiyun.com/js/yibo404/key/1" target="_BLANK">404 page</a></li>
