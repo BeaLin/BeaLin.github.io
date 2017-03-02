@@ -42,7 +42,7 @@
 <meta property="og:image" content="http://o73nd1ra4.bkt.clouddn.com/ML10-29.png">
 <meta property="og:image" content="http://o73nd1ra4.bkt.clouddn.com/ML10-30.png">
 <meta property="og:image" content="http://o73nd1ra4.bkt.clouddn.com/ML10-31.png">
-<meta property="og:updated_time" content="2017-03-01T03:15:26.047Z">
+<meta property="og:updated_time" content="2017-03-02T12:19:37.580Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="机器学习系列—10.聚类">
 <meta name="twitter:description" content="Programmer,Technology,Software Engineering">
@@ -101,7 +101,7 @@ var _hmt = _hmt || [];
           <a id="nav-github-link" class="nav-icon" href="https://github.com/BeaLin" title="Github" target="_blank"></a>
         
         
-        <a id="nav-search-btn" class="nav-icon" title="Zoeken"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -142,7 +142,7 @@ var _hmt = _hmt || [];
       
 		
 		<div id="toc" class="toc-article">
-			<h2 class="toc-title"><span>文章目录</span></h2>
+			<h2 class="toc-title"><span>Contents</span></h2>
 		
 			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#性能度量"><span class="toc-number">1.</span> <span class="toc-text">性能度量</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#外部指标"><span class="toc-number">1.1.</span> <span class="toc-text">外部指标</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#内部指标"><span class="toc-number">1.2.</span> <span class="toc-text">内部指标</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#距离计算"><span class="toc-number">2.</span> <span class="toc-text">距离计算</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#原型聚类"><span class="toc-number">3.</span> <span class="toc-text">原型聚类</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#KMeans（k均值算法）"><span class="toc-number">3.1.</span> <span class="toc-text">KMeans（k均值算法）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#学习向量量化"><span class="toc-number">3.2.</span> <span class="toc-text">学习向量量化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#高斯混合聚类（Mixture-of-Gaussian）"><span class="toc-number">3.3.</span> <span class="toc-text">高斯混合聚类（Mixture-of-Gaussian）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#密度聚类"><span class="toc-number">3.4.</span> <span class="toc-text">密度聚类</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#层次聚类"><span class="toc-number">4.</span> <span class="toc-text">层次聚类</span></a></li></ol>
 		
@@ -153,7 +153,7 @@ var _hmt = _hmt || [];
 <li>原型聚类：<br>(1)用原型向量刻画聚类结构：<br>a.<strong>Kmean</strong><br>b.<strong>LVQ</strong>（学习向量量化）<br>(2)概率模型（高斯分布）：<strong>GMM</strong>（高斯混合模型</li>
 <li>密度聚类（样本分布的紧密程度）：<strong>DBSCAN</strong></li>
 <li>层次聚类（树形的聚类结构）：<br>(1)“自底向上”的聚合策略：<strong>AGNES</strong>                                                   (2)“自顶向下”的分拆策略：<br>本文会先讨论聚类算法涉及到的两个基本问题——性能度量和距离计算，然后对上面涉及到的不同类型的聚类进行介绍。<a id="more"></a>
-<h2 id="性能度量"><a href="#性能度量" class="headerlink" title="性能度量"></a>性能度量</h2>通常我们希望聚类结果的“簇内相似度”（intra-cluster similarity）高且“簇间相似度”（inter-cluster similarity）低。聚类性能度量大致有两类：一类是将聚类结果与某个“参考模型”（reference model）进行比较，称为“外部指标”（external index）；另一类是直接考查聚类结果而不利于任何参考模型。称为“内部指标”（internal index）<h3 id="外部指标"><a href="#外部指标" class="headerlink" title="外部指标"></a>外部指标</h3><img src="http://o73nd1ra4.bkt.clouddn.com/ML10-1.png" alt=""><br>基于上式导出常用的聚类性能度量外部指标：<br><strong>1. Jaccard系数（Jaccard Coefficient，JC）</strong><br><img src="http://o73nd1ra4.bkt.clouddn.com/ML10-2.png" alt=""><br><strong>2. FM指数（Fowlkes and Mallows Index，FMI）</strong><br><img src="http://o73nd1ra4.bkt.clouddn.com/ML10-3.png" alt=""><br><strong>3. Rand指数（Rand Index，RI）</strong><br><img src="http://o73nd1ra4.bkt.clouddn.com/ML10-4.png" alt=""><br>上述三值均在[0,1]区间，值越大越好。<h3 id="内部指标"><a href="#内部指标" class="headerlink" title="内部指标"></a>内部指标</h3><img src="http://o73nd1ra4.bkt.clouddn.com/ML10-5.png" alt=""><br>簇C内样本间的平均距离：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML10-6.png" alt=""><br>簇C内样本间最远距离：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML10-7.png" alt=""><br>簇Ci与Cj最近样本件的距离<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML10-8.png" alt=""><br>簇Ci与Cj中心点间的距离：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML10-9.png" alt=""><br>基于上式可导出常用的聚类性能度量内部指标：<br><strong>1. DB指数（Davies-Bouldin Index，DBI）</strong><br>类比簇间相似度<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML10-10.png" alt=""><br><strong>2. Dunn指数（Dunn Index，DI）</strong><br>类比簇内相似度<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML10-11.png" alt=""><br>DBI的值越小越好，DI相反，越大越好<h2 id="距离计算"><a href="#距离计算" class="headerlink" title="距离计算"></a>距离计算</h2>“距离度量”需满足一些基本性质：非负性、同一性、对称性、直递性（i到j的距离小于等于i到k与k到j的距离之和）。<br>最常用的是“闵可夫斯基距离”（Minkowski distance）<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML10-12.png" alt=""><br>p=2时，闵可夫斯基距离即欧氏距离（Euclidean distance）<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML10-13.png" alt=""><br>p=1时，闵可夫斯基距离即曼哈顿距离（Manhattan distance）<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML10-14.png" alt=""><br>我们常将属性划分为“连续属性”（continuous attribute）（数值属性）和“离散属性”（categorical attribute）（列名属性）。但在讨论距离计算时，属性上是否定义了“序”关系更为重要。能直接在属性值上计算距离的称为“有序属性”，不能直接在属性值上计算距离的称为“无序属性”。显然，闵可夫斯基距离可用于有序属性。<br>对无序属性可采用VDM（Value Difference Metric）。令Mu,a表示在属性u上取值为a的样本数，Mu,a,i表示在第i个样本簇中在属性u上取值为a的样本数，k为样本簇数，则属性u上两个离散值a与b之间的VDM距离为：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML10-15.png" alt=""><br>将闵可夫斯基距离和VDM结合可处理混合属性。不失一般性，令有序属性排列在无序属性之前，则<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML10-16.png" alt=""><br>当样本空间中不同属性的重要性不同时，可使用“加权距离”，以加权闵可夫斯基距离为例：通常权值之和为1。<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML10-17.png" alt=""><h2 id="原型聚类"><a href="#原型聚类" class="headerlink" title="原型聚类"></a>原型聚类</h2>原型聚类亦称“基于原型的聚类”（prototype-based clustering）。此类算法假设聚类结构能通过一组原型刻画。原型是指样本空间中具有代表性的点。下面介绍几种著名的原型聚类算法。<h3 id="KMeans（k均值算法）"><a href="#KMeans（k均值算法）" class="headerlink" title="KMeans（k均值算法）"></a>KMeans（k均值算法）</h3>给定样本集D={x1,x2,…,xm},“k均值”（k-means）算法针对聚类所得簇划分C={C1，C2,…,Ck}最小化平方误差<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML10-18.png" alt=""><br>最小化式（9.24）并不容易，找到它的最优解需考察样本集D所有可能的簇划分，这是一个NP难问题。k均值算法采用了贪心策略，通过迭代优化来近似求解式。以下是k均值算法描述<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML10-19.png" alt=""><br>为避免运行时间过长，通常设置一个最大运行轮数或最小调整幅度阈值，若达到最大轮数或调整幅度小于阈值，则停止运行。<h3 id="学习向量量化"><a href="#学习向量量化" class="headerlink" title="学习向量量化"></a>学习向量量化</h3>与k均值算法类似，“学习向量量化”（Learning Vector Quantization，LVQ）也是试图找到一组原型向量来刻画聚类结构，LVQ假设数据样本带有类别标记，学习过程利用样本的这些监督信息来辅助聚类。LVQ算法描述如下：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML10-20.png" alt=""><br>首先对原型向量进行初始化，然后对原型向量进行迭代优化，在每一轮迭代中，算法随机选取一个有标记训练样本，找出与其距离最近的原型向量，并根据两者的类别标记是否一致来对原型向量进行更新。LVQ的关键是第6-10行的更新原型向量，对样本Xj，若最近的原型向量pi<em>与Xj的类别标记相同，则令pi</em>向Xj的方向靠。若标签不同，则远离Xj。<br>在学得一组原型向量后，即可实现对样本空间X的簇划分。对任意样本x，它将被划入于其距离最近的原型向量所代表的簇中；<h3 id="高斯混合聚类（Mixture-of-Gaussian）"><a href="#高斯混合聚类（Mixture-of-Gaussian）" class="headerlink" title="高斯混合聚类（Mixture-of-Gaussian）"></a>高斯混合聚类（Mixture-of-Gaussian）</h3>与k均值、LVQ用原型向量来刻画聚类结构不同，高斯混合聚类采用概率模型来表达聚类原型。<br>高斯分布的定义，对n维样本空间X中的随机向量x，若x服从高斯分布，其概率密度函数为<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML10-21.png" alt=""><br>高斯分布完全由均值向量和协方差矩阵这两个参数确定。<br>根据概率密度函数可定义高斯混合分布：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML10-22.png" alt=""><br>该分布共由k个混合成分组成，每个混合成分对应一个高斯分布。假设样本的生成过程由高斯混合分布给出。令随机变量Zj∈{1,2,…,k}表示生成样本Xj的高斯混合成分，根据贝叶斯定理，Zj的后验分布对应于：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML10-23.png" alt=""><br>换言之，PM(Zj=i|Xj)给出了样本Xj由第i个高斯混合成分生成的后验概率，为方便叙述，将其简记为γji(i=1,2,…,k)。当高斯混合分布(9.29)已知时，高斯混合聚类将把样本集D划分为k个簇C={C1,C2,…,Ck},每个样本Xj的簇标记λj如下确定：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML10-24.png" alt=""><br>即将样本划分进后验概率最大的那个高斯混合成分。因此，从原型聚类的角度来看，高斯混合聚类是采用概率模型（高斯分布）对原型进行刻画，簇划分则由原型对应后验概率确定。对于式(9.29)模型参数{(αi,μi,Σi)|1≤i≤k}如何求解呢？可以采用极大似然估计，即最大化（对数）似然（这块知识的具体介绍可查看贝叶斯决策理论部分）<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML10-25.png" alt=""><br>LL（D）是对数似然的期望值。上式常采用EM算法进行迭代优化求解。EM算法步骤在此简要复习一下：<br>主要分为E步和M步：<br>E步（期望E步）：利用当前估计的参数计算对数似然的期望值<br>M步（最大化M步）：寻找能使E步产生的似然期望最大化的参数值<br>重复E步、M步直至收敛。<br>根据上述的EM算法步骤可得高斯混合模型的EM算法：在每步迭代中，先根据当前参数来计算每个样本属于每个高斯成分的后验概率（E步），再根据更新公式更新模型参数，包括均值向量、协方差矩阵以及新混合系数。具体高斯混合聚类算法步骤如下：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML10-26.png" alt=""><h3 id="密度聚类"><a href="#密度聚类" class="headerlink" title="密度聚类"></a>密度聚类</h3>密度聚类亦称“基于密度的聚类”（density-based clustering），此类算法假设聚类结构能通过样本分布的紧密程度确定。<br><strong>DBSCAN</strong>是一种著名的密度聚类算法，它基于一组“领域”（neighborhood）参数来刻画样本分布的紧密程度，给定数据集D，定义如下几个概念：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML10-27.png" alt=""><br>下图是上述概念的直观显示：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML10-28.png" alt=""><br>ps：</li>
+<h2 id="性能度量"><a href="#性能度量" class="headerlink" title="性能度量"></a>性能度量</h2>通常我们希望聚类结果的“簇内相似度”（intra-cluster similarity）高且“簇间相似度”（inter-cluster similarity）低。聚类性能度量大致有两类：一类是将聚类结果与某个“参考模型”（reference model）进行比较，称为“外部指标”（external index）；另一类是直接考查聚类结果而不利于任何参考模型。称为“内部指标”（internal index）<h3 id="外部指标"><a href="#外部指标" class="headerlink" title="外部指标"></a>外部指标</h3><img src="http://o73nd1ra4.bkt.clouddn.com/ML10-1.png" alt=""><br>基于上式导出常用的聚类性能度量外部指标：<br><strong>1. Jaccard系数（Jaccard Coefficient，JC）</strong><br><img src="http://o73nd1ra4.bkt.clouddn.com/ML10-2.png" alt=""><br><strong>2. FM指数（Fowlkes and Mallows Index，FMI）</strong><br><img src="http://o73nd1ra4.bkt.clouddn.com/ML10-3.png" alt=""><br><strong>3. Rand指数（Rand Index，RI）</strong><br><img src="http://o73nd1ra4.bkt.clouddn.com/ML10-4.png" alt=""><br>上述三值均在[0,1]区间，值越大越好。<h3 id="内部指标"><a href="#内部指标" class="headerlink" title="内部指标"></a>内部指标</h3><img src="http://o73nd1ra4.bkt.clouddn.com/ML10-5.png" alt=""><br>簇C内样本间的平均距离：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML10-6.png" alt=""><br>簇C内样本间最远距离：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML10-7.png" alt=""><br>簇Ci与Cj最近样本件的距离<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML10-8.png" alt=""><br>簇Ci与Cj中心点间的距离：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML10-9.png" alt=""><br>基于上式可导出常用的聚类性能度量内部指标：<br><strong>1. DB指数（Davies-Bouldin Index，DBI）</strong><br>类比簇间相似度<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML10-10.png" alt=""><br><strong>2. Dunn指数（Dunn Index，DI）</strong><br>类比簇内相似度<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML10-11.png" alt=""><br>DBI的值越小越好，DI相反，越大越好<h2 id="距离计算"><a href="#距离计算" class="headerlink" title="距离计算"></a>距离计算</h2>“距离度量”需满足一些基本性质：非负性、同一性、对称性、直递性（i到j的距离小于等于i到k与k到j的距离之和）。<br>最常用的是“闵可夫斯基距离”（Minkowski distance）<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML10-12.png" alt=""><br>p=2时，闵可夫斯基距离即欧氏距离（Euclidean distance）<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML10-13.png" alt=""><br>p=1时，闵可夫斯基距离即曼哈顿距离（Manhattan distance）<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML10-14.png" alt=""><br>我们常将属性划分为“连续属性”（continuous attribute）（数值属性）和“离散属性”（categorical attribute）（列名属性）。但在讨论距离计算时，属性上是否定义了“序”关系更为重要。能直接在属性值上计算距离的称为“有序属性”，不能直接在属性值上计算距离的称为“无序属性”。显然，闵可夫斯基距离可用于有序属性。<br>对无序属性可采用VDM（Value Difference Metric）。令Mu,a表示在属性u上取值为a的样本数，Mu,a,i表示在第i个样本簇中在属性u上取值为a的样本数，k为样本簇数，则属性u上两个离散值a与b之间的VDM距离为：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML10-15.png" alt=""><br>将闵可夫斯基距离和VDM结合可处理混合属性。不失一般性，令有序属性排列在无序属性之前，则<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML10-16.png" alt=""><br>当样本空间中不同属性的重要性不同时，可使用“加权距离”，以加权闵可夫斯基距离为例：通常权值之和为1。<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML10-17.png" alt=""><h2 id="原型聚类"><a href="#原型聚类" class="headerlink" title="原型聚类"></a>原型聚类</h2>原型聚类亦称“基于原型的聚类”（prototype-based clustering）。此类算法假设聚类结构能通过一组原型刻画。原型是指样本空间中具有代表性的点。下面介绍几种著名的原型聚类算法。<h3 id="KMeans（k均值算法）"><a href="#KMeans（k均值算法）" class="headerlink" title="KMeans（k均值算法）"></a>KMeans（k均值算法）</h3>给定样本集D={x1,x2,…,xm},“k均值”（k-means）算法针对聚类所得簇划分C={C1，C2,…,Ck}最小化平方误差<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML10-18.png" alt=""><br>最小化式（9.24）并不容易，找到它的最优解需考察样本集D所有可能的簇划分，这是一个NP难问题。k均值算法采用了贪心策略，通过迭代优化来近似求解式。以下是k均值算法描述<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML10-19.png" alt=""><br>为避免运行时间过长，通常设置一个最大运行轮数或最小调整幅度阈值，若达到最大轮数或调整幅度小于阈值，则停止运行。<h3 id="学习向量量化"><a href="#学习向量量化" class="headerlink" title="学习向量量化"></a>学习向量量化</h3>与k均值算法类似，“学习向量量化”（Learning Vector Quantization，LVQ）也是试图找到一组原型向量来刻画聚类结构，LVQ假设数据样本带有类别标记，学习过程利用样本的这些监督信息来辅助聚类。LVQ算法描述如下：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML10-20.png" alt=""><br>首先对原型向量进行初始化，然后对原型向量进行迭代优化，在每一轮迭代中，算法随机选取一个有标记训练样本，找出与其距离最近的原型向量，并根据两者的类别标记是否一致来对原型向量进行更新。LVQ的关键是第6-10行的更新原型向量，对样本Xj，若最近的原型向量pi<em>与Xj的类别标记相同，则令pi</em>向Xj的方向靠。若标签不同，则远离Xj。<br>在学得一组原型向量后，即可实现对样本空间X的簇划分。对任意样本x，它将被划入于其距离最近的原型向量所代表的簇中；<h3 id="高斯混合聚类（Mixture-of-Gaussian）"><a href="#高斯混合聚类（Mixture-of-Gaussian）" class="headerlink" title="高斯混合聚类（Mixture-of-Gaussian）"></a>高斯混合聚类（Mixture-of-Gaussian）</h3>与k均值、LVQ用原型向量来刻画聚类结构不同，高斯混合聚类采用概率模型来表达聚类原型。<br>高斯分布的定义，对n维样本空间X中的随机向量x，若x服从高斯分布，其概率密度函数为<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML10-21.png" alt=""><br>高斯分布完全由均值向量和协方差矩阵这两个参数确定。<br>根据概率密度函数可定义高斯混合分布：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML10-22.png" alt=""><br>该分布共由k个混合成分组成，每个混合成分对应一个高斯分布。假设样本的生成过程由高斯混合分布给出。令随机变量Zj∈{1,2,…,k}表示生成样本Xj的高斯混合成分，根据贝叶斯定理，Zj的后验分布对应于：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML10-23.png" alt=""><br>换言之，PM(Zj=i|Xj)给出了样本Xj由第i个高斯混合成分生成的后验概率，为方便叙述，将其简记为γji(i=1,2,…,k)。当高斯混合分布(9.29)已知时，高斯混合聚类将把样本集D划分为k个簇C={C1,C2,…,Ck},每个样本Xj的簇标记λj如下确定：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML10-24.png" alt=""><br>即将样本划分进后验概率最大的那个高斯混合成分。因此，从原型聚类的角度来看，高斯混合聚类是采用概率模型（高斯分布）对原型进行刻画，簇划分则由原型对应后验概率确定。对于式(9.29)模型参数{(αi,μi,Σi)|1≤i≤k}如何求解呢？可以采用极大似然估计，即最大化（对数）似然（这块知识的具体介绍可查看贝叶斯决策理论部分）<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML10-25.png" alt=""><br>LL（D）是对数似然的期望值。上式常采用EM算法进行迭代优化求解。EM算法步骤在此简要复习一下：<br>EM（Expectation-Maximization）算法是常用的估计参数隐变量（隐变量：未观测变量的学名）的利器，它是一种迭代式地方法，基本思想是：若参数θ已知，则可根据训练数据推断出最优隐变量Z的值（E步）；反之，若Z的值已知，则可方便地对参数θ做极大似然估计（M步）。EM算法可看作是一种非梯度优化方法（坐标下降法）。<br>简要来说，EM算法使用E步和M步交替计算：<br>E步（期望E步）：利用当前估计的参数计算对数似然的期望值<br>M步（最大化M步）：寻找能使E步产生的似然期望最大化的参数值<br>重复E步、M步直至收敛。<br>根据上述的EM算法步骤可得高斯混合模型的EM算法：在每步迭代中，先根据当前参数来计算每个样本属于每个高斯成分的后验概率（E步），再根据更新公式更新模型参数，包括均值向量、协方差矩阵以及新混合系数。具体高斯混合聚类算法步骤如下：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML10-26.png" alt=""><h3 id="密度聚类"><a href="#密度聚类" class="headerlink" title="密度聚类"></a>密度聚类</h3>密度聚类亦称“基于密度的聚类”（density-based clustering），此类算法假设聚类结构能通过样本分布的紧密程度确定。<br><strong>DBSCAN</strong>是一种著名的密度聚类算法，它基于一组“领域”（neighborhood）参数来刻画样本分布的紧密程度，给定数据集D，定义如下几个概念：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML10-27.png" alt=""><br>下图是上述概念的直观显示：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML10-28.png" alt=""><br>ps：</li>
 <li>密度直达关系不满足对称性，因为Xj不一定是另一个e-领域中的核心对象。</li>
 <li>密度可达关系满足直递性，但不满足对称性。</li>
 <li>密度直达、密度可达、密度相连，这三者的紧密性依次递减。</li>
@@ -174,7 +174,7 @@ var _hmt = _hmt || [];
 
 	  
 <span>
-更新日期:<time datetime="2017-03-01T03:15:26.047Z" itemprop="dateModified">2017-03-01</time>
+Updated:<time datetime="2017-03-02T12:19:37.580Z" itemprop="dateModified">2017-03-02</time>
 </span>
 
 
@@ -185,7 +185,7 @@ var _hmt = _hmt || [];
 <nav id="article-nav">
   
     <a href="/2017/02/27/机器学习系列—11-k近邻/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Nieuwer</strong>
+      <strong class="article-nav-caption">上一篇</strong>
       <div class="article-nav-title">
         
           机器学习系列—11.k近邻
@@ -195,7 +195,7 @@ var _hmt = _hmt || [];
   
   
     <a href="/2017/02/27/机器学习系列—5-决策树/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Ouder</strong>
+      <strong class="article-nav-caption">下一篇</strong>
       <div class="article-nav-title">机器学习系列—5.决策树</div>
     </a>
   
@@ -219,7 +219,7 @@ var _hmt = _hmt || [];
         
           
   <div id="toc" class="toc-aside">
-  <h2 class="toc-title">文章目录</h2>
+  <h2 class="toc-title">Contents</h2>
     
         <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#性能度量"><span class="toc-number">1.</span> <span class="toc-text">性能度量</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#外部指标"><span class="toc-number">1.1.</span> <span class="toc-text">外部指标</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#内部指标"><span class="toc-number">1.2.</span> <span class="toc-text">内部指标</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#距离计算"><span class="toc-number">2.</span> <span class="toc-text">距离计算</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#原型聚类"><span class="toc-number">3.</span> <span class="toc-text">原型聚类</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#KMeans（k均值算法）"><span class="toc-number">3.1.</span> <span class="toc-text">KMeans（k均值算法）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#学习向量量化"><span class="toc-number">3.2.</span> <span class="toc-text">学习向量量化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#高斯混合聚类（Mixture-of-Gaussian）"><span class="toc-number">3.3.</span> <span class="toc-text">高斯混合聚类（Mixture-of-Gaussian）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#密度聚类"><span class="toc-number">3.4.</span> <span class="toc-text">密度聚类</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#层次聚类"><span class="toc-number">4.</span> <span class="toc-text">层次聚类</span></a></li></ol>
     
@@ -253,7 +253,7 @@ var _hmt = _hmt || [];
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Categorieën</h3>
+    <h3 class="widget-title">Categories</h3>
     <div class="widget">
       <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Deep-Learning/">Deep Learning</a><span class="category-list-count">7</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Deep-Learning/Caffe/">Caffe</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hadoop/">Hadoop</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Python/Scrapy/">Scrapy</a><span class="category-list-count">1</span></li></ul></li></ul>
     </div>
@@ -273,7 +273,7 @@ var _hmt = _hmt || [];
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archieven</h3>
+    <h3 class="widget-title">Archives</h3>
     <div class="widget">
       <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">5</span></li></ul>
     </div>
@@ -283,7 +283,7 @@ var _hmt = _hmt || [];
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Recente berichten</h3>
+    <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
         
@@ -315,7 +315,7 @@ var _hmt = _hmt || [];
   
     
 <div class="widget-wrap">
-  <h3 class="widget-title">最新评论</h3>
+  <h3 class="widget-title">Recent Comments</h3>
   <ul class="widget ds-recent-comments" data-num-items="5" data-show-avatars="0" data-show-title="1" data-show-time="1"></ul>
 </div>
 <!-- 需要多说的公用代码 -->
@@ -324,7 +324,7 @@ var _hmt = _hmt || [];
   
     
 <div class="widget-wrap">
-  <h3 class="widget-title">友情链接</h3>
+  <h3 class="widget-title">Links</h3>
   <ul class="widget">
     
     <li><a href="http://yibo.iyiyun.com/js/yibo404/key/1" target="_BLANK">404 page</a></li>
