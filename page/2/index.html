@@ -646,7 +646,7 @@ Updated:<time datetime="2017-03-01T05:59:47.885Z" itemprop="dateModified">2017-0
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>什么是目标检测？目标检测主要是明确从图中看到了什么物体？他们在什么位置。传统的目标检测方法一般分为三个阶段：首先在给定的图像上选择一些候选的区域，然后对这些区域提取特征，最后使用训练的分类器进行分类。<br><strong>1. 区域选择</strong><br>这一步是为了对目标进行定位。传统方法是采用穷举策略。由于目标可能在图片上的任意位置，而且大小不定，因此使用滑动窗口的策略对整幅图像进行遍历，而且需要设置不同的长宽。这种策略虽然可以检测到所有可能出现的位置，但是时间复杂度太高，产生的冗余窗口太多，严重影响后续特征的提取和分类速度的性能。<br><strong>2. 特征提取</strong><br>提取特征的好坏会直接影响到分类的准确性，但又由于目标的形态多样性，提取一个鲁棒的特征并不是一个简单的事。这个阶段常用的特征有SIFT（尺度不变特征变换 ，Scale-invariant feature transform）和HOG（ 方向梯度直方图特征，Histogram of Oriented Gradient）等。<br><strong>3. 分类器</strong><br>主要有SVM，Adaboost等<br>综上所述，传统目标检测存在两个主要问题：一个是基于滑动窗口的区域选择策略没有针对性，时间复杂度高，窗口冗余；而是手工设计的特征对于多样性没有很好的鲁棒性。<br>
+        <p>什么是目标检测？目标检测主要是明确从图中看到了什么物体？他们在什么位置。传统的目标检测方法一般分为三个阶段：首先在给定的图像上选择一些候选的区域，然后对这些区域提取特征，最后使用训练的分类器进行分类。<br><strong>1. 区域选择</strong><br>这一步是为了对目标进行定位。传统方法是采用穷举策略。由于目标可能在图片上的任意位置，而且大小不定，因此使用滑动窗口的策略对整幅图像进行遍历，而且需要设置不同的长宽。这种策略虽然可以检测到所有可能出现的位置，但是时间复杂度太高，产生的冗余窗口太多，严重影响后续特征的提取和分类速度的性能。<br><strong>2. 特征提取</strong><br>提取特征的好坏会直接影响到分类的准确性，但又由于目标的形态多样性，提取一个鲁棒的特征并不是一个简单的事。这个阶段常用的特征有SIFT（尺度不变特征变换 ，Scale-invariant feature transform）和HOG（ 方向梯度直方图特征，Histogram of Oriented Gradient）等。<br><strong>3. 分类器</strong><br>主要有SVM，Adaboost等<br>综上所述，传统目标检测存在两个主要问题：一个是基于滑动窗口的区域选择策略没有针对性，时间复杂度高，窗口冗余；而是手工设计的特征对于多样性没有很好的鲁棒性。</p>
         
           <p class="article-more-link">
             <a href="/2016/10/23/目标检测方法——从RCNN、Fast-RCNN到Faster-RCNN/#more">Read More</a>
@@ -668,7 +668,7 @@ Updated:<time datetime="2017-03-01T05:59:47.885Z" itemprop="dateModified">2017-0
 
 	  
 <span>
-Updated:<time datetime="2016-10-23T05:54:25.424Z" itemprop="dateModified">2016-10-23</time>
+Updated:<time datetime="2017-03-03T02:05:12.598Z" itemprop="dateModified">2017-03-03</time>
 </span>
 
 
