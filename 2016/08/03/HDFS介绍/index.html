@@ -77,7 +77,7 @@ var _hmt = _hmt || [];
           <a id="nav-github-link" class="nav-icon" href="https://github.com/BeaLin" title="Github" target="_blank"></a>
         
         
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Zoeken"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -87,171 +87,11 @@ var _hmt = _hmt || [];
 </header>
 
       <div class="outer">
-        <section id="main"><article id="post-HDFS介绍" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    
-<a href="/2016/08/03/HDFS介绍/" class="article-date">
-  <time datetime="2016-08-03T14:14:26.000Z" itemprop="datePublished">2016-08-03</time>
-</a>
-
-
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Hadoop/">Hadoop</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="article-title" itemprop="name">
-      HDFS介绍
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-		
-		<div id="toc" class="toc-article">
-			<h2 class="toc-title"><span>Contents</span></h2>
-		
-			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#主从结构"><span class="toc-number">1.</span> <span class="toc-text">主从结构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#NameNode（管理节点）"><span class="toc-number">1.1.</span> <span class="toc-text">NameNode（管理节点）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#NameNode-Metadata"><span class="toc-number">1.1.1.</span> <span class="toc-text">NameNode Metadata</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#功能"><span class="toc-number">1.1.2.</span> <span class="toc-text">功能</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#NameNode的工作特点"><span class="toc-number">1.1.3.</span> <span class="toc-text">NameNode的工作特点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Secondary-NameNode"><span class="toc-number">1.1.4.</span> <span class="toc-text">Secondary NameNode</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DataNode"><span class="toc-number">1.2.</span> <span class="toc-text">DataNode</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#存储形式：块"><span class="toc-number">1.2.1.</span> <span class="toc-text">存储形式：块</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#存储内容"><span class="toc-number">1.2.2.</span> <span class="toc-text">存储内容</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#心跳机制"><span class="toc-number">1.2.3.</span> <span class="toc-text">心跳机制</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#保证可靠性的措施"><span class="toc-number">2.</span> <span class="toc-text">保证可靠性的措施</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#一个名字节点和多个数据节点"><span class="toc-number">2.1.</span> <span class="toc-text">一个名字节点和多个数据节点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#数据复制（冗余机制）（保证容错）"><span class="toc-number">2.2.</span> <span class="toc-text">数据复制（冗余机制）（保证容错）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#故障检测"><span class="toc-number">2.3.</span> <span class="toc-text">故障检测</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#空间回收机制"><span class="toc-number">2.4.</span> <span class="toc-text">空间回收机制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#元数据保护——HA机制（版本2的zookeeper）——高可用性"><span class="toc-number">2.5.</span> <span class="toc-text">元数据保护——HA机制（版本2的zookeeper）——高可用性</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Remote-Procedure-Call"><span class="toc-number">3.</span> <span class="toc-text">Remote Procedure Call</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HDFS读过程"><span class="toc-number">4.</span> <span class="toc-text">HDFS读过程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HDFS写过程"><span class="toc-number">5.</span> <span class="toc-text">HDFS写过程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HDFS的访问"><span class="toc-number">6.</span> <span class="toc-text">HDFS的访问</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JavaAPI接口"><span class="toc-number">7.</span> <span class="toc-text">JavaAPI接口</span></a></li></ol>
-		
-		</div>
-		
-        <p>分布式文件系统是管理网络中跨多台计算机存储的文件系统。HDFS（Hadoop Distributed File System）以流式数据访问模式来存储超大文件，运行于商用硬件集群上。其中流式数据访问指的是一次写入、多次读取是最高效的访问模式。<br>HDFS具有以下几大特性：</p>
-<ol>
-<li>高容错性</li>
-<li>高吞吐量</li>
-<li>超大数据集</li>
-<li>流式数据访问</li>
-<li>移动计算优于移动数据</li>
-<li>轻便访问异构的软硬件平台</li>
-</ol>
-<a id="more"></a>
-<h2 id="主从结构"><a href="#主从结构" class="headerlink" title="主从结构"></a>主从结构</h2><p>HDFS采用主从结构，即1个namenode，多个datanode。</p>
-<h3 id="NameNode（管理节点）"><a href="#NameNode（管理节点）" class="headerlink" title="NameNode（管理节点）"></a>NameNode（管理节点）</h3><h4 id="NameNode-Metadata"><a href="#NameNode-Metadata" class="headerlink" title="NameNode Metadata"></a>NameNode Metadata</h4><p>元数据存储方式NameNode(FileName, replicas, block-ids,id2host…)<br>/test/a.log, 3 ,{blk_1,blk_2}, [{blk_1:[h0,h1,h3]},{blk_2:[h0,h2,h4]}]<br><img src="http://o73nd1ra4.bkt.clouddn.com/Hadoop1-1.png" alt="NameNode中的存储情况"></p>
-<h4 id="功能"><a href="#功能" class="headerlink" title="功能"></a>功能</h4><p>NameNode的功能主要有以下几点：</p>
-<ol>
-<li>维护着整个文件系统的文件目录树，文件/目录的元信息和每个文件对应的数据块列表。</li>
-<li>调节客户端访问文件的主服务器（提供名称查询服务、保存metadata、启动后加载metadata至内存）</li>
-</ol>
-<p>同时它周期性地从集群中的每个Datanode接收心跳信号和块状态报告(Blockreport)。接收到心跳信号意味着该Datanode节点工作正常。块状态报告包含了一个该Datanode上所有数据块的列表。读取文件时NameNode尽量让用户先读取最近的副本，降低带块消耗和读取时延。</p>
-<h4 id="NameNode的工作特点"><a href="#NameNode的工作特点" class="headerlink" title="NameNode的工作特点"></a>NameNode的工作特点</h4><p>NameNode中元数据的持久化：：<br><strong>Fsimage：元数据镜像文件</strong>。在本地文件系统中：存储某一时段NameNode内存元数据信息。包括完整的文件系统命名空间、文件块的映射和文件系统的配置。<br><strong>Edits：操作日志文件</strong>。（用于持久化每一个对文件系统的元数据的改变。<br><strong>Fstime：保存最近一次checkpoint的时间</strong>。检查点发生在NameNode启动时。<br>以上这些文件是保存在linux的文件系统中。<br>Namenode始终在内存中保存metedata，用于处理“读请求”。有“写请求”到来时，namenode会首先写editlog到磁盘，即向edits文件中写日志，成功返回后，才会修改内存，并且向客户端返回<br>Hadoop会维护一个fsimage文件，也就是namenode中metedata的镜像，但是fsimage不会随时与namenode内存中的metedata保持一致，而是每隔一段时间通过合并edits文件来更新内容。<strong>Secondary namenode</strong>就是用来合并fsimage和edits文件来更新NameNode的metedata的。</p>
-<h4 id="Secondary-NameNode"><a href="#Secondary-NameNode" class="headerlink" title="Secondary NameNode"></a>Secondary NameNode</h4><p>Secondary NameNode是HA（高可靠性）的一个解决方案。<br><strong>执行过程：</strong>周期性从NameNode上下载元数据信息（fsimage, edits），然后把二者合并，生成新的fsimage，在本地保存，并将其推送到NameNode（Namenode启动时加载最新的FSImage），替换旧的fsimage。<br>默认在安装在NameNode节点上，但这样不安全！<br><strong>1. secondary namenode的工作流程</strong><br><img src="http://o73nd1ra4.bkt.clouddn.com/Hadoop1-2.jpg" alt=""><br>1、secondary通知namenode切换edits文件<br>2、secondary从namenode获得fsimage和edits(通过http)<br>3、secondary将fsimage载入内存，然后开始合并edits<br>4、secondary将新的fsimage发回给namenode<br>5、namenode用新的fsimage替换旧的fsimage<br><strong>2. 什么时候checkpiont</strong><br>复制触发的条件在core-site.xml中<br>fs.checkpoint.period指定两次checkpoint的最大时间间隔，默认3600秒。<br>fs.checkpoint.size 规定edits文件的最大值，一旦超过这个值则强制checkpoint，不管是否到达最大时间间隔。默认大小是64M。即当EditsLog&gt;64MB时，触发两文件合并</p>
-<h3 id="DataNode"><a href="#DataNode" class="headerlink" title="DataNode"></a>DataNode</h3><h4 id="存储形式：块"><a href="#存储形式：块" class="headerlink" title="存储形式：块"></a>存储形式：块</h4><p>文件块（block）：最基本的存储单位。磁盘块一般为512字节，文件系统块一般为几千字节，为前者的整数倍。对于文件内容而言，一个文件的长度大小是size，那么从文件的0偏移开始，按照固定的大小，顺序对文件进行划分并编号，划分好的每一个块称一个Block。HDFS默认Block大小是64MB（可使寻道时间最小化），以一个256MB文件，共有256/64=4个Block.。一个HDFS文件最多切分为128块。<br>PS：若上传文件&lt;64MB，仍占用一个Block的Namenode Metadata，但物理空间不占用64MB<br>Fsck：查看块信息<br><strong>优点</strong>：:简化存储子系统的设计；大于网络中任意一个磁盘的容量</p>
-<h4 id="存储内容"><a href="#存储内容" class="headerlink" title="存储内容"></a>存储内容</h4><p>一个数据块在DataNode以文件存储在磁盘上，包括两个文件，一个是数据本身，一个是元数据包括数据块的长度，块数据的校验和，以及时间戳</p>
-<h4 id="心跳机制"><a href="#心跳机制" class="headerlink" title="心跳机制"></a>心跳机制</h4><p>DataNode启动后向NameNode注册，通过后，周期性（1小时）的向NameNode上报所有的块信息。<br>心跳是每3秒一次，心跳返回结果带有NameNode给该DataNode的命令，如复制块数据到另一台机器，或删除某个数据块。<br>如果超过10分钟没有收到某个DataNode 的心跳，则认为该节点不可用。<br>~集群运行中可以安全加入和退出一些机</p>
-<h2 id="保证可靠性的措施"><a href="#保证可靠性的措施" class="headerlink" title="保证可靠性的措施"></a>保证可靠性的措施</h2><p>HDFS保证可靠性的措施主要有以下几种方式</p>
-<h3 id="一个名字节点和多个数据节点"><a href="#一个名字节点和多个数据节点" class="headerlink" title="一个名字节点和多个数据节点"></a>一个名字节点和多个数据节点</h3><h3 id="数据复制（冗余机制）（保证容错）"><a href="#数据复制（冗余机制）（保证容错）" class="headerlink" title="数据复制（冗余机制）（保证容错）"></a>数据复制（冗余机制）（保证容错）</h3><p><strong>1. 三复本存放策略</strong><br>将数据复制三份分别保存在以下三个地方：<br>1.本地机器的HDFS目录下<br>2.不同机架的某个DataNode<br>3.同一机架的某台机器上<br><strong>2. 备份机制</strong><br>如下图所示，由DataNode1流式传至DataNode2，再流式传至DataNode3<br><img src="http://o73nd1ra4.bkt.clouddn.com/Hadoop1-3.png" alt=""><br><strong>3. 存放的位置（机架感知策略）</strong><br>机架感知：非自适应，通常情况，Hadoop随机选择机器，若数据量大，会造成性能瓶颈</p>
-<h3 id="故障检测"><a href="#故障检测" class="headerlink" title="故障检测"></a>故障检测</h3><ol>
-<li>DataNode<br>DataNode主要有以下几种方式<br><strong>心跳机制：</strong>心跳包检测是否宕机）——<br><strong>安全模式</strong>下检测：块报告<br>数据完整性检测（<strong>校验和</strong>比较）</li>
-<li>NameNode<br>NameNode使用Secondary NameNode机制来保证故障检测。</li>
-</ol>
-<h3 id="空间回收机制"><a href="#空间回收机制" class="headerlink" title="空间回收机制"></a>空间回收机制</h3><h3 id="元数据保护——HA机制（版本2的zookeeper）——高可用性"><a href="#元数据保护——HA机制（版本2的zookeeper）——高可用性" class="headerlink" title="元数据保护——HA机制（版本2的zookeeper）——高可用性"></a>元数据保护——HA机制（版本2的zookeeper）——高可用性</h3><p>当集群不可用（宕机、软件或硬件升级）时，只有手动故障转移。故可以通过提供热备用的“主/备”两个冗余Namenode来预防故障。注意，这里两个Namenode与Secondary Namenode是不同概念！两个Namenode中只有1个namenode是Active；在之前的Namenode重新恢复之后，不能提供failback；数据一致性比failback更重要，所以Namenode——Datanode之间写不变时才生效；DataNode会同时向Namenode Active和Namenode standby 汇报块信息。<br>~~还可以使用<strong>Federation机制</strong><br>Federation:使HDFS支持多个Namespace。（简单鲁棒的设计：对HDFS文件系统文件的隔离）<br>解决的问题：单个NameNode的HDFS架构局限性带来的单点故障(性能瓶颈、隔离问题、集群可用性)</p>
-<h2 id="Remote-Procedure-Call"><a href="#Remote-Procedure-Call" class="headerlink" title="Remote Procedure Call"></a>Remote Procedure Call</h2><p>RPC是远程过程调用协议，它是一种通过网络从远程计算机程序上请求服务，而不需要了解底层网络技术的协议。RPC协议假定某些传输协议的存在，如TCP或UDP，为通信程序之间携带信息数据。在OSI网络通信模型中，RPC跨越了传输层和应用层。RPC使得开发包括网络分布式多程序在内的应用程序更加容易。<br>Hadoop RPC抽象包装了ClientProtocal（客户端和NameNode）、DataNodeProtocal（NameNode和DataNode）Haddoop RPC使用Java动态代理和放射实现对象调用的，大致过程如下：<br><img src="http://o73nd1ra4.bkt.clouddn.com/Hadoop1-4.png" alt=""></p>
-<ol>
-<li>Dynamic proxy创建代理对象，会关联一个Invocation Handler，RPC由此捕捉用户的调用请求</li>
-<li>将调用请求序列化成二进制数据流发送到服务端</li>
-<li>服务端解析调用请求，调用接口真正的接口，返回结果<br>（1）Listener：监听RPC Server端口<br>（2）Reader：从客户端连接中读取数据流，转化成调用对象call，放在call queue<br>（3）Handler：真正做事的实体，从call queue中获取call，反射调用真正对象，得到结果并放在response queue<br>（4）Responder：检查response queue，将调用结果放回到客户端</li>
-</ol>
-<p>具体对RPC的介绍以及源码分析请看另外一篇博文</p>
-<h2 id="HDFS读过程"><a href="#HDFS读过程" class="headerlink" title="HDFS读过程"></a>HDFS读过程</h2><p><img src="http://o73nd1ra4.bkt.clouddn.com/Hadoop1-5.png" alt=""></p>
-<ol>
-<li>初始化FileSystem，然后客户端(client)用FileSystem的open()函数打开文件</li>
-<li>FileSystem用RPC调用元数据节点，得到文件的数据块信息，对于每一个数据块，元数据节点返回保存数据块的数据节点的地址。</li>
-<li>FileSystem返回FSDataInputStream给客户端，用来读取数据，客户端调用stream的read()函数开始读取数据。</li>
-<li>DFSInputStream连接保存此文件第一个数据块的最近的数据节点，data从数据节点读到客户端(client)</li>
-<li>当此数据块读取完毕时，DFSInputStream关闭和此数据节点的连接，然后连接此文件下一个数据块的最近的数据节点。</li>
-<li>当客户端读取完毕数据的时候，调用FSDataInputStream的close函数。</li>
-<li>在读取数据的过程中，如果客户端在与数据节点通信出现错误，则尝试连接包含此数据块的下一个数据节点。</li>
-<li>失败的数据节点将被记录，以后不再连接。</li>
-</ol>
-<h2 id="HDFS写过程"><a href="#HDFS写过程" class="headerlink" title="HDFS写过程"></a>HDFS写过程</h2><p><img src="http://o73nd1ra4.bkt.clouddn.com/Hadoop1-6.png" alt=""></p>
-<ol>
-<li>初始化FileSystem，客户端调用create()来创建文件</li>
-<li>FileSystem用RPC调用元数据节点，在文件系统的命名空间中创建一个新的文件，元数据节点首先确定文件原来不存在，并且客户端有创建文件的权限，然后创建新文件。</li>
-<li>FileSystem返回DFSOutputStream，客户端用于写数据，客户端开始写入数据。</li>
-<li>DFSOutputStream将数据分成块，写入data queue。data queue由Data Streamer读取，并通知元数据节点分配数据节点，用来存储数据块(每块默认复制3块)。分配的数据节点放在一个pipeline里。Data Streamer将数据块写入pipeline中的第一个数据节点。第一个数据节点将数据块发送给第二个数据节点。第二个数据节点将数据发送给第三个数据节点。</li>
-<li>DFSOutputStream为发出去的数据块保存了ack queue，等待pipeline中的数据节点告知数据已经写入成功。</li>
-<li>当客户端结束写入数据，则调用stream的close函数。此操作将所有的数据块写入pipeline中的数据节点，并等待ack queue返回成功。最后通知元数据节点写入完毕。</li>
-<li>如果数据节点在写入的过程中失败，关闭pipeline，将ack queue中的数据块放入data queue的开始，当前的数据块在已经写入的数据节点中被元数据节点赋予新的标示，则错误节点重启后能够察觉其数据块是过时的，会被删除。失败的数据节点从pipeline中移除，另外的数据块则写入pipeline中的另外两个数据节点。元数据节点则被通知此数据块是复制块数不足，将来会再创建第三份备份。</li>
-</ol>
-<h2 id="HDFS的访问"><a href="#HDFS的访问" class="headerlink" title="HDFS的访问"></a>HDFS的访问</h2><p><strong>安全模式（只读）</strong></p>
-<ol>
-<li>安全模式主要是为了系统启动的时候检查各个DataNode上数据块的有效性，同时根据策略必要的复制或者删除部分数据块。</li>
-<li>当分布式文件系统处于安全模式的情况下，文件系统中的内容不允许修改也不允许删除，直到安全模式结束。</li>
-<li>系统启动的时候去修改和删除文件也会有安全模式不允许修改的出错提示，只需要等待一会儿即可。</li>
-<li>NameNode在启动的时候首先进入安全模式，如果datanode丢失的block达到一定的比例（1- dfs.safemode.threshold.pct），则系统会一直处于安全模式状态即只读状态。<br>~dfs.safemode.threshold.pct（缺省值0.999f）表示HDFS启动的时候，如果DataNode上报的block个数达到了元数据记录的block个数的0.999倍才可以离开安全模式，否则一直是这种只读模式。如果设为1则HDFS永远是处于SafeMode。<br><strong>命令：</strong>hadoop dfsadmin -safemode enter | leave | get |wait（进入、离开、得到当前状态信息、挂起）<br><strong>Shell命令</strong></li>
-<li>hadoop fs –put/ -ls/-get/-text/-rm</li>
-<li>Hadoop secondarynamenode –checkpoint / -geteditsize  (强制进入检查点、打印editlog大小)</li>
-</ol>
-<h2 id="JavaAPI接口"><a href="#JavaAPI接口" class="headerlink" title="JavaAPI接口"></a>JavaAPI接口</h2><p><img src="http://o73nd1ra4.bkt.clouddn.com/Hadoop1-7.png" alt=""><br><strong>1. FSDataInputStream</strong><br>继承至DataInputStream继承至FileInputStream继承至InputSream继承至Object<br><strong>作用：</strong><br>用dataInputStream包装一个输入流，并使用BufferedInputStream实现对输入的缓冲<br><strong>实现：</strong><br>DataInputStream抽象类和Closeable接口:具有流式搜索和流式定位读取<br>PositionedReadable接口:从指定位置读取<br><strong>2. FSDataOutputStream</strong><br>与FSDataInputStream类相似，可查询文件当前位置，但不可定位。</p>
-<p>详细HDFS文件操作介绍： <a href="http://www.open-open.com/lib/view/open1398335331546.html" target="_blank" rel="external">http://www.open-open.com/lib/view/open1398335331546.html</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-	  
-	  <!-- 百度分享 Start -->
-	  <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a><a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a></div>
-	  <!-- 百度分享 End -->
-	  
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HDFS/">HDFS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hadoop/">Hadoop</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/分布式文件系统/">分布式文件系统</a></li></ul>
-
-	  
-<span>
-Updated:<time datetime="2017-03-02T03:13:40.836Z" itemprop="dateModified">2017-03-02</time>
-</span>
-
-
-    </footer>
-  </div>
-  
-    
-<nav id="article-nav">
-  
-    <a href="/2016/08/04/Hadoop伪分布式搭建/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">上一篇</strong>
-      <div class="article-nav-title">
-        
-          Hadoop伪分布式搭建
-        
-      </div>
-    </a>
-  
-  
-    <a href="/2016/07/30/Hadoop简介/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">下一篇</strong>
-      <div class="article-nav-title">Hadoop简介</div>
-    </a>
-  
-</nav>
-
-  
-</article>
-
-
-
-
-<!-- 多说评论框 start -->
-<section id="comments">
-  <div class="ds-thread"  data-thread-key="/2016/08/03/HDFS介绍/" data-title="HDFS介绍" data-url="http://yoursite.com/2016/08/03/HDFS介绍/" id="ds_thread">
-    <noscript>Please enable JavaScript to view the <a href="//duoshuo.com/?ref_noscript">comments powered by duoshuo.</a></noscript>
-  </div>
-</section>
-<!-- 多说评论框 end -->
-</section>
+        <section id="main"></section>
         
           
   <div id="toc" class="toc-aside">
-  <h2 class="toc-title">Contents</h2>
+  <h2 class="toc-title">文章目录</h2>
     
         <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#主从结构"><span class="toc-number">1.</span> <span class="toc-text">主从结构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#NameNode（管理节点）"><span class="toc-number">1.1.</span> <span class="toc-text">NameNode（管理节点）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#NameNode-Metadata"><span class="toc-number">1.1.1.</span> <span class="toc-text">NameNode Metadata</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#功能"><span class="toc-number">1.1.2.</span> <span class="toc-text">功能</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#NameNode的工作特点"><span class="toc-number">1.1.3.</span> <span class="toc-text">NameNode的工作特点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Secondary-NameNode"><span class="toc-number">1.1.4.</span> <span class="toc-text">Secondary NameNode</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DataNode"><span class="toc-number">1.2.</span> <span class="toc-text">DataNode</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#存储形式：块"><span class="toc-number">1.2.1.</span> <span class="toc-text">存储形式：块</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#存储内容"><span class="toc-number">1.2.2.</span> <span class="toc-text">存储内容</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#心跳机制"><span class="toc-number">1.2.3.</span> <span class="toc-text">心跳机制</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#保证可靠性的措施"><span class="toc-number">2.</span> <span class="toc-text">保证可靠性的措施</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#一个名字节点和多个数据节点"><span class="toc-number">2.1.</span> <span class="toc-text">一个名字节点和多个数据节点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#数据复制（冗余机制）（保证容错）"><span class="toc-number">2.2.</span> <span class="toc-text">数据复制（冗余机制）（保证容错）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#故障检测"><span class="toc-number">2.3.</span> <span class="toc-text">故障检测</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#空间回收机制"><span class="toc-number">2.4.</span> <span class="toc-text">空间回收机制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#元数据保护——HA机制（版本2的zookeeper）——高可用性"><span class="toc-number">2.5.</span> <span class="toc-text">元数据保护——HA机制（版本2的zookeeper）——高可用性</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Remote-Procedure-Call"><span class="toc-number">3.</span> <span class="toc-text">Remote Procedure Call</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HDFS读过程"><span class="toc-number">4.</span> <span class="toc-text">HDFS读过程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HDFS写过程"><span class="toc-number">5.</span> <span class="toc-text">HDFS写过程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HDFS的访问"><span class="toc-number">6.</span> <span class="toc-text">HDFS的访问</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JavaAPI接口"><span class="toc-number">7.</span> <span class="toc-text">JavaAPI接口</span></a></li></ol>
     
@@ -283,7 +123,7 @@ Updated:<time datetime="2017-03-02T03:13:40.836Z" itemprop="dateModified">2017-0
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Categories</h3>
+    <h3 class="widget-title">Categorieën</h3>
     <div class="widget">
       <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Deep-Learning/">Deep Learning</a><span class="category-list-count">7</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Deep-Learning/Caffe/">Caffe</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hadoop/">Hadoop</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a><span class="category-list-count">15</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Python/Scrapy/">Scrapy</a><span class="category-list-count">1</span></li></ul></li></ul>
     </div>
@@ -303,7 +143,7 @@ Updated:<time datetime="2017-03-02T03:13:40.836Z" itemprop="dateModified">2017-0
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
+    <h3 class="widget-title">Archieven</h3>
     <div class="widget">
       <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">5</span></li></ul>
     </div>
@@ -313,7 +153,7 @@ Updated:<time datetime="2017-03-02T03:13:40.836Z" itemprop="dateModified">2017-0
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
+    <h3 class="widget-title">Recente berichten</h3>
     <div class="widget">
       <ul>
         
@@ -345,7 +185,7 @@ Updated:<time datetime="2017-03-02T03:13:40.836Z" itemprop="dateModified">2017-0
   
     
 <div class="widget-wrap">
-  <h3 class="widget-title">Recent Comments</h3>
+  <h3 class="widget-title">最新评论</h3>
   <ul class="widget ds-recent-comments" data-num-items="5" data-show-avatars="0" data-show-title="1" data-show-time="1"></ul>
 </div>
 <!-- 需要多说的公用代码 -->
@@ -354,7 +194,7 @@ Updated:<time datetime="2017-03-02T03:13:40.836Z" itemprop="dateModified">2017-0
   
     
 <div class="widget-wrap">
-  <h3 class="widget-title">Links</h3>
+  <h3 class="widget-title">友情链接</h3>
   <ul class="widget">
     
     <li><a href="http://yibo.iyiyun.com/js/yibo404/key/1" target="_BLANK">404 page</a></li>

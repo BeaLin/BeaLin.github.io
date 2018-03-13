@@ -71,7 +71,7 @@ var _hmt = _hmt || [];
           <a id="nav-github-link" class="nav-icon" href="https://github.com/BeaLin" title="Github" target="_blank"></a>
         
         
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Zoeken"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -81,104 +81,11 @@ var _hmt = _hmt || [];
 </header>
 
       <div class="outer">
-        <section id="main"><article id="post-机器学习系列—11-k近邻" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    
-<a href="/2017/02/27/机器学习系列—11-k近邻/" class="article-date">
-  <time datetime="2017-02-27T05:56:27.000Z" itemprop="datePublished">2017-02-27</time>
-</a>
-
-
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Machine-Learning/">Machine Learning</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="article-title" itemprop="name">
-      机器学习系列—11.k近邻
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-		
-		<div id="toc" class="toc-article">
-			<h2 class="toc-title"><span>Contents</span></h2>
-		
-			
-		
-		</div>
-		
-        <p>k近邻（k-Nearest Neighbor，kNN）学习是一种常用的监督学习方法，其工作机制非常简单：给定测试样本，基于某种距离度量找出训练集中与其最靠近的k个训练样本，然后基于这k个“邻居”的信息来进行预测。通常，在分类任务中可使用“投票法”，即选择这k个样本中出现最多的类别标记作为预测结果；在回归任务中可使用“平均法”，即将这k个样本的实值输出标记的平均值作为预测结果；还可基于距离远近进行加权平均或加权投票，距离越近的样本权重越大。<br><a id="more"></a></p>
-<p>K近邻学习与前面介绍的学习方法相比有一个不同之处：它似乎没有显示的训练过程。它是“懒惰学习”的代表。此类学习技术在训练阶段仅仅是把样本保存起来，训练时间开销为零，待收到测试样本后再进行处理。下图是k近邻分类器的一个示意图，当k取不同值时，分类结果有显著不同。当采用不同的距离计算防止，则找出的近邻可能有显著差别，也会导致分类结果不同。<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML11-1.png" alt=""><br>最近邻分类器虽然简单，但它的泛化错误率不超过贝叶斯最优分类器的错误率的两倍。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-	  
-	  <!-- 百度分享 Start -->
-	  <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a><a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a></div>
-	  <!-- 百度分享 End -->
-	  
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/K近邻/">K近邻</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ML/">ML</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/机器学习/">机器学习</a></li></ul>
-
-	  
-<span>
-Updated:<time datetime="2017-03-01T03:34:23.485Z" itemprop="dateModified">2017-03-01</time>
-</span>
-
-
-    </footer>
-  </div>
-  
-    
-<nav id="article-nav">
-  
-    <a href="/2017/02/27/机器学习系列—12-降维之PCA/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">上一篇</strong>
-      <div class="article-nav-title">
-        
-          机器学习系列—12.降维之PCA
-        
-      </div>
-    </a>
-  
-  
-    <a href="/2017/02/27/机器学习系列—10-聚类/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">下一篇</strong>
-      <div class="article-nav-title">机器学习系列—10.聚类</div>
-    </a>
-  
-</nav>
-
-  
-</article>
-
-
-
-
-<!-- 多说评论框 start -->
-<section id="comments">
-  <div class="ds-thread"  data-thread-key="/2017/02/27/机器学习系列—11-k近邻/" data-title="机器学习系列—11.k近邻" data-url="http://yoursite.com/2017/02/27/机器学习系列—11-k近邻/" id="ds_thread">
-    <noscript>Please enable JavaScript to view the <a href="//duoshuo.com/?ref_noscript">comments powered by duoshuo.</a></noscript>
-  </div>
-</section>
-<!-- 多说评论框 end -->
-</section>
+        <section id="main"></section>
         
           
   <div id="toc" class="toc-aside">
-  <h2 class="toc-title">Contents</h2>
+  <h2 class="toc-title">文章目录</h2>
     
         
     
@@ -210,7 +117,7 @@ Updated:<time datetime="2017-03-01T03:34:23.485Z" itemprop="dateModified">2017-0
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Categories</h3>
+    <h3 class="widget-title">Categorieën</h3>
     <div class="widget">
       <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Deep-Learning/">Deep Learning</a><span class="category-list-count">7</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Deep-Learning/Caffe/">Caffe</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hadoop/">Hadoop</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a><span class="category-list-count">15</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Python/Scrapy/">Scrapy</a><span class="category-list-count">1</span></li></ul></li></ul>
     </div>
@@ -230,7 +137,7 @@ Updated:<time datetime="2017-03-01T03:34:23.485Z" itemprop="dateModified">2017-0
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
+    <h3 class="widget-title">Archieven</h3>
     <div class="widget">
       <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">5</span></li></ul>
     </div>
@@ -240,7 +147,7 @@ Updated:<time datetime="2017-03-01T03:34:23.485Z" itemprop="dateModified">2017-0
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
+    <h3 class="widget-title">Recente berichten</h3>
     <div class="widget">
       <ul>
         
@@ -272,7 +179,7 @@ Updated:<time datetime="2017-03-01T03:34:23.485Z" itemprop="dateModified">2017-0
   
     
 <div class="widget-wrap">
-  <h3 class="widget-title">Recent Comments</h3>
+  <h3 class="widget-title">最新评论</h3>
   <ul class="widget ds-recent-comments" data-num-items="5" data-show-avatars="0" data-show-title="1" data-show-time="1"></ul>
 </div>
 <!-- 需要多说的公用代码 -->
@@ -281,7 +188,7 @@ Updated:<time datetime="2017-03-01T03:34:23.485Z" itemprop="dateModified">2017-0
   
     
 <div class="widget-wrap">
-  <h3 class="widget-title">Links</h3>
+  <h3 class="widget-title">友情链接</h3>
   <ul class="widget">
     
     <li><a href="http://yibo.iyiyun.com/js/yibo404/key/1" target="_BLANK">404 page</a></li>

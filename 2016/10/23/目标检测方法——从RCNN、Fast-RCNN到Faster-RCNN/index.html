@@ -72,7 +72,7 @@ var _hmt = _hmt || [];
           <a id="nav-github-link" class="nav-icon" href="https://github.com/BeaLin" title="Github" target="_blank"></a>
         
         
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Zoeken"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -82,133 +82,11 @@ var _hmt = _hmt || [];
 </header>
 
       <div class="outer">
-        <section id="main"><article id="post-目标检测方法——从RCNN、Fast-RCNN到Faster-RCNN" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    
-<a href="/2016/10/23/目标检测方法——从RCNN、Fast-RCNN到Faster-RCNN/" class="article-date">
-  <time datetime="2016-10-23T02:33:45.000Z" itemprop="datePublished">2016-10-23</time>
-</a>
-
-
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Deep-Learning/">Deep Learning</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="article-title" itemprop="name">
-      目标检测方法——从RCNN、Fast-RCNN到Faster-RCNN
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-		
-		<div id="toc" class="toc-article">
-			<h2 class="toc-title"><span>Contents</span></h2>
-		
-			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-R-CNN-CVPR2014-TPAMI2015"><span class="toc-number">1.</span> <span class="toc-text">1.R-CNN (CVPR2014, TPAMI2015)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SPP-NET-ECCV2014-TPAMI2015"><span class="toc-number">2.</span> <span class="toc-text">SPP-NET (ECCV2014, TPAMI2015)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Fast-R-CNN-ICCV2015"><span class="toc-number">3.</span> <span class="toc-text">Fast R-CNN(ICCV2015)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Faster-R-CNN-NIPS2015"><span class="toc-number">4.</span> <span class="toc-text">Faster R-CNN(NIPS2015)</span></a></li></ol>
-		
-		</div>
-		
-        <p>什么是目标检测？目标检测主要是明确从图中看到了什么物体？他们在什么位置。传统的目标检测方法一般分为三个阶段：首先在给定的图像上选择一些候选的区域，然后对这些区域提取特征，最后使用训练的分类器进行分类。<br><strong>1. 区域选择</strong><br>这一步是为了对目标进行定位。传统方法是采用穷举策略。由于目标可能在图片上的任意位置，而且大小不定，因此使用滑动窗口的策略对整幅图像进行遍历，而且需要设置不同的长宽。这种策略虽然可以检测到所有可能出现的位置，但是时间复杂度太高，产生的冗余窗口太多，严重影响后续特征的提取和分类速度的性能。<br><strong>2. 特征提取</strong><br>提取特征的好坏会直接影响到分类的准确性，但又由于目标的形态多样性，提取一个鲁棒的特征并不是一个简单的事。这个阶段常用的特征有SIFT（尺度不变特征变换 ，Scale-invariant feature transform）和HOG（ 方向梯度直方图特征，Histogram of Oriented Gradient）等。<br><strong>3. 分类器</strong><br>主要有SVM，Adaboost等<br>综上所述，传统目标检测存在两个主要问题：一个是基于滑动窗口的区域选择策略没有针对性，时间复杂度高，窗口冗余；而是手工设计的特征对于多样性没有很好的鲁棒性。</p>
-<a id="more"></a>
-<p>针对滑动窗口问题，region proposal（候选区域）是预先找出图中目标可能出现的位置，这可以保证在选取较少窗口（几千个甚至几百个）的情况下保持较高的召回率。并且获取的候选窗口要比滑动窗口的质量更高（滑动窗口固定长宽比）。比较常用的region proposal算法有selective search和edge boxes。针对特征选取，卷积神经网络(convolution neural network: CNN) 的特征比传统手工特征效果更好。因此在2014年，<a href="https://people.eecs.berkeley.edu/~rbg/index.html" target="_blank" rel="external">RBG（Ross B. Girshick ）大神</a>使用Region proposal+CNN（RCNN）代替传统目标检测使用的滑动窗口+手工设计特征，设计了RCNN框架，使得目标检测取得巨大突破，并开启了基于深度学习的目标检测热潮。</p>
-<h2 id="1-R-CNN-CVPR2014-TPAMI2015"><a href="#1-R-CNN-CVPR2014-TPAMI2015" class="headerlink" title="1.R-CNN (CVPR2014, TPAMI2015)"></a>1.R-CNN (CVPR2014, TPAMI2015)</h2><p>文章:<a href="https://people.eecs.berkeley.edu/~rbg/papers/r-cnn-cvpr.pdf" target="_blank" rel="external">Region-based Convolution Networks for Accurate Object detection and Segmentation</a><br><img src="http://o73nd1ra4.bkt.clouddn.com/Caffe3.png" alt=""></p>
-<ol>
-<li>输入测试图像  </li>
-<li>利用selective search算法在图像中提取2000个左右的region proposal。   </li>
-<li>将每个region proposal缩放（warp）成227x227的大小并输入到CNN，将CNN的fc7层的输出作为特征。   </li>
-<li>将每个region proposal提取到的CNN特征输入到SVM进行分类。</li>
-<li>边框回归（bounding-box regression)，边框回归是对region proposal进行纠正的线性回归算法，为了让region proposal提取到的窗口跟目标真实窗口更吻合。</li>
-</ol>
-<p><strong>小结：</strong>R-CNN在PASCAL VOC2007上的检测结果从DPM HSC的34.3%直接提升到了66%(mAP)。如此大的提升使我们看到了region proposal+CNN的巨大优势。    但是R-CNN框架也存在着很多问题:   </p>
-<ol>
-<li>训练分为多个阶段，<strong>步骤繁琐</strong>: 微调网络+训练SVM+训练边框回归器   </li>
-<li><strong>训练耗时</strong>，占用磁盘空间大：5000张图像产生几百G的特征文件<br>3.<strong>速度慢</strong>: 使用GPU, VGG16模型处理一张图像需要47s。</li>
-</ol>
-<p>针对速度慢的这个问题，SPP-NET给出了很好的解决方案。</p>
-<h2 id="SPP-NET-ECCV2014-TPAMI2015"><a href="#SPP-NET-ECCV2014-TPAMI2015" class="headerlink" title="SPP-NET (ECCV2014, TPAMI2015)"></a>SPP-NET (ECCV2014, TPAMI2015)</h2><p>(Spatial Pyramid Pooling in Deep Convolutional Networks for Visual Recognition)<br>R-CNN：检测速度慢，对图像提完region proposal（2000个左右）之后将每个proposal当成一张图像进行后续处理(CNN提特征+SVM分类)，实际上对一张图像进行了2000次提特征和分类的过程！<br>对图像提一次卷积层特征，然后将region proposal在原图的位置映射到卷积层特征图上，这样对于一张图像我们只需要提一次卷积层特征，然后将每个region proposal的卷积层特征输入到全连接层做后续操作。<br><strong>小结：</strong>使用SPP-NET相比于R-CNN可以大大加快目标检测的速度，但是依然存在着很多问题：   </p>
-<ol>
-<li>训练分为多个阶段，步骤繁琐: 微调网络+训练SVM+训练训练边框回归器   </li>
-<li>SPP-NET在微调网络的时候固定了卷积层，只对全连接层进行微调，而对于一个新的任务，有必要对卷积层也进行微调。（分类的模型提取的特征更注重高层语义，而目标检测任务除了语义信息还需要目标的位置信息）<br>针对这两个问题，RBG又提出Fast R-CNN, 一个精简而快速的目标检测框架。</li>
-</ol>
-<h2 id="Fast-R-CNN-ICCV2015"><a href="#Fast-R-CNN-ICCV2015" class="headerlink" title="Fast R-CNN(ICCV2015)"></a>Fast R-CNN(ICCV2015)</h2><p><img src="http://o73nd1ra4.bkt.clouddn.com/Caffe2.png" alt=""><br>与R-CNN框架图对比，可以发现主要有两处不同：<br><strong>一</strong>是最后一个卷积层后加了一个ROI pooling layer，ROI pooling layer实际上是SPP-NET的一个精简版<br><strong>二</strong>是损失函数使用了多任务损失函数(multi-task loss)，将边框回归直接加入到CNN网络中训练。<br>R-CNN训练过程分为了三个阶段，而Fast R-CNN直接使用softmax替代SVM分类，同时利用多任务损失函数边框回归也加入到了网络中，这样整个的训练过程是端到端的(除去region proposal提取阶段)。Fast R-CNN在网络微调的过程中，将部分卷积层也进行了微调，取得了更好的检测效果。<br><strong>小结：</strong>Fast R-CNN融合了R-CNN和SPP-NET的精髓，并且引入多任务损失函数，使整个网络的训练和测试变得十分方便。<br><strong>缺点：</strong>region proposal的提取使用selective search，目标检测时间大多消耗在这上面（提region proposal 2~3s，而提特征分类只需0.32s），无法满足实时应用，而且并没有实现真正意义上的端到端训练测试（region proposal使用selective search先提取处来）。</p>
-<h2 id="Faster-R-CNN-NIPS2015"><a href="#Faster-R-CNN-NIPS2015" class="headerlink" title="Faster R-CNN(NIPS2015)"></a>Faster R-CNN(NIPS2015)</h2><p>NIPS2015版本的Faster R-CNN使用的检测框架是RPN网络+Fast R-CNN网络分离进行的目标检测，整体流程跟Fast R-CNN一样，只是region proposal现在是用RPN网络提取的（代替原来的selective search）。RPN的核心思想是使用卷积神经网络直接产生region proposal，使用的方法本质上就是滑动窗口。RPN的设计比较巧妙，RPN只需在最后的卷积层上滑动一遍，因为anchor机制和边框回归可以得到多尺度多长宽比的region proposal。 作者为了让RPN的网络和Fast R-CNN网络实现卷积层的权值共享，训练RPN和Fast R-CNN的时候用了4阶段的训练方法:   </p>
-<ol>
-<li>使用在ImageNet上预训练的模型初始化网络参数，微调RPN网络；   </li>
-<li>使用(1)中RPN网络提取region proposal训练Fast R-CNN网络；   </li>
-<li>使用(2)的Fast R-CNN网络重新初始化RPN, 固定卷积层进行微调；   </li>
-<li>固定(2)中Fast R-CNN的卷积层，使用(3)中RPN提取的region proposal微调网络。</li>
-</ol>
-<p>权值共享后的RPN和Fast R-CNN用于目标检测精度会提高一些。<br><strong>小结：</strong>Faster R-CNN将一直以来分离的region proposal和CNN分类融合到了一起，使用端到端的网络进行目标检测，无论在速度上还是精度上都得到了不错的提高。然而Faster R-CNN还是达不到实时的目标检测，预先获取region proposal，然后在对每个proposal分类计算量还是比较大。比较幸运的是YOLO这类目标检测方法的出现让实时性也变的成为可能。<br><strong>总结：</strong><br>总的来说，从R-CNN, SPP-NET, Fast R-CNN, Faster R-CNN一路走来，基于深度学习目标检测的流程变得越来越精简，精度越来越高，速度也越来越快。可以说基于region proposal的R-CNN系列目标检测方法是当前目标最主要的一个分支。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-	  
-	  <!-- 百度分享 Start -->
-	  <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a><a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a></div>
-	  <!-- 百度分享 End -->
-	  
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Deep-Learning/">Deep Learning</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Object-Detection/">Object Detection</a></li></ul>
-
-	  
-<span>
-Updated:<time datetime="2017-03-03T02:05:12.598Z" itemprop="dateModified">2017-03-03</time>
-</span>
-
-
-    </footer>
-  </div>
-  
-    
-<nav id="article-nav">
-  
-    <a href="/2016/10/23/Caffe学习系列——5使用R-CNN进行目标检测/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">上一篇</strong>
-      <div class="article-nav-title">
-        
-          Caffe学习系列——5使用R-CNN进行目标检测
-        
-      </div>
-    </a>
-  
-  
-    <a href="/2016/10/23/Caffe学习系列——4使用训练好的模型进行分类/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">下一篇</strong>
-      <div class="article-nav-title">Caffe学习系列——4使用训练好的模型进行分类</div>
-    </a>
-  
-</nav>
-
-  
-</article>
-
-
-
-
-<!-- 多说评论框 start -->
-<section id="comments">
-  <div class="ds-thread"  data-thread-key="/2016/10/23/目标检测方法——从RCNN、Fast-RCNN到Faster-RCNN/" data-title="目标检测方法——从RCNN、Fast-RCNN到Faster-RCNN" data-url="http://yoursite.com/2016/10/23/目标检测方法——从RCNN、Fast-RCNN到Faster-RCNN/" id="ds_thread">
-    <noscript>Please enable JavaScript to view the <a href="//duoshuo.com/?ref_noscript">comments powered by duoshuo.</a></noscript>
-  </div>
-</section>
-<!-- 多说评论框 end -->
-</section>
+        <section id="main"></section>
         
           
   <div id="toc" class="toc-aside">
-  <h2 class="toc-title">Contents</h2>
+  <h2 class="toc-title">文章目录</h2>
     
         <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-R-CNN-CVPR2014-TPAMI2015"><span class="toc-number">1.</span> <span class="toc-text">1.R-CNN (CVPR2014, TPAMI2015)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SPP-NET-ECCV2014-TPAMI2015"><span class="toc-number">2.</span> <span class="toc-text">SPP-NET (ECCV2014, TPAMI2015)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Fast-R-CNN-ICCV2015"><span class="toc-number">3.</span> <span class="toc-text">Fast R-CNN(ICCV2015)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Faster-R-CNN-NIPS2015"><span class="toc-number">4.</span> <span class="toc-text">Faster R-CNN(NIPS2015)</span></a></li></ol>
     
@@ -240,7 +118,7 @@ Updated:<time datetime="2017-03-03T02:05:12.598Z" itemprop="dateModified">2017-0
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Categories</h3>
+    <h3 class="widget-title">Categorieën</h3>
     <div class="widget">
       <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Deep-Learning/">Deep Learning</a><span class="category-list-count">7</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Deep-Learning/Caffe/">Caffe</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hadoop/">Hadoop</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a><span class="category-list-count">15</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Python/Scrapy/">Scrapy</a><span class="category-list-count">1</span></li></ul></li></ul>
     </div>
@@ -260,7 +138,7 @@ Updated:<time datetime="2017-03-03T02:05:12.598Z" itemprop="dateModified">2017-0
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
+    <h3 class="widget-title">Archieven</h3>
     <div class="widget">
       <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">5</span></li></ul>
     </div>
@@ -270,7 +148,7 @@ Updated:<time datetime="2017-03-03T02:05:12.598Z" itemprop="dateModified">2017-0
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
+    <h3 class="widget-title">Recente berichten</h3>
     <div class="widget">
       <ul>
         
@@ -302,7 +180,7 @@ Updated:<time datetime="2017-03-03T02:05:12.598Z" itemprop="dateModified">2017-0
   
     
 <div class="widget-wrap">
-  <h3 class="widget-title">Recent Comments</h3>
+  <h3 class="widget-title">最新评论</h3>
   <ul class="widget ds-recent-comments" data-num-items="5" data-show-avatars="0" data-show-title="1" data-show-time="1"></ul>
 </div>
 <!-- 需要多说的公用代码 -->
@@ -311,7 +189,7 @@ Updated:<time datetime="2017-03-03T02:05:12.598Z" itemprop="dateModified">2017-0
   
     
 <div class="widget-wrap">
-  <h3 class="widget-title">Links</h3>
+  <h3 class="widget-title">友情链接</h3>
   <ul class="widget">
     
     <li><a href="http://yibo.iyiyun.com/js/yibo404/key/1" target="_BLANK">404 page</a></li>

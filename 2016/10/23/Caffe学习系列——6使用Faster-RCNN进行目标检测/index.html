@@ -88,7 +88,7 @@ var _hmt = _hmt || [];
           <a id="nav-github-link" class="nav-icon" href="https://github.com/BeaLin" title="Github" target="_blank"></a>
         
         
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Zoeken"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -98,215 +98,11 @@ var _hmt = _hmt || [];
 </header>
 
       <div class="outer">
-        <section id="main"><article id="post-Caffe学习系列——6使用Faster-RCNN进行目标检测" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    
-<a href="/2016/10/23/Caffe学习系列——6使用Faster-RCNN进行目标检测/" class="article-date">
-  <time datetime="2016-10-23T02:35:22.000Z" itemprop="datePublished">2016-10-23</time>
-</a>
-
-
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Deep-Learning/">Deep Learning</a>►<a class="article-category-link" href="/categories/Deep-Learning/Caffe/">Caffe</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="article-title" itemprop="name">
-      Caffe学习系列——6使用Faster-RCNN进行目标检测
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-		
-		<div id="toc" class="toc-article">
-			<h2 class="toc-title"><span>Contents</span></h2>
-		
-			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#配置与运行Demo"><span class="toc-number">1.</span> <span class="toc-text">配置与运行Demo</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-配置、编译与安装环境"><span class="toc-number">1.1.</span> <span class="toc-text">1.配置、编译与安装环境</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-运行demo"><span class="toc-number">1.2.</span> <span class="toc-text">2.运行demo</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-训练PASCAL-VOC-2007的数据集"><span class="toc-number">1.3.</span> <span class="toc-text">3.训练PASCAL VOC 2007的数据集</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-遇到的问题"><span class="toc-number">1.4.</span> <span class="toc-text">4.遇到的问题</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用Faster-RCNN训练自己的数据集"><span class="toc-number">2.</span> <span class="toc-text">使用Faster-RCNN训练自己的数据集</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-工程目录简介"><span class="toc-number">2.1.</span> <span class="toc-text">1.工程目录简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-创建数据集"><span class="toc-number">2.2.</span> <span class="toc-text">2.创建数据集</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-训练自己的数据"><span class="toc-number">2.3.</span> <span class="toc-text">3.训练自己的数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-测试结果"><span class="toc-number">2.4.</span> <span class="toc-text">4.测试结果</span></a></li></ol></li></ol>
-		
-		</div>
-		
-        <p>由于要实现服装的目标检测，所以一直在研究Faster-RCNN 。讲到目标检测，不得不提到rbg大神的深度神经网络检测算法系列RCNN、Fast-RCNN、Faster-RCNN，其还在github上开源了自己的代码，造福广大码农。这是rbg大神的主页 <a href="https://people.eecs.berkeley.edu/~rbg/index.html" target="_blank" rel="external">https://people.eecs.berkeley.edu/~rbg/index.html</a> ，以及本篇博文会用到的Faster-RCNN的github源码地址 <a href="https://github.com/rbgirshick/py-faster-rcnn" target="_blank" rel="external">https://github.com/rbgirshick/py-faster-rcnn</a>，欢迎前去膜拜学习。对于RCNN、Fast-RCNN、Faster-RCNN的介绍就不在这里赘述了，可以看看我的上一篇博文 。该github源码是Faster-RCNN python版本的实现，并使用caffe。除了python版本，rbg大神还提供了matlab代码。这两种实现方式有些许的不同，主要体现在以下几点：</p>
-<ol>
-<li>由于使用了python layer，python版本的在测试时间上会比matlab版本的慢10%左右，但是准确率差不多甚至略高一点。</li>
-<li>由于在实现方式上有一点点不同，所以使用MATLAB代码训练的模型与Python版本的不兼容</li>
-<li>目前已经实现的方式有两种：Alternative training和Approximate join training。推荐使用第二种，因为第二种使用的显存更小，而且训练会更快。</li>
-</ol>
-<p>本篇博文主要分为两部分，第一部分讲如何配置py-faster-rcnn并训练PASCALVOC2007，运行demo。第二部分讲如何对代码和数据集进行修改实现自己数据的训练与检测。<br><a id="more"></a></p>
-<h2 id="配置与运行Demo"><a href="#配置与运行Demo" class="headerlink" title="配置与运行Demo"></a>配置与运行Demo</h2><p>这个过程主要是跟着github上的说明:<a href="https://github.com/rbgirshick/py-faster-rcnn/blob/master/README.md" target="_blank" rel="external">https://github.com/rbgirshick/py-faster-rcnn/blob/master/README.md</a> 走了一遍用以熟悉用Faster-RCNN进行目标检测的过程。</p>
-<h3 id="1-配置、编译与安装环境"><a href="#1-配置、编译与安装环境" class="headerlink" title="1.配置、编译与安装环境"></a>1.配置、编译与安装环境</h3><ol>
-<li><p>在进行这一步之前，需已经在自己的机器上配置好caffe环境以及各种依赖项的安装，在配置之前，需确保已经安装以下几个python包：cython、easydict和python-opencv。安装命令如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">pip install cython </span><br><span class="line">pip install easydict </span><br><span class="line">apt-get install python-opencv</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>从github上clone项目，注意！一定要在clone时加入–recursive参数，不然会很麻烦，也不要直接下载，在机器上装个git来clone，这样会省去很多时间。</p>
-<p> git clone –recursive <a href="https://github.com/rbgirshick/py-faster-rcnn.git" target="_blank" rel="external">https://github.com/rbgirshick/py-faster-rcnn.git</a></p>
-</li>
-<li><p>Cython模块编译</p>
-<p> cd $FRCN_ROOT /lib<br> make</p>
-</li>
-<li><p>caffe和pycaffe的编译<br>在编译之前，需要复制$FRCN_ROOT/caffe-fast-rcnn 的Makefile.config.example，然后重命名为Makefile.config。<br><img src="http://o73nd1ra4.bkt.clouddn.com/Caffe6-wenjian.png" alt=""><br>需要注意的是里面有几个配置需要添加<br>打开USE_CUDNN=1，这个选项默认情况下是关闭的，需要打开让CUDA支持DNN<br>打开WITH_PYTHON_LAYER=1，默认关闭，需打开，因为FasterRCNN需要支持Python接口。<br>执行以下命令进行编译</p>
-<p> cd $FRCN_ROOT/caffe-fast-rcnn<br> make -j8 &amp;&amp; make pycaffe</p>
-</li>
-</ol>
-<h3 id="2-运行demo"><a href="#2-运行demo" class="headerlink" title="2.运行demo"></a>2.运行demo</h3><ol>
-<li><p>下载训练好的模型，下载后这个faster_rcnn_models文件夹在$FRCN_ROOT/data下面，可以从data/README.md中查看关于这个的详细介绍。这些模型是在VOC 2007 上训练的。</p>
-<p> cd $FRCN_ROOT<br> ./data/scripts/fetch_faster_rcnn_models.sh<br>这里有个小建议，就是下载模型时，直接去脚本文件中复制URL使用迅雷下载更快。</p>
-</li>
-<li><p>运行demo</p>
-<p> cd $FRCN_ROOT<br> ./tools/demo.py<br>这个demo展示了使用在PASCAL VOC 2007上训练的VGG16网络来进行目标检测。运行结果如下图所示:<br><img src="http://o73nd1ra4.bkt.clouddn.com/Caffe6-1.png" alt=""></p>
-</li>
-</ol>
-<h3 id="3-训练PASCAL-VOC-2007的数据集"><a href="#3-训练PASCAL-VOC-2007的数据集" class="headerlink" title="3.训练PASCAL VOC 2007的数据集"></a>3.训练PASCAL VOC 2007的数据集</h3><ol>
-<li><p>下载训练、验证以及测试集和VOCdevkit</p>
-<p> wget <a href="http://host.robots.ox.ac.uk/pascal/VOC/voc2007/VOCtrainval_06-Nov-2007.tar" target="_blank" rel="external">http://host.robots.ox.ac.uk/pascal/VOC/voc2007/VOCtrainval_06-Nov-2007.tar</a><br> wget <a href="http://host.robots.ox.ac.uk/pascal/VOC/voc2007/VOCtest_06-Nov-2007.tar" target="_blank" rel="external">http://host.robots.ox.ac.uk/pascal/VOC/voc2007/VOCtest_06-Nov-2007.tar</a><br> wget <a href="http://host.robots.ox.ac.uk/pascal/VOC/voc2007/VOCdevkit_08-Jun-2007.tar" target="_blank" rel="external">http://host.robots.ox.ac.uk/pascal/VOC/voc2007/VOCdevkit_08-Jun-2007.tar</a></p>
-</li>
-<li><p>解压</p>
-<p> tar xvf VOCtrainval_06-Nov-2007.tar<br> tar xvf VOCtest_06-Nov-2007.tar<br> tar xvf VOCdevkit_08-Jun-2007.ta<br>解压后的文件结构如下</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$VOCdevkit/   # 开发工具包</span><br><span class="line">$VOCdevkit/VOCcode/   # VOC实用代码</span><br><span class="line">$VOCdevkit/VOC2007# 图片集, 注释, 等等</span><br><span class="line"># 一些其他的目录</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>将VOCdevkit改名为VOCdevkit2007，然后放到data文件夹下，亦可以使用软连接的方式，</p>
-<pre><code>cd $FRCN_ROOT/data
-ln -s $VOCdevkit VOCdevkit2007   
-</code></pre><ol>
-<li><p>下载预训练的ImageNet模型</p>
-<p> cd $FRCN_ROOT<br> ./data/scripts/fetch_imagenet_models.sh<br>VGG16来自<a href="https://github.com/BVLC/caffe/wiki/Model-Zoo" target="_blank" rel="external">Caffe Mode Zoo</a>，ZF是由MSRA训练的结构</p>
-</li>
-<li>训练数据<br>(1) 使用交替优化（alternating optimization）算法来训练和测试Faster R-CNN<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">cd $FRCN_ROOT</span><br><span class="line">./experiments/scripts/faster_rcnn_alt_opt.sh [GPU_ID] [NET] [--set ...]</span><br><span class="line"># GPU_ID是你想要训练的GPUID</span><br><span class="line"># 你可以选择如下的网络之一进行训练：ZF, VGG_CNN_M_1024, VGG16</span><br><span class="line"># --set ... 运行你自定义fast_rcnn.config参数,例如.</span><br><span class="line">#   --set EXP_DIR seed_rng1701 RNG_SEED 1701</span><br><span class="line">#例如命令</span><br><span class="line">./experiments/scripts/faster_rcnn_alt_opt.sh 0 ZF pascal_voc</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>输出的结果在 $FRCN_ROOT/output下。训练过程截图：<br><img src="http://o73nd1ra4.bkt.clouddn.com/Caffe6-2.png" alt=""><br>(2) 使用近似联合训练（ approximate joint training）</p>
-<pre><code>cd $FRCN_ROOT
-./experiments/scripts/faster_rcnn_end2end.sh [GPU_ID] [NET] [--set ...]
-</code></pre><p>这个方法是联合RPN模型和Fast R-CNN网络训练。而不是交替训练。用此种方法比交替优化快1.5倍，但是准确率相近。所以推荐使用这种方法<br>训练Fast R-CNN网络的结果保存在这个目录下：</p>
-<pre><code>output/&lt;experiment directory&gt;/&lt;dataset name&gt;/
-</code></pre><p>测试保存在这个目录下：</p>
-<pre><code>output/&lt;experiment directory&gt;/&lt;dataset name&gt;/&lt;network snapshot name&gt;/
-</code></pre><p><img src="http://o73nd1ra4.bkt.clouddn.com/Caffe6-3.png" alt=""></p>
-<h3 id="4-遇到的问题"><a href="#4-遇到的问题" class="headerlink" title="4.遇到的问题"></a>4.遇到的问题</h3><ol>
-<li>TypeError: ‘numpy.float64’ object cannot be interpreted as an index<br><img src="http://o73nd1ra4.bkt.clouddn.com/Caffe6-4.png" alt=""><br>这个错误是$FRCN_ROOT/lib/roi_data_layer下的minibatch.py中的npr.choice引起的，所以需要改成ruxia所示<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">if fg_inds.size &gt; 0:</span><br><span class="line">        for i in range(0,len(fg_inds)):</span><br><span class="line">            fg_inds[i] = int(fg_inds[i])</span><br><span class="line">        fg_inds = npr.choice(fg_inds, size=int(fg_rois_per_this_image), replace=False)</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>注意有两个npr.choice，所以两个地方都按照如上来改。</p>
-<ol>
-<li>labels[fg_rois_per_this_image:] = 0<br>TypeError: slice indices must be integers or None or have an <strong>index</strong> method<br><img src="http://o73nd1ra4.bkt.clouddn.com/Caffe6-5.png" alt=""><br>这个错误是由numpy的版本引起的，只要将fg_rois_per_this_image强制转换为int型就可以了<br>labels[int(fg_rois_per_this_image):] = 0</li>
-</ol>
-<h2 id="使用Faster-RCNN训练自己的数据集"><a href="#使用Faster-RCNN训练自己的数据集" class="headerlink" title="使用Faster-RCNN训练自己的数据集"></a>使用Faster-RCNN训练自己的数据集</h2><h3 id="1-工程目录简介"><a href="#1-工程目录简介" class="headerlink" title="1.工程目录简介"></a>1.工程目录简介</h3><p>由于需要训练自己的数据集，所以需要对这个工程各个目录的作用有所了解</p>
-<ol>
-<li>caffe-fast-rcnn：caffe框架目录</li>
-<li>data：用来存放pretrained模型以及读取文件的cache缓存，还有一些下载模型的脚本</li>
-<li>experiments:存放配置文件以及运行的log文件，另外这个目录下有scripts，里面存放end2end和alt_opt两种训练方式的脚本</li>
-<li>lib：用来存放一些python接口文件，如其下的datasets主要负责数据库读取，config负责一些训练的配置选项</li>
-<li>models：里面存放了三个模型文件，小型网络ZF，中型网络VGG_CNN_M_1024以及大型网络VGG16，根据你的硬件条件来选择使用哪种网络，ZF和VGG_CNN_M_1024需要至少3G内存，VGG16需要更多的内存，但不会超过11G。</li>
-<li>output：这里存放的是训练完成后的输出目录，这是运行了训练后才会出现的目录</li>
-<li>tools：里面存放的是训练和测试的Python文件</li>
-</ol>
-<h3 id="2-创建数据集"><a href="#2-创建数据集" class="headerlink" title="2.创建数据集"></a>2.创建数据集</h3><p>我个人觉得训练模型最头疼的是数据集的准备，本文我以服装的识别为例来说明如何用自己的数据集进行目标检测。在准备数据集的时候，假如你是第一次用自己的数据集进行训练，那么最好是参照上一章节跑的demo中的VOC2007数据集的格式来准备，这样，关于后续训练过程会涉及到的配置更改会较为简单，比较容易成功。在本次的训练过程中，我使用的是由香港中文大学<a href="http://mmlab.ie.cuhk.edu.hk/projects/DeepFashion.html" target="_blank" rel="external">Large-scale Fashion (DeepFashion) Database</a>提供的服装标记相关的数据集，在此特别感谢一下他们愿意将数据集公开。想要获取他们的数据集只需要发邮件申请即可。基于上述已标记的数据集，可将数据集整理得到如下所示的格式：<br>0000001.jpg Blouse 72 79 232 273<br>0000002.jpg Shorts 67 59 155 161<br>如果一张图片有多个目标，则格式如下：（比如两个目标）<br>000002.jpg dog 44 28 132 121<br>000002.jpg car 50 27 140 110</p>
-<ol>
-<li>将上述的txt转成xml，可参考如下matlab代码：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br></pre></td><td class="code"><pre><span class="line">%%</span><br><span class="line">%该代码可以做voc2007数据集中的xml文件，</span><br><span class="line">%txt文件每行格式为：0000001.jpg Tee 44 28 132 121</span><br><span class="line">%即每行由图片名、目标类型、包围框坐标组成，空格隔开</span><br><span class="line">%包围框坐标为左上角和右下角</span><br><span class="line">%@author：bealin</span><br><span class="line">%%</span><br><span class="line">clc;</span><br><span class="line">clear;</span><br><span class="line">%注意修改下面四个变量</span><br><span class="line">imgpath=&apos;/home/linbiyuan/py-faster-rcnn/data/VOCdevkit2007/VOC2007/JPEGImages/&apos;;%图像存放文件夹</span><br><span class="line">txtpath=&apos;/home/linbiyuan/py-faster-rcnn/data/VOCdevkit2007/VOC2007/alldata.txt&apos;;%txt文件</span><br><span class="line">xmlpath_new=&apos;/home/linbiyuan/py-faster-rcnn/data/VOCdevkit2007/VOC2007/Annotations/&apos;;%修改后的xml保存文件夹</span><br><span class="line">foldername=&apos;VOC2007&apos;;%xml的folder字段名</span><br><span class="line"></span><br><span class="line">fidin=fopen(txtpath,&apos;r&apos;);</span><br><span class="line"></span><br><span class="line">while ~feof(fidin)</span><br><span class="line">     tline=fgetl(fidin);</span><br><span class="line">     str = regexp(tline, &apos; &apos;,&apos;split&apos;);</span><br><span class="line">     filepath=[imgpath,str&#123;1&#125;];</span><br><span class="line">     img=imread(filepath);</span><br><span class="line">     [h,w,d]=size(img);</span><br><span class="line">     rectangle(&apos;Position&apos;,[str2double(str&#123;3&#125;),str2double(str&#123;4&#125;),str2double(str&#123;5&#125;)-str2double(str&#123;3&#125;),str2double(str&#123;6&#125;)-str2double(str&#123;4&#125;)],&apos;LineWidth&apos;,4,&apos;EdgeColor&apos;,&apos;r&apos;);</span><br><span class="line">     Createnode=com.mathworks.xml.XMLUtils.createDocument(&apos;annotation&apos;);</span><br><span class="line">     Root=Createnode.getDocumentElement;%根节点</span><br><span class="line">     node=Createnode.createElement(&apos;folder&apos;);</span><br><span class="line">     node.appendChild(Createnode.createTextNode(sprintf(&apos;%s&apos;,foldername)));</span><br><span class="line">     Root.appendChild(node);</span><br><span class="line">     node=Createnode.createElement(&apos;filename&apos;);</span><br><span class="line">     node.appendChild(Createnode.createTextNode(sprintf(&apos;%s&apos;,str&#123;1&#125;)));</span><br><span class="line">     Root.appendChild(node);</span><br><span class="line">     source_node=Createnode.createElement(&apos;source&apos;);</span><br><span class="line">     Root.appendChild(source_node);</span><br><span class="line">     node=Createnode.createElement(&apos;database&apos;);</span><br><span class="line">     node.appendChild(Createnode.createTextNode(sprintf(&apos;My Database&apos;)));</span><br><span class="line">     source_node.appendChild(node);</span><br><span class="line">     node=Createnode.createElement(&apos;annotation&apos;);</span><br><span class="line">     node.appendChild(Createnode.createTextNode(sprintf(&apos;VOC2007&apos;)));</span><br><span class="line">     source_node.appendChild(node);</span><br><span class="line">     node=Createnode.createElement(&apos;image&apos;);</span><br><span class="line">     node.appendChild(Createnode.createTextNode(sprintf(&apos;flickr&apos;)));</span><br><span class="line">     source_node.appendChild(node);</span><br><span class="line">     node=Createnode.createElement(&apos;flickrid&apos;);</span><br><span class="line">     node.appendChild(Createnode.createTextNode(sprintf(&apos;NULL&apos;)));</span><br><span class="line">     source_node.appendChild(node);</span><br><span class="line">     owner_node=Createnode.createElement(&apos;owner&apos;);</span><br><span class="line">     Root.appendChild(owner_node);</span><br><span class="line">     node=Createnode.createElement(&apos;flickrid&apos;);</span><br><span class="line">     node.appendChild(Createnode.createTextNode(sprintf(&apos;NULL&apos;)));</span><br><span class="line">     owner_node.appendChild(node);</span><br><span class="line"></span><br><span class="line">     node=Createnode.createElement(&apos;name&apos;);</span><br><span class="line">     node.appendChild(Createnode.createTextNode(sprintf(&apos;lby&apos;)));</span><br><span class="line">     owner_node.appendChild(node);</span><br><span class="line">     size_node=Createnode.createElement(&apos;size&apos;);</span><br><span class="line">     Root.appendChild(size_node);</span><br><span class="line"></span><br><span class="line">     node=Createnode.createElement(&apos;width&apos;);</span><br><span class="line">     node.appendChild(Createnode.createTextNode(sprintf(&apos;%s&apos;,num2str(w))));</span><br><span class="line">     size_node.appendChild(node);</span><br><span class="line"></span><br><span class="line">     node=Createnode.createElement(&apos;height&apos;);</span><br><span class="line">     node.appendChild(Createnode.createTextNode(sprintf(&apos;%s&apos;,num2str(h))));</span><br><span class="line">     size_node.appendChild(node);</span><br><span class="line"></span><br><span class="line">     node=Createnode.createElement(&apos;depth&apos;);</span><br><span class="line">     node.appendChild(Createnode.createTextNode(sprintf(&apos;%s&apos;,num2str(d))));</span><br><span class="line">     size_node.appendChild(node);</span><br><span class="line"></span><br><span class="line">     node=Createnode.createElement(&apos;segmented&apos;);</span><br><span class="line">     node.appendChild(Createnode.createTextNode(sprintf(&apos;%s&apos;,&apos;0&apos;)));</span><br><span class="line">     Root.appendChild(node);</span><br><span class="line">     object_node=Createnode.createElement(&apos;object&apos;);</span><br><span class="line">     Root.appendChild(object_node);</span><br><span class="line">     node=Createnode.createElement(&apos;name&apos;);</span><br><span class="line">     node.appendChild(Createnode.createTextNode(sprintf(&apos;%s&apos;,str&#123;2&#125;)));</span><br><span class="line">     object_node.appendChild(node);</span><br><span class="line"></span><br><span class="line">     node=Createnode.createElement(&apos;pose&apos;);</span><br><span class="line">     node.appendChild(Createnode.createTextNode(sprintf(&apos;%s&apos;,&apos;Unspecified&apos;)));</span><br><span class="line">     object_node.appendChild(node);</span><br><span class="line"></span><br><span class="line">     node=Createnode.createElement(&apos;truncated&apos;);</span><br><span class="line">     node.appendChild(Createnode.createTextNode(sprintf(&apos;%s&apos;,&apos;0&apos;)));</span><br><span class="line">     object_node.appendChild(node);</span><br><span class="line"></span><br><span class="line">     node=Createnode.createElement(&apos;difficult&apos;);</span><br><span class="line">     node.appendChild(Createnode.createTextNode(sprintf(&apos;%s&apos;,&apos;0&apos;)));</span><br><span class="line">     object_node.appendChild(node);</span><br><span class="line"></span><br><span class="line">     bndbox_node=Createnode.createElement(&apos;bndbox&apos;);</span><br><span class="line">     object_node.appendChild(bndbox_node);</span><br><span class="line"></span><br><span class="line">     node=Createnode.createElement(&apos;xmin&apos;);</span><br><span class="line">     node.appendChild(Createnode.createTextNode(sprintf(&apos;%s&apos;,num2str(str&#123;3&#125;))));</span><br><span class="line">     bndbox_node.appendChild(node);</span><br><span class="line"></span><br><span class="line">     node=Createnode.createElement(&apos;ymin&apos;);</span><br><span class="line">     node.appendChild(Createnode.createTextNode(sprintf(&apos;%s&apos;,num2str(str&#123;4&#125;))));</span><br><span class="line">     bndbox_node.appendChild(node);</span><br><span class="line"></span><br><span class="line">     node=Createnode.createElement(&apos;xmax&apos;);</span><br><span class="line">     node.appendChild(Createnode.createTextNode(sprintf(&apos;%s&apos;,num2str(str&#123;5&#125;))));</span><br><span class="line">     bndbox_node.appendChild(node);</span><br><span class="line"></span><br><span class="line">     node=Createnode.createElement(&apos;ymax&apos;);</span><br><span class="line">     node.appendChild(Createnode.createTextNode(sprintf(&apos;%s&apos;,num2str(str&#123;6&#125;))));</span><br><span class="line">     bndbox_node.appendChild(node);</span><br><span class="line">     %保存xml%</span><br><span class="line">     lastname=str&#123;1&#125;;</span><br><span class="line">     tempname=strrep(lastname,&apos;.jpg&apos;,&apos;.xml&apos;);</span><br><span class="line">     xmlwrite(tempname,Createnode);</span><br><span class="line">     fprintf(&apos;%s\n&apos;,tempname);</span><br><span class="line"></span><br><span class="line">end</span><br><span class="line">fclose(fidin);</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>由于我的数据集是单标签的，所以这份代码是针对单标签来生成xml。假如你的数据集是多标签的，txt的格式可前所示，而相应的matlab代码做出一点修改即可。生成的xml格式如下<br><img src="http://o73nd1ra4.bkt.clouddn.com/Caffe6-6.png" alt=""><br>这份代码运行生成的xml文件是在当前目录下的，所以还需要将所有的xml放到VOC2007下的Annotations中，可参考如下linux命令：<br>for xml in *.xml;do mv $xml Annotations/;done</p>
-<ol>
-<li>将所有的训练图片放到JPEGImages文件夹中，生成ImageSet\Main里的四个txt文件，分别是：trainval.txt（训练和验证集总和）、train.txt（训练集）、val.txt（验证集）、test.txt（测试集），trainval集占整个数据集的70%，train集占trainval集的70%，val集占trainval集的30%，test集占整个数据集的30%。可参考以下代码进行数据集的划分：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">%%</span><br><span class="line">%该代码根据已生成的xml，制作VOC2007数据集中的trainval.txt;train.txt;test.txt和val.txt</span><br><span class="line">%trainval占总数据集的70%，test占总数据集的30%；train占trainval的70%，val占trainval的30%；</span><br><span class="line">%上面所占百分比可根据自己的数据集修改</span><br><span class="line">%注意修改下面两个路径</span><br><span class="line">xmlfilepath=&apos;/home/linbiyuan/py-faster-rcnn/data/VOCdevkit2007/VOC2007/Annotations&apos;;</span><br><span class="line">txtsavepath=&apos;/home/linbiyuan/py-faster-rcnn/data/VOCdevkit2007/VOC2007/ImageSets/Main/&apos;;</span><br><span class="line"></span><br><span class="line">xmlfile=dir(xmlfilepath);</span><br><span class="line">numOfxml=length(xmlfile)-2;%减去.和..  总的数据集大小</span><br><span class="line"></span><br><span class="line">trainval=sort(randperm(numOfxml,floor(numOfxml*0.7)));%trainval为数据集的50%</span><br><span class="line">test=sort(setdiff(1:numOfxml,trainval));%test为剩余50%</span><br><span class="line"></span><br><span class="line">trainvalsize=length(trainval);%trainval的大小</span><br><span class="line">train=sort(trainval(randperm(trainvalsize,floor(trainvalsize*0.7))));</span><br><span class="line">val=sort(setdiff(trainval,train));</span><br><span class="line"></span><br><span class="line">ftrainval=fopen([txtsavepath &apos;trainval.txt&apos;],&apos;w&apos;);</span><br><span class="line">ftest=fopen([txtsavepath &apos;test.txt&apos;],&apos;w&apos;);</span><br><span class="line">ftrain=fopen([txtsavepath &apos;train.txt&apos;],&apos;w&apos;);</span><br><span class="line">fval=fopen([txtsavepath &apos;val.txt&apos;],&apos;w&apos;);</span><br><span class="line"></span><br><span class="line">for i=1:numOfxml</span><br><span class="line">    if ismember(i,trainval)</span><br><span class="line">        fprintf(ftrainval,&apos;%s\n&apos;,xmlfile(i+2).name(1:end-4));</span><br><span class="line">        if ismember(i,train)</span><br><span class="line">            fprintf(ftrain,&apos;%s\n&apos;,xmlfile(i+2).name(1:end-4));</span><br><span class="line">        else</span><br><span class="line">            fprintf(fval,&apos;%s\n&apos;,xmlfile(i+2).name(1:end-4));</span><br><span class="line">        end</span><br><span class="line">    else</span><br><span class="line">        fprintf(ftest,&apos;%s\n&apos;,xmlfile(i+2).name(1:end-4));</span><br><span class="line">    end</span><br><span class="line">end</span><br><span class="line">fclose(ftrainval);</span><br><span class="line">fclose(ftrain);</span><br><span class="line">fclose(fval);</span><br><span class="line">fclose(ftest);</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>至此，数据集的构建就完成啦，你可以新建一个文件夹，将上述三个文件夹放到里面去，也可将上述三个文件夹分贝替换VOC2007数据集中的Annotations、ImageSets和JPEGImages，这样可免去一些训练的修改。本文选择的是替换~</p>
-<h3 id="3-训练自己的数据"><a href="#3-训练自己的数据" class="headerlink" title="3.训练自己的数据"></a>3.训练自己的数据</h3><p><strong>1. 修改prototxt配置文件</strong><br>这些配置文件都在models下的pascal_voc下。里面有三种网络结构：ZF、VGG16、VGG_CNN_M_1024，本文选择的是VGG_CNN_M_1024 。每个网络结构中都有三个文件夹，分别是faster_rcnn_end2end、faster_rcnn_alt_opt、faster_rcnn。使用近似联合训练，比交替优化快1.5倍，但是准确率相近，所以推荐使用这种方法。更改faster_rcnn_end2end文件夹下的train.prototxt和test.prototxt，train中需要更改的地方有三处，<br>第一处是input-data层，将原先的21改成：你的实际类别数+1（背景），我目标检测一共有46类，所以加上背景这一类，一共47类。<br><img src="http://o73nd1ra4.bkt.clouddn.com/Caffe6-7.png" alt=""><br>第二处是cls_score层<br><img src="http://o73nd1ra4.bkt.clouddn.com/Caffe6-8.png" alt=""><br>第三处是bbox_pred，这里需将原来的84改成（你的类别数+1）<em>4，即（46+1）</em>4=188<br><img src="http://o73nd1ra4.bkt.clouddn.com/Caffe6-9.png" alt=""><br>test.prototxt中没有input-data层，所以只需按照train中的修改cls_score层以及bbox_pred层即可<br><strong>2. 修改lib/datasets/pascal_voc.py，将类别改成自己的类别</strong><br><img src="http://o73nd1ra4.bkt.clouddn.com/Caffe6-11.png" alt=""><br>这里有一个注意点就是，这里的类别以及你之前的类别名称最好是全部小写，假如是大写的话，则会报keyError的错误，这时只需要在pascal_voc。py中第218行的lower去掉即可<br><img src="http://o73nd1ra4.bkt.clouddn.com/Caffe6-12.png" alt=""><br>datasets目录下主要有三个文件，分别是<br>(1) factory.py:这是一个工厂类，用类生成imdb类并且返回数据库供网络训练和测试使用；<br>(2) imdb.py:是数据库读写类的基类，封装了许多db的操作；<br>(3) pascl_voc.pyRoss用这个类来操作<br><strong>3. 修改py-faster-rcnn/lib/datasets/imdb.py</strong><br>在使用自己的数据进行训练时，假如你的数据集中的图片没有统一整理过就会报 assert(boxes[:,2] &gt;= boxes[:,0]).all() 这个错误，故需在imdb.py中加入如下几行<br><img src="http://o73nd1ra4.bkt.clouddn.com/Caffe6-13.png" alt=""><br><strong>4. 开始训练</strong></p>
-<pre><code>cd py-faster-rcnn
-./experiments/scripts/faster_rcnn_end2end.sh 0 VGG_CNN_M_1024 pascal_voc
-</code></pre><p>由于训练过程太长，可以将训练过程产生的输出定向输入到log文件中，这样可方便查看。只需在上述命令中加入定向输入的命令即可，如下：</p>
-<pre><code>./experiments/scripts/faster_rcnn_end2end.sh 0 VGG_CNN_M_1024 pascal_voc &gt; /home/lby/log/clothdirector.log 2&gt;&amp;1
-</code></pre><p>！！！训练前需要将cache中的pki文件以及VOCdevkit2007中annotations_cache的缓存删掉。</p>
-<p><strong>训练过程中会遇到的问题</strong></p>
-<ol>
-<li>roidb[i][‘image’] = imdb.image_path_at(i)<br>IndexError: list index out of range<br><img src="http://o73nd1ra4.bkt.clouddn.com/Caffe6-14.png" alt=""><br>解决方法：删除data/cache里面的pki文件<br>注意：不管在训练过程中遇到什么问题，修正过后，重新训练之前都需要将cache中的pki文件删除之后再重新运行，</li>
-<li>R = [obj for obj in recs[imagename] if obj[‘name’] == classname]<br>KeyError: ‘0000001’<br><img src="http://o73nd1ra4.bkt.clouddn.com/Caffe6-18.png" alt=""><br>这是在测试时出现错误，删掉VOCdevkit2007中annotations_cache的缓存</li>
-</ol>
-<h3 id="4-测试结果"><a href="#4-测试结果" class="headerlink" title="4.测试结果"></a>4.测试结果</h3><p>训练完成之后，将output中的最终模型拷贝到data/faster_rcnn_models，修改tools下的demo.py，我是使用VGG_CNN_M_1024这个中型网络，不是默认的ZF，所以要改的地方挺多<br><strong>1. 修改class</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">CLASSES = (&apos;__background__&apos;,</span><br><span class="line">           &apos;Blouse&apos;, &apos;Sweatpants&apos;, &apos;Cardigan&apos;, &apos;Button-Down&apos;,</span><br><span class="line">                         &apos;Cutoffs&apos;, &apos;Chinos&apos;, &apos;Top&apos;, &apos;Anorak&apos;, &apos;Kimono&apos;,</span><br><span class="line">                         &apos;Tank&apos;, &apos;Robe&apos;, &apos;Parka&apos;, &apos;Jodhpurs&apos;,</span><br><span class="line">                         &apos;Halter&apos;, &apos;Shorts&apos;, &apos;Caftan&apos;,&apos;Turtleneck&apos;,</span><br><span class="line">                         &apos;Leggings&apos;, &apos;Joggers&apos;, &apos;Hoodie&apos;, &apos;Culottes&apos;,</span><br><span class="line">                            &apos;Sweater&apos;, &apos;Flannel&apos;, &apos;Jeggings&apos;, &apos;Blazer&apos;,</span><br><span class="line">                             &apos;Onesie&apos;, &apos;Coat&apos;, &apos;Henley&apos;, &apos;Jacket&apos;,</span><br><span class="line">                             &apos;Trunks&apos;, &apos;Gauchos&apos;, &apos;Sweatshorts&apos;, &apos;Romper&apos;,</span><br><span class="line">                             &apos;Jersey&apos;, &apos;Bomber&apos;, &apos;Sarong&apos;, &apos;Dress&apos;,&apos;Jeans&apos;,</span><br><span class="line">                             &apos;Tee&apos;, &apos;Coverup&apos;, &apos;Capris&apos;, &apos;Kaftan&apos;,&apos;Peacoat&apos;,</span><br><span class="line">                             &apos;Poncho&apos;, &apos;Skirt&apos;, &apos;Jumpsuit&apos;)</span><br></pre></td></tr></table></figure></p>
-<p><strong>2. 增加你自己训练的模型</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">NETS = &#123;&apos;vgg16&apos;: (&apos;VGG16&apos;,</span><br><span class="line">                  &apos;VGG16_faster_rcnn_final.caffemodel&apos;),</span><br><span class="line">        &apos;zf&apos;: (&apos;ZF&apos;,</span><br><span class="line">                  &apos;ZF_faster_rcnn_final.caffemodel&apos;),</span><br><span class="line">        &apos;myvgg1024&apos;:(&apos;VGG_CNN_M_1024&apos;,&apos;vgg_cnn_m_1024_faster_rcnn_iter_70000.caffemodel&apos;)&#125;</span><br></pre></td></tr></table></figure></p>
-<p><strong>3. 修改prototxt，如果你用的是ZF，就不用改了</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">prototxt = os.path.join(cfg.MODELS_DIR, NETS[args.demo_net][0],</span><br><span class="line">                            &apos;faster_rcnn_end2end&apos;, &apos;test.prototxt&apos;)</span><br></pre></td></tr></table></figure></p>
-<p><strong>4. 开始检测</strong><br>执行 ./tools/demo.py –net myvgg1024<br>假如不想那么麻烦输入参数，可以在demo的parse_args()里修改默认参数<br>    parser.add_argument(‘–net’, dest=’demo_net’, help=’Network to use [myvgg1024]’,<br>    choices=NETS.keys(), default=’myvgg1024’)<br>这样只需要输入  ./tools/demo.py 就可以了<br>检测结果：<br><img src="http://o73nd1ra4.bkt.clouddn.com/Caffe6-15.png" alt=""></p>
-<p><strong>遇到的问题</strong></p>
-<ol>
-<li>Cannot copy param 0 weights from layer“”：已放弃（核心已转储）<br><img src="http://o73nd1ra4.bkt.clouddn.com/Caffe6-16.png" alt=""><br>没有修改prototxt，详情请见第3步</li>
-<li><p>Makefile:2: recipe for target ‘all’ failed</p>
-<p> Traceback (most recent call last):<br>  File “setup.py”, line 59, in <module><br>   CUDA = locate_cuda()<br>  File “setup.py”, line 56, in locate_cuda<br>   raise EnvironmentError(‘The CUDA %s path could not be located in %s’ % (k, v))<br> EnvironmentError: The CUDA lib64 path could not be located in /usr/lib64<br> Makefile:2: recipe for target ‘all’ failed<br>解决方法：打开 setup.py，把lib64改为lib</module></p>
-<p> cudaconfig = {‘home’:home, ‘nvcc’:nvcc,  </p>
-<pre><code>&apos;include&apos;: pjoin(home, &apos;include&apos;),  
- &apos;lib64&apos;: pjoin(home, &apos;lib&apos;)} 
-</code></pre></li>
-<li><p>make error:command ‘/usr/local/bin/nvcc’ failed with exit status 1<br><img src="http://o73nd1ra4.bkt.clouddn.com/Caffe6-17.png" alt=""><br>添加 export PATH=/usr/local/cuda/bin:”$PATH” 到你的 ~/.bashrc</p>
-</li>
-</ol>
-
-      
-    </div>
-    <footer class="article-footer">
-	  
-	  <!-- 百度分享 Start -->
-	  <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a><a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a></div>
-	  <!-- 百度分享 End -->
-	  
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Caffe/">Caffe</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Deep-Learning/">Deep Learning</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Faster-RCNN/">Faster-RCNN</a></li></ul>
-
-	  
-<span>
-Updated:<time datetime="2017-03-01T06:03:05.736Z" itemprop="dateModified">2017-03-01</time>
-</span>
-
-
-    </footer>
-  </div>
-  
-    
-<nav id="article-nav">
-  
-    <a href="/2017/02/27/机器学习系列—1-机器学习介绍/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">上一篇</strong>
-      <div class="article-nav-title">
-        
-          机器学习系列—1.机器学习介绍
-        
-      </div>
-    </a>
-  
-  
-    <a href="/2016/10/23/Caffe学习系列——5使用R-CNN进行目标检测/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">下一篇</strong>
-      <div class="article-nav-title">Caffe学习系列——5使用R-CNN进行目标检测</div>
-    </a>
-  
-</nav>
-
-  
-</article>
-
-
-
-
-<!-- 多说评论框 start -->
-<section id="comments">
-  <div class="ds-thread"  data-thread-key="/2016/10/23/Caffe学习系列——6使用Faster-RCNN进行目标检测/" data-title="Caffe学习系列——6使用Faster-RCNN进行目标检测" data-url="http://yoursite.com/2016/10/23/Caffe学习系列——6使用Faster-RCNN进行目标检测/" id="ds_thread">
-    <noscript>Please enable JavaScript to view the <a href="//duoshuo.com/?ref_noscript">comments powered by duoshuo.</a></noscript>
-  </div>
-</section>
-<!-- 多说评论框 end -->
-</section>
+        <section id="main"></section>
         
           
   <div id="toc" class="toc-aside">
-  <h2 class="toc-title">Contents</h2>
+  <h2 class="toc-title">文章目录</h2>
     
         <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#配置与运行Demo"><span class="toc-number">1.</span> <span class="toc-text">配置与运行Demo</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-配置、编译与安装环境"><span class="toc-number">1.1.</span> <span class="toc-text">1.配置、编译与安装环境</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-运行demo"><span class="toc-number">1.2.</span> <span class="toc-text">2.运行demo</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-训练PASCAL-VOC-2007的数据集"><span class="toc-number">1.3.</span> <span class="toc-text">3.训练PASCAL VOC 2007的数据集</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-遇到的问题"><span class="toc-number">1.4.</span> <span class="toc-text">4.遇到的问题</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用Faster-RCNN训练自己的数据集"><span class="toc-number">2.</span> <span class="toc-text">使用Faster-RCNN训练自己的数据集</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-工程目录简介"><span class="toc-number">2.1.</span> <span class="toc-text">1.工程目录简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-创建数据集"><span class="toc-number">2.2.</span> <span class="toc-text">2.创建数据集</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-训练自己的数据"><span class="toc-number">2.3.</span> <span class="toc-text">3.训练自己的数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-测试结果"><span class="toc-number">2.4.</span> <span class="toc-text">4.测试结果</span></a></li></ol></li></ol>
     
@@ -338,7 +134,7 @@ Updated:<time datetime="2017-03-01T06:03:05.736Z" itemprop="dateModified">2017-0
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Categories</h3>
+    <h3 class="widget-title">Categorieën</h3>
     <div class="widget">
       <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Deep-Learning/">Deep Learning</a><span class="category-list-count">7</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Deep-Learning/Caffe/">Caffe</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hadoop/">Hadoop</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a><span class="category-list-count">15</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Python/Scrapy/">Scrapy</a><span class="category-list-count">1</span></li></ul></li></ul>
     </div>
@@ -358,7 +154,7 @@ Updated:<time datetime="2017-03-01T06:03:05.736Z" itemprop="dateModified">2017-0
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
+    <h3 class="widget-title">Archieven</h3>
     <div class="widget">
       <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">5</span></li></ul>
     </div>
@@ -368,7 +164,7 @@ Updated:<time datetime="2017-03-01T06:03:05.736Z" itemprop="dateModified">2017-0
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
+    <h3 class="widget-title">Recente berichten</h3>
     <div class="widget">
       <ul>
         
@@ -400,7 +196,7 @@ Updated:<time datetime="2017-03-01T06:03:05.736Z" itemprop="dateModified">2017-0
   
     
 <div class="widget-wrap">
-  <h3 class="widget-title">Recent Comments</h3>
+  <h3 class="widget-title">最新评论</h3>
   <ul class="widget ds-recent-comments" data-num-items="5" data-show-avatars="0" data-show-title="1" data-show-time="1"></ul>
 </div>
 <!-- 需要多说的公用代码 -->
@@ -409,7 +205,7 @@ Updated:<time datetime="2017-03-01T06:03:05.736Z" itemprop="dateModified">2017-0
   
     
 <div class="widget-wrap">
-  <h3 class="widget-title">Links</h3>
+  <h3 class="widget-title">友情链接</h3>
   <ul class="widget">
     
     <li><a href="http://yibo.iyiyun.com/js/yibo404/key/1" target="_BLANK">404 page</a></li>

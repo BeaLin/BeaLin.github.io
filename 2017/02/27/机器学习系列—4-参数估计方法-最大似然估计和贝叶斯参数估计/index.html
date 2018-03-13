@@ -84,7 +84,7 @@ var _hmt = _hmt || [];
           <a id="nav-github-link" class="nav-icon" href="https://github.com/BeaLin" title="Github" target="_blank"></a>
         
         
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Zoeken"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -94,117 +94,11 @@ var _hmt = _hmt || [];
 </header>
 
       <div class="outer">
-        <section id="main"><article id="post-机器学习系列—4-参数估计方法-最大似然估计和贝叶斯参数估计" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    
-<a href="/2017/02/27/机器学习系列—4-参数估计方法-最大似然估计和贝叶斯参数估计/" class="article-date">
-  <time datetime="2017-02-27T05:52:36.000Z" itemprop="datePublished">2017-02-27</time>
-</a>
-
-
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Machine-Learning/">Machine Learning</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="article-title" itemprop="name">
-      机器学习系列—4.参数估计方法(最大似然估计和贝叶斯参数估计)
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-		
-		<div id="toc" class="toc-article">
-			<h2 class="toc-title"><span>Contents</span></h2>
-		
-			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#极大似然估计（Maximum-Likelihood-Estimation，MLE）"><span class="toc-number">1.</span> <span class="toc-text">极大似然估计（Maximum-Likelihood Estimation，MLE）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#贝叶斯估计（Bayesian-Estimation）"><span class="toc-number">2.</span> <span class="toc-text">贝叶斯估计（Bayesian Estimation）</span></a></li></ol>
-		
-		</div>
-		
-        <p>贝叶斯决策论可以根据先验概率（可以估计）和假设类条件概率来得到最优的分类器，但估计通常存在困难，原因如下：</p>
-<ol>
-<li>训练样本数太少（</li>
-<li>特征向量的维数较大时，计算复杂</li>
-</ol>
-<p>其解决方法是将条件概率密度函数参数化。即假设类条件概率密度P(x|w)是一个多元正态分布，已知均值和协方差矩阵，这样就可以从估计完全未知的类条件概率密度P(x|w)转化为估计参数均值和协方差矩阵。这也叫参数估计，最常用的方法是<strong>极大似然估计</strong>和<strong>贝叶斯参数估计</strong>。<br>极大似然估计是把待估计的参数看做是确定性的量，只是值未知，因此只需要求得最佳估计即可，就是使得产生已观测到的样本概率为最大值的那个值。<br>而贝叶斯估计是把待估计的参数看成是符合某种先验概率分布的随机变量。对比两种方法，极大似然估计更简单，样本量增大时收敛效果更好。</p>
-<a id="more"></a>
-<h2 id="极大似然估计（Maximum-Likelihood-Estimation，MLE）"><a href="#极大似然估计（Maximum-Likelihood-Estimation，MLE）" class="headerlink" title="极大似然估计（Maximum-Likelihood Estimation，MLE）"></a>极大似然估计（Maximum-Likelihood Estimation，MLE）</h2><p>极大似然估计是通过最大化观察样例获得的可能性来获取最好的参数。MLE比其他分析简单。<br>一般原则：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML4-1.png" alt=""><br>使用训练样例的信息来估计<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML4-2.png" alt=""><br><img src="http://o73nd1ra4.bkt.clouddn.com/ML4-3.png" alt=""><br>根据参数的已知情况，分类讨论如下：<br><strong>1. 协方差矩阵已知，均值未知</strong><br><img src="http://o73nd1ra4.bkt.clouddn.com/ML4-4.png" alt=""><br>可以看出要求的均值是训练样例的平均值。<br><strong>2. 当协方差矩阵和均值均未知时</strong><br>考虑单变量情况：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML4-5.png" alt=""><br>对全体样本的对数似然函数求极值：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML4-6.png" alt=""><br>可得到均值和方差是：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML4-7.png" alt=""></p>
-<h2 id="贝叶斯估计（Bayesian-Estimation）"><a href="#贝叶斯估计（Bayesian-Estimation）" class="headerlink" title="贝叶斯估计（Bayesian Estimation）"></a>贝叶斯估计（Bayesian Estimation）</h2><p>贝叶斯估计与极大似然估计结果很相似，但本质不同。区别在于，极大似然估计需估计的向量参数（θ）是一个确定而未知的参数。而贝叶斯的θ是随机变量，已有的训练样本将对θ的初始密度估计转为后验概率密度。<br><strong>贝叶斯的核心是如何计算后验概率P(w|x)，可以使用贝叶斯公式。</strong><br>为了强调训练样本在估计过程的重要性，用D表示训练样本的集合。<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML4-8.png" alt=""><br>将训练样本放到C个次样本集D1,D2,…,Dc，可得到<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML4-9.png" alt=""><br>这样就能够对每一个类别进行分别处理，即处理C个独立问题。根据确定却未知的P(X)来得到P(x|D)，把联合概率密度P(x,θ|D)对θ进行积分<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML4-10.png" alt=""><br>其中<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML4-11.png" alt=""><br>是贝叶斯核心公式：即把类条件概率密度p(x|D)和未知参量的后验概率密度p(θ|D)联系起来。具体计算就是把对所有可能的θ求平均。在实际应用中，可用数值计算的方法进行计算，例如蒙特卡洛仿真。<br><strong>贝叶斯参数估计一般理论</strong><br>在多元高斯分布情况下，应用Bayes估计，即后验概率，只要未知概率分布能表示成参数形式，就可以用Bayes估计。<br><strong>基本假设:</strong></p>
-<ol>
-<li>条件概率密度函数P(x|θ)已知，但参数θ未知</li>
-<li>先验概率密度函数P()θ包含了与θ有关的知识</li>
-<li>剩下有关θ的知识包含在样本x1,x2,…,xn，这些服从P(θ)</li>
-</ol>
-<p><strong>总结：如何计算P(x|D)：</strong><br>根据各样本独立性假设得到P(D|θ)：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML4-12.png" alt=""><br>再根据Bayes公式得到P(θ|D)：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML4-13.png" alt=""><br>最后再由P(θ|D)计算得到P(x|D)：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML4-14.png" alt=""></p>
-
-      
-    </div>
-    <footer class="article-footer">
-	  
-	  <!-- 百度分享 Start -->
-	  <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a><a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a></div>
-	  <!-- 百度分享 End -->
-	  
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/BE/">BE</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Bayes/">Bayes</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ML/">ML</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MLE/">MLE</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/机器学习/">机器学习</a></li></ul>
-
-	  
-<span>
-Updated:<time datetime="2017-02-28T08:31:47.369Z" itemprop="dateModified">2017-02-28</time>
-</span>
-
-
-    </footer>
-  </div>
-  
-    
-<nav id="article-nav">
-  
-    <a href="/2017/02/27/机器学习系列—6-拉格朗日乘子法/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">上一篇</strong>
-      <div class="article-nav-title">
-        
-          机器学习系列—6.拉格朗日乘子法
-        
-      </div>
-    </a>
-  
-  
-    <a href="/2017/02/27/机器学习系列—3-贝叶斯决策理论/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">下一篇</strong>
-      <div class="article-nav-title">机器学习系列—3.贝叶斯决策理论</div>
-    </a>
-  
-</nav>
-
-  
-</article>
-
-
-
-
-<!-- 多说评论框 start -->
-<section id="comments">
-  <div class="ds-thread"  data-thread-key="/2017/02/27/机器学习系列—4-参数估计方法-最大似然估计和贝叶斯参数估计/" data-title="机器学习系列—4.参数估计方法(最大似然估计和贝叶斯参数估计)" data-url="http://yoursite.com/2017/02/27/机器学习系列—4-参数估计方法-最大似然估计和贝叶斯参数估计/" id="ds_thread">
-    <noscript>Please enable JavaScript to view the <a href="//duoshuo.com/?ref_noscript">comments powered by duoshuo.</a></noscript>
-  </div>
-</section>
-<!-- 多说评论框 end -->
-</section>
+        <section id="main"></section>
         
           
   <div id="toc" class="toc-aside">
-  <h2 class="toc-title">Contents</h2>
+  <h2 class="toc-title">文章目录</h2>
     
         <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#极大似然估计（Maximum-Likelihood-Estimation，MLE）"><span class="toc-number">1.</span> <span class="toc-text">极大似然估计（Maximum-Likelihood Estimation，MLE）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#贝叶斯估计（Bayesian-Estimation）"><span class="toc-number">2.</span> <span class="toc-text">贝叶斯估计（Bayesian Estimation）</span></a></li></ol>
     
@@ -236,7 +130,7 @@ Updated:<time datetime="2017-02-28T08:31:47.369Z" itemprop="dateModified">2017-0
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Categories</h3>
+    <h3 class="widget-title">Categorieën</h3>
     <div class="widget">
       <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Deep-Learning/">Deep Learning</a><span class="category-list-count">7</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Deep-Learning/Caffe/">Caffe</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hadoop/">Hadoop</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a><span class="category-list-count">15</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Python/Scrapy/">Scrapy</a><span class="category-list-count">1</span></li></ul></li></ul>
     </div>
@@ -256,7 +150,7 @@ Updated:<time datetime="2017-02-28T08:31:47.369Z" itemprop="dateModified">2017-0
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
+    <h3 class="widget-title">Archieven</h3>
     <div class="widget">
       <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">5</span></li></ul>
     </div>
@@ -266,7 +160,7 @@ Updated:<time datetime="2017-02-28T08:31:47.369Z" itemprop="dateModified">2017-0
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
+    <h3 class="widget-title">Recente berichten</h3>
     <div class="widget">
       <ul>
         
@@ -298,7 +192,7 @@ Updated:<time datetime="2017-02-28T08:31:47.369Z" itemprop="dateModified">2017-0
   
     
 <div class="widget-wrap">
-  <h3 class="widget-title">Recent Comments</h3>
+  <h3 class="widget-title">最新评论</h3>
   <ul class="widget ds-recent-comments" data-num-items="5" data-show-avatars="0" data-show-title="1" data-show-time="1"></ul>
 </div>
 <!-- 需要多说的公用代码 -->
@@ -307,7 +201,7 @@ Updated:<time datetime="2017-02-28T08:31:47.369Z" itemprop="dateModified">2017-0
   
     
 <div class="widget-wrap">
-  <h3 class="widget-title">Links</h3>
+  <h3 class="widget-title">友情链接</h3>
   <ul class="widget">
     
     <li><a href="http://yibo.iyiyun.com/js/yibo404/key/1" target="_BLANK">404 page</a></li>

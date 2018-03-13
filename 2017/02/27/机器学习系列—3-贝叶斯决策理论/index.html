@@ -115,7 +115,7 @@ var _hmt = _hmt || [];
           <a id="nav-github-link" class="nav-icon" href="https://github.com/BeaLin" title="Github" target="_blank"></a>
         
         
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Zoeken"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -125,154 +125,11 @@ var _hmt = _hmt || [];
 </header>
 
       <div class="outer">
-        <section id="main"><article id="post-机器学习系列—3-贝叶斯决策理论" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    
-<a href="/2017/02/27/机器学习系列—3-贝叶斯决策理论/" class="article-date">
-  <time datetime="2017-02-27T05:51:40.000Z" itemprop="datePublished">2017-02-27</time>
-</a>
-
-
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Machine-Learning/">Machine Learning</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="article-title" itemprop="name">
-      机器学习系列—3.贝叶斯决策理论
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-		
-		<div id="toc" class="toc-article">
-			<h2 class="toc-title"><span>Contents</span></h2>
-		
-			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#贝叶斯决策规则"><span class="toc-number">1.</span> <span class="toc-text">贝叶斯决策规则</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#针对二分类"><span class="toc-number">1.1.</span> <span class="toc-text">针对二分类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#针对多分类"><span class="toc-number">1.2.</span> <span class="toc-text">针对多分类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最小化总风险"><span class="toc-number">1.3.</span> <span class="toc-text">最小化总风险</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最小误差分类"><span class="toc-number">1.4.</span> <span class="toc-text">最小误差分类</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#分类器、判别函数及判定面"><span class="toc-number">2.</span> <span class="toc-text">分类器、判别函数及判定面</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#误差概率和误差积分"><span class="toc-number">3.</span> <span class="toc-text">误差概率和误差积分</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#朴素贝叶斯NaiveBayes"><span class="toc-number">4.</span> <span class="toc-text">朴素贝叶斯NaiveBayes</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#定义"><span class="toc-number">4.1.</span> <span class="toc-text">定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#计算类条件概率密度"><span class="toc-number">4.2.</span> <span class="toc-text">计算类条件概率密度</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#总结"><span class="toc-number">4.3.</span> <span class="toc-text">总结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#贝叶斯决策论总结"><span class="toc-number">5.</span> <span class="toc-text">贝叶斯决策论总结</span></a></li></ol>
-		
-		</div>
-		
-        <p>贝叶斯决策论事解决模式分类问题的一种基本统计途径，其出发点是利用概率的不同分类决策与相应的决策代价之间的定量折中，它做出了如下的假设，即决策问题可以用概率的形式来描述，并且假设所有有关的概率结构均已知。本文主要是学习Pattern Classify的第2章后的笔记总结，若有错误，望指出。</p>
-<a id="more"></a>
-<p><br></p>
-<h2 id="贝叶斯决策规则"><a href="#贝叶斯决策规则" class="headerlink" title="贝叶斯决策规则"></a>贝叶斯决策规则</h2><h3 id="针对二分类"><a href="#针对二分类" class="headerlink" title="针对二分类"></a>针对二分类</h3><p>首先需要知道三个概念：</p>
-<ol>
-<li><strong>先验概率</strong>，即为w的概率：<strong>P(w)</strong><br>先验概率有如下特点：（1）随机；（2）反映先前认识；（3）P(w1)=P(w2)，且P(w1)+P(w2)=1，(二分类情况)</li>
-<li><strong>类条件概率密度：P(x|w)</strong></li>
-<li>处于类别Wj并具有特征值x的模式的<strong>联合概率密度</strong>：<br>P(Wj,x)=P(Wj|x)P(x)=P(x|Wj)P(Wj)</li>
-</ol>
-<p>根据<strong>贝叶斯公式</strong>：(如下式所示：)，求得<strong>后验概率</strong>（P(w|x)）<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML3-1.png" alt="贝叶斯公式"><br><img src="http://o73nd1ra4.bkt.clouddn.com/ML3-2.png" alt=""><br>likelihood：似然；prior：先验概率；Evidence：证据因子。<br>由贝叶斯公式可以推出<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML3-3.png" alt=""><br><strong>最小化误差概率条件下的贝叶斯决策规则</strong>：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML3-4.png" alt=""></p>
-<h3 id="针对多分类"><a href="#针对多分类" class="headerlink" title="针对多分类"></a>针对多分类</h3><p>将上述针对二分类的贝叶斯决策规则正式化，即多于两种类别：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML3-5.png" alt=""><br>根据贝叶斯公式可以得到后验概率：其中x是一个2维以上的向量<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML3-6.png" alt=""><br>证据因子 Evidence：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML3-7.png" alt=""></p>
-<h3 id="最小化总风险"><a href="#最小化总风险" class="headerlink" title="最小化总风险"></a>最小化总风险</h3><p>与行为相关联的损失为条件风险（conditional risk）<br>贝叶斯决策过程：提供了一个总风险的优化过程，以最小化总风险来替代先验概率。<br>贝叶斯决策规则：为了最小化总风险，对所有i=1,…,a计算条件风险<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML3-8.png" alt=""><br>并选择行为使条件风险最小化，最小化后的总风险值称为贝叶斯风险记为R*，即最优结果。<br>对于二分类：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML3-9.png" alt=""><br>所以Conditional risk：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML3-10.png" alt=""><br>判别形式有两种：<br>第一种：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML3-11.png" alt=""><br>第二种：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML3-12.png" alt=""><br>判别形式（2）主要依赖于x的概率密度，作为w的函数可构成“似然比”：，<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML3-13.png" alt=""><br>所以贝叶斯规则可转换为：如果似然比超过某个不依赖观测值x的阈值，那么可判决为w</p>
-<h3 id="最小误差分类"><a href="#最小误差分类" class="headerlink" title="最小误差分类"></a>最小误差分类</h3><p>对称损失、0-1损失函数：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML3-14.png" alt=""><br>因为误判是等代价的，所以损失函数对应的风险是平均误差概率。其中行为ai通常解释为类别状态被判决为wi。<br>因为条件风险的公式如下：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML3-15.png" alt=""><br><img src="http://o73nd1ra4.bkt.clouddn.com/ML3-16.png" alt=""></p>
-<hr>
-<h2 id="分类器、判别函数及判定面"><a href="#分类器、判别函数及判定面" class="headerlink" title="分类器、判别函数及判定面"></a>分类器、判别函数及判定面</h2><p>有很多种方式来表述模式分类器，其中用的最多的是一种判别函数的形式如下：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML3-17.png" alt=""><br>这里的分类器可定义为计算c个判别函数并选取与最大判别值对应的网络，如下图所示：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML3-18.png" alt=""><br>对于<strong>贝叶斯分类器</strong>来说，其判别函数是什么呢？</p>
-<ol>
-<li>可以是最小化条件风险：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML3-19.png" alt=""><br>（注意！是判别函数最大值对应最小的条件风险）</li>
-<li>可以是最大化后验概率。<br>最小误差概率情况下，我们可以得到：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML3-20.png" alt=""><br>还可以推出:<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML3-21.png" alt=""><br>（判别函数最大值对应最大后验概率）</li>
-</ol>
-<p><strong>综上所述：</strong>判别函数的选择是不唯一的。但究其根本，其判别规则是相同的。<br><strong>判决规则：</strong>将特制空间分成c个判决区域（由判决边界分割，通常是使判别函数值最大的曲面），R1，R2，…，Rc。<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML3-22.png" alt=""><br>对于简单的<strong>两类情况</strong>（二分分类器）：<br>定义一个简单的判别函数：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML3-23.png" alt=""><br>目前为止，基于贝叶斯框架，如果我们已经知道先验概率，类条件概率密度，我们可以设计一个简单的分类器。但是实际情况是，基于一个被标记过的训练数据集，我们可以假设先验概率已知（可以从训练数据中估计得到），但是我们无法估计到类条件概率密度，特别是特征空间特别大的时候。<br>因此我们需要使用参数估计的方法，参数估计的方法大体有2种，极大似然估计和贝叶斯估计，具体这两种估计方法见另一篇博文(<a href="http://bealin.github.io/2017/02/27/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%B3%BB%E5%88%97%E2%80%944-%E5%8F%82%E6%95%B0%E4%BC%B0%E8%AE%A1%E6%96%B9%E6%B3%95-%E6%9C%80%E5%A4%A7%E4%BC%BC%E7%84%B6%E4%BC%B0%E8%AE%A1%E5%92%8C%E8%B4%9D%E5%8F%B6%E6%96%AF%E5%8F%82%E6%95%B0%E4%BC%B0%E8%AE%A1/" target="_blank" rel="external"> “机器学习系列—4-参数估计方法-最大似然估计和贝叶斯参数估计”</a>)，此处主要是证明用这两种参数估计方法得到的类条件概率密度结果是一样的。<br>在使用参数估计方法估计类条件概率密度之前，我们需要一个前提，就是类条件概率密度这个参数模型是可以计算得到的。常态下的类条件概率密度可以由两个参数描述而得。即：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML3-24.png" alt=""></p>
-<ol>
-<li>对于<strong>单变量密度函数</strong>：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML3-25.png" alt=""></li>
-<li>对于<strong>多元密度函数</strong>（d元，由d+d(d+1)/2各参数决定）：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML3-26.png" alt=""></li>
-</ol>
-<p>综上所述：由<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML3-27.png" alt=""><br>和<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML3-28.png" alt=""><br>可以推出贝叶斯分类器在正太分布下的<strong>判别函数</strong>：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML3-29.png" alt=""><br>对上述判别函数进行讨论：<br><strong>第一种情况：</strong><br><img src="http://o73nd1ra4.bkt.clouddn.com/ML3-30.png" alt=""><br>这种情况表明各特征统计独立，并具有相同的方差。此时协方差矩阵式对角矩阵。几何上，样本落于相等大小的超球体聚类中。<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML3-31.png" alt=""><br>使用线性判别函数的分类器也称为线性及其，其判定面是一些超平面，这些超平面可由能够获得最大后验概率的线性方程（下式）来确定。<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML3-32.png" alt=""><br>即<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML3-33.png" alt=""><br>即X0位于两中心的中点，超平面垂直平分两中心的连线。<br>如果P(wi)不等于P(wj)，则X0远离可能的均值。<br><strong>综上所述：</strong>若所有c类的先验概率P(wi)已知且相等，那么lnP(wi)项为可忽略的附加常量，此时的最优判决规则如下：将某特征向量X归类，通过测量每一个X到c个均值向量的欧式距离，并将x归为离他最近的哪一类中。这种分类器也称为”最小距离分类器“，KNN最近邻算法可用到此方法。</p>
-<p><strong>第二种情况：</strong><br><img src="http://o73nd1ra4.bkt.clouddn.com/ML3-34.png" alt=""><br>该情况表明所有类的协方差矩阵都相等，但各自的均值向量是任意的，几何上，样本落于相同大小和相同形状的超椭球求聚类中。<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML3-35.png" alt=""><br>若C类别的先验概率P(wi)相等，那么lnP(wi)可省，最优判决规则为：将向量X归类，计算从X到每一个C均值向量的平方马氏距离:<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML3-36.png" alt=""><br>将X归于离他最近的均值所属类，与Case1相同：不相等的P(wi)会将判定面移向远离先验概率较大的类的一边。<br>根据以下推导：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML3-37.png" alt=""><br>令gi(x)=gj(x)可以得到X0的值。其中若P(wi)相等，判定面与均值连线交于其中点X0出，但不垂直；若P(wi)不相等，最优边界超平面将远离可能性较大的均值。</p>
-<p><strong>第三种情况：</strong><br><img src="http://o73nd1ra4.bkt.clouddn.com/ML3-38.png" alt=""><br>在一般的多元正态分布情况下，其判定函数也是二次型，<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML3-39.png" alt=""><br>其中<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML3-40.png" alt=""><br>所以：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML3-41.png" alt=""><br>即当在两类问题中的时候，其判定面是超二次曲面</p>
-<hr>
-<h2 id="误差概率和误差积分"><a href="#误差概率和误差积分" class="headerlink" title="误差概率和误差积分"></a>误差概率和误差积分</h2><p>针对二分类器：误差概率为：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML3-42.png" alt=""><br>相等P(wi)下，若判决边界定于相等后验概率点XB处，可去误差区将消失，可使误差区域减到最小。</p>
-<hr>
-<h2 id="朴素贝叶斯NaiveBayes"><a href="#朴素贝叶斯NaiveBayes" class="headerlink" title="朴素贝叶斯NaiveBayes"></a>朴素贝叶斯NaiveBayes</h2><h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p><img src="http://o73nd1ra4.bkt.clouddn.com/ML3-43.png" alt=""><br>朴素贝叶斯之所以称之为朴素，即该算法简化了一些条件，以便于贝叶斯决策理论更好地计算、其朴素之处就是假设各特征之间是相互独立的，则<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML3-44.png" alt=""></p>
-<h3 id="计算类条件概率密度"><a href="#计算类条件概率密度" class="headerlink" title="计算类条件概率密度"></a>计算类条件概率密度</h3><p>对于特征值为连续值的特征，计算P(X1|w)的方法：</p>
-<ol>
-<li>将值离散化</li>
-<li>用一个临界值分割：(x<v)or(x>v)</v)or(x></li>
-<li>使用概率密度函数：<br>a.设想参数服从正太分布；                               b.使用数据计算分布的参数，例如均值、方差<br>c.一旦已知概率分布，就可以使用概率密度函数计算<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML3-45.png" alt=""><h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3>对于朴素贝叶斯</li>
-<li>一定要删除噪声点                                  </li>
-<li>在概率估计计算过程中，可以通过忽视这个实例来处理缺失值</li>
-<li>确保属性之间是不相干的</li>
-</ol>
-<hr>
-<h2 id="贝叶斯决策论总结"><a href="#贝叶斯决策论总结" class="headerlink" title="贝叶斯决策论总结"></a>贝叶斯决策论总结</h2><ol>
-<li>基本思想：为最小化总风险，总是选择那些能够最小化条件风险的行为。</li>
-<li>为了最小化分类问题中的误差概率，总是选择那些使后验概率P(w|x)最大的类别。</li>
-<li>贝叶斯公式允许通过先验概率P(w)和条件密度P(X1|w)来计算后验概率</li>
-</ol>
-<p><strong>Bayesion的缺点：</strong></p>
-<ol>
-<li>仅仅只作一次判决会引起许多问题</li>
-<li>没有一种合理的方式来确定先验概率值</li>
-<li>最致命的缺点是计算条件密度函数的困难</li>
-</ol>
-
-      
-    </div>
-    <footer class="article-footer">
-	  
-	  <!-- 百度分享 Start -->
-	  <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a><a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a></div>
-	  <!-- 百度分享 End -->
-	  
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Bayes/">Bayes</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ML/">ML</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NaiveBayes/">NaiveBayes</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/机器学习/">机器学习</a></li></ul>
-
-	  
-<span>
-Updated:<time datetime="2017-02-27T09:57:36.713Z" itemprop="dateModified">2017-02-27</time>
-</span>
-
-
-    </footer>
-  </div>
-  
-    
-<nav id="article-nav">
-  
-    <a href="/2017/02/27/机器学习系列—4-参数估计方法-最大似然估计和贝叶斯参数估计/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">上一篇</strong>
-      <div class="article-nav-title">
-        
-          机器学习系列—4.参数估计方法(最大似然估计和贝叶斯参数估计)
-        
-      </div>
-    </a>
-  
-  
-    <a href="/2017/02/27/机器学习系列—2-模型评估与选择/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">下一篇</strong>
-      <div class="article-nav-title">机器学习系列—2.模型评估与选择</div>
-    </a>
-  
-</nav>
-
-  
-</article>
-
-
-
-
-<!-- 多说评论框 start -->
-<section id="comments">
-  <div class="ds-thread"  data-thread-key="/2017/02/27/机器学习系列—3-贝叶斯决策理论/" data-title="机器学习系列—3.贝叶斯决策理论" data-url="http://yoursite.com/2017/02/27/机器学习系列—3-贝叶斯决策理论/" id="ds_thread">
-    <noscript>Please enable JavaScript to view the <a href="//duoshuo.com/?ref_noscript">comments powered by duoshuo.</a></noscript>
-  </div>
-</section>
-<!-- 多说评论框 end -->
-</section>
+        <section id="main"></section>
         
           
   <div id="toc" class="toc-aside">
-  <h2 class="toc-title">Contents</h2>
+  <h2 class="toc-title">文章目录</h2>
     
         <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#贝叶斯决策规则"><span class="toc-number">1.</span> <span class="toc-text">贝叶斯决策规则</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#针对二分类"><span class="toc-number">1.1.</span> <span class="toc-text">针对二分类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#针对多分类"><span class="toc-number">1.2.</span> <span class="toc-text">针对多分类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最小化总风险"><span class="toc-number">1.3.</span> <span class="toc-text">最小化总风险</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最小误差分类"><span class="toc-number">1.4.</span> <span class="toc-text">最小误差分类</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#分类器、判别函数及判定面"><span class="toc-number">2.</span> <span class="toc-text">分类器、判别函数及判定面</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#误差概率和误差积分"><span class="toc-number">3.</span> <span class="toc-text">误差概率和误差积分</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#朴素贝叶斯NaiveBayes"><span class="toc-number">4.</span> <span class="toc-text">朴素贝叶斯NaiveBayes</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#定义"><span class="toc-number">4.1.</span> <span class="toc-text">定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#计算类条件概率密度"><span class="toc-number">4.2.</span> <span class="toc-text">计算类条件概率密度</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#总结"><span class="toc-number">4.3.</span> <span class="toc-text">总结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#贝叶斯决策论总结"><span class="toc-number">5.</span> <span class="toc-text">贝叶斯决策论总结</span></a></li></ol>
     
@@ -304,7 +161,7 @@ Updated:<time datetime="2017-02-27T09:57:36.713Z" itemprop="dateModified">2017-0
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Categories</h3>
+    <h3 class="widget-title">Categorieën</h3>
     <div class="widget">
       <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Deep-Learning/">Deep Learning</a><span class="category-list-count">7</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Deep-Learning/Caffe/">Caffe</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hadoop/">Hadoop</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a><span class="category-list-count">15</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Python/Scrapy/">Scrapy</a><span class="category-list-count">1</span></li></ul></li></ul>
     </div>
@@ -324,7 +181,7 @@ Updated:<time datetime="2017-02-27T09:57:36.713Z" itemprop="dateModified">2017-0
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
+    <h3 class="widget-title">Archieven</h3>
     <div class="widget">
       <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">5</span></li></ul>
     </div>
@@ -334,7 +191,7 @@ Updated:<time datetime="2017-02-27T09:57:36.713Z" itemprop="dateModified">2017-0
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
+    <h3 class="widget-title">Recente berichten</h3>
     <div class="widget">
       <ul>
         
@@ -366,7 +223,7 @@ Updated:<time datetime="2017-02-27T09:57:36.713Z" itemprop="dateModified">2017-0
   
     
 <div class="widget-wrap">
-  <h3 class="widget-title">Recent Comments</h3>
+  <h3 class="widget-title">最新评论</h3>
   <ul class="widget ds-recent-comments" data-num-items="5" data-show-avatars="0" data-show-title="1" data-show-time="1"></ul>
 </div>
 <!-- 需要多说的公用代码 -->
@@ -375,7 +232,7 @@ Updated:<time datetime="2017-02-27T09:57:36.713Z" itemprop="dateModified">2017-0
   
     
 <div class="widget-wrap">
-  <h3 class="widget-title">Links</h3>
+  <h3 class="widget-title">友情链接</h3>
   <ul class="widget">
     
     <li><a href="http://yibo.iyiyun.com/js/yibo404/key/1" target="_BLANK">404 page</a></li>

@@ -68,7 +68,7 @@ var _hmt = _hmt || [];
           <a id="nav-github-link" class="nav-icon" href="https://github.com/BeaLin" title="Github" target="_blank"></a>
         
         
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Zoeken"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -80,672 +80,31 @@ var _hmt = _hmt || [];
       <div class="outer">
         <section id="main">
   
-    <article id="post-机器学习系列—10-聚类" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
     
-<a href="/2017/02/27/机器学习系列—10-聚类/" class="article-date">
-  <time datetime="2017-02-27T05:56:06.000Z" itemprop="datePublished">2017-02-27</time>
-</a>
-
-
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Machine-Learning/">Machine Learning</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/02/27/机器学习系列—10-聚类/">机器学习系列—10.聚类</a>
-    </h1>
+    
   
-
-      </header>
     
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>在“无监督学习”中，训练样本的标记信息是未知的，目标是通过对无标记训练样本的学习来揭示数据的内在性质及规律。聚类试图将数据集中的样本划分为若干个通常是不想交的子集，每个子集称为一个“簇”（cluster）。聚类既能作为一个单独过程，用于找寻数据内在的分布结构，也可作为分类等其他学习任务的前驱过程。其实异常检测（anomaly detection）也常借助聚类或距离计算进行，如将远离所有簇中心的样本作为异常点，获奖密度极低处的样本作为异常点。<br>基于不同的学习策略，人们设计出多种类型的聚类算法，主要划分及设计到的聚类算法如下：</p>
-<ol>
-<li>原型聚类：<br>(1)用原型向量刻画聚类结构：<br>a.<strong>Kmean</strong><br>b.<strong>LVQ</strong>（学习向量量化）<br>(2)概率模型（高斯分布）：<strong>GMM</strong>（高斯混合模型</li>
-<li>密度聚类（样本分布的紧密程度）：<strong>DBSCAN</strong></li>
-<li>层次聚类（树形的聚类结构）：<br>(1)“自底向上”的聚合策略：<strong>AGNES</strong>                                                   (2)“自顶向下”的分拆策略：<br>本文会先讨论聚类算法涉及到的两个基本问题——性能度量和距离计算，然后对上面涉及到的不同类型的聚类进行介绍。
-        
-          <p class="article-more-link">
-            <a href="/2017/02/27/机器学习系列—10-聚类/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-	  
-	  <a data-url="http://yoursite.com/2017/02/27/机器学习系列—10-聚类/" data-id="cjep815ee001a50uy3urf6a3s" data_title="机器学习系列—10.聚类" data_summary="在“无监督学习”中，训练样本的标记信息是未知的，目标是..." class="article-share-link">Share</a>
-      
-
-      
-        <a href="http://yoursite.com/2017/02/27/机器学习系列—10-聚类/#ds-thread" class="ds-thread-count article-comment-link" data-thread-key="/2017/02/27/机器学习系列—10-聚类/">暂无评论</a>
-      
-	  
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ML/">ML</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/感知机/">感知机</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/机器学习/">机器学习</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/深度学习/">深度学习</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/聚类/">聚类</a></li></ul>
-
-	  
-<span>
-Updated:<time datetime="2017-03-02T12:19:37.580Z" itemprop="dateModified">2017-03-02</time>
-</span>
-
-
-    </footer>
-  </div>
   
-</article>
-
-
-
-
+    
   
-    <article id="post-机器学习系列—5-决策树" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
     
-<a href="/2017/02/27/机器学习系列—5-决策树/" class="article-date">
-  <time datetime="2017-02-27T05:55:32.000Z" itemprop="datePublished">2017-02-27</time>
-</a>
-
-
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Machine-Learning/">Machine Learning</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/02/27/机器学习系列—5-决策树/">机器学习系列—5.决策树</a>
-    </h1>
+    
   
-
-      </header>
     
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="基本流程"><a href="#基本流程" class="headerlink" title="基本流程"></a>基本流程</h2><p>决策树（decision）是一类常见的机器学习方法，其时基于树结构来进行决策的，这恰是人类在面临决策问题时一种很自然的处理机制。<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML5-1.png" alt=""><br>一般的，一颗决策树包含一个根结点、若干个内部结点和若干个叶结点。叶结点对应于决策结果，其他每个结点则对应于一个属性测试；决策树学习的目的是为了产生一颗泛化能力强，即处理未见实例能力强的决策树，其基本流程遵循简单且直观的“分而治之”（divide-and-conquer）策略。<br>
-        
-          <p class="article-more-link">
-            <a href="/2017/02/27/机器学习系列—5-决策树/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-	  
-	  <a data-url="http://yoursite.com/2017/02/27/机器学习系列—5-决策树/" data-id="cjep815f0002650uyj884zxxl" data_title="机器学习系列—5.决策树" data_summary="基本流程决策树（decision）是一类常见的机器学习..." class="article-share-link">Share</a>
-      
-
-      
-        <a href="http://yoursite.com/2017/02/27/机器学习系列—5-决策树/#ds-thread" class="ds-thread-count article-comment-link" data-thread-key="/2017/02/27/机器学习系列—5-决策树/">暂无评论</a>
-      
-	  
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ML/">ML</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/决策树/">决策树</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/机器学习/">机器学习</a></li></ul>
-
-	  
-<span>
-Updated:<time datetime="2017-02-28T11:57:19.518Z" itemprop="dateModified">2017-02-28</time>
-</span>
-
-
-    </footer>
-  </div>
   
-</article>
-
-
-
-
+    
   
-    <article id="post-机器学习系列—9-集成学习" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
     
-<a href="/2017/02/27/机器学习系列—9-集成学习/" class="article-date">
-  <time datetime="2017-02-27T05:54:40.000Z" itemprop="datePublished">2017-02-27</time>
-</a>
-
-
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Machine-Learning/">Machine Learning</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/02/27/机器学习系列—9-集成学习/">机器学习系列—9.集成学习</a>
-    </h1>
-  
-
-      </header>
     
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>集成学习（ensemble learning）通过构建并结合多个学习器来完成任务，有时也被称为多分类器（multi-classifier system）、基于委员会的学习等。<br>若集成中只包含同种类型的个体学习器，则这样的集成是“同质”的，其个体学习器称为“基学习器”。若包含的是不同类型的个体学习器，则称为“异质”，其基学习器称为“组件学习器”。<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML9-1.png" alt=""><br>
-        
-          <p class="article-more-link">
-            <a href="/2017/02/27/机器学习系列—9-集成学习/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-	  
-	  <a data-url="http://yoursite.com/2017/02/27/机器学习系列—9-集成学习/" data-id="cjep815fa002l50uykbrsu610" data_title="机器学习系列—9.集成学习" data_summary="集成学习（ensemble learning）通过构建..." class="article-share-link">Share</a>
-      
-
-      
-        <a href="http://yoursite.com/2017/02/27/机器学习系列—9-集成学习/#ds-thread" class="ds-thread-count article-comment-link" data-thread-key="/2017/02/27/机器学习系列—9-集成学习/">暂无评论</a>
-      
-	  
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Bagging/">Bagging</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Boosting/">Boosting</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ML/">ML</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Stacking/">Stacking</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/机器学习/">机器学习</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/集成方法/">集成方法</a></li></ul>
-
-	  
-<span>
-Updated:<time datetime="2017-02-28T13:20:08.440Z" itemprop="dateModified">2017-02-28</time>
-</span>
-
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-机器学习系列—7-支持向量机SVM" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    
-<a href="/2017/02/27/机器学习系列—7-支持向量机SVM/" class="article-date">
-  <time datetime="2017-02-27T05:54:20.000Z" itemprop="datePublished">2017-02-27</time>
-</a>
-
-
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Machine-Learning/">Machine Learning</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/02/27/机器学习系列—7-支持向量机SVM/">机器学习系列—7.支持向量机SVM</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>本文主要介绍以下内容，对于分类任务，最基本的想法就是找到一个划分平面，离超平面最近的样本点称为支持向量，支持向量到超平面的距离称为间隔，支持向量机的核心思想就是找到间隔最大的超平面，这是一个凸优化问题（即带约束的优化问题），使用拉格朗日乘子法引入拉格朗日乘子求得拉个朗日函数，对其求偏低得到其对偶问题，通过求解对偶问题得到主问题的解。因为支持向量的约束是不等式约束，所以还需满足KKT条件。现实任务通常是线性不可分的，可以采用将特征空间从高维映射到低维的方法。因此引入核函数的概念。为了防止过拟合，可以采用软间隔和正则化，软间隔是相对于硬间隔的概念，硬间隔是要求所有样本都分类正确，软间隔允许部分分类错误。正则化是引入结构风险，以期希望得到复杂度低一点的模型。最后描述了支持向量回归，用于解决回归问题。<br>
-        
-          <p class="article-more-link">
-            <a href="/2017/02/27/机器学习系列—7-支持向量机SVM/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-	  
-	  <a data-url="http://yoursite.com/2017/02/27/机器学习系列—7-支持向量机SVM/" data-id="cjep815f5002e50uyncsmq60a" data_title="机器学习系列—7.支持向量机SVM" data_summary="本文主要介绍以下内容，对于分类任务，最基本的想法就是找..." class="article-share-link">Share</a>
-      
-
-      
-        <a href="http://yoursite.com/2017/02/27/机器学习系列—7-支持向量机SVM/#ds-thread" class="ds-thread-count article-comment-link" data-thread-key="/2017/02/27/机器学习系列—7-支持向量机SVM/">暂无评论</a>
-      
-	  
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ML/">ML</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SVM/">SVM</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/机器学习/">机器学习</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/核方法/">核方法</a></li></ul>
-
-	  
-<span>
-Updated:<time datetime="2017-02-28T11:57:43.784Z" itemprop="dateModified">2017-02-28</time>
-</span>
-
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-机器学习系列—6-拉格朗日乘子法" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    
-<a href="/2017/02/27/机器学习系列—6-拉格朗日乘子法/" class="article-date">
-  <time datetime="2017-02-27T05:53:54.000Z" itemprop="datePublished">2017-02-27</time>
-</a>
-
-
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Machine-Learning/">Machine Learning</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/02/27/机器学习系列—6-拉格朗日乘子法/">机器学习系列—6.拉格朗日乘子法</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>拉格朗日乘子法（Lagrange multipliers）是一种寻找多元函数在一组约束下的极值的方法。通过引入拉格朗日乘子，可将有d个变量与k个约束条件的最优化问题转化为具有d+k个变量的无约束优化问题。<br>分两种情况考虑：等式约束和不等式约束，如下图所示<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML6-1.png" alt=""><br>
-        
-          <p class="article-more-link">
-            <a href="/2017/02/27/机器学习系列—6-拉格朗日乘子法/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-	  
-	  <a data-url="http://yoursite.com/2017/02/27/机器学习系列—6-拉格朗日乘子法/" data-id="cjep815f2002a50uytbhixgr1" data_title="机器学习系列—6.拉格朗日乘子法" data_summary="拉格朗日乘子法（Lagrange multiplier..." class="article-share-link">Share</a>
-      
-
-      
-        <a href="http://yoursite.com/2017/02/27/机器学习系列—6-拉格朗日乘子法/#ds-thread" class="ds-thread-count article-comment-link" data-thread-key="/2017/02/27/机器学习系列—6-拉格朗日乘子法/">暂无评论</a>
-      
-	  
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/拉格朗日乘子法/">拉格朗日乘子法</a></li></ul>
-
-	  
-<span>
-Updated:<time datetime="2018-01-10T09:29:45.465Z" itemprop="dateModified">2018-01-10</time>
-</span>
-
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-机器学习系列—4-参数估计方法-最大似然估计和贝叶斯参数估计" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    
-<a href="/2017/02/27/机器学习系列—4-参数估计方法-最大似然估计和贝叶斯参数估计/" class="article-date">
-  <time datetime="2017-02-27T05:52:36.000Z" itemprop="datePublished">2017-02-27</time>
-</a>
-
-
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Machine-Learning/">Machine Learning</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/02/27/机器学习系列—4-参数估计方法-最大似然估计和贝叶斯参数估计/">机器学习系列—4.参数估计方法(最大似然估计和贝叶斯参数估计)</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>贝叶斯决策论可以根据先验概率（可以估计）和假设类条件概率来得到最优的分类器，但估计通常存在困难，原因如下：</p>
-<ol>
-<li>训练样本数太少（</li>
-<li>特征向量的维数较大时，计算复杂</li>
-</ol>
-<p>其解决方法是将条件概率密度函数参数化。即假设类条件概率密度P(x|w)是一个多元正态分布，已知均值和协方差矩阵，这样就可以从估计完全未知的类条件概率密度P(x|w)转化为估计参数均值和协方差矩阵。这也叫参数估计，最常用的方法是<strong>极大似然估计</strong>和<strong>贝叶斯参数估计</strong>。<br>极大似然估计是把待估计的参数看做是确定性的量，只是值未知，因此只需要求得最佳估计即可，就是使得产生已观测到的样本概率为最大值的那个值。<br>而贝叶斯估计是把待估计的参数看成是符合某种先验概率分布的随机变量。对比两种方法，极大似然估计更简单，样本量增大时收敛效果更好。</p>
-        
-          <p class="article-more-link">
-            <a href="/2017/02/27/机器学习系列—4-参数估计方法-最大似然估计和贝叶斯参数估计/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-	  
-	  <a data-url="http://yoursite.com/2017/02/27/机器学习系列—4-参数估计方法-最大似然估计和贝叶斯参数估计/" data-id="cjep815ex002250uyqta58mc9" data_title="机器学习系列—4.参数估计方法(最大似然估计和贝叶斯参数估计)" data_summary="贝叶斯决策论可以根据先验概率（可以估计）和假设类条件概..." class="article-share-link">Share</a>
-      
-
-      
-        <a href="http://yoursite.com/2017/02/27/机器学习系列—4-参数估计方法-最大似然估计和贝叶斯参数估计/#ds-thread" class="ds-thread-count article-comment-link" data-thread-key="/2017/02/27/机器学习系列—4-参数估计方法-最大似然估计和贝叶斯参数估计/">暂无评论</a>
-      
-	  
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/BE/">BE</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Bayes/">Bayes</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ML/">ML</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MLE/">MLE</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/机器学习/">机器学习</a></li></ul>
-
-	  
-<span>
-Updated:<time datetime="2017-02-28T08:31:47.369Z" itemprop="dateModified">2017-02-28</time>
-</span>
-
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-机器学习系列—3-贝叶斯决策理论" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    
-<a href="/2017/02/27/机器学习系列—3-贝叶斯决策理论/" class="article-date">
-  <time datetime="2017-02-27T05:51:40.000Z" itemprop="datePublished">2017-02-27</time>
-</a>
-
-
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Machine-Learning/">Machine Learning</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/02/27/机器学习系列—3-贝叶斯决策理论/">机器学习系列—3.贝叶斯决策理论</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>贝叶斯决策论事解决模式分类问题的一种基本统计途径，其出发点是利用概率的不同分类决策与相应的决策代价之间的定量折中，它做出了如下的假设，即决策问题可以用概率的形式来描述，并且假设所有有关的概率结构均已知。本文主要是学习Pattern Classify的第2章后的笔记总结，若有错误，望指出。</p>
-        
-          <p class="article-more-link">
-            <a href="/2017/02/27/机器学习系列—3-贝叶斯决策理论/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-	  
-	  <a data-url="http://yoursite.com/2017/02/27/机器学习系列—3-贝叶斯决策理论/" data-id="cjep815ew002050uymszzc3am" data_title="机器学习系列—3.贝叶斯决策理论" data_summary="贝叶斯决策论事解决模式分类问题的一种基本统计途径，其出..." class="article-share-link">Share</a>
-      
-
-      
-        <a href="http://yoursite.com/2017/02/27/机器学习系列—3-贝叶斯决策理论/#ds-thread" class="ds-thread-count article-comment-link" data-thread-key="/2017/02/27/机器学习系列—3-贝叶斯决策理论/">暂无评论</a>
-      
-	  
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Bayes/">Bayes</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ML/">ML</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NaiveBayes/">NaiveBayes</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/机器学习/">机器学习</a></li></ul>
-
-	  
-<span>
-Updated:<time datetime="2017-02-27T09:57:36.713Z" itemprop="dateModified">2017-02-27</time>
-</span>
-
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-机器学习系列—2-模型评估与选择" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    
-<a href="/2017/02/27/机器学习系列—2-模型评估与选择/" class="article-date">
-  <time datetime="2017-02-27T05:51:12.000Z" itemprop="datePublished">2017-02-27</time>
-</a>
-
-
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Machine-Learning/">Machine Learning</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/02/27/机器学习系列—2-模型评估与选择/">机器学习系列—2.模型评估与选择</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="训练误差与测试误差"><a href="#训练误差与测试误差" class="headerlink" title="训练误差与测试误差"></a>训练误差与测试误差</h2><p>当损失函数给定时，学习方法评估的标准：基于损失函数的模型的训练误差和模型的测试误差。<br>训练误差是模型关于训练数据的平均损失：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML2-1.png" alt=""><br>测试误差是模型关于测试数据集的平均损失：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML2-2.png" alt=""><br>
-        
-          <p class="article-more-link">
-            <a href="/2017/02/27/机器学习系列—2-模型评估与选择/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-	  
-	  <a data-url="http://yoursite.com/2017/02/27/机器学习系列—2-模型评估与选择/" data-id="cjep815et001v50uyuram5b1m" data_title="机器学习系列—2.模型评估与选择" data_summary="训练误差与测试误差当损失函数给定时，学习方法评估的标准..." class="article-share-link">Share</a>
-      
-
-      
-        <a href="http://yoursite.com/2017/02/27/机器学习系列—2-模型评估与选择/#ds-thread" class="ds-thread-count article-comment-link" data-thread-key="/2017/02/27/机器学习系列—2-模型评估与选择/">暂无评论</a>
-      
-	  
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ML/">ML</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/机器学习/">机器学习</a></li></ul>
-
-	  
-<span>
-Updated:<time datetime="2017-02-27T09:57:00.712Z" itemprop="dateModified">2017-02-27</time>
-</span>
-
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-机器学习系列—1-机器学习介绍" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    
-<a href="/2017/02/27/机器学习系列—1-机器学习介绍/" class="article-date">
-  <time datetime="2017-02-27T05:50:43.000Z" itemprop="datePublished">2017-02-27</time>
-</a>
-
-
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Machine-Learning/">Machine Learning</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/02/27/机器学习系列—1-机器学习介绍/">机器学习系列—1.机器学习介绍</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>当我们晚上抬头看天空的时侯，如果看到许多的星星，我们通常会认为明天会是个好天气。我们之所以能做出有效的预判，是因为我们过往积累的经验，人类可以通过对经验的总结利用，然后做出有效的预判，那么计算机可以吗？机器学习正是这样一门学科，它致力于研究如何通过计算的手段，利用经验来改善系统自身的性能。在计算机系统中，“经验”通常以“数据”的形式存在。因此，机器学习研究的内容就是关于在计算机上从数据中产生“模型”的算法。对于机器学习的定义，业界主要有两种：</p>
-<blockquote>
-<ol>
-<li>Arthue Samuel ：Field of study that gives computers the ability to learn without being explicitly programmed.(在没有明确训练的条件下，教给计算机学习的能力 )</li>
-<li>Tom Mitchell:A computer program is said to learn from experience E with respect to some task T and some performance measure P. if its performance on T as measured by P.improves with experience E.(计算机程序从经验E中学习任务T并用度量 P来衡量性能。条件是它由 P定义的关于T的性能随着经验 E而提高)</li>
-</ol>
-</blockquote>
-        
-          <p class="article-more-link">
-            <a href="/2017/02/27/机器学习系列—1-机器学习介绍/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-	  
-	  <a data-url="http://yoursite.com/2017/02/27/机器学习系列—1-机器学习介绍/" data-id="cjep815ed001750uyb28qux5u" data_title="机器学习系列—1.机器学习介绍" data_summary="当我们晚上抬头看天空的时侯，如果看到许多的星星，我们通..." class="article-share-link">Share</a>
-      
-
-      
-        <a href="http://yoursite.com/2017/02/27/机器学习系列—1-机器学习介绍/#ds-thread" class="ds-thread-count article-comment-link" data-thread-key="/2017/02/27/机器学习系列—1-机器学习介绍/">暂无评论</a>
-      
-	  
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ML/">ML</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/机器学习/">机器学习</a></li></ul>
-
-	  
-<span>
-Updated:<time datetime="2017-02-27T09:57:02.297Z" itemprop="dateModified">2017-02-27</time>
-</span>
-
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-Caffe学习系列——6使用Faster-RCNN进行目标检测" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    
-<a href="/2016/10/23/Caffe学习系列——6使用Faster-RCNN进行目标检测/" class="article-date">
-  <time datetime="2016-10-23T02:35:22.000Z" itemprop="datePublished">2016-10-23</time>
-</a>
-
-
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Deep-Learning/">Deep Learning</a>►<a class="article-category-link" href="/categories/Deep-Learning/Caffe/">Caffe</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/10/23/Caffe学习系列——6使用Faster-RCNN进行目标检测/">Caffe学习系列——6使用Faster-RCNN进行目标检测</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>由于要实现服装的目标检测，所以一直在研究Faster-RCNN 。讲到目标检测，不得不提到rbg大神的深度神经网络检测算法系列RCNN、Fast-RCNN、Faster-RCNN，其还在github上开源了自己的代码，造福广大码农。这是rbg大神的主页 <a href="https://people.eecs.berkeley.edu/~rbg/index.html">https://people.eecs.berkeley.edu/~rbg/index.html</a> ，以及本篇博文会用到的Faster-RCNN的github源码地址 <a href="https://github.com/rbgirshick/py-faster-rcnn">https://github.com/rbgirshick/py-faster-rcnn</a>，欢迎前去膜拜学习。对于RCNN、Fast-RCNN、Faster-RCNN的介绍就不在这里赘述了，可以看看我的上一篇博文 。该github源码是Faster-RCNN python版本的实现，并使用caffe。除了python版本，rbg大神还提供了matlab代码。这两种实现方式有些许的不同，主要体现在以下几点：</p>
-<ol>
-<li>由于使用了python layer，python版本的在测试时间上会比matlab版本的慢10%左右，但是准确率差不多甚至略高一点。</li>
-<li>由于在实现方式上有一点点不同，所以使用MATLAB代码训练的模型与Python版本的不兼容</li>
-<li>目前已经实现的方式有两种：Alternative training和Approximate join training。推荐使用第二种，因为第二种使用的显存更小，而且训练会更快。</li>
-</ol>
-<p>本篇博文主要分为两部分，第一部分讲如何配置py-faster-rcnn并训练PASCALVOC2007，运行demo。第二部分讲如何对代码和数据集进行修改实现自己数据的训练与检测。<br>
-        
-          <p class="article-more-link">
-            <a href="/2016/10/23/Caffe学习系列——6使用Faster-RCNN进行目标检测/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-	  
-	  <a data-url="http://yoursite.com/2016/10/23/Caffe学习系列——6使用Faster-RCNN进行目标检测/" data-id="cjep815dk000950uyezzgdear" data_title="Caffe学习系列——6使用Faster-RCNN进行目标检测" data_summary="由于要实现服装的目标检测，所以一直在研究Faster-..." class="article-share-link">Share</a>
-      
-
-      
-        <a href="http://yoursite.com/2016/10/23/Caffe学习系列——6使用Faster-RCNN进行目标检测/#ds-thread" class="ds-thread-count article-comment-link" data-thread-key="/2016/10/23/Caffe学习系列——6使用Faster-RCNN进行目标检测/">暂无评论</a>
-      
-	  
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Caffe/">Caffe</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Deep-Learning/">Deep Learning</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Faster-RCNN/">Faster-RCNN</a></li></ul>
-
-	  
-<span>
-Updated:<time datetime="2017-03-01T06:03:05.736Z" itemprop="dateModified">2017-03-01</time>
-</span>
-
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
   
 
 
   <nav id="page-nav">
     
-    <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
+    <a class="extend prev" rel="prev" href="/">&laquo; Vorige</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/3/">Volgende &raquo;</a>
   </nav>
 
 </section>
@@ -777,7 +136,7 @@ Updated:<time datetime="2017-03-01T06:03:05.736Z" itemprop="dateModified">2017-0
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Categories</h3>
+    <h3 class="widget-title">Categorieën</h3>
     <div class="widget">
       <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Deep-Learning/">Deep Learning</a><span class="category-list-count">7</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Deep-Learning/Caffe/">Caffe</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hadoop/">Hadoop</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a><span class="category-list-count">15</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Python/Scrapy/">Scrapy</a><span class="category-list-count">1</span></li></ul></li></ul>
     </div>
@@ -797,7 +156,7 @@ Updated:<time datetime="2017-03-01T06:03:05.736Z" itemprop="dateModified">2017-0
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
+    <h3 class="widget-title">Archieven</h3>
     <div class="widget">
       <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">5</span></li></ul>
     </div>
@@ -807,7 +166,7 @@ Updated:<time datetime="2017-03-01T06:03:05.736Z" itemprop="dateModified">2017-0
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
+    <h3 class="widget-title">Recente berichten</h3>
     <div class="widget">
       <ul>
         
@@ -839,7 +198,7 @@ Updated:<time datetime="2017-03-01T06:03:05.736Z" itemprop="dateModified">2017-0
   
     
 <div class="widget-wrap">
-  <h3 class="widget-title">Recent Comments</h3>
+  <h3 class="widget-title">最新评论</h3>
   <ul class="widget ds-recent-comments" data-num-items="5" data-show-avatars="0" data-show-title="1" data-show-time="1"></ul>
 </div>
 <!-- 需要多说的公用代码 -->
@@ -848,7 +207,7 @@ Updated:<time datetime="2017-03-01T06:03:05.736Z" itemprop="dateModified">2017-0
   
     
 <div class="widget-wrap">
-  <h3 class="widget-title">Links</h3>
+  <h3 class="widget-title">友情链接</h3>
   <ul class="widget">
     
     <li><a href="http://yibo.iyiyun.com/js/yibo404/key/1" target="_BLANK">404 page</a></li>
