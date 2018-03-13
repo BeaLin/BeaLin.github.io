@@ -71,7 +71,7 @@ var _hmt = _hmt || [];
           <a id="nav-github-link" class="nav-icon" href="https://github.com/BeaLin" title="Github" target="_blank"></a>
         
         
-        <a id="nav-search-btn" class="nav-icon" title="Buscar"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -81,11 +81,124 @@ var _hmt = _hmt || [];
 </header>
 
       <div class="outer">
-        <section id="main"></section>
+        <section id="main"><article id="post-Caffe学习系列——5使用R-CNN进行目标检测" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    
+<a href="/2016/10/23/Caffe学习系列——5使用R-CNN进行目标检测/" class="article-date">
+  <time datetime="2016-10-23T02:34:12.000Z" itemprop="datePublished">2016-10-23</time>
+</a>
+
+
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Deep-Learning/">Deep Learning</a>►<a class="article-category-link" href="/categories/Deep-Learning/Caffe/">Caffe</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Caffe学习系列——5使用R-CNN进行目标检测
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+		
+		<div id="toc" class="toc-article">
+			<h2 class="toc-title"><span>Contents</span></h2>
+		
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-安装matlab"><span class="toc-number">1.</span> <span class="toc-text">1.安装matlab</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-caffe下matcaffe配置"><span class="toc-number">2.</span> <span class="toc-text">2. caffe下matcaffe配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-下载Selective-Search文件"><span class="toc-number">3.</span> <span class="toc-text">3.下载Selective Search文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-运行R-CNN例子"><span class="toc-number">4.</span> <span class="toc-text">4.运行R_CNN例子</span></a></li></ol>
+		
+		</div>
+		
+        <p>RCNN是一个比较经典的目标检测算法，由此后续衍生出的一系列fast-rcnn、faster-rcnn都对目标检测产生了很大的影响。对于RCNN、Fast-RCNN、Faster-RCNN的介绍请看我的这篇博文（）<br>本文主要介绍如何使用caffe实现RCNN目标检测，这也是caffe文档中Notebook Examples的倒数第二个例子，链接在此： <a href="http://nbviewer.jupyter.org/github/BVLC/caffe/blob/master/examples/detection.ipynb" target="_blank" rel="external">http://nbviewer.jupyter.org/github/BVLC/caffe/blob/master/examples/detection.ipynb</a>在这个例子，预训练模型是基于Imagnet数据集的，并在ILSVRC13上进行了微调。一共有200个类。需要注意的是：本例中一个原始数据对应的所有SVM分类的得分是没有概率校准和类间比较的。并且使用现成的模型只是为了简便，并不是完整的R-CNN模型。<br>首先，我们需要做一些准备工作：<br><a id="more"></a></p>
+<h2 id="1-安装matlab"><a href="#1-安装matlab" class="headerlink" title="1.安装matlab"></a>1.安装matlab</h2><p>本文安装的MATLAB014a，下载地址：<a href="http://pan.baidu.com/s/1o6qKdxo#path=%252Fmatlab" target="_blank" rel="external">http://pan.baidu.com/s/1o6qKdxo#path=%252Fmatlab</a><br>解压缩包，创建新的文件夹，将matlab挂载到linux上<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo mkdir MATHWORKS_R2014A</span><br><span class="line">sudo mount -o loop MATHWORKS_R2014A.iso MATHWORKS_R2014A</span><br></pre></td></tr></table></figure></p>
+<p>进入目录，开始安装<br>cd MATHWORKS_R2014A<br>./install<br>安装过程中使用readme.txt中的序列号<br>安装完成后使用crack下的 license进行激活<br>将crack文件夹下的libmwservices.so copy到  /usr/local/MATLAB/R2014A/bin/glnxa64<br>完成安装，命令行下使用sudo matlab即可启动使用<br>假如你的linux版本是没有桌面型的，则需要提前写好安装过程中需要输入的值，然后再安装，否则安装过程会报错。<br>创建etc目录并将配置文件拷贝到etc中<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sudo mkdir -p etc</span><br><span class="line">sudo cp MATHWORKS_R2014A /installer_input.txt etc/</span><br><span class="line">sudo cp MATHWORKS_R2014A /activate.ini etc/</span><br><span class="line">chmod +w /usr/local/matlab/etc/installer_input.txt</span><br><span class="line">chmod +w /usr/local/matlab/etc/activate.ini</span><br></pre></td></tr></table></figure></p>
+<p>编辑installer_input.txt文件，按如下内容设置配置项<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">destinationFolder=/home/linbiyuan/MATLAB/R2014a #安装目录</span><br><span class="line">fileInstallationKey= 12345-67890-12345-67890#序列号,似乎可以随便写</span><br><span class="line">agreeToLicense=yes #同意协议</span><br><span class="line">outputFile=/home/linbiyuan/log/mathworks_lby.log#安装日志</span><br><span class="line">mode=silent #开启无人值守安装</span><br><span class="line">activationPropertiesFile=/home/linbiyuan/matlab/etc/activate.ini#激活文件</span><br><span class="line">licensePath= /home/linbiyuan/mymatlab/Crack/license_405329_R2014a.lic#license文件</span><br></pre></td></tr></table></figure></p>
+<p>编辑activate.ini文件，按如下内容设置<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">isSilent=true #开启silent模式</span><br><span class="line">activateCommand=activateOffline #设置激活方式, 离线激活 无需联网</span><br><span class="line">licenseFile=/home/linbiyuan/matlab/etc/license_405329_R2014a.lic#license文件位置</span><br></pre></td></tr></table></figure></p>
+<p>安装命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo MATHWORKS_R2014A /install -inputFile etc/installer_input.txt</span><br></pre></td></tr></table></figure></p>
+<p>激活：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo 2014a/bin/activate_matlab.sh -propertiesFile etc/activate.ini</span><br></pre></td></tr></table></figure></p>
+<p>添加matlab安装路径，sudo gedit ~/.bashrc,　在文本最后添加：<br>export PATH=”/home/linbiyuan/matlab/R2014a/bin”:$PATH<br><strong>记住修改完要source ~/.bashrc一下</strong><br>否则运行时会出现：OSError: [Errno 2] No such file or directory错误</p>
+<h2 id="2-caffe下matcaffe配置"><a href="#2-caffe下matcaffe配置" class="headerlink" title="2. caffe下matcaffe配置"></a>2. caffe下matcaffe配置</h2><p>这里要说明的是，caffe中matlab只支持gcc4.7，但是ubuntu14.04默认安装的是4.8.　因此，需要安装gcc4.7，并给gcc降级<br>安装gcc4.7、g++4.7<br>sudoapt-getinstallgcc-4.7 g++-4.7 g++-4.7-multilibgcc-4.7-multilib<br>在终端执行以下系统gcc降级命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.4 40</span><br><span class="line">update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.6 60</span><br><span class="line">update-alternatives --config g++</span><br><span class="line">sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.7 100</span><br><span class="line">sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.8 50</span><br><span class="line">sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.7 100</span><br><span class="line">sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.8 50</span><br><span class="line">sudo update-alternatives--install /usr/bin/cpp cpp- bin/usr/bin/cpp-4.7 100</span><br><span class="line">sudo update-alternatives --install /usr/bin/cpp cpp- bin/usr/bin/cpp-4.8 50</span><br></pre></td></tr></table></figure></p>
+<p>验证gcc-4.7是否安装并成为系统的默认版本：<br>gcc-v<br>安装完成后需要修改Makefile.config里面matlab的路径：(matlab安装路径)，并取消注释。<br>保存然后重新编译caffe：<br>sudo make clean<br>make all<br>make test<br>make runtest<br>make matcaffe<br>make pycaffe</p>
+<h2 id="3-下载Selective-Search文件"><a href="#3-下载Selective-Search文件" class="headerlink" title="3.下载Selective Search文件"></a>3.下载Selective Search文件</h2><p>下载地址：<a href="https://github.com/sergeyk/selective_search_ijcv_with_python" target="_blank" rel="external">https://github.com/sergeyk/selective_search_ijcv_with_python</a>，用于检测候选框，关于Selective Search的算法介绍，参考：<a href="http://koen.me/research/selectivesearch/" target="_blank" rel="external">http://koen.me/research/selectivesearch/</a>，下载完成后，解压，在matlab下运行demo.m, 进入demo.m 的目录，运行matlab，然后再输入 run demo  。无报错信息关闭即可，<br>需要注意的是，如果这个文件不在$CAFFE-ROOT/python目录下,需要将其添加到PYTHONPATH路径中，我的是：<br>export export PYTHONPATH=/home/linbiyuan/caffe/python/selective_search_ijcv_with_python-master/:/home/linbiyuan/caffe/python:$PYTHONPATH（按自己的情况添加）<br>这里推荐一个便捷且不容易报错的方法，就是使用git clone来下载，这样caffe可以自己找到这个文件，不需要配置。命令如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd  caffe/python/caffe</span><br><span class="line">git clone git@github.com:sergeyk/selective_search_ijcv_with_python.git</span><br></pre></td></tr></table></figure></p>
+<p>运行 python selective_search.py看看是否有报错，一般来说，前面都配置好的话，不会出什么问题</p>
+<h2 id="4-运行R-CNN例子"><a href="#4-运行R-CNN例子" class="headerlink" title="4.运行R_CNN例子"></a>4.运行R_CNN例子</h2><p><strong>1. 创建临时目录，导入检测样本</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd $Caffe_Root/examples</span><br><span class="line">mkdir -p _temp</span><br><span class="line">echo `pwd`/images/fish-bike.jpg &gt; _temp/det_input.txt</span><br></pre></td></tr></table></figure></p>
+<p><strong>2. 运行 selective_search提取候选框，调用Caffe进行分类预测。运行GPU模式</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">../python/detect.py --crop_mode=selective_search --pretrained_model=../models/bvlc_reference_rcnn_ilsvrc13/bvlc_reference_rcnn_ilsvrc13.caffemodel --model_def=../models/bvlc_reference_rcnn_ilsvrc13/deploy.prototxt --gpu --raw_scale=255 _temp/det_input.txt _temp/det_output.h5</span><br></pre></td></tr></table></figure></p>
+<p><strong>3. 查看结果</strong><br>检测得分存放在~/_temp/det_outpu.h5文件中，使用python代码查看结果<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">import numpy as np  </span><br><span class="line">import pandas as pd  </span><br><span class="line">import matplotlib.pyplot as plt  </span><br><span class="line">%matplotlib inline  </span><br><span class="line">df = pd.read_hdf(&apos;_temp/det_output.h5&apos;, &apos;df&apos;)  </span><br><span class="line">print(df.shape)  </span><br><span class="line">print(df.iloc[0])</span><br></pre></td></tr></table></figure></p>
+<p>输出：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">(1570, 5)  </span><br><span class="line">prediction    [-2.62247, -2.84579, -2.85122, -3.20838, -1.94...  </span><br><span class="line">ymin                                                     79.846  </span><br><span class="line">xmin                                                       9.62  </span><br><span class="line">ymax                                                     246.31  </span><br><span class="line">xmax                                                    339.624  </span><br><span class="line">Name: /home/sindyz/caffe-master/examples/images/fish-bike.jpg, dtype: object</span><br></pre></td></tr></table></figure></p>
+<p>加载ILSVRC13的检测类别名称, 可通过./data/ilsvrc12/get_ilsvrc12_aux.sh获取数据<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">with open(&apos;../data/ilsvrc12/det_synset_words.txt&apos;) as f:  </span><br><span class="line">     labels_df = pd.DataFrame([  </span><br><span class="line">         &#123;  </span><br><span class="line">             &apos;synset_id&apos;: l.strip().split(&apos; &apos;)[0],  </span><br><span class="line">             &apos;name&apos;: &apos; &apos;.join(l.strip().split(&apos; &apos;)[1:]).split(&apos;,&apos;)[0]  </span><br><span class="line">         &#125;  </span><br><span class="line">         for l in f.readlines()  </span><br><span class="line">     ])  </span><br><span class="line"> labels_df.sort(&apos;synset_id&apos;)  </span><br><span class="line"> predictions_df = pd.DataFrame(np.vstack(df.prediction.values), columns=labels_df[&apos;name&apos;])</span><br></pre></td></tr></table></figure></p>
+<p>取得分最大值，并输出<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">max_s = predictions_df.max(0)  </span><br><span class="line">max_s.sort(ascending=False)  </span><br><span class="line">print(max_s[:10])</span><br></pre></td></tr></table></figure></p>
+<p>得到结果<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">name  </span><br><span class="line">person          1.835771  </span><br><span class="line">bicycle         0.866109  </span><br><span class="line">unicycle        0.057079  </span><br><span class="line">motorcycle     -0.006122  </span><br><span class="line">banjo          -0.028208  </span><br><span class="line">turtle         -0.189833  </span><br><span class="line">electric fan   -0.206787  </span><br><span class="line">cart           -0.214237  </span><br><span class="line">lizard         -0.393519  </span><br><span class="line">helmet         -0.477942  </span><br><span class="line">dtype: float32</span><br></pre></td></tr></table></figure></p>
+<p>检测结果最高的是人和自行车，检测还需要定位，于是，选择得分最高的人和自行车来定位<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">i = predictions_df[&apos;person&apos;].argmax()  </span><br><span class="line">j = predictions_df[&apos;bicycle&apos;].argmax()  </span><br><span class="line"># Show top predictions for top detection.  </span><br><span class="line">f = pd.Series(df[&apos;prediction&apos;].iloc[i], index=labels_df[&apos;name&apos;])  </span><br><span class="line">print(&apos;Top detection:&apos;)  </span><br><span class="line">print(f.order(ascending=False)[:5])  </span><br><span class="line">print(&apos;&apos;)  </span><br><span class="line"># Show top predictions for second-best detection.  </span><br><span class="line">f = pd.Series(df[&apos;prediction&apos;].iloc[j], index=labels_df[&apos;name&apos;])  </span><br><span class="line">print(&apos;Second-best detection:&apos;)  </span><br><span class="line">print(f.order(ascending=False)[:5])  </span><br><span class="line">   </span><br><span class="line"># Show top detection in red, second-best top detection in blue.  </span><br><span class="line">im = plt.imread(&apos;examples/images/fish-bike.jpg&apos;)  </span><br><span class="line">plt.imshow(im)  </span><br><span class="line">currentAxis = plt.gca()  </span><br><span class="line">  </span><br><span class="line">det = df.iloc[i]  </span><br><span class="line">coords = (det[&apos;xmin&apos;], det[&apos;ymin&apos;]), det[&apos;xmax&apos;] - det[&apos;xmin&apos;], det[&apos;ymax&apos;] - det[&apos;ymin&apos;]  </span><br><span class="line">currentAxis.add_patch(plt.Rectangle(*coords, fill=False, edgecolor=&apos;r&apos;, linewidth=5))  </span><br><span class="line">   </span><br><span class="line">det = df.iloc[j]  </span><br><span class="line">coords = (det[&apos;xmin&apos;], det[&apos;ymin&apos;]), det[&apos;xmax&apos;] - det[&apos;xmin&apos;], det[&apos;ymax&apos;] - det[&apos;ymin&apos;]  </span><br><span class="line">currentAxis.add_patch(plt.Rectangle(*coords, fill=False, edgecolor=&apos;b&apos;, linewidth=5))</span><br></pre></td></tr></table></figure></p>
+<p>输出<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">Top detection:  </span><br><span class="line">name  </span><br><span class="line">person             1.835771  </span><br><span class="line">swimming trunks   -1.150371  </span><br><span class="line">rubber eraser     -1.231106  </span><br><span class="line">turtle            -1.266037  </span><br><span class="line">plastic bag       -1.303266  </span><br><span class="line">dtype: float32  </span><br><span class="line">  </span><br><span class="line">Second-best detection:  </span><br><span class="line">name  </span><br><span class="line">bicycle     0.866109  </span><br><span class="line">unicycle   -0.359140  </span><br><span class="line">scorpion   -0.811621  </span><br><span class="line">lobster    -0.982891  </span><br><span class="line">lamp       -1.096809  </span><br><span class="line">dtype: float32</span><br></pre></td></tr></table></figure></p>
+<p><img src="http://o73nd1ra4.bkt.clouddn.com/Caffe5-1.png" alt=""></p>
+
+      
+    </div>
+    <footer class="article-footer">
+	  
+	  <!-- 百度分享 Start -->
+	  <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a><a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a></div>
+	  <!-- 百度分享 End -->
+	  
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Caffe/">Caffe</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Deep-Learning/">Deep Learning</a></li></ul>
+
+	  
+<span>
+Updated:<time datetime="2017-03-01T05:59:47.886Z" itemprop="dateModified">2017-03-01</time>
+</span>
+
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/10/23/Caffe学习系列——6使用Faster-RCNN进行目标检测/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">上一篇</strong>
+      <div class="article-nav-title">
+        
+          Caffe学习系列——6使用Faster-RCNN进行目标检测
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/10/23/目标检测方法——从RCNN、Fast-RCNN到Faster-RCNN/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">目标检测方法——从RCNN、Fast-RCNN到Faster-RCNN</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+<!-- 多说评论框 start -->
+<section id="comments">
+  <div class="ds-thread"  data-thread-key="/2016/10/23/Caffe学习系列——5使用R-CNN进行目标检测/" data-title="Caffe学习系列——5使用R-CNN进行目标检测" data-url="http://yoursite.com/2016/10/23/Caffe学习系列——5使用R-CNN进行目标检测/" id="ds_thread">
+    <noscript>Please enable JavaScript to view the <a href="//duoshuo.com/?ref_noscript">comments powered by duoshuo.</a></noscript>
+  </div>
+</section>
+<!-- 多说评论框 end -->
+</section>
         
           
   <div id="toc" class="toc-aside">
-  <h2 class="toc-title">文章目录</h2>
+  <h2 class="toc-title">Contents</h2>
     
         <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-安装matlab"><span class="toc-number">1.</span> <span class="toc-text">1.安装matlab</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-caffe下matcaffe配置"><span class="toc-number">2.</span> <span class="toc-text">2. caffe下matcaffe配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-下载Selective-Search文件"><span class="toc-number">3.</span> <span class="toc-text">3.下载Selective Search文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-运行R-CNN例子"><span class="toc-number">4.</span> <span class="toc-text">4.运行R_CNN例子</span></a></li></ol>
     
@@ -117,7 +230,7 @@ var _hmt = _hmt || [];
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Categorías</h3>
+    <h3 class="widget-title">Categories</h3>
     <div class="widget">
       <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Deep-Learning/">Deep Learning</a><span class="category-list-count">7</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Deep-Learning/Caffe/">Caffe</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hadoop/">Hadoop</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a><span class="category-list-count">15</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Python/Scrapy/">Scrapy</a><span class="category-list-count">1</span></li></ul></li></ul>
     </div>
@@ -127,7 +240,7 @@ var _hmt = _hmt || [];
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Nube de Tags</h3>
+    <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
       <a href="/tags/AlexNet/" style="font-size: 13px; color: #7dc3de">AlexNet</a> <a href="/tags/BE/" style="font-size: 13px; color: #7dc3de">BE</a> <a href="/tags/Bagging/" style="font-size: 13px; color: #7dc3de">Bagging</a> <a href="/tags/Bayes/" style="font-size: 14.17px; color: #6dc1b9">Bayes</a> <a href="/tags/Boosting/" style="font-size: 13px; color: #7dc3de">Boosting</a> <a href="/tags/Caffe/" style="font-size: 17.67px; color: #3db94a">Caffe</a> <a href="/tags/Deep-Learning/" style="font-size: 18.83px; color: #2db725">Deep Learning</a> <a href="/tags/Faster-RCNN/" style="font-size: 13px; color: #7dc3de">Faster-RCNN</a> <a href="/tags/Fine-tuning/" style="font-size: 13px; color: #7dc3de">Fine-tuning</a> <a href="/tags/GC/" style="font-size: 13px; color: #7dc3de">GC</a> <a href="/tags/HDFS/" style="font-size: 13px; color: #7dc3de">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 16.5px; color: #4dbc6f">Hadoop</a> <a href="/tags/JMM/" style="font-size: 13px; color: #7dc3de">JMM</a> <a href="/tags/JVM/" style="font-size: 13px; color: #7dc3de">JVM</a> <a href="/tags/Java/" style="font-size: 15.33px; color: #5dbe94">Java</a> <a href="/tags/K近邻/" style="font-size: 13px; color: #7dc3de">K近邻</a> <a href="/tags/ML/" style="font-size: 20px; color: #1db400">ML</a> <a href="/tags/MLE/" style="font-size: 13px; color: #7dc3de">MLE</a> <a href="/tags/MapReduce/" style="font-size: 13px; color: #7dc3de">MapReduce</a> <a href="/tags/NaiveBayes/" style="font-size: 13px; color: #7dc3de">NaiveBayes</a> <a href="/tags/Object-Detection/" style="font-size: 13px; color: #7dc3de">Object Detection</a> <a href="/tags/PCA/" style="font-size: 13px; color: #7dc3de">PCA</a> <a href="/tags/Python/" style="font-size: 14.17px; color: #6dc1b9">Python</a> <a href="/tags/RPC/" style="font-size: 13px; color: #7dc3de">RPC</a> <a href="/tags/SVM/" style="font-size: 13px; color: #7dc3de">SVM</a> <a href="/tags/Scrapy/" style="font-size: 13px; color: #7dc3de">Scrapy</a> <a href="/tags/Stacking/" style="font-size: 13px; color: #7dc3de">Stacking</a> <a href="/tags/决策树/" style="font-size: 13px; color: #7dc3de">决策树</a> <a href="/tags/分布式技术/" style="font-size: 13px; color: #7dc3de">分布式技术</a> <a href="/tags/分布式文件系统/" style="font-size: 13px; color: #7dc3de">分布式文件系统</a> <a href="/tags/半监督学习/" style="font-size: 13px; color: #7dc3de">半监督学习</a> <a href="/tags/多线程/" style="font-size: 13px; color: #7dc3de">多线程</a> <a href="/tags/大数据/" style="font-size: 13px; color: #7dc3de">大数据</a> <a href="/tags/感知机/" style="font-size: 14.17px; color: #6dc1b9">感知机</a> <a href="/tags/拉格朗日乘子法/" style="font-size: 13px; color: #7dc3de">拉格朗日乘子法</a> <a href="/tags/机器学习/" style="font-size: 20px; color: #1db400">机器学习</a> <a href="/tags/核方法/" style="font-size: 13px; color: #7dc3de">核方法</a> <a href="/tags/概率图模型/" style="font-size: 13px; color: #7dc3de">概率图模型</a> <a href="/tags/深度学习/" style="font-size: 14.17px; color: #6dc1b9">深度学习</a> <a href="/tags/爬虫/" style="font-size: 13px; color: #7dc3de">爬虫</a> <a href="/tags/特征选择/" style="font-size: 13px; color: #7dc3de">特征选择</a> <a href="/tags/神经网络/" style="font-size: 13px; color: #7dc3de">神经网络</a> <a href="/tags/聚类/" style="font-size: 13px; color: #7dc3de">聚类</a> <a href="/tags/阅读/" style="font-size: 14.17px; color: #6dc1b9">阅读</a> <a href="/tags/降维/" style="font-size: 13px; color: #7dc3de">降维</a> <a href="/tags/集成方法/" style="font-size: 13px; color: #7dc3de">集成方法</a>
     </div>
@@ -137,7 +250,7 @@ var _hmt = _hmt || [];
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archivos</h3>
+    <h3 class="widget-title">Archives</h3>
     <div class="widget">
       <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">5</span></li></ul>
     </div>
@@ -147,7 +260,7 @@ var _hmt = _hmt || [];
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Posts recientes</h3>
+    <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
         
@@ -178,11 +291,17 @@ var _hmt = _hmt || [];
 
   
     
+<div class="widget-wrap">
+  <h3 class="widget-title">Recent Comments</h3>
+  <ul class="widget ds-recent-comments" data-num-items="5" data-show-avatars="0" data-show-title="1" data-show-time="1"></ul>
+</div>
+<!-- 需要多说的公用代码 -->
+
 
   
     
 <div class="widget-wrap">
-  <h3 class="widget-title">友情链接</h3>
+  <h3 class="widget-title">Links</h3>
   <ul class="widget">
     
     <li><a href="http://yibo.iyiyun.com/js/yibo404/key/1" target="_BLANK">404 page</a></li>
@@ -218,6 +337,20 @@ var _hmt = _hmt || [];
 </nav>
     
 
+
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"bealin"};
+  (function() {
+	var ds = document.createElement('script');
+	ds.type = 'text/javascript';ds.async = true;
+	ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+	ds.charset = 'UTF-8';
+	(document.getElementsByTagName('head')[0]
+		|| document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+<!-- 多说公共JS代码 end -->
 
 
 

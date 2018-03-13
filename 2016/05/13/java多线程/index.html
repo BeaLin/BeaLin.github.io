@@ -75,7 +75,7 @@ var _hmt = _hmt || [];
           <a id="nav-github-link" class="nav-icon" href="https://github.com/BeaLin" title="Github" target="_blank"></a>
         
         
-        <a id="nav-search-btn" class="nav-icon" title="Buscar"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -85,11 +85,251 @@ var _hmt = _hmt || [];
 </header>
 
       <div class="outer">
-        <section id="main"></section>
+        <section id="main"><article id="post-java多线程" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    
+<a href="/2016/05/13/java多线程/" class="article-date">
+  <time datetime="2016-05-13T03:25:51.000Z" itemprop="datePublished">2016-05-13</time>
+</a>
+
+
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Java/">Java</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      java多线程
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+		
+		<div id="toc" class="toc-article">
+			<h2 class="toc-title"><span>Contents</span></h2>
+		
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#线程"><span class="toc-number">1.</span> <span class="toc-text">线程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#什么是线程？"><span class="toc-number">1.1.</span> <span class="toc-text">什么是线程？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#多进程与多线程的区别"><span class="toc-number">1.2.</span> <span class="toc-text">多进程与多线程的区别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#定义线程"><span class="toc-number">1.3.</span> <span class="toc-text">定义线程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#中断线程-java-lang-Thread"><span class="toc-number">1.4.</span> <span class="toc-text">中断线程(java.lang.Thread)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#线程状态-6种状态"><span class="toc-number">1.5.</span> <span class="toc-text">线程状态(6种状态)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#线程属性"><span class="toc-number">1.6.</span> <span class="toc-text">线程属性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#实现线程安全的方法"><span class="toc-number">1.7.</span> <span class="toc-text">实现线程安全的方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#用于管理线程，提高线程执行效率："><span class="toc-number">1.8.</span> <span class="toc-text">用于管理线程，提高线程执行效率：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#java-utils-concurrent"><span class="toc-number">1.9.</span> <span class="toc-text">java.utils.concurrent</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#同步"><span class="toc-number">2.</span> <span class="toc-text">同步</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#锁和条件型"><span class="toc-number">2.1.</span> <span class="toc-text">锁和条件型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#监视器-monitor"><span class="toc-number">2.2.</span> <span class="toc-text">监视器(monitor)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#volatile关键字"><span class="toc-number">2.3.</span> <span class="toc-text">volatile关键字</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#final变量"><span class="toc-number">2.4.</span> <span class="toc-text">final变量</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#阻塞队列-blocking-queue"><span class="toc-number">3.</span> <span class="toc-text">阻塞队列(blocking queue)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#线程安全的集合"><span class="toc-number">4.</span> <span class="toc-text">线程安全的集合</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#执行器-线程池"><span class="toc-number">5.</span> <span class="toc-text">执行器(线程池)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Callable"><span class="toc-number">5.1.</span> <span class="toc-text">Callable</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Future"><span class="toc-number">5.2.</span> <span class="toc-text">Future</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#执行器（Executor）"><span class="toc-number">5.3.</span> <span class="toc-text">执行器（Executor）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#同步器"><span class="toc-number">6.</span> <span class="toc-text">同步器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#同步器-1"><span class="toc-number">6.1.</span> <span class="toc-text">同步器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#分类"><span class="toc-number">6.2.</span> <span class="toc-text">分类</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考资料"><span class="toc-number">7.</span> <span class="toc-text">参考资料</span></a></li></ol>
+		
+		</div>
+		
+        <p>多线程是java的一个很重要的高级特性，本文主要归纳了线程的相关概念，包括线程的定义，与进程的区别，线程的状态和属性。同时介绍了线程中很重要的一个知识点——如何实现线程安全:1使线程同步、使用阻塞队列或线程安全的集合。除此之外，还介绍了用于管理线程，提高线程执行效率的执行器(线程池)和同步器。<br>本文是在看了《Think in JAVA》、《JAVA核心技术卷》以及相关的一些博客后的总结笔记，纯属个人理解。若有错误，望指出。文末会贴出参考资料的链接。</p>
+<a id="more"></a>
+<h2 id="线程"><a href="#线程" class="headerlink" title="线程"></a>线程</h2><h3 id="什么是线程？"><a href="#什么是线程？" class="headerlink" title="什么是线程？"></a>什么是线程？</h3><p>一个程序同时执行多个任务，每一个任务称为一个线程。  </p>
+<h3 id="多进程与多线程的区别"><a href="#多进程与多线程的区别" class="headerlink" title="多进程与多线程的区别"></a>多进程与多线程的区别</h3><p>每一个进程拥有自己的一整套变量，而线程则共享数据，共享变量使线程之间的通信比进程之间的通信更有效、更容易。</p>
+<h3 id="定义线程"><a href="#定义线程" class="headerlink" title="定义线程"></a>定义线程</h3><ol>
+<li>定义一个实现Runable接口的类  <pre><code class="java"><span class="class"><span class="keyword">class</span> <span class="title">MyRunable</span> <span class="keyword">implements</span> <span class="title">Runable</span></span>{
+ <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span></span>{
+     task code; 
+ }
+}
+</code></pre>
+</li>
+<li>创建类对象  <pre><code class="java">Runable r=<span class="keyword">new</span> MyRunable();
+</code></pre>
+</li>
+<li>由Runable创建一个Thread对象  <pre><code class="java">Thread t=<span class="keyword">new</span> Thread(r);
+</code></pre>
+</li>
+<li>启动线程  <pre><code class="java">t.start()
+</code></pre>
+也可以通过构建一个Thread类的子类定义一个线程  <pre><code class="java"><span class="class"><span class="keyword">class</span> <span class="title">MyThread</span> <span class="keyword">extends</span> <span class="title">Thread</span></span>{
+  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span></span>{
+       task code
+  }
+}
+</code></pre>
+然后创建子类的实例对象，调用start()方法。<br><strong>不建议用这种方法，建议用线程池  </strong><br>不要调用Thread类或Runable对象的run方法。直接调用run方法，只会执行同一个线程中的任务，而不会启动新线程。应调用Thread.start方法。  </li>
+</ol>
+<h3 id="中断线程-java-lang-Thread"><a href="#中断线程-java-lang-Thread" class="headerlink" title="中断线程(java.lang.Thread)"></a>中断线程(java.lang.Thread)</h3><ol>
+<li>void interrupt方法:请求终止线程,线程的中断状态将被置位为true。如果线程被阻塞(线程调用sleep或wait),就无法检测中断状态。会抛出Interrupt Exception异常。(存在不能被中断的阻塞I/O调用)  </li>
+<li>static boolean interrupted():一个静态方法，它检测当前的线程是否被中断，并且会清除该线程的中断状态，置为false。  </li>
+<li>boolean isInterrupted():一个实例方法，测试线程是否被中断。不会改变中断状态。  </li>
+<li>static Thread currentThread():返回当前执行线程的Thread对象。</li>
+</ol>
+<h3 id="线程状态-6种状态"><a href="#线程状态-6种状态" class="headerlink" title="线程状态(6种状态)"></a>线程状态(6种状态)</h3><p><img src="http://o73nd1ra4.bkt.clouddn.com/thread_status.png" alt=""><br><strong>New(新创建):</strong>程序还没有开始运行线程中的代码。<br><strong>Runable(可运行):</strong>不始终运行,采用时间片机制。在桌面以及服务器操作系统使用抢占式调度,手机等小型设备使用协作式调度。<br><strong>Blocked(被阻塞):</strong>当一个线程视图获取一个内部的对象锁，而该锁被其他线程持有，则进入阻塞状态。<br><strong>Waiting(等待):</strong>当线程等待另一个线程通知调度器一个条件时，进入等待状态。<br><strong>Timed waiting(计时等待):</strong>调用含有超时参数的方法，会导致线程进入计时等待。<br><strong>Terminated(被终止):</strong><br>(1) 因为run方法正常退出而自然死亡。<br>(2) 因为一个没有捕获的异常终止了run方法而意外死亡。  </p>
+<h3 id="线程属性"><a href="#线程属性" class="headerlink" title="线程属性"></a>线程属性</h3><p>包括线程优先级、守护线程、处理未捕获异常的处理器、线程组<br><strong>1. 线程优先级：高度依赖于系统</strong><br>setpriority(int newPriority):设置线程优先级<br>MIN_PRIORITY:1;<br>NORM_PRIORITY:5(默认优先级);<br>MAX_PRIORITY:10<br>yield():导致当前执行线程处于让步状态。<br><strong>2. 守护线程：</strong><br>thread.setDaemon(true):为其他线程提供服务，如计时线程。当只剩下守护线程时，虚拟机就退出了。<br><strong>3. 未捕获异常处理器</strong><br>线程的run方法不能抛出任何被检测的异常。可以用setUncaughtExceptionHandler方法为线程安装一个处理器，来处理未捕获异常。处理器需实现Thread.UncaughtExceptionHandler接口。<br><strong>4. 线程组：</strong><br>一个可以统一管理的线程集合，不建议使用。  </p>
+<h3 id="实现线程安全的方法"><a href="#实现线程安全的方法" class="headerlink" title="实现线程安全的方法"></a>实现线程安全的方法</h3><p>(个人总结,不保证正确性):  </p>
+<ol>
+<li>使线程同步、同步的方法有：显式地声明锁和条件；使用synchronized关键字（隐式声明锁）；监视器（不需要程序员去考虑锁的问题）；volatile关键字（提供免锁机制）；final变量（实现内存可见性）；    </li>
+<li>阻塞队列（java.utils.concurrent包中的机制）  </li>
+<li>线程安全的集合   </li>
+</ol>
+<h3 id="用于管理线程，提高线程执行效率："><a href="#用于管理线程，提高线程执行效率：" class="headerlink" title="用于管理线程，提高线程执行效率："></a>用于管理线程，提高线程执行效率：</h3><ol>
+<li>执行器（线程池）：  </li>
+<li>同步器（预置功能）：信号量、CountDownLatch、cyclicBarrier、交换器、同步队列   </li>
+</ol>
+<h3 id="java-utils-concurrent"><a href="#java-utils-concurrent" class="headerlink" title="java.utils.concurrent"></a>java.utils.concurrent</h3><p>concurrent包的实现：  </p>
+<ol>
+<li>首先，声明共享变量为volatile；  </li>
+<li>然后，使用CAS的原子条件更新来实现线程之间的同步；  </li>
+<li>同时，配合以volatile的读/写和CAS所具有的volatile读和写的内存语义来实现线程之间的通信。  </li>
+</ol>
+<p>concurrent包的实现示意图如下：<br><img src="http://o73nd1ra4.bkt.clouddn.com/Concurrent.png" alt=""><br>AQS，非阻塞数据结构和原子变量类（java.util.concurrent.atomic包中的类）  </p>
+<hr>
+<h2 id="同步"><a href="#同步" class="headerlink" title="同步"></a>同步</h2><p>线程同步的工具:<br>(1)锁和条件型（非面向对象）；<br>(2)监视器  </p>
+<h3 id="锁和条件型"><a href="#锁和条件型" class="headerlink" title="锁和条件型"></a>锁和条件型</h3><p><strong>两种机制</strong>防止代码块受并发访问的干扰:  </p>
+<ul>
+<li>Lock和Condition对象;  </li>
+<li>synchronized关键字;<br><strong>1. 锁对象</strong><br>(1) 用ReentrantLock保护代码块的基本结构  <pre><code class="java">ReentrantLock mylock=<span class="keyword">new</span> ReentrantLock();
+mylock.lock();
+<span class="keyword">try</span>{
+   critical section
+}<span class="keyword">finally</span>{
+   mylock.unlock;
+}
+</code></pre>
+这一结构确保任何时刻只有一个线程进入临界区。一旦一个线程得到锁对象，其他任何线程都无法通过lock语句。当其他线程调用lock时，则会被阻塞，直到第一个线程释放锁对象。<br>(2) void lock():获取这个锁<br> void unlock():释放锁<br> ReentranLock():构建一个可以被用来保护临界区的可重入锁<br> ReentrantLock(boolean fair):构建一个带有公平策略的锁。一个公平锁偏爱等待时间最长的线程。会降低性能。默认非公平<br><strong>2. 条件对象</strong><br>线程进入临界区，并满足一个条件后它才能执行。可以用一个条件对象来管理那些已经获得了一个锁但是却不能做有用工作的线程。  <pre><code class="java">Condition mycond;
+ReentrantLock mylock=<span class="keyword">new</span> ReentrantLock();
+mylock.lock();
+<span class="keyword">try</span>{
+   mycond=mylock.newCondition();
+   <span class="keyword">while</span>(条件)
+        mycond.await();  <span class="comment">//进入该条件的等待集中，处于阻塞状态</span>
+   ......
+   mycond.signalAll();
+}<span class="keyword">finally</span>{
+   mylock.unlock;
+}
+</code></pre>
+(1) <strong>等待获得锁的线程</strong>与<strong>调用await()的线程</strong>在本质上是不同。调用await（）的线程进入该条件的等待集，即使锁可用，该线程也不能立即解除阻塞。直到另一个线程调用同一条件上signalAll方法。所以这个线程的激活要依靠其他线程，如果没有其他线程重新激活，则会导致死锁现象。<br>(2) <strong>死锁</strong>：所有的线程都进入阻塞状态。没有任何线程可以解除其他线程的阻塞，程序挂起。<br>(3) <strong>siganlAll</strong>不会立即激活一个等待线程，它仅仅解除所有等待线程的阻塞，这些线程退出同步方法后，通过竞争实现对对象的访问。<br>(4) <strong>siganl与siganlAll的区别</strong>：siganl随机解除等待集中某个线程的阻塞状态。siganlAll是解除所有等待线程。signal更加有效也更危险。更容易导致死锁现象。即当它随机选择的线程发现自己仍然不满足条件对象，再次被阻塞。<br><strong>3. 总结锁和条件</strong>  </li>
+<li>锁是用来保护代码片段，任何时刻只能有一个线程执行被保护的代码。  </li>
+<li>锁可以管理试图进入被保护代码段的线程（公平锁和非公平锁。  </li>
+<li>锁可以拥有一个或多个条件对象。  </li>
+<li>条件对象可以管理进入临界区但不能运行的线程。<br><strong>4. synchronized关键字</strong><br><strong>java中的每一个对象都有一个对象锁。</strong><br>(1) 当一个方法用synchronized关键声明，该对象的锁将保护整个方法。<pre><code class="java"><span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span>  <span class="keyword">void</span> <span class="title">method</span><span class="params">()</span></span>{
+  method body
+}
+</code></pre>
+等价于   <pre><code class="java"><span class="keyword">public</span> <span class="keyword">void</span> method{
+  <span class="keyword">this</span>.intrinisclock.lock();
+  <span class="keyword">try</span>{
+  method body
+  }
+  <span class="keyword">finally</span>{ <span class="keyword">this</span>.intrinisclock.unlock();  }
+}
+</code></pre>
+(2) 内部对象锁只有一个相关条件：<br>wait方法添加一个线程到等待集:wait()=instrinsicCondition.await()<br>notifyAll方法解除所有等待线程的阻塞状态:notifyAll() =instrinsicCondition.signalAll()<br>notify方法随机选择一个等待线程解除其阻塞状态:notify() =instrinsicCondition.signal()<br>(3) 内部锁和条件的局限<br>a. 不能中断一个正在试图获得锁的线程<br>b. 试图获得锁时不能设定超时<br>c. 每个锁仅有单一的条件<br><strong>5. Lock+Condition对象还是Synchronized同步方法？</strong><br>(1) Lock+Condition 对象和ynchronized同步方法最好不使用,可以使用concurrent包中的机制。<br>(2) 尽量使用synchronized而不是Lock/Condition结构。  <h3 id="监视器-monitor"><a href="#监视器-monitor" class="headerlink" title="监视器(monitor)"></a>监视器(monitor)</h3><strong>1. 监视器的特性：（不需要程序员考虑如何加锁）</strong><br>(1) 监视器是只包含私有域的类<br>(2) 每个监视器类的对象有一个相关的锁<br>(3) 使用该锁对所有的方法进行加锁，调用方法时自动获得锁，方法返回时自动释放锁。<br>(4) 该锁可以有任意多个相关条件<br><strong>2. 用synchronized关键字声明方法的Java对象类似于监视器，但又有不同之处：</strong><br>(1) 域不要求必须是private<br>(2) 方法不要求必须是synchronized<br>(3) 内部锁对客户是可用的  <h3 id="volatile关键字"><a href="#volatile关键字" class="headerlink" title="volatile关键字"></a>volatile关键字</h3></li>
+</ul>
+<ol>
+<li>volatile关键字为实例域的同步访问提供了一种免锁机制。  </li>
+<li>volatile与synchronized关键字的区别间java内存管理。<br>具体内容见博文<a href="http://bealin.github.io/2016/05/13/java%E5%A4%9A%E7%BA%BF%E7%A8%8B/#more" target="_blank" rel="external">java内存模型</a>   </li>
+</ol>
+<h3 id="final变量"><a href="#final变量" class="headerlink" title="final变量"></a>final变量</h3><p>对于final域，编译器和处理器要遵守两个重排序规则:  </p>
+<ol>
+<li>在构造函数内对一个final域的写入，与随后把这个被构造对象的引用赋值给一个引用变量，这两个操作之间不能重排序。  </li>
+<li>初次读一个包含final域的对象的引用，与随后初次读这个final域，这两个操作之间不能重排序。  </li>
+</ol>
+<hr>
+<h2 id="阻塞队列-blocking-queue"><a href="#阻塞队列-blocking-queue" class="headerlink" title="阻塞队列(blocking queue)"></a>阻塞队列(blocking queue)</h2><p>使用队列可以安全地从一个线程向另一个线程传递数据。<br>(1) 阻塞队列在<strong>协调多个线程之间的合作</strong>上是一个有用的工具。<br>(2) 当试图向队列添加元素而队列已满，或是想从队列移出元素而队列为空的时候，阻塞队列导致线程阻塞。队列会<strong>自动平衡负载</strong>。<br>(3) <strong>阻塞队列方法</strong>分三类<br><img src="http://o73nd1ra4.bkt.clouddn.com/blockqueue.png" alt=""><br>(4) <strong>阻塞队列的变种</strong><br>a. <strong>ArrayBlockingQueue</strong>：带有指定的容量和公平性设置（可选、等待时长为指标 ）的阻塞队列。该队列用循环数组实现。<br>b. <strong>LinkedBlockingQueue</strong>：无上限（或指定容量）的阻塞队列，用链表实现。<br>c. <strong>LinkedBlockingDeque</strong>：无上限（或指定容量）的双向阻塞队列，用链表实现。<br>d. <strong>DelayQueue</strong>：一个包含Delayed元素的无界的阻塞时间有限的阻塞队列。只有那些延迟已经超过时间的元素才可以从队列中移出。<br>e. <strong>PriorityBlockingQueue</strong>：带优先级的队列，按照优先级顺序被移出。用堆实现。 </p>
+<hr>
+<h2 id="线程安全的集合"><a href="#线程安全的集合" class="headerlink" title="线程安全的集合"></a>线程安全的集合</h2><ol>
+<li><strong>java.util.concurrent包</strong>提供了高效的映射表、有序集和队列：ConcurrentHashMap、ConcurrentSkipListMap、ConcurrentSkipListSet和ConcurrentLinkedQueue。。这些集合允许并发地访问数据结构的不同部分来使竞争极小化。  </li>
+<li>集合返回<strong>弱一致性（weakly consisteut）</strong>的迭代器。这意味着迭代器不一定能反映出它们被构造之后的所有的修改。  </li>
+<li><strong>写数组的拷贝：CopyOnWriteArrayList和CopyOnWriteArraySet</strong>是线程安全地集合，其中所有的修改线程对底层数组进行复制。  </li>
+<li>Vector（线程安全）——》ArrayList（非线程安全）<br>Hashtable（线程安全）——》HashMap（非线程安全）   </li>
+<li>任何集合类可通过使用同步包装器变成线程安全的  <pre><code class="java">List&lt;E&gt; synchArrayList=Collections.synchronizedList(<span class="keyword">new</span> ArrayList&lt;E&gt;());  
+Map&lt;K,V&gt;synchHashMap=Collections.synchronizedMap(<span class="keyword">new</span> HashMap&lt;K,V&gt;());
+</code></pre>
+</li>
+<li><strong>最好使用java.util.concurrent包中定义的集合，不使用同步包装器。</strong><br>例外：对于经常被修改的数组列表，同步的ArrayList可以胜过CopyOnWriteArrayList。  </li>
+</ol>
+<hr>
+<h2 id="执行器-线程池"><a href="#执行器-线程池" class="headerlink" title="执行器(线程池)"></a>执行器(线程池)</h2><h3 id="Callable"><a href="#Callable" class="headerlink" title="Callable"></a>Callable</h3><p>Runable封装一个异步运行的任务，可以把它想象成为一个没有参数和返回值的异步方法。Callable与Runnable类似，但是有返回值。    </p>
+<pre><code class="java"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Callable</span>&lt;<span class="title">V</span>&gt;</span>{
+     <span class="function">V <span class="title">call</span><span class="params">()</span> <span class="keyword">throws</span> Exception</span>;
+}
+</code></pre>
+<h3 id="Future"><a href="#Future" class="headerlink" title="Future"></a>Future</h3><p>保存异步计算的结果。可以启动一个计算，将Future对象交给某个线程，然后不用管它，Future对象的所有者在结果计算好之后就可以获得它  </p>
+<pre><code class="java"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Future</span>&lt;<span class="title">V</span>&gt;</span>{
+     <span class="function">V <span class="title">get</span><span class="params">()</span> <span class="keyword">throws</span>...</span>;
+     <span class="function">V <span class="title">get</span><span class="params">(<span class="keyword">long</span> timeout,TimeUnit)</span> <span class="keyword">throws</span>...</span>;
+     <span class="function"><span class="keyword">void</span> <span class="title">cancel</span><span class="params">(<span class="keyword">boolean</span> mayInterrupt)</span></span>;
+     <span class="function"><span class="keyword">boolean</span> <span class="title">isCancelled</span><span class="params">()</span></span>;
+     <span class="function"><span class="keyword">boolean</span> <span class="title">isDone</span><span class="params">()</span></span>;
+}
+</code></pre>
+<h3 id="执行器（Executor）"><a href="#执行器（Executor）" class="headerlink" title="执行器（Executor）"></a>执行器（Executor）</h3><ol>
+<li>若程序中创建了大量的生命期很短的线程，应该使用线程池  </li>
+<li>一个线程池中包含许多准备运行的空闲线程，将某个Runnable对象交给线程池，就会有一个线程调用run方法，运行完run方法，线程不会死亡，而是在池中准备为下一个请求提供服务。  </li>
+<li>使用线程池的好处：减少并发线程的数目，线程数过多会降低性能甚至使虚拟机奔溃  </li>
+<li>执行器类有许多静态工厂方法用来构建线程池。<br><img src="http://o73nd1ra4.bkt.clouddn.com/Executor.png" alt=""></li>
+<li>shutdown：当用完一个线程池时，调用shutdown，该方法启动该池的关闭序列。被关闭的执行器不再接受新任务，当所有任务完成后，线程池的线程死亡。  </li>
+<li>shutdownNow：取消尚未开始的所有任务并试图中断正在运行的线程。  </li>
+<li>使用连接池的过程<br>a.调用Executors类中静态的方法newCachedThreadPool或newFixedThreadPool<br>b.调用submit提交Runable或Callable对象<br>c.取消一个任务或提交Callable对象，要保存好返回的Future对象。<br>d.当不再提交任何任务时，调用shutdown  </li>
+</ol>
+<hr>
+<h2 id="同步器"><a href="#同步器" class="headerlink" title="同步器"></a>同步器</h2><h3 id="同步器-1"><a href="#同步器-1" class="headerlink" title="同步器"></a>同步器</h3><p>帮助人们管理相互合作的线程集，为线程之间的“共用集结点模式”提供“预置功能”  </p>
+<h3 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h3><p><img src="http://o73nd1ra4.bkt.clouddn.com/tongbuqi.png" alt=""> </p>
+<hr>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p>书本：<br><a href="https://www.amazon.cn/Java%E7%BC%96%E7%A8%8B%E6%80%9D%E6%83%B3-%E5%9F%83%E5%8F%B2%E5%B0%94/dp/B0011F7WU4?ie=UTF8&amp;camp=536&amp;creative=3132&amp;creativeASIN=B0011F7WU4&amp;linkCode=as2&amp;ref_=as_li_ss_tl&amp;tag=jtianlinsblog-23" target="_blank" rel="external">《Think in Java》</a><br><a href="https://www.amazon.cn/gp/product/B00W34E0LQ/ref=s9_simh_bw_p14_d0_i2?pf_rd_m=A1AJ19PSB66TGU&amp;pf_rd_s=merchandised-search-4&amp;pf_rd_r=CQ16VGJKK5XV21BH4ZNT&amp;pf_rd_t=101&amp;pf_rd_p=284204612&amp;pf_rd_i=658390051" target="_blank" rel="external">JAVA核心技术卷</a><br>网址：<br><a href="http://www.mamicode.com/info-detail-517008.html" target="_blank" rel="external">http://www.mamicode.com/info-detail-517008.html</a><br><a href="http://lavasoft.blog.51cto.com/62575/27069/" target="_blank" rel="external">http://lavasoft.blog.51cto.com/62575/27069/</a>  </p>
+
+      
+    </div>
+    <footer class="article-footer">
+	  
+	  <!-- 百度分享 Start -->
+	  <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a><a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a></div>
+	  <!-- 百度分享 End -->
+	  
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/多线程/">多线程</a></li></ul>
+
+	  
+<span>
+Updated:<time datetime="2016-05-23T06:07:36.091Z" itemprop="dateModified">2016-05-23</time>
+</span>
+
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/05/18/java内存管理及垃圾回收机制/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">上一篇</strong>
+      <div class="article-nav-title">
+        
+          Java内存管理及垃圾回收机制
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/05/13/使用Scrapy框架爬取数据/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">使用Scrapy框架爬取数据</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+<!-- 多说评论框 start -->
+<section id="comments">
+  <div class="ds-thread"  data-thread-key="/2016/05/13/java多线程/" data-title="java多线程" data-url="http://yoursite.com/2016/05/13/java多线程/" id="ds_thread">
+    <noscript>Please enable JavaScript to view the <a href="//duoshuo.com/?ref_noscript">comments powered by duoshuo.</a></noscript>
+  </div>
+</section>
+<!-- 多说评论框 end -->
+</section>
         
           
   <div id="toc" class="toc-aside">
-  <h2 class="toc-title">文章目录</h2>
+  <h2 class="toc-title">Contents</h2>
     
         <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#线程"><span class="toc-number">1.</span> <span class="toc-text">线程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#什么是线程？"><span class="toc-number">1.1.</span> <span class="toc-text">什么是线程？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#多进程与多线程的区别"><span class="toc-number">1.2.</span> <span class="toc-text">多进程与多线程的区别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#定义线程"><span class="toc-number">1.3.</span> <span class="toc-text">定义线程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#中断线程-java-lang-Thread"><span class="toc-number">1.4.</span> <span class="toc-text">中断线程(java.lang.Thread)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#线程状态-6种状态"><span class="toc-number">1.5.</span> <span class="toc-text">线程状态(6种状态)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#线程属性"><span class="toc-number">1.6.</span> <span class="toc-text">线程属性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#实现线程安全的方法"><span class="toc-number">1.7.</span> <span class="toc-text">实现线程安全的方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#用于管理线程，提高线程执行效率："><span class="toc-number">1.8.</span> <span class="toc-text">用于管理线程，提高线程执行效率：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#java-utils-concurrent"><span class="toc-number">1.9.</span> <span class="toc-text">java.utils.concurrent</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#同步"><span class="toc-number">2.</span> <span class="toc-text">同步</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#锁和条件型"><span class="toc-number">2.1.</span> <span class="toc-text">锁和条件型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#监视器-monitor"><span class="toc-number">2.2.</span> <span class="toc-text">监视器(monitor)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#volatile关键字"><span class="toc-number">2.3.</span> <span class="toc-text">volatile关键字</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#final变量"><span class="toc-number">2.4.</span> <span class="toc-text">final变量</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#阻塞队列-blocking-queue"><span class="toc-number">3.</span> <span class="toc-text">阻塞队列(blocking queue)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#线程安全的集合"><span class="toc-number">4.</span> <span class="toc-text">线程安全的集合</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#执行器-线程池"><span class="toc-number">5.</span> <span class="toc-text">执行器(线程池)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Callable"><span class="toc-number">5.1.</span> <span class="toc-text">Callable</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Future"><span class="toc-number">5.2.</span> <span class="toc-text">Future</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#执行器（Executor）"><span class="toc-number">5.3.</span> <span class="toc-text">执行器（Executor）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#同步器"><span class="toc-number">6.</span> <span class="toc-text">同步器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#同步器-1"><span class="toc-number">6.1.</span> <span class="toc-text">同步器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#分类"><span class="toc-number">6.2.</span> <span class="toc-text">分类</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考资料"><span class="toc-number">7.</span> <span class="toc-text">参考资料</span></a></li></ol>
     
@@ -121,7 +361,7 @@ var _hmt = _hmt || [];
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Categorías</h3>
+    <h3 class="widget-title">Categories</h3>
     <div class="widget">
       <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Deep-Learning/">Deep Learning</a><span class="category-list-count">7</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Deep-Learning/Caffe/">Caffe</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hadoop/">Hadoop</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a><span class="category-list-count">15</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Python/Scrapy/">Scrapy</a><span class="category-list-count">1</span></li></ul></li></ul>
     </div>
@@ -131,7 +371,7 @@ var _hmt = _hmt || [];
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Nube de Tags</h3>
+    <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
       <a href="/tags/AlexNet/" style="font-size: 13px; color: #7dc3de">AlexNet</a> <a href="/tags/BE/" style="font-size: 13px; color: #7dc3de">BE</a> <a href="/tags/Bagging/" style="font-size: 13px; color: #7dc3de">Bagging</a> <a href="/tags/Bayes/" style="font-size: 14.17px; color: #6dc1b9">Bayes</a> <a href="/tags/Boosting/" style="font-size: 13px; color: #7dc3de">Boosting</a> <a href="/tags/Caffe/" style="font-size: 17.67px; color: #3db94a">Caffe</a> <a href="/tags/Deep-Learning/" style="font-size: 18.83px; color: #2db725">Deep Learning</a> <a href="/tags/Faster-RCNN/" style="font-size: 13px; color: #7dc3de">Faster-RCNN</a> <a href="/tags/Fine-tuning/" style="font-size: 13px; color: #7dc3de">Fine-tuning</a> <a href="/tags/GC/" style="font-size: 13px; color: #7dc3de">GC</a> <a href="/tags/HDFS/" style="font-size: 13px; color: #7dc3de">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 16.5px; color: #4dbc6f">Hadoop</a> <a href="/tags/JMM/" style="font-size: 13px; color: #7dc3de">JMM</a> <a href="/tags/JVM/" style="font-size: 13px; color: #7dc3de">JVM</a> <a href="/tags/Java/" style="font-size: 15.33px; color: #5dbe94">Java</a> <a href="/tags/K近邻/" style="font-size: 13px; color: #7dc3de">K近邻</a> <a href="/tags/ML/" style="font-size: 20px; color: #1db400">ML</a> <a href="/tags/MLE/" style="font-size: 13px; color: #7dc3de">MLE</a> <a href="/tags/MapReduce/" style="font-size: 13px; color: #7dc3de">MapReduce</a> <a href="/tags/NaiveBayes/" style="font-size: 13px; color: #7dc3de">NaiveBayes</a> <a href="/tags/Object-Detection/" style="font-size: 13px; color: #7dc3de">Object Detection</a> <a href="/tags/PCA/" style="font-size: 13px; color: #7dc3de">PCA</a> <a href="/tags/Python/" style="font-size: 14.17px; color: #6dc1b9">Python</a> <a href="/tags/RPC/" style="font-size: 13px; color: #7dc3de">RPC</a> <a href="/tags/SVM/" style="font-size: 13px; color: #7dc3de">SVM</a> <a href="/tags/Scrapy/" style="font-size: 13px; color: #7dc3de">Scrapy</a> <a href="/tags/Stacking/" style="font-size: 13px; color: #7dc3de">Stacking</a> <a href="/tags/决策树/" style="font-size: 13px; color: #7dc3de">决策树</a> <a href="/tags/分布式技术/" style="font-size: 13px; color: #7dc3de">分布式技术</a> <a href="/tags/分布式文件系统/" style="font-size: 13px; color: #7dc3de">分布式文件系统</a> <a href="/tags/半监督学习/" style="font-size: 13px; color: #7dc3de">半监督学习</a> <a href="/tags/多线程/" style="font-size: 13px; color: #7dc3de">多线程</a> <a href="/tags/大数据/" style="font-size: 13px; color: #7dc3de">大数据</a> <a href="/tags/感知机/" style="font-size: 14.17px; color: #6dc1b9">感知机</a> <a href="/tags/拉格朗日乘子法/" style="font-size: 13px; color: #7dc3de">拉格朗日乘子法</a> <a href="/tags/机器学习/" style="font-size: 20px; color: #1db400">机器学习</a> <a href="/tags/核方法/" style="font-size: 13px; color: #7dc3de">核方法</a> <a href="/tags/概率图模型/" style="font-size: 13px; color: #7dc3de">概率图模型</a> <a href="/tags/深度学习/" style="font-size: 14.17px; color: #6dc1b9">深度学习</a> <a href="/tags/爬虫/" style="font-size: 13px; color: #7dc3de">爬虫</a> <a href="/tags/特征选择/" style="font-size: 13px; color: #7dc3de">特征选择</a> <a href="/tags/神经网络/" style="font-size: 13px; color: #7dc3de">神经网络</a> <a href="/tags/聚类/" style="font-size: 13px; color: #7dc3de">聚类</a> <a href="/tags/阅读/" style="font-size: 14.17px; color: #6dc1b9">阅读</a> <a href="/tags/降维/" style="font-size: 13px; color: #7dc3de">降维</a> <a href="/tags/集成方法/" style="font-size: 13px; color: #7dc3de">集成方法</a>
     </div>
@@ -141,7 +381,7 @@ var _hmt = _hmt || [];
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archivos</h3>
+    <h3 class="widget-title">Archives</h3>
     <div class="widget">
       <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">5</span></li></ul>
     </div>
@@ -151,7 +391,7 @@ var _hmt = _hmt || [];
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Posts recientes</h3>
+    <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
         
@@ -182,11 +422,17 @@ var _hmt = _hmt || [];
 
   
     
+<div class="widget-wrap">
+  <h3 class="widget-title">Recent Comments</h3>
+  <ul class="widget ds-recent-comments" data-num-items="5" data-show-avatars="0" data-show-title="1" data-show-time="1"></ul>
+</div>
+<!-- 需要多说的公用代码 -->
+
 
   
     
 <div class="widget-wrap">
-  <h3 class="widget-title">友情链接</h3>
+  <h3 class="widget-title">Links</h3>
   <ul class="widget">
     
     <li><a href="http://yibo.iyiyun.com/js/yibo404/key/1" target="_BLANK">404 page</a></li>
@@ -222,6 +468,20 @@ var _hmt = _hmt || [];
 </nav>
     
 
+
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"bealin"};
+  (function() {
+	var ds = document.createElement('script');
+	ds.type = 'text/javascript';ds.async = true;
+	ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+	ds.charset = 'UTF-8';
+	(document.getElementsByTagName('head')[0]
+		|| document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+<!-- 多说公共JS代码 end -->
 
 
 

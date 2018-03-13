@@ -76,7 +76,7 @@ var _hmt = _hmt || [];
           <a id="nav-github-link" class="nav-icon" href="https://github.com/BeaLin" title="Github" target="_blank"></a>
         
         
-        <a id="nav-search-btn" class="nav-icon" title="Buscar"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -86,11 +86,132 @@ var _hmt = _hmt || [];
 </header>
 
       <div class="outer">
-        <section id="main"></section>
+        <section id="main"><article id="post-机器学习系列—1-机器学习介绍" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    
+<a href="/2017/02/27/机器学习系列—1-机器学习介绍/" class="article-date">
+  <time datetime="2017-02-27T05:50:43.000Z" itemprop="datePublished">2017-02-27</time>
+</a>
+
+
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Machine-Learning/">Machine Learning</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      机器学习系列—1.机器学习介绍
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+		
+		<div id="toc" class="toc-article">
+			<h2 class="toc-title"><span>Contents</span></h2>
+		
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#基本概念"><span class="toc-number">1.</span> <span class="toc-text">基本概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#学习过程与三要素"><span class="toc-number">2.</span> <span class="toc-text">学习过程与三要素</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#模型"><span class="toc-number">2.1.</span> <span class="toc-text">模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#策略"><span class="toc-number">2.2.</span> <span class="toc-text">策略</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#算法"><span class="toc-number">2.3.</span> <span class="toc-text">算法</span></a></li></ol></li></ol>
+		
+		</div>
+		
+        <p>当我们晚上抬头看天空的时侯，如果看到许多的星星，我们通常会认为明天会是个好天气。我们之所以能做出有效的预判，是因为我们过往积累的经验，人类可以通过对经验的总结利用，然后做出有效的预判，那么计算机可以吗？机器学习正是这样一门学科，它致力于研究如何通过计算的手段，利用经验来改善系统自身的性能。在计算机系统中，“经验”通常以“数据”的形式存在。因此，机器学习研究的内容就是关于在计算机上从数据中产生“模型”的算法。对于机器学习的定义，业界主要有两种：</p>
+<blockquote>
+<ol>
+<li>Arthue Samuel ：Field of study that gives computers the ability to learn without being explicitly programmed.(在没有明确训练的条件下，教给计算机学习的能力 )</li>
+<li>Tom Mitchell:A computer program is said to learn from experience E with respect to some task T and some performance measure P. if its performance on T as measured by P.improves with experience E.(计算机程序从经验E中学习任务T并用度量 P来衡量性能。条件是它由 P定义的关于T的性能随着经验 E而提高)</li>
+</ol>
+</blockquote>
+<a id="more"></a>
+<p><br></p>
+<h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><p>要进行机器学习，首先要有数据集（data set），  从数据中学得模型（model）（结果）的过程称为“学习”（learning）或“训练”（training），这个过程通过执行某个学习算法来完成。模型指全局性结果（例如一颗决策树），模式（pattern）指局部性结果（例如一条规则）。训练过程中使用的数据称为“训练集”（training set）。学得模型对应关于数据的某种潜在的规律也称为“假设（hypothesis）”。有时也将模型称为“学习器”（learner）。学得模型后，使用其进行预测的过程称为“测试”（testing）。被预测的样本称为“测试样本”（testing sample）。<br>根据训练数据是否拥有标记信息，机器学习算法主要可分两类：<br><strong>第一类是监督学习（supervised learning）</strong>：是由我们教计算机如何做事情，其代表就是分类和回归以及标注。<br>其中监督学习问题类别是由输入变量X与输出变量Y的不同类型组合决定：</p>
+<ol>
+<li>回归问题：输入变量与输出变量均为连续变量的预测问题</li>
+<li>分类问题：输出变量为有限个离散变量的预测问题</li>
+<li>标注问题：输入变量与输出变量均为变量序列的预测</li>
+</ol>
+<p><strong>第二类是非监督学习（unsupervised learning）</strong>：我们让计算机自己学习，其代表就是聚类<br>除此之外，还有半监督学习（semi-supervised learning）和强化学习（reinforcement learning）<br>机器学习的目标是使得学得的模型能很好地适用于“新样本”，而不是仅仅在训练样本上工作得很好，学得模型适用于新样本的能力，称为“泛化”（generalization）能力。</p>
+<hr>
+<h2 id="学习过程与三要素"><a href="#学习过程与三要素" class="headerlink" title="学习过程与三要素"></a>学习过程与三要素</h2><p>实现机器学习的步骤如下：</p>
+<ol>
+<li>得到一个有限的训练数据集合</li>
+<li>确定包含所有可能的模型的假设空间，即学习模型的集合</li>
+<li>确定模型选择的准则，即学习的策略</li>
+<li>实现求解最优模型的算法，即学习的算法</li>
+<li>通过学习方法选择最优模型</li>
+<li>利用学习的最优模型对新数据进行预测或分析</li>
+</ol>
+<p>总的来说就是三要素：模型、策略、算法</p>
+<h3 id="模型"><a href="#模型" class="headerlink" title="模型"></a>模型</h3><p>学习首先要考虑的问题就是学习什么样的模型。在监督学习过程中，模型的假设空间包括所有可能的条件概率或决策函数。其中如果决策函数是输入变量的线性函数，那么模型的假设空间就是所有线性函数构成的集合；假设空间中的模型一般有无穷多个。</p>
+<h3 id="策略"><a href="#策略" class="headerlink" title="策略"></a>策略</h3><p>有了模型的假设空间，接着需要考虑的是按照什么样的准则学习或者选择最优的模型。这里主要涉及到两个概念：损失函数和风险函数。<br><strong>1. 损失函数（loss function）或代价函数（cost function）</strong><br>度量模型一次预测的好坏，记作L(Y,f(X))<br>常用的损失函数有一下几种：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML1-1.png" alt=""><br>损失函数值越小，模型就越好，由于模型的输入输出遵循联合分布P(X,Y)，所以损失函数的期望，即风险函数（risk function）或期望损失（expected loss），也叫期望风险。这是理论上模型关于联合分布P(X,Y)的平均意义下的损失。<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML1-2.png" alt=""><br><strong>2. 风险函数：度量平均意义下模型预测好坏</strong><br>模型f(x)关于训练数据集的平均损失称为经验风险或经验损失<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML1-3.png" alt=""><br>期望风险Rexp(f)是模型关于联合分布的期望损失，经验风险Remp(f)是模型关于训练样本集的平均损失。根据大数定律，当样本容量N趋于无穷大时，经验风险趋于期望风险。由于联合分布P(X,Y)未知，所以Rexp无法直接计算。所以可以用经验风险估计期望风险。<br>但是由于训练样本数有限，这种估计方式并不理想，需要对经验风险进行矫正。<br>根据经验风险最小化策略，经验风险最小的模型是最优的模型，因此可以按照经验风险最小化求解最优模型。<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML1-4.png" alt=""><br>当样本容量足够大时，具有较好的效果。当样本容量很小时，效果未必很好，会产生过拟合现象。为防止经验风险最小化中的过拟合问题，提出了结构风险最小化的策略。结构风险最小化等价于正则化，即在经验风险基础上引入表示模型复杂度的正则化或惩罚项<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML1-5.png" alt=""><br>J(f)表示模型复杂度，是定义在假设空间F上的泛函。模型f越复杂J(f)越大，反之越小；复杂度表示了对复杂模型的惩罚。J(f)前面的字符是系数，用以权衡经验风险和模型复杂度。根据上述公式可以看出，结构风险小时需要经验风险和模型复杂度同时小的。<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML1-6.png" alt=""></p>
+<h3 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h3><p>指学习模型的具体计算方法。也为求解最优化问题的算法。如果最优化问题有显示的解析解，即可以直接基于公式求解；如果解析解不存在，需要数值计算的方法求解。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+	  
+	  <!-- 百度分享 Start -->
+	  <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a><a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a></div>
+	  <!-- 百度分享 End -->
+	  
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ML/">ML</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/机器学习/">机器学习</a></li></ul>
+
+	  
+<span>
+Updated:<time datetime="2017-02-27T09:57:02.297Z" itemprop="dateModified">2017-02-27</time>
+</span>
+
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/02/27/机器学习系列—2-模型评估与选择/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">上一篇</strong>
+      <div class="article-nav-title">
+        
+          机器学习系列—2.模型评估与选择
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/10/23/Caffe学习系列——6使用Faster-RCNN进行目标检测/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">Caffe学习系列——6使用Faster-RCNN进行目标检测</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+<!-- 多说评论框 start -->
+<section id="comments">
+  <div class="ds-thread"  data-thread-key="/2017/02/27/机器学习系列—1-机器学习介绍/" data-title="机器学习系列—1.机器学习介绍" data-url="http://yoursite.com/2017/02/27/机器学习系列—1-机器学习介绍/" id="ds_thread">
+    <noscript>Please enable JavaScript to view the <a href="//duoshuo.com/?ref_noscript">comments powered by duoshuo.</a></noscript>
+  </div>
+</section>
+<!-- 多说评论框 end -->
+</section>
         
           
   <div id="toc" class="toc-aside">
-  <h2 class="toc-title">文章目录</h2>
+  <h2 class="toc-title">Contents</h2>
     
         <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#基本概念"><span class="toc-number">1.</span> <span class="toc-text">基本概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#学习过程与三要素"><span class="toc-number">2.</span> <span class="toc-text">学习过程与三要素</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#模型"><span class="toc-number">2.1.</span> <span class="toc-text">模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#策略"><span class="toc-number">2.2.</span> <span class="toc-text">策略</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#算法"><span class="toc-number">2.3.</span> <span class="toc-text">算法</span></a></li></ol></li></ol>
     
@@ -122,7 +243,7 @@ var _hmt = _hmt || [];
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Categorías</h3>
+    <h3 class="widget-title">Categories</h3>
     <div class="widget">
       <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Deep-Learning/">Deep Learning</a><span class="category-list-count">7</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Deep-Learning/Caffe/">Caffe</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hadoop/">Hadoop</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a><span class="category-list-count">15</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Python/Scrapy/">Scrapy</a><span class="category-list-count">1</span></li></ul></li></ul>
     </div>
@@ -132,7 +253,7 @@ var _hmt = _hmt || [];
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Nube de Tags</h3>
+    <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
       <a href="/tags/AlexNet/" style="font-size: 13px; color: #7dc3de">AlexNet</a> <a href="/tags/BE/" style="font-size: 13px; color: #7dc3de">BE</a> <a href="/tags/Bagging/" style="font-size: 13px; color: #7dc3de">Bagging</a> <a href="/tags/Bayes/" style="font-size: 14.17px; color: #6dc1b9">Bayes</a> <a href="/tags/Boosting/" style="font-size: 13px; color: #7dc3de">Boosting</a> <a href="/tags/Caffe/" style="font-size: 17.67px; color: #3db94a">Caffe</a> <a href="/tags/Deep-Learning/" style="font-size: 18.83px; color: #2db725">Deep Learning</a> <a href="/tags/Faster-RCNN/" style="font-size: 13px; color: #7dc3de">Faster-RCNN</a> <a href="/tags/Fine-tuning/" style="font-size: 13px; color: #7dc3de">Fine-tuning</a> <a href="/tags/GC/" style="font-size: 13px; color: #7dc3de">GC</a> <a href="/tags/HDFS/" style="font-size: 13px; color: #7dc3de">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 16.5px; color: #4dbc6f">Hadoop</a> <a href="/tags/JMM/" style="font-size: 13px; color: #7dc3de">JMM</a> <a href="/tags/JVM/" style="font-size: 13px; color: #7dc3de">JVM</a> <a href="/tags/Java/" style="font-size: 15.33px; color: #5dbe94">Java</a> <a href="/tags/K近邻/" style="font-size: 13px; color: #7dc3de">K近邻</a> <a href="/tags/ML/" style="font-size: 20px; color: #1db400">ML</a> <a href="/tags/MLE/" style="font-size: 13px; color: #7dc3de">MLE</a> <a href="/tags/MapReduce/" style="font-size: 13px; color: #7dc3de">MapReduce</a> <a href="/tags/NaiveBayes/" style="font-size: 13px; color: #7dc3de">NaiveBayes</a> <a href="/tags/Object-Detection/" style="font-size: 13px; color: #7dc3de">Object Detection</a> <a href="/tags/PCA/" style="font-size: 13px; color: #7dc3de">PCA</a> <a href="/tags/Python/" style="font-size: 14.17px; color: #6dc1b9">Python</a> <a href="/tags/RPC/" style="font-size: 13px; color: #7dc3de">RPC</a> <a href="/tags/SVM/" style="font-size: 13px; color: #7dc3de">SVM</a> <a href="/tags/Scrapy/" style="font-size: 13px; color: #7dc3de">Scrapy</a> <a href="/tags/Stacking/" style="font-size: 13px; color: #7dc3de">Stacking</a> <a href="/tags/决策树/" style="font-size: 13px; color: #7dc3de">决策树</a> <a href="/tags/分布式技术/" style="font-size: 13px; color: #7dc3de">分布式技术</a> <a href="/tags/分布式文件系统/" style="font-size: 13px; color: #7dc3de">分布式文件系统</a> <a href="/tags/半监督学习/" style="font-size: 13px; color: #7dc3de">半监督学习</a> <a href="/tags/多线程/" style="font-size: 13px; color: #7dc3de">多线程</a> <a href="/tags/大数据/" style="font-size: 13px; color: #7dc3de">大数据</a> <a href="/tags/感知机/" style="font-size: 14.17px; color: #6dc1b9">感知机</a> <a href="/tags/拉格朗日乘子法/" style="font-size: 13px; color: #7dc3de">拉格朗日乘子法</a> <a href="/tags/机器学习/" style="font-size: 20px; color: #1db400">机器学习</a> <a href="/tags/核方法/" style="font-size: 13px; color: #7dc3de">核方法</a> <a href="/tags/概率图模型/" style="font-size: 13px; color: #7dc3de">概率图模型</a> <a href="/tags/深度学习/" style="font-size: 14.17px; color: #6dc1b9">深度学习</a> <a href="/tags/爬虫/" style="font-size: 13px; color: #7dc3de">爬虫</a> <a href="/tags/特征选择/" style="font-size: 13px; color: #7dc3de">特征选择</a> <a href="/tags/神经网络/" style="font-size: 13px; color: #7dc3de">神经网络</a> <a href="/tags/聚类/" style="font-size: 13px; color: #7dc3de">聚类</a> <a href="/tags/阅读/" style="font-size: 14.17px; color: #6dc1b9">阅读</a> <a href="/tags/降维/" style="font-size: 13px; color: #7dc3de">降维</a> <a href="/tags/集成方法/" style="font-size: 13px; color: #7dc3de">集成方法</a>
     </div>
@@ -142,7 +263,7 @@ var _hmt = _hmt || [];
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archivos</h3>
+    <h3 class="widget-title">Archives</h3>
     <div class="widget">
       <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">5</span></li></ul>
     </div>
@@ -152,7 +273,7 @@ var _hmt = _hmt || [];
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Posts recientes</h3>
+    <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
         
@@ -183,11 +304,17 @@ var _hmt = _hmt || [];
 
   
     
+<div class="widget-wrap">
+  <h3 class="widget-title">Recent Comments</h3>
+  <ul class="widget ds-recent-comments" data-num-items="5" data-show-avatars="0" data-show-title="1" data-show-time="1"></ul>
+</div>
+<!-- 需要多说的公用代码 -->
+
 
   
     
 <div class="widget-wrap">
-  <h3 class="widget-title">友情链接</h3>
+  <h3 class="widget-title">Links</h3>
   <ul class="widget">
     
     <li><a href="http://yibo.iyiyun.com/js/yibo404/key/1" target="_BLANK">404 page</a></li>
@@ -223,6 +350,20 @@ var _hmt = _hmt || [];
 </nav>
     
 
+
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"bealin"};
+  (function() {
+	var ds = document.createElement('script');
+	ds.type = 'text/javascript';ds.async = true;
+	ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+	ds.charset = 'UTF-8';
+	(document.getElementsByTagName('head')[0]
+		|| document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+<!-- 多说公共JS代码 end -->
 
 
 
