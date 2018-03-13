@@ -68,7 +68,7 @@ var _hmt = _hmt || [];
           <a id="nav-github-link" class="nav-icon" href="https://github.com/BeaLin" title="Github" target="_blank"></a>
         
         
-        <a id="nav-search-btn" class="nav-icon" title="Zoeken"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Buscar"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -80,19 +80,279 @@ var _hmt = _hmt || [];
       <div class="outer">
         <section id="main">
   
+    <article id="post-java多线程" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
     
+<a href="/2016/05/13/java多线程/" class="article-date">
+  <time datetime="2016-05-13T03:25:51.000Z" itemprop="datePublished">2016-05-13</time>
+</a>
+
+
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Java/">Java</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
   
-    
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/05/13/java多线程/">java多线程</a>
+    </h1>
   
+
+      </header>
     
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>多线程是java的一个很重要的高级特性，本文主要归纳了线程的相关概念，包括线程的定义，与进程的区别，线程的状态和属性。同时介绍了线程中很重要的一个知识点——如何实现线程安全:1使线程同步、使用阻塞队列或线程安全的集合。除此之外，还介绍了用于管理线程，提高线程执行效率的执行器(线程池)和同步器。<br>本文是在看了《Think in JAVA》、《JAVA核心技术卷》以及相关的一些博客后的总结笔记，纯属个人理解。若有错误，望指出。文末会贴出参考资料的链接。</p>
+        
+          <p class="article-more-link">
+            <a href="/2016/05/13/java多线程/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+	  
+	  <a data-url="http://yoursite.com/2016/05/13/java多线程/" data-id="cjep8fph8000wikuyfzcdbaqg" data_title="java多线程" data_summary="多线程是java的一个很重要的高级特性，本文主要归纳了..." class="article-share-link">Compartir</a>
+      
+
+      
+        <a href="http://yoursite.com/2016/05/13/java多线程/#ds-thread" class="ds-thread-count article-comment-link" data-thread-key="/2016/05/13/java多线程/">暂无评论</a>
+      
+	  
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/多线程/">多线程</a></li></ul>
+
+	  
+<span>
+Updated:<time datetime="2016-05-23T06:07:36.091Z" itemprop="dateModified">2016-05-23</time>
+</span>
+
+
+    </footer>
+  </div>
   
+</article>
+
+
+
+
+
+
+  
+    <article id="post-使用Scrapy框架爬取数据" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
     
+<a href="/2016/05/13/使用Scrapy框架爬取数据/" class="article-date">
+  <time datetime="2016-05-13T03:25:13.000Z" itemprop="datePublished">2016-05-13</time>
+</a>
+
+
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Python/">Python</a>►<a class="article-category-link" href="/categories/Python/Scrapy/">Scrapy</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/05/13/使用Scrapy框架爬取数据/">使用Scrapy框架爬取数据</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>Scrapy是一个为了爬取网站数据，提取结构性数据而编写的应用框架。 可以应用在包括数据挖掘，信息处理或存储历史数据等一系列的程序中。</p>
+</blockquote>
+<p>上述是<a href="http://scrapy-chs.readthedocs.io/zh_CN/latest/index.html">Scrapy的官方文档</a>的解释，个人认为学习Scrapy的最好方法就是Scrapy的官方文档，写的非常清楚，而且各种功能也都写的特别详尽。推荐看官方文档学习Scrapy。本文主要是有关于我在学习Scrapy过程中遇到的坑和解决方法，以及是Scrapy入门后找的一些网站练手的代码展示。所有的代码都已经上传到我的github上了，如果感兴趣的话，可以去这个地址下载。<a href="https://github.com/BeaLin/ScrapyProgram">https://github.com/BeaLin/ScrapyProgram</a> 。使用Scrapy爬取数据的网站有<br>聚美优品、豆瓣、乐峰、蜜芽、跨境淘、欧美淘。不出意外，这些代码下载下来是可以直接运行的。这篇博文会不定时更新~^-^<br>
+        
+          <p class="article-more-link">
+            <a href="/2016/05/13/使用Scrapy框架爬取数据/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+	  
+	  <a data-url="http://yoursite.com/2016/05/13/使用Scrapy框架爬取数据/" data-id="cjep8fphb0011ikuyi3ck4ehm" data_title="使用Scrapy框架爬取数据" data_summary="
+Scrapy是一个为了爬取网站数据，提取结构性数据而..." class="article-share-link">Compartir</a>
+      
+
+      
+        <a href="http://yoursite.com/2016/05/13/使用Scrapy框架爬取数据/#ds-thread" class="ds-thread-count article-comment-link" data-thread-key="/2016/05/13/使用Scrapy框架爬取数据/">暂无评论</a>
+      
+	  
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Scrapy/">Scrapy</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/爬虫/">爬虫</a></li></ul>
+
+	  
+<span>
+Updated:<time datetime="2016-07-30T06:01:23.740Z" itemprop="dateModified">2016-07-30</time>
+</span>
+
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+
+
+  
+    <article id="post-Python学习笔记" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    
+<a href="/2016/05/13/Python学习笔记/" class="article-date">
+  <time datetime="2016-05-13T03:24:33.000Z" itemprop="datePublished">2016-05-13</time>
+</a>
+
+
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Python/">Python</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/05/13/Python学习笔记/">Python学习笔记</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>由于项目需要，最近开始学Python。Python是一种面向对象、解释型语言。也是最近非常火的一种语言。Python为我们提供了非常完善的基础代码库，涵盖了网络、文件、GUI、数据库、文本等大量内容。Python非常简单，有一定面向对象知识的同学都可以很快地入门并深入。但是Python也有缺点：一个是运行速度慢；一个是代码不能加密。因为Python是解释型语言，所以代码在执行时会一行一行地翻译成CPU能理解地机器码。这个翻译过程很耗时。我学习Python的目的主要是为了编写爬虫代码和学习机器学习知识。所以对Python的学习程度并不需要达到深层次。我为了快速入门，选择<a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000">廖雪峰的官方网站中的Python3教程</a>进行学习。本文主要是我学习过程记下的笔记，着重于与java不太一样的地方。个人笔记仅供参考。<br>
+        
+          <p class="article-more-link">
+            <a href="/2016/05/13/Python学习笔记/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+	  
+	  <a data-url="http://yoursite.com/2016/05/13/Python学习笔记/" data-id="cjep8fph0000nikuylz7hhbmk" data_title="Python学习笔记" data_summary="由于项目需要，最近开始学Python。Python是一..." class="article-share-link">Compartir</a>
+      
+
+      
+        <a href="http://yoursite.com/2016/05/13/Python学习笔记/#ds-thread" class="ds-thread-count article-comment-link" data-thread-key="/2016/05/13/Python学习笔记/">暂无评论</a>
+      
+	  
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li></ul>
+
+	  
+<span>
+Updated:<time datetime="2016-05-23T03:26:52.345Z" itemprop="dateModified">2016-05-23</time>
+</span>
+
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+
+
+  
+    <article id="post-java内存模型JMM" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    
+<a href="/2016/05/12/java内存模型JMM/" class="article-date">
+  <time datetime="2016-05-12T11:54:38.000Z" itemprop="datePublished">2016-05-12</time>
+</a>
+
+
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Java/">Java</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/05/12/java内存模型JMM/">Java内存模型JMM</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在并发编程中，有两个关键问题需要处理：线程之间如何通信以及线程之间如何同步。在命令式编程中，线程之间的通信机制有两种：共享内存和消息传递。在共享内存的并发模型里，线程之间共享程序的公共状态，线程之间通过写-读内存中的公共状态来隐式进行通信。java的并发采用的是共享内存模型。本文主要介绍Java内存模型JMM以及其实现内存可见性的方式。<br>本文是在看了《Think in JAVA》、《JAVA核心技术卷》以及相关的一些博客后的总结笔记，纯属个人理解。若有错误，望指出。文末会贴出参考资料的链接。</p>
+        
+          <p class="article-more-link">
+            <a href="/2016/05/12/java内存模型JMM/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+	  
+	  <a data-url="http://yoursite.com/2016/05/12/java内存模型JMM/" data-id="cjep8fph2000pikuy64zjo0m2" data_title="Java内存模型JMM" data_summary="在并发编程中，有两个关键问题需要处理：线程之间如何通信..." class="article-share-link">Compartir</a>
+      
+
+      
+        <a href="http://yoursite.com/2016/05/12/java内存模型JMM/#ds-thread" class="ds-thread-count article-comment-link" data-thread-key="/2016/05/12/java内存模型JMM/">暂无评论</a>
+      
+	  
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JMM/">JMM</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
+
+	  
+<span>
+Updated:<time datetime="2016-05-23T06:07:38.555Z" itemprop="dateModified">2016-05-23</time>
+</span>
+
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+
+
   
 
 
   <nav id="page-nav">
     
-    <a class="extend prev" rel="prev" href="/page/3/">&laquo; Vorige</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span>
+    <a class="extend prev" rel="prev" href="/page/3/">&laquo; Previo</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span>
   </nav>
 
 </section>
@@ -124,7 +384,7 @@ var _hmt = _hmt || [];
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Categorieën</h3>
+    <h3 class="widget-title">Categorías</h3>
     <div class="widget">
       <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Deep-Learning/">Deep Learning</a><span class="category-list-count">7</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Deep-Learning/Caffe/">Caffe</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hadoop/">Hadoop</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a><span class="category-list-count">15</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Python/Scrapy/">Scrapy</a><span class="category-list-count">1</span></li></ul></li></ul>
     </div>
@@ -134,7 +394,7 @@ var _hmt = _hmt || [];
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Tag Cloud</h3>
+    <h3 class="widget-title">Nube de Tags</h3>
     <div class="widget tagcloud">
       <a href="/tags/AlexNet/" style="font-size: 13px; color: #7dc3de">AlexNet</a> <a href="/tags/BE/" style="font-size: 13px; color: #7dc3de">BE</a> <a href="/tags/Bagging/" style="font-size: 13px; color: #7dc3de">Bagging</a> <a href="/tags/Bayes/" style="font-size: 14.17px; color: #6dc1b9">Bayes</a> <a href="/tags/Boosting/" style="font-size: 13px; color: #7dc3de">Boosting</a> <a href="/tags/Caffe/" style="font-size: 17.67px; color: #3db94a">Caffe</a> <a href="/tags/Deep-Learning/" style="font-size: 18.83px; color: #2db725">Deep Learning</a> <a href="/tags/Faster-RCNN/" style="font-size: 13px; color: #7dc3de">Faster-RCNN</a> <a href="/tags/Fine-tuning/" style="font-size: 13px; color: #7dc3de">Fine-tuning</a> <a href="/tags/GC/" style="font-size: 13px; color: #7dc3de">GC</a> <a href="/tags/HDFS/" style="font-size: 13px; color: #7dc3de">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 16.5px; color: #4dbc6f">Hadoop</a> <a href="/tags/JMM/" style="font-size: 13px; color: #7dc3de">JMM</a> <a href="/tags/JVM/" style="font-size: 13px; color: #7dc3de">JVM</a> <a href="/tags/Java/" style="font-size: 15.33px; color: #5dbe94">Java</a> <a href="/tags/K近邻/" style="font-size: 13px; color: #7dc3de">K近邻</a> <a href="/tags/ML/" style="font-size: 20px; color: #1db400">ML</a> <a href="/tags/MLE/" style="font-size: 13px; color: #7dc3de">MLE</a> <a href="/tags/MapReduce/" style="font-size: 13px; color: #7dc3de">MapReduce</a> <a href="/tags/NaiveBayes/" style="font-size: 13px; color: #7dc3de">NaiveBayes</a> <a href="/tags/Object-Detection/" style="font-size: 13px; color: #7dc3de">Object Detection</a> <a href="/tags/PCA/" style="font-size: 13px; color: #7dc3de">PCA</a> <a href="/tags/Python/" style="font-size: 14.17px; color: #6dc1b9">Python</a> <a href="/tags/RPC/" style="font-size: 13px; color: #7dc3de">RPC</a> <a href="/tags/SVM/" style="font-size: 13px; color: #7dc3de">SVM</a> <a href="/tags/Scrapy/" style="font-size: 13px; color: #7dc3de">Scrapy</a> <a href="/tags/Stacking/" style="font-size: 13px; color: #7dc3de">Stacking</a> <a href="/tags/决策树/" style="font-size: 13px; color: #7dc3de">决策树</a> <a href="/tags/分布式技术/" style="font-size: 13px; color: #7dc3de">分布式技术</a> <a href="/tags/分布式文件系统/" style="font-size: 13px; color: #7dc3de">分布式文件系统</a> <a href="/tags/半监督学习/" style="font-size: 13px; color: #7dc3de">半监督学习</a> <a href="/tags/多线程/" style="font-size: 13px; color: #7dc3de">多线程</a> <a href="/tags/大数据/" style="font-size: 13px; color: #7dc3de">大数据</a> <a href="/tags/感知机/" style="font-size: 14.17px; color: #6dc1b9">感知机</a> <a href="/tags/拉格朗日乘子法/" style="font-size: 13px; color: #7dc3de">拉格朗日乘子法</a> <a href="/tags/机器学习/" style="font-size: 20px; color: #1db400">机器学习</a> <a href="/tags/核方法/" style="font-size: 13px; color: #7dc3de">核方法</a> <a href="/tags/概率图模型/" style="font-size: 13px; color: #7dc3de">概率图模型</a> <a href="/tags/深度学习/" style="font-size: 14.17px; color: #6dc1b9">深度学习</a> <a href="/tags/爬虫/" style="font-size: 13px; color: #7dc3de">爬虫</a> <a href="/tags/特征选择/" style="font-size: 13px; color: #7dc3de">特征选择</a> <a href="/tags/神经网络/" style="font-size: 13px; color: #7dc3de">神经网络</a> <a href="/tags/聚类/" style="font-size: 13px; color: #7dc3de">聚类</a> <a href="/tags/阅读/" style="font-size: 14.17px; color: #6dc1b9">阅读</a> <a href="/tags/降维/" style="font-size: 13px; color: #7dc3de">降维</a> <a href="/tags/集成方法/" style="font-size: 13px; color: #7dc3de">集成方法</a>
     </div>
@@ -144,7 +404,7 @@ var _hmt = _hmt || [];
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archieven</h3>
+    <h3 class="widget-title">Archivos</h3>
     <div class="widget">
       <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">5</span></li></ul>
     </div>
@@ -154,7 +414,7 @@ var _hmt = _hmt || [];
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Recente berichten</h3>
+    <h3 class="widget-title">Posts recientes</h3>
     <div class="widget">
       <ul>
         
@@ -186,7 +446,7 @@ var _hmt = _hmt || [];
   
     
 <div class="widget-wrap">
-  <h3 class="widget-title">最新评论</h3>
+  <h3 class="widget-title">Recent Comments</h3>
   <ul class="widget ds-recent-comments" data-num-items="5" data-show-avatars="0" data-show-title="1" data-show-time="1"></ul>
 </div>
 <!-- 需要多说的公用代码 -->
@@ -195,7 +455,7 @@ var _hmt = _hmt || [];
   
     
 <div class="widget-wrap">
-  <h3 class="widget-title">友情链接</h3>
+  <h3 class="widget-title">Links</h3>
   <ul class="widget">
     
     <li><a href="http://yibo.iyiyun.com/js/yibo404/key/1" target="_BLANK">404 page</a></li>

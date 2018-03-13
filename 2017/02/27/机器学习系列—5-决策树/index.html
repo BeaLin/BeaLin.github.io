@@ -80,7 +80,7 @@ var _hmt = _hmt || [];
           <a id="nav-github-link" class="nav-icon" href="https://github.com/BeaLin" title="Github" target="_blank"></a>
         
         
-        <a id="nav-search-btn" class="nav-icon" title="Zoeken"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Buscar"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -90,11 +90,131 @@ var _hmt = _hmt || [];
 </header>
 
       <div class="outer">
-        <section id="main"></section>
+        <section id="main"><article id="post-机器学习系列—5-决策树" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    
+<a href="/2017/02/27/机器学习系列—5-决策树/" class="article-date">
+  <time datetime="2017-02-27T05:55:32.000Z" itemprop="datePublished">2017-02-27</time>
+</a>
+
+
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Machine-Learning/">Machine Learning</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      机器学习系列—5.决策树
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+		
+		<div id="toc" class="toc-article">
+			<h2 class="toc-title"><span>Contents</span></h2>
+		
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#基本流程"><span class="toc-number">1.</span> <span class="toc-text">基本流程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#划分选择"><span class="toc-number">2.</span> <span class="toc-text">划分选择</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#信息增益"><span class="toc-number">2.1.</span> <span class="toc-text">信息增益</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#增益率"><span class="toc-number">2.2.</span> <span class="toc-text">增益率</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#基尼指数"><span class="toc-number">2.3.</span> <span class="toc-text">基尼指数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#总结"><span class="toc-number">2.4.</span> <span class="toc-text">总结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#剪枝处理"><span class="toc-number">3.</span> <span class="toc-text">剪枝处理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#预剪枝"><span class="toc-number">3.1.</span> <span class="toc-text">预剪枝</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#后剪枝"><span class="toc-number">3.2.</span> <span class="toc-text">后剪枝</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#连续与缺失值"><span class="toc-number">4.</span> <span class="toc-text">连续与缺失值</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#连续值处理"><span class="toc-number">4.1.</span> <span class="toc-text">连续值处理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#缺失值处理"><span class="toc-number">4.2.</span> <span class="toc-text">缺失值处理</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#多变量决策树"><span class="toc-number">5.</span> <span class="toc-text">多变量决策树</span></a></li></ol>
+		
+		</div>
+		
+        <h2 id="基本流程"><a href="#基本流程" class="headerlink" title="基本流程"></a>基本流程</h2><p>决策树（decision）是一类常见的机器学习方法，其时基于树结构来进行决策的，这恰是人类在面临决策问题时一种很自然的处理机制。<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML5-1.png" alt=""><br>一般的，一颗决策树包含一个根结点、若干个内部结点和若干个叶结点。叶结点对应于决策结果，其他每个结点则对应于一个属性测试；决策树学习的目的是为了产生一颗泛化能力强，即处理未见实例能力强的决策树，其基本流程遵循简单且直观的“分而治之”（divide-and-conquer）策略。<br><a id="more"></a><br><img src="http://o73nd1ra4.bkt.clouddn.com/ML5-2.png" alt=""><br>显然，决策树的生成是一个递归过程。在决策树基本算法中，有三种情形会导致递归返回：</p>
+<ol>
+<li>当前结点包含的样本全属于同一类别，无需划分；</li>
+<li>当前属性集为空，或是所有样本在所有属性上取值相同，无法划分；把当前结点标记为叶结点，类别设定为该结点所含样本最多的类别。</li>
+<li>当前结点包含的样本集合为空，不能划分。把当前结点标记为叶结点，类别设定为其父结点所含样本最多的类别。</li>
+</ol>
+<h2 id="划分选择"><a href="#划分选择" class="headerlink" title="划分选择"></a>划分选择</h2><p>决策树学习的关键是第8行，即如何选择最优划分属性。一般而言，我们希望决策树的分支结点所包含的样本尽可能属于同一类别，即结点的“纯度”（purity）越来越高。本文介绍以下三种指标、：信息增益、增益率，基尼指数。分别对应三种决策树算法：ID3决策树学习算法、C4.5决策树算法、CART决策树。</p>
+<h3 id="信息增益"><a href="#信息增益" class="headerlink" title="信息增益"></a>信息增益</h3><p>“信息熵”（information entropy）是度量样本集合纯度最常用的一种指标，其定义为：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML5-3.png" alt=""><br>Ent（D）的值越小，则D的纯度越高。假定离散属性a有V个可能的取值，则用属性a对样本集D进行划分所获得的“信息增益”（information gain）是：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML5-4.png" alt=""><br>一般而言，信息增益越大，则意味着使用属性a来进行划分所获得的“纯度提升”越大，因此可用信息增益来进行决策树的划分属性选择。著名的ID3决策树学习算法就是以信息增益为准则来选择划分属性。</p>
+<h3 id="增益率"><a href="#增益率" class="headerlink" title="增益率"></a>增益率</h3><p>实际上，信息增益准则对可取值数目较多的属性有所偏好，为减少这种偏好可能带来的不利影响，著名的C4.5决策树算法不直接使用信息增益，而是使用“增益率”（gain ratio）来选择最优划分属性。采用与式（4.2）相同的符号表示<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML5-5.png" alt=""><br>IV(a)称为属性a的“固有值”（intrinsic value），属性a的可能取值数目越多，则IV(a)的值通常会越大。增益率准则对可取值数目较少的属性有所偏好，因此C4.5算法并不是直接选择增益率最大的候选划分属性，而是使用了一个启发式；先从候选划分属性中找出信息增益高于平均水平的属性，再从中选择增益率最高的。</p>
+<h3 id="基尼指数"><a href="#基尼指数" class="headerlink" title="基尼指数"></a>基尼指数</h3><p>CART决策树使用“基尼指数”（Gini index）来选择划分属性。采用与式（4.1）相同的符号，数据集D的纯度可用基尼值来度量：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML5-6.png" alt=""><br>直观来说，Gini(D)反映了从数据集D中随机抽取两个样本，其类别标记不一致的概率。因此Gini(D)越小，则数据集D的纯度越高。采用与式（4.2）相同的符号表示，属性a的基尼指数定义为：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML5-7.png" alt=""><br>所以，在候选属性集合A中，选择那个使得划分后基尼指数最小的属性作为最优划分属性。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>除信息增益、增益率、基尼指数之外，人们还设计了许多其他的准则用于决策树划分选择，然而这些准则虽然对决策树的尺寸有较大影响，但对泛化性能的影响有限，它们仅在2%的情况下会有所不同，而下一节介绍的剪枝策略和程度对决策树泛化性能的影响相当显著。</p>
+<h2 id="剪枝处理"><a href="#剪枝处理" class="headerlink" title="剪枝处理"></a>剪枝处理</h2><p>剪枝（pruning）是决策树学习算法对付“过拟合”的主要手段。<br>决策树剪枝的基本策略有“预剪枝”（prepruning）和“后剪枝”（post-pruning）。</p>
+<h3 id="预剪枝"><a href="#预剪枝" class="headerlink" title="预剪枝"></a>预剪枝</h3><p>预剪枝是指在决策树生成过程中，对每个节点在划分前先进行估计，若当前结点的划分不能带来决策树泛化性能提升，则停止划分并将当前结点标记为叶结点；<br>预剪枝使得决策树的很多分支都没有“展开”，这不仅降低了过拟合的风险，还显著减少了决策树的训练时间开销和测试时间开销。但另一方面，有些分支的当前划分虽不能提升泛化性能、甚至可能导致泛化性能暂时下降，但在其基础上进行的后续划分却又可能导致性能显著提高；预剪枝基于“贪心”本质禁止这些分支展开，给预剪枝决策树带来了欠拟合的风险。</p>
+<h3 id="后剪枝"><a href="#后剪枝" class="headerlink" title="后剪枝"></a>后剪枝</h3><p>后剪枝则是先从训练集生成一颗完整的决策树，然后自底向上地对非叶结点进行考察，若该结点对应的子树替换为叶结点能带来决策树泛化性能提升，则将该子树替换为叶结点。性能评估可使用“留出法”，即预留一部分验证集以进行性能评估。<br>后剪枝决策树通常比预剪枝决策树保留了更多的分支，一般情形下，后剪枝决策树的欠拟合风险很小，泛化性能往往优于预剪枝决策树，但后剪枝过程是在生成完全决策树之后进行的，并且要自底向上地对树中的所有非叶结点进行逐一考察，因此其训练时间开销比未剪枝决策树和预剪枝决策树都要大得多。</p>
+<h2 id="连续与缺失值"><a href="#连续与缺失值" class="headerlink" title="连续与缺失值"></a>连续与缺失值</h2><h3 id="连续值处理"><a href="#连续值处理" class="headerlink" title="连续值处理"></a>连续值处理</h3><p>到目前仅讨论了基于离散属性来生成决策树，现实任务中常会遇到连续属性，那如何在决策树学习中使用连续属性？由于连续属性的可取值数不再有限，因此，不能直接根据连续属性的可能取值来对结点进行划分。此时可使用连续属性离散化技术，最简单的策略是采用二分法对连续属性进行处理，C4.5决策树算法中采用此种机制。即把连续属性的取值区间的两两之间的中位点作为候选划分点，然后就可以像离散属性值一样来考察，选取最优的划分点进行样本集合的划分。需注意的是，与离散属性不同，若当前结点划分属性为连续属性，该属性还可作为其后代结点的划分属性。</p>
+<h3 id="缺失值处理"><a href="#缺失值处理" class="headerlink" title="缺失值处理"></a>缺失值处理</h3><p>现实任务中常会遇到不完整样本，即样本的某些属性值缺失。如果简单地放弃不完整样本，仅使用无缺失值的样本来进行学习，显然是对数据信息极大地浪费，因此有必要考虑利用有缺失属性值的训练样例来进行学习。<br>在针对缺失值这个问题，我们需要解决两个问题：</p>
+<ol>
+<li>如何在属性值缺失的情况下进行划分属性的选择？</li>
+<li>给定划分属性，若样本在该属性上的值缺失，如何对样本进行划分？</li>
+</ol>
+<p>对于<strong>问题一</strong>，给定数据集D和属性a，令D~表示D中在属性a上没有缺失值的样本子集，因此我们可根据D~来判断属性a的优劣。将信息增益的计算式推广为如下：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML5-8.png" alt=""><br>对于<strong>问题二</strong>，若样本x在划分属性a上的取值已知，则将x划入与其取值对应的子结点，且样本权值在子结点中保持为Wx。若样本x在划分属性a上的取值未知，则将x同时划入所有子结点，且样本权值在与属性值a对应的子结点中调整为r~*w;直观地看，就是让同一个样本以不同的概率划入到不同的子结点中。C4.5算法就使用了该解决方案。</p>
+<h2 id="多变量决策树"><a href="#多变量决策树" class="headerlink" title="多变量决策树"></a>多变量决策树</h2><p>若我们把每个属性视为坐标空间中的一个坐标轴，则d个属性描述的样本就对应了d维空间中的一个数据点，对样本分类则意味着这个坐标空间中寻找不同类样本直接的分类边界，决策树所形成的分类边界有一个明显特点就是轴平行（axis-parallel），即它的分类边界由若干个与坐标轴平行的分段组成。<br>如图所示，此时的决策树会相当复杂，由于要进行大量的属性测试，预测时间开销会很大。<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML5-9.png" alt=""><br>若能使用斜的划分边界，如图4.12中红色线段所示，则决策树模型将大为简化。<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML5-10.png" alt=""><br><strong>“多变量决策树”</strong>（multivariate decision tree）就是能实现这样的斜划分或者更复杂划分的决策树。以实现斜划分的多变量决策树为例，在此类决策树中，非叶结点不再是仅对某个属性，而是对属性的线性组合进行测试，换言之，每个非叶结点是一个线性分类器，其中权重和偏移项均可在样本集合和属性集上学得。因此，与传统的“单变量决策树”（univariate decision tree）不同，在多变量决策树的学习过程中，不是为每个非叶结点寻找一个最优划分属性，而是试图建立一个合适的线性分类器。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+	  
+	  <!-- 百度分享 Start -->
+	  <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a><a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a></div>
+	  <!-- 百度分享 End -->
+	  
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ML/">ML</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/决策树/">决策树</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/机器学习/">机器学习</a></li></ul>
+
+	  
+<span>
+Updated:<time datetime="2017-02-28T11:57:19.518Z" itemprop="dateModified">2017-02-28</time>
+</span>
+
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/02/27/机器学习系列—10-聚类/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Nuevo</strong>
+      <div class="article-nav-title">
+        
+          机器学习系列—10.聚类
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/02/27/机器学习系列—9-集成学习/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Viejo</strong>
+      <div class="article-nav-title">机器学习系列—9.集成学习</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+<!-- 多说评论框 start -->
+<section id="comments">
+  <div class="ds-thread"  data-thread-key="/2017/02/27/机器学习系列—5-决策树/" data-title="机器学习系列—5.决策树" data-url="http://yoursite.com/2017/02/27/机器学习系列—5-决策树/" id="ds_thread">
+    <noscript>Please enable JavaScript to view the <a href="//duoshuo.com/?ref_noscript">comments powered by duoshuo.</a></noscript>
+  </div>
+</section>
+<!-- 多说评论框 end -->
+
+
+
+<!-- UY BEGIN -->
+<div id="uyan_frame"></div>
+<script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2159107"></script>
+<!-- UY END -->
+</section>
         
           
   <div id="toc" class="toc-aside">
-  <h2 class="toc-title">文章目录</h2>
+  <h2 class="toc-title">Contents</h2>
     
         <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#基本流程"><span class="toc-number">1.</span> <span class="toc-text">基本流程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#划分选择"><span class="toc-number">2.</span> <span class="toc-text">划分选择</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#信息增益"><span class="toc-number">2.1.</span> <span class="toc-text">信息增益</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#增益率"><span class="toc-number">2.2.</span> <span class="toc-text">增益率</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#基尼指数"><span class="toc-number">2.3.</span> <span class="toc-text">基尼指数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#总结"><span class="toc-number">2.4.</span> <span class="toc-text">总结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#剪枝处理"><span class="toc-number">3.</span> <span class="toc-text">剪枝处理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#预剪枝"><span class="toc-number">3.1.</span> <span class="toc-text">预剪枝</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#后剪枝"><span class="toc-number">3.2.</span> <span class="toc-text">后剪枝</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#连续与缺失值"><span class="toc-number">4.</span> <span class="toc-text">连续与缺失值</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#连续值处理"><span class="toc-number">4.1.</span> <span class="toc-text">连续值处理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#缺失值处理"><span class="toc-number">4.2.</span> <span class="toc-text">缺失值处理</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#多变量决策树"><span class="toc-number">5.</span> <span class="toc-text">多变量决策树</span></a></li></ol>
     
@@ -126,7 +246,7 @@ var _hmt = _hmt || [];
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Categorieën</h3>
+    <h3 class="widget-title">Categorías</h3>
     <div class="widget">
       <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Deep-Learning/">Deep Learning</a><span class="category-list-count">7</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Deep-Learning/Caffe/">Caffe</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hadoop/">Hadoop</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a><span class="category-list-count">15</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Python/Scrapy/">Scrapy</a><span class="category-list-count">1</span></li></ul></li></ul>
     </div>
@@ -136,7 +256,7 @@ var _hmt = _hmt || [];
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Tag Cloud</h3>
+    <h3 class="widget-title">Nube de Tags</h3>
     <div class="widget tagcloud">
       <a href="/tags/AlexNet/" style="font-size: 13px; color: #7dc3de">AlexNet</a> <a href="/tags/BE/" style="font-size: 13px; color: #7dc3de">BE</a> <a href="/tags/Bagging/" style="font-size: 13px; color: #7dc3de">Bagging</a> <a href="/tags/Bayes/" style="font-size: 14.17px; color: #6dc1b9">Bayes</a> <a href="/tags/Boosting/" style="font-size: 13px; color: #7dc3de">Boosting</a> <a href="/tags/Caffe/" style="font-size: 17.67px; color: #3db94a">Caffe</a> <a href="/tags/Deep-Learning/" style="font-size: 18.83px; color: #2db725">Deep Learning</a> <a href="/tags/Faster-RCNN/" style="font-size: 13px; color: #7dc3de">Faster-RCNN</a> <a href="/tags/Fine-tuning/" style="font-size: 13px; color: #7dc3de">Fine-tuning</a> <a href="/tags/GC/" style="font-size: 13px; color: #7dc3de">GC</a> <a href="/tags/HDFS/" style="font-size: 13px; color: #7dc3de">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 16.5px; color: #4dbc6f">Hadoop</a> <a href="/tags/JMM/" style="font-size: 13px; color: #7dc3de">JMM</a> <a href="/tags/JVM/" style="font-size: 13px; color: #7dc3de">JVM</a> <a href="/tags/Java/" style="font-size: 15.33px; color: #5dbe94">Java</a> <a href="/tags/K近邻/" style="font-size: 13px; color: #7dc3de">K近邻</a> <a href="/tags/ML/" style="font-size: 20px; color: #1db400">ML</a> <a href="/tags/MLE/" style="font-size: 13px; color: #7dc3de">MLE</a> <a href="/tags/MapReduce/" style="font-size: 13px; color: #7dc3de">MapReduce</a> <a href="/tags/NaiveBayes/" style="font-size: 13px; color: #7dc3de">NaiveBayes</a> <a href="/tags/Object-Detection/" style="font-size: 13px; color: #7dc3de">Object Detection</a> <a href="/tags/PCA/" style="font-size: 13px; color: #7dc3de">PCA</a> <a href="/tags/Python/" style="font-size: 14.17px; color: #6dc1b9">Python</a> <a href="/tags/RPC/" style="font-size: 13px; color: #7dc3de">RPC</a> <a href="/tags/SVM/" style="font-size: 13px; color: #7dc3de">SVM</a> <a href="/tags/Scrapy/" style="font-size: 13px; color: #7dc3de">Scrapy</a> <a href="/tags/Stacking/" style="font-size: 13px; color: #7dc3de">Stacking</a> <a href="/tags/决策树/" style="font-size: 13px; color: #7dc3de">决策树</a> <a href="/tags/分布式技术/" style="font-size: 13px; color: #7dc3de">分布式技术</a> <a href="/tags/分布式文件系统/" style="font-size: 13px; color: #7dc3de">分布式文件系统</a> <a href="/tags/半监督学习/" style="font-size: 13px; color: #7dc3de">半监督学习</a> <a href="/tags/多线程/" style="font-size: 13px; color: #7dc3de">多线程</a> <a href="/tags/大数据/" style="font-size: 13px; color: #7dc3de">大数据</a> <a href="/tags/感知机/" style="font-size: 14.17px; color: #6dc1b9">感知机</a> <a href="/tags/拉格朗日乘子法/" style="font-size: 13px; color: #7dc3de">拉格朗日乘子法</a> <a href="/tags/机器学习/" style="font-size: 20px; color: #1db400">机器学习</a> <a href="/tags/核方法/" style="font-size: 13px; color: #7dc3de">核方法</a> <a href="/tags/概率图模型/" style="font-size: 13px; color: #7dc3de">概率图模型</a> <a href="/tags/深度学习/" style="font-size: 14.17px; color: #6dc1b9">深度学习</a> <a href="/tags/爬虫/" style="font-size: 13px; color: #7dc3de">爬虫</a> <a href="/tags/特征选择/" style="font-size: 13px; color: #7dc3de">特征选择</a> <a href="/tags/神经网络/" style="font-size: 13px; color: #7dc3de">神经网络</a> <a href="/tags/聚类/" style="font-size: 13px; color: #7dc3de">聚类</a> <a href="/tags/阅读/" style="font-size: 14.17px; color: #6dc1b9">阅读</a> <a href="/tags/降维/" style="font-size: 13px; color: #7dc3de">降维</a> <a href="/tags/集成方法/" style="font-size: 13px; color: #7dc3de">集成方法</a>
     </div>
@@ -146,7 +266,7 @@ var _hmt = _hmt || [];
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archieven</h3>
+    <h3 class="widget-title">Archivos</h3>
     <div class="widget">
       <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">5</span></li></ul>
     </div>
@@ -156,7 +276,7 @@ var _hmt = _hmt || [];
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Recente berichten</h3>
+    <h3 class="widget-title">Posts recientes</h3>
     <div class="widget">
       <ul>
         
@@ -188,7 +308,7 @@ var _hmt = _hmt || [];
   
     
 <div class="widget-wrap">
-  <h3 class="widget-title">最新评论</h3>
+  <h3 class="widget-title">Recent Comments</h3>
   <ul class="widget ds-recent-comments" data-num-items="5" data-show-avatars="0" data-show-title="1" data-show-time="1"></ul>
 </div>
 <!-- 需要多说的公用代码 -->
@@ -197,7 +317,7 @@ var _hmt = _hmt || [];
   
     
 <div class="widget-wrap">
-  <h3 class="widget-title">友情链接</h3>
+  <h3 class="widget-title">Links</h3>
   <ul class="widget">
     
     <li><a href="http://yibo.iyiyun.com/js/yibo404/key/1" target="_BLANK">404 page</a></li>
