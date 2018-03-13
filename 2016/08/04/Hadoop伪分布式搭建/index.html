@@ -69,7 +69,7 @@ var _hmt = _hmt || [];
           <a id="nav-github-link" class="nav-icon" href="https://github.com/BeaLin" title="Github" target="_blank"></a>
         
         
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Buscar"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -79,124 +79,11 @@ var _hmt = _hmt || [];
 </header>
 
       <div class="outer">
-        <section id="main"><article id="post-Hadoop伪分布式搭建" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    
-<a href="/2016/08/04/Hadoop伪分布式搭建/" class="article-date">
-  <time datetime="2016-08-04T05:29:00.000Z" itemprop="datePublished">2016-08-04</time>
-</a>
-
-
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Hadoop/">Hadoop</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="article-title" itemprop="name">
-      Hadoop伪分布式搭建
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-		
-		<div id="toc" class="toc-article">
-			<h2 class="toc-title"><span>Contents</span></h2>
-		
-			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#准备Linux环境"><span class="toc-number">1.</span> <span class="toc-text">准备Linux环境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装JDK"><span class="toc-number">2.</span> <span class="toc-text">安装JDK</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装hadoop2-2-0"><span class="toc-number">3.</span> <span class="toc-text">安装hadoop2.2.0</span></a></li></ol>
-		
-		</div>
-		
-        <h2 id="准备Linux环境"><a href="#准备Linux环境" class="headerlink" title="准备Linux环境"></a>准备Linux环境</h2><ol>
-<li>点击VMware快捷方式，右键打开文件所在位置,然后双击vmnetcfg.exe -&gt; VMnet1 host-only -&gt;修改subnet ip 设置网段：192.168.8.0 子网掩码：255.255.255.0 -&gt; apply -&gt; ok<br>回到windows –&gt; 打开网络和共享中心 -&gt; 更改适配器设置 -&gt; 右键VMnet1 -&gt; 属性 -&gt; 双击IPv4 -&gt; 设置windows的IP：192.168.8.100 子网掩码：255.255.255.0 -&gt; 点击确定<br>在虚拟软件上 –My Computer -&gt; 选中虚拟机 -&gt; 右键 -&gt; settings -&gt; network adapter -&gt; host only -&gt; ok    <a id="more"></a></li>
-<li>修改主机名<br>vim /etc/sysconfig/network<br>NETWORKING=yes<br>HOSTNAME=centos01   </li>
-<li>修改IP<br>两种方式：<!--more-->
-<strong>第一种</strong>：通过Linux图形界面进行修改（强烈推荐）<br>进入Linux图形界面 -&gt; 右键点击右上方的两个小电脑 -&gt; 点击Edit connections -&gt; 选中当前网络System eth0 -&gt; 点击edit按钮 -&gt; 选择IPv4 -&gt; method选择为manual -&gt; 点击add按钮 -&gt; 添加IP：192.168.8.88 子网掩码：255.255.255.0 网关：192.168.1.1 -&gt; apply<br><strong>第二种</strong>：修改配置文件方式（屌丝程序猿专用）：<br>vim /etc/sysconfig/network-scripts/ifcfg-eth0<br>DEVICE=”eth0”<br>BOOTPROTO=”static”               ###<br>HWADDR=”00:0C:29:3C:BF:E7”<br>IPV6INIT=”yes”<br>NM_CONTROLLED=”yes”<br>ONBOOT=”yes”<br>TYPE=”Ethernet”<br>UUID=”ce22eeca-ecde-4536-8cc2-ef0dc36d4a8c”<br>IPADDR=”192.168.8.88”           ###<br>NETMASK=”255.255.255.0”          ###<br>GATEWAY=”192.168.8.1”            ###</li>
-<li>修改主机名和IP的映射关系<br>vim /etc/hosts<br>192.168.8.88    centos01    </li>
-<li>关闭防火墙<br>查看防火墙状态<br>service iptables status<br>关闭防火墙<br>service iptables stop<br>查看防火墙开机启动状态<br>chkconfig iptables –list<br>关闭防火墙开机启动<br>chkconfig iptables off    </li>
-<li>重启Linux<br>Reboot<br>其实，不管是分布式还是伪分布式的集群搭建，1.0–1.5是基本的步骤。</li>
-</ol>
-<h2 id="安装JDK"><a href="#安装JDK" class="headerlink" title="安装JDK"></a>安装JDK</h2><ol>
-<li>上传</li>
-<li>解压jdk<br>创建文件夹<br>mkdir /ideas/java<br>解压<br>tar -zxvf jdk-7u76-linux-i586.gz  -C /ideas/java/    </li>
-<li>将java添加到环境变量中<br>vim /etc/profile<br>在文件最后添加<br>export JAVA_HOME=/ideas/java/jdk1.7.0_76<br>export PATH=$PATH:$JAVA_HOME/bin<br>刷新配置<br>source /etc/profile</li>
-</ol>
-<h2 id="安装hadoop2-2-0"><a href="#安装hadoop2-2-0" class="headerlink" title="安装hadoop2.2.0"></a>安装hadoop2.2.0</h2><p>注意：hadoop2.x的配置文件$HADOOP_HOME/etc/hadoop<br>伪分布式需要修改5个配置文件</p>
-<ol>
-<li>配置hadoop<br><strong>第一个：hadoop-env.sh</strong><br>vim hadoop-env.sh<br>export JAVA_HOME=/ideas/java/jdk1.7.0_76<br><strong>第二个：core-site.xml</strong><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 制定HDFS的老大（NameNode）的地址 --&gt;</span><br><span class="line">&lt;property&gt;</span><br><span class="line">	&lt;name&gt;fs.defaultFS&lt;/name&gt;</span><br><span class="line">	&lt;value&gt;hdfs://centos01:9000&lt;/value&gt;</span><br><span class="line">&lt;/property&gt;</span><br><span class="line">&lt;!-- 指定hadoop运行时产生文件的存储目录 --&gt;</span><br><span class="line">&lt;property&gt;</span><br><span class="line">	&lt;name&gt;hadoop.tmp.dir&lt;/name&gt;</span><br><span class="line">	&lt;value&gt;/itcast/hadoop-2.2.0/tmp&lt;/value&gt;</span><br><span class="line">&lt;/property&gt;</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<p><strong>第三个：hdfs-site.xml</strong><br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 指定HDFS副本的数量 --&gt;</span><br><span class="line">&lt;property&gt;</span><br><span class="line">	&lt;name&gt;dfs.replication&lt;/name&gt;</span><br><span class="line">	&lt;value&gt;1&lt;/value&gt;</span><br><span class="line">&lt;/property&gt;</span><br><span class="line">```	</span><br><span class="line">**第四个：mapred-site.xml (mv mapred-site.xml.template mapred-site.xml)**</span><br><span class="line">```python</span><br><span class="line">mv mapred-site.xml.template mapred-site.xml</span><br><span class="line">vim mapred-site.xml</span><br><span class="line">&lt;!-- 指定mr运行在yarn上 --&gt;</span><br><span class="line">&lt;property&gt;</span><br><span class="line">	&lt;name&gt;mapreduce.framework.name&lt;/name&gt;</span><br><span class="line">		&lt;value&gt;yarn&lt;/value&gt;</span><br><span class="line">&lt;/property&gt;</span><br></pre></td></tr></table></figure></p>
-<p><strong>第五个：yarn-site.xml</strong><br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 指定YARN的老大（ResourceManager）的地址 --&gt;</span><br><span class="line">&lt;property&gt;</span><br><span class="line">	&lt;name&gt;yarn.resourcemanager.hostname&lt;/name&gt;</span><br><span class="line">	&lt;value&gt;centos01&lt;/value&gt;</span><br><span class="line">&lt;/property&gt;</span><br><span class="line">&lt;!-- reducer获取数据的方式 --&gt;</span><br><span class="line">&lt;property&gt;</span><br><span class="line">	&lt;name&gt;yarn.nodemanager.aux-services&lt;/name&gt;</span><br><span class="line">	&lt;value&gt;mapreduce_shuffle&lt;/value&gt;</span><br><span class="line">&lt;/property&gt;</span><br></pre></td></tr></table></figure></p>
-<ol>
-<li>将hadoop添加到环境变量<br>vim /etc/proflie<br>export JAVA_HOME=/ideas/java/jdk1.7.0_76<br>export HADOOP_HOME=/itcast/hadoop-2.2.0<br>export PATH=$PATH:$JAVA_HOME/bin:$HADOOP_HOME/bin:$HADOOP_HOME/sbin<br>source /etc/profile</li>
-<li>格式化namenode（是对namenode进行初始化）<br>hdfs namenode -format (hadoop namenode -format)        </li>
-<li>启动hadoop<br>先启动HDFS:sbin/start-dfs.sh<br>再启动YARN:sbin/start-yarn.sh        </li>
-<li>验证是否启动成功<br>使用jps命令验证<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">27408</span> NameNode</span><br><span class="line"><span class="number">28218</span> Jps</span><br><span class="line"><span class="number">27643</span> SecondaryNameNode</span><br><span class="line"><span class="number">28066</span> NodeManager</span><br><span class="line"><span class="number">27803</span> ResourceManager</span><br><span class="line"><span class="number">27512</span> DataNode</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>一般遇到DataNode没有启动起来，重启一下机器就行了<br><a href="http://192.168.8.88:50070" target="_blank" rel="external">http://192.168.8.88:50070</a> （HDFS管理界面）<br><a href="http://192.168.8.88:8088" target="_blank" rel="external">http://192.168.8.88:8088</a> （MR管理界面）</p>
-
-      
-    </div>
-    <footer class="article-footer">
-	  
-	  <!-- 百度分享 Start -->
-	  <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a><a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a></div>
-	  <!-- 百度分享 End -->
-	  
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hadoop/">Hadoop</a></li></ul>
-
-	  
-<span>
-Updated:<time datetime="2017-03-01T13:26:07.306Z" itemprop="dateModified">2017-03-01</time>
-</span>
-
-
-    </footer>
-  </div>
-  
-    
-<nav id="article-nav">
-  
-    <a href="/2016/10/23/Caffe学习系列——1介绍与安装过程/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">上一篇</strong>
-      <div class="article-nav-title">
-        
-          Caffe学习系列——1介绍与安装过程
-        
-      </div>
-    </a>
-  
-  
-    <a href="/2016/08/03/HDFS介绍/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">下一篇</strong>
-      <div class="article-nav-title">HDFS介绍</div>
-    </a>
-  
-</nav>
-
-  
-</article>
-
-
-
-
-</section>
+        <section id="main"></section>
         
           
   <div id="toc" class="toc-aside">
-  <h2 class="toc-title">Contents</h2>
+  <h2 class="toc-title">文章目录</h2>
     
         <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#准备Linux环境"><span class="toc-number">1.</span> <span class="toc-text">准备Linux环境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装JDK"><span class="toc-number">2.</span> <span class="toc-text">安装JDK</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装hadoop2-2-0"><span class="toc-number">3.</span> <span class="toc-text">安装hadoop2.2.0</span></a></li></ol>
     
@@ -228,7 +115,7 @@ Updated:<time datetime="2017-03-01T13:26:07.306Z" itemprop="dateModified">2017-0
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Categories</h3>
+    <h3 class="widget-title">Categorías</h3>
     <div class="widget">
       <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Deep-Learning/">Deep Learning</a><span class="category-list-count">7</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Deep-Learning/Caffe/">Caffe</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hadoop/">Hadoop</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a><span class="category-list-count">15</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Python/Scrapy/">Scrapy</a><span class="category-list-count">1</span></li></ul></li></ul>
     </div>
@@ -238,7 +125,7 @@ Updated:<time datetime="2017-03-01T13:26:07.306Z" itemprop="dateModified">2017-0
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Tag Cloud</h3>
+    <h3 class="widget-title">Nube de Tags</h3>
     <div class="widget tagcloud">
       <a href="/tags/AlexNet/" style="font-size: 13px; color: #7dc3de">AlexNet</a> <a href="/tags/BE/" style="font-size: 13px; color: #7dc3de">BE</a> <a href="/tags/Bagging/" style="font-size: 13px; color: #7dc3de">Bagging</a> <a href="/tags/Bayes/" style="font-size: 14.17px; color: #6dc1b9">Bayes</a> <a href="/tags/Boosting/" style="font-size: 13px; color: #7dc3de">Boosting</a> <a href="/tags/Caffe/" style="font-size: 17.67px; color: #3db94a">Caffe</a> <a href="/tags/Deep-Learning/" style="font-size: 18.83px; color: #2db725">Deep Learning</a> <a href="/tags/Faster-RCNN/" style="font-size: 13px; color: #7dc3de">Faster-RCNN</a> <a href="/tags/Fine-tuning/" style="font-size: 13px; color: #7dc3de">Fine-tuning</a> <a href="/tags/GC/" style="font-size: 13px; color: #7dc3de">GC</a> <a href="/tags/HDFS/" style="font-size: 13px; color: #7dc3de">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 16.5px; color: #4dbc6f">Hadoop</a> <a href="/tags/JMM/" style="font-size: 13px; color: #7dc3de">JMM</a> <a href="/tags/JVM/" style="font-size: 13px; color: #7dc3de">JVM</a> <a href="/tags/Java/" style="font-size: 15.33px; color: #5dbe94">Java</a> <a href="/tags/K近邻/" style="font-size: 13px; color: #7dc3de">K近邻</a> <a href="/tags/ML/" style="font-size: 20px; color: #1db400">ML</a> <a href="/tags/MLE/" style="font-size: 13px; color: #7dc3de">MLE</a> <a href="/tags/MapReduce/" style="font-size: 13px; color: #7dc3de">MapReduce</a> <a href="/tags/NaiveBayes/" style="font-size: 13px; color: #7dc3de">NaiveBayes</a> <a href="/tags/Object-Detection/" style="font-size: 13px; color: #7dc3de">Object Detection</a> <a href="/tags/PCA/" style="font-size: 13px; color: #7dc3de">PCA</a> <a href="/tags/Python/" style="font-size: 14.17px; color: #6dc1b9">Python</a> <a href="/tags/RPC/" style="font-size: 13px; color: #7dc3de">RPC</a> <a href="/tags/SVM/" style="font-size: 13px; color: #7dc3de">SVM</a> <a href="/tags/Scrapy/" style="font-size: 13px; color: #7dc3de">Scrapy</a> <a href="/tags/Stacking/" style="font-size: 13px; color: #7dc3de">Stacking</a> <a href="/tags/决策树/" style="font-size: 13px; color: #7dc3de">决策树</a> <a href="/tags/分布式技术/" style="font-size: 13px; color: #7dc3de">分布式技术</a> <a href="/tags/分布式文件系统/" style="font-size: 13px; color: #7dc3de">分布式文件系统</a> <a href="/tags/半监督学习/" style="font-size: 13px; color: #7dc3de">半监督学习</a> <a href="/tags/多线程/" style="font-size: 13px; color: #7dc3de">多线程</a> <a href="/tags/大数据/" style="font-size: 13px; color: #7dc3de">大数据</a> <a href="/tags/感知机/" style="font-size: 14.17px; color: #6dc1b9">感知机</a> <a href="/tags/拉格朗日乘子法/" style="font-size: 13px; color: #7dc3de">拉格朗日乘子法</a> <a href="/tags/机器学习/" style="font-size: 20px; color: #1db400">机器学习</a> <a href="/tags/核方法/" style="font-size: 13px; color: #7dc3de">核方法</a> <a href="/tags/概率图模型/" style="font-size: 13px; color: #7dc3de">概率图模型</a> <a href="/tags/深度学习/" style="font-size: 14.17px; color: #6dc1b9">深度学习</a> <a href="/tags/爬虫/" style="font-size: 13px; color: #7dc3de">爬虫</a> <a href="/tags/特征选择/" style="font-size: 13px; color: #7dc3de">特征选择</a> <a href="/tags/神经网络/" style="font-size: 13px; color: #7dc3de">神经网络</a> <a href="/tags/聚类/" style="font-size: 13px; color: #7dc3de">聚类</a> <a href="/tags/阅读/" style="font-size: 14.17px; color: #6dc1b9">阅读</a> <a href="/tags/降维/" style="font-size: 13px; color: #7dc3de">降维</a> <a href="/tags/集成方法/" style="font-size: 13px; color: #7dc3de">集成方法</a>
     </div>
@@ -248,7 +135,7 @@ Updated:<time datetime="2017-03-01T13:26:07.306Z" itemprop="dateModified">2017-0
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
+    <h3 class="widget-title">Archivos</h3>
     <div class="widget">
       <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">5</span></li></ul>
     </div>
@@ -258,7 +145,7 @@ Updated:<time datetime="2017-03-01T13:26:07.306Z" itemprop="dateModified">2017-0
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
+    <h3 class="widget-title">Posts recientes</h3>
     <div class="widget">
       <ul>
         
@@ -293,7 +180,7 @@ Updated:<time datetime="2017-03-01T13:26:07.306Z" itemprop="dateModified">2017-0
   
     
 <div class="widget-wrap">
-  <h3 class="widget-title">Links</h3>
+  <h3 class="widget-title">友情链接</h3>
   <ul class="widget">
     
     <li><a href="http://yibo.iyiyun.com/js/yibo404/key/1" target="_BLANK">404 page</a></li>

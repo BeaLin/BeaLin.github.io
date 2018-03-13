@@ -115,7 +115,7 @@ var _hmt = _hmt || [];
           <a id="nav-github-link" class="nav-icon" href="https://github.com/BeaLin" title="Github" target="_blank"></a>
         
         
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Buscar"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -125,102 +125,11 @@ var _hmt = _hmt || [];
 </header>
 
       <div class="outer">
-        <section id="main"><article id="post-机器学习系列—7-支持向量机SVM" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    
-<a href="/2017/02/27/机器学习系列—7-支持向量机SVM/" class="article-date">
-  <time datetime="2017-02-27T05:54:20.000Z" itemprop="datePublished">2017-02-27</time>
-</a>
-
-
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Machine-Learning/">Machine Learning</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="article-title" itemprop="name">
-      机器学习系列—7.支持向量机SVM
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-		
-		<div id="toc" class="toc-article">
-			<h2 class="toc-title"><span>Contents</span></h2>
-		
-			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#间隔与支持向量"><span class="toc-number">1.</span> <span class="toc-text">间隔与支持向量</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#对偶问题"><span class="toc-number">2.</span> <span class="toc-text">对偶问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#核函数"><span class="toc-number">3.</span> <span class="toc-text">核函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#软间隔与正则化"><span class="toc-number">4.</span> <span class="toc-text">软间隔与正则化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#支持向量回归"><span class="toc-number">5.</span> <span class="toc-text">支持向量回归</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#核方法"><span class="toc-number">6.</span> <span class="toc-text">核方法</span></a></li></ol>
-		
-		</div>
-		
-        <p>本文主要介绍以下内容，对于分类任务，最基本的想法就是找到一个划分平面，离超平面最近的样本点称为支持向量，支持向量到超平面的距离称为间隔，支持向量机的核心思想就是找到间隔最大的超平面，这是一个凸优化问题（即带约束的优化问题），使用拉格朗日乘子法引入拉格朗日乘子求得拉个朗日函数，对其求偏低得到其对偶问题，通过求解对偶问题得到主问题的解。因为支持向量的约束是不等式约束，所以还需满足KKT条件。现实任务通常是线性不可分的，可以采用将特征空间从高维映射到低维的方法。因此引入核函数的概念。为了防止过拟合，可以采用软间隔和正则化，软间隔是相对于硬间隔的概念，硬间隔是要求所有样本都分类正确，软间隔允许部分分类错误。正则化是引入结构风险，以期希望得到复杂度低一点的模型。最后描述了支持向量回归，用于解决回归问题。<br><a id="more"></a></p>
-<h2 id="间隔与支持向量"><a href="#间隔与支持向量" class="headerlink" title="间隔与支持向量"></a>间隔与支持向量</h2><p>给定训练集，分类学习最基本的想法就是基于训练集D在样本空间中找到一个划分超平面，将不同类别的样本分开。直观来看，位于两类训练样本“正中间”的划分超平面效果最好，即中间最粗的那条。<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML7-1.png" alt=""><br>在样本空间中，划分超平面可通过如下线性方程来描述：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML7-2.png" alt=""><br>w为法向量，决定了超平面的方向；b为位移项，决定了超平面与原点之间的距离。样本空间中任意点x到超平面（w,b）的距离可写为：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML7-3.png" alt=""><br>假设超平面（w,b）能将训练样本正确分类，令<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML7-4.png" alt=""><br>如下图6.2所示，距离超平面最近的这几个训练样本点使式（6.3）的等号成立，它们被称为“支持向量”（support vector），两个异类支持向量到超平面的距离之和称为“间隔”（margin），公式为：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML7-5.png" alt=""><br><img src="http://o73nd1ra4.bkt.clouddn.com/ML7-6.png" alt=""><br>欲找到具有“最大间隔”（maximum margin）的划分超平面，也就是要找到能满足式（6.3）中约束的参数w和b，使得间隔最大，即<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML7-7.png" alt=""><br>最大化间隔等价于最小化||w||，于是，式（6.5）可重写为<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML7-8.png" alt=""><br>上式为支持向量机（Support Vector Machine，SVM）的基本型。</p>
-<h2 id="对偶问题"><a href="#对偶问题" class="headerlink" title="对偶问题"></a>对偶问题</h2><p>如何求解式（6.6）来得到大间隔划分超平面所对应的的模型：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML7-9.png" alt=""><br>其中w和b是模型参数。<br>式（6.6）是一个凸二次规划（quadratic  programming）问题，可以使用现成的优化计算包求解，但可以使用更高效的办法——拉格朗日乘子法（拉格朗日乘子法的介绍）来得到其“对偶问题”。对式(6.6)的每条约束添加拉格朗日乘子，则该问题的拉格朗日函数可写为：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML7-10.png" alt=""><br>令L(w,b,a)对w和b的偏导为零得到的等式<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML7-11.png" alt=""><br>将式(6.9)代入拉格朗日函数，可得式(6.6)的对偶问题：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML7-12.png" alt=""><br>因此模型为<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML7-13.png" alt=""><br>因为是不等式约束，因此上述过程需满足KKT(Karush-Kuhn-Tucker)条件，即要求<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML7-14.png" alt=""><br>由上可得支持向量机的一个重要性质：训练完成后，大部分的训练样本都不需保留，最终模型仅与支持向量有关。<br>如何求解式(6.11),这是一个二次规划问题，可以使用SMO（Sequential Minimal Optimization）。<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML7-15.png" alt=""><br>KKT条件违背的程度越大，则变量更新后可能导致的目标函数值增幅越大。于是，SMO先选取违背KKT条件程度最大的变量。第二个变量应选择一个使目标函数值增长最快的变量。但比较各变量所对应的目标函数值增幅的复杂度过高，故SMO采用启发式：使选取的两变量所对应的样本之间的间隔最大。直观解释就是这样的两个变量有很大的差别，对它们进行更新会带来目标函数值更大的变化。<br>SMO算法之所以高效，是因为在固定其他参数之后，仅优化两个参数的过程能做到非常高效。<br>如何确定偏移项b呢？因为对任意支持向量(Xs,Ys)都有Ysf(Xs)=1。即<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML7-16.png" alt=""><br>现实任务中常采用一种更鲁棒的做法：使用所有支持向量求解的平均值：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML7-17.png" alt=""></p>
-<h2 id="核函数"><a href="#核函数" class="headerlink" title="核函数"></a>核函数</h2><p>在现实任务中，原始样本空间内也许并不存在一个能正确划分两类的超平面，例如异或问题就不是线性可分的。对于这样的问题，可将样本从原始空间映射到一个更高维的特征空间，使得样本在这个特征空间内线性可分。如果原始空间是有限维，即属性数有限，那么一定存在一个高维特征空间使样本可分。<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML7-18.png" alt=""><br>直接计算φ(Xi)Tφ(Xj)通常是困难的，为了避开这个障碍，可以设想一个函数（Xi与Xj的内积）：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML7-19.png" alt=""><br>于是式(6.21)可重写为<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML7-20.png" alt=""><br>求解后可得<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML7-21.png" alt=""><br><strong>核函数定理</strong><br><img src="http://o73nd1ra4.bkt.clouddn.com/ML7-22.png" alt=""><br><strong>核函数的选择</strong><br>若核函数选择不合适，则意味着将样本映射到了一个不合适的特征空间，可能会导致性能不佳。<br><strong>常用的核函数</strong><br><img src="http://o73nd1ra4.bkt.clouddn.com/ML7-23.png" alt=""><br>PS:d=1时退化为线性核，高斯核亦称RBF核。<br>此外核函数可通过函数组合得到：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML7-24.png" alt=""></p>
-<h2 id="软间隔与正则化"><a href="#软间隔与正则化" class="headerlink" title="软间隔与正则化"></a>软间隔与正则化</h2><p>在现实任务中很难确定合适的核函数使得训练样本在特征空间中线性可分，也很难断定这个貌似线性可分的结果是不是由于过拟合所造成的。缓解该问题的一个办法是允许支持向量机在一些样本上出错。为此，要引入“软间隔”（soft margin）的概念。<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML7-25.png" alt=""><br>前面介绍的支持向量机形式是要求所有样本均满足约束（6.3），即所有样本都必须划分正确，这称为“硬间隔”（hard margin），而软间隔允许某些样本不满足约束。当然在最大化间隔的同时，不满足约束的样本应尽可能少。于是，优化目标可写为：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML7-26.png" alt=""><br>式(6.29)的后半部是不满足约束条件的样例的数量，数量越多，对样本满足条件的约束越大。显然，当C为无穷大时，式(6.29)迫使所有样本均满足约束。<br>然而0/1损失函数非凸、非连续，数学性质不太好，通常使用其他一些函数来代替，称为“替代损失”(surrogate loss)。三种常用的替代损失函数：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML7-27.png" alt=""><br><img src="http://o73nd1ra4.bkt.clouddn.com/ML7-28.png" alt=""><br>若采用hinge损失，则式（6.29）<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML7-29.png" alt=""><br>引入“松弛变量”（slack variable）ξi&gt;=0，则为<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML7-30.png" alt=""><br>上式即为常用的<strong>“软间隔支持向量机”</strong>。式中每个样本都有一个对应的松弛变量，用以表征该样本不满足约束的程度。通过拉格朗日乘子法可得拉格朗日函数<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML7-31.png" alt=""><br>上述即为软间隔下的对偶问题。与硬间隔下的对偶问题对比，二者唯一的差别就在于对偶变量的约束不同。对软间隔支持向量机，KKT条件要求为<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML7-32.png" alt=""><br><img src="http://o73nd1ra4.bkt.clouddn.com/ML7-33.png" alt=""><br>若使用对率损失函数来替代0/1损失函数，则几乎得到了对率回归模型。实际上，支持向量机与对率回归的优化目标相近，性能也相当。对率回归的优势主要在于其输出具有自然的概率意义，即在给出预测标记的同时也给出了概率。<br>hinge损失有一块“平坦”的零区域，这使得支持向量机的解具有稀疏性，对率不损失是光滑的 单调递减函数，不能导出类似支持向量的概念，因此对率回归的解依赖于更多地训练样本，其预测开销更大<br>优化目标中的第一项用来描述划分超平面的“间隔”大小，另一项用来表述训练集上的误差。因此更一般的形式：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML7-34.png" alt=""><br>其中Ω(f)称为“结构风险”（structural risk），用于描述模型f的某些性质；第二项称为“经验风险”（empirical risk），用于描述模型与训练数据的契合程度；C用于对二者进行折中。从经验风险最小化的角度来看，Ω(f)表述了我们希望获得具有何种性质的模型（例如希望获得复杂度较小的模型），从而降低了最小化训练误差的过拟合风险。Ω(f)称为正则化项，C则称为正则化常数。Lp范数（norm）是常用的正则化项，其中L2范数||w||2倾向于w的分量取值尽量均和，即非零分量个数尽量稠密，而L0范数||w||0和L1范数||w||1则倾向于w的分量尽量稀疏，即非零分量个数尽量少。</p>
-<h2 id="支持向量回归"><a href="#支持向量回归" class="headerlink" title="支持向量回归"></a>支持向量回归</h2><p>关于回归问题，传统的回归模型通常基于模型输出f(x)与真实值之间的差别来计算损失。但是支持向量回归（Support Vector Regression，SVR）假设我们能容忍f(x)与y之间最多有e的偏差，即仅当f(x)与y之间的差别绝对值大于e时才计算损失。这相当于以f(x)为中心，构建了一个宽度为2e的间隔带。<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML7-35.png" alt=""><br>于是，SVR问题形式为<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML7-36.png" alt=""><br>类似支持向量机的推导过程，这是个带约束的优化问题，所以可以使用拉格朗日乘子法得到拉格朗日函数，再对其求偏导，得到的式子代入从而得到SVR问题的对偶问题，推导过程如下，不感兴趣可直接跳过。<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML7-37.png" alt=""><br>SVR的对偶问题：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML7-38.png" alt=""><br>上述过程需满足KKT条件：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML7-39.png" alt=""><br>有上述KKT条件式子可以看出αi和âi中至少有一个为0:<br>将式(6.47)代入(6.7)，可得SVR的解如下：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML7-40.png" alt=""><br>由式(6.52)和(6.53)可得，在得到αi后，若0&lt;αi&lt;C，则必有ξi=0，进而有<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML7-41.png" alt=""><br>实践中常采用一种更鲁棒的办法，就是在求解式(6.51)得到αi，选取多个（或所有）满足条件0&lt;αi&lt;C的样本求解b后取平均值。<br>若考虑特征映射，则带核函数的SVR可表示为：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML7-42.png" alt=""></p>
-<h2 id="核方法"><a href="#核方法" class="headerlink" title="核方法"></a>核方法</h2><p>回顾式（6.24）和式(6.56)<br>SVM:<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML7-43.png" alt=""><br>SVR:<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML7-44.png" alt=""><br>若不考虑偏移项b，则无论SVM还是SVR，学得的模型总能表示成核函数的线性组合。有更一般的结论是如下的表示定理：<br><img src="http://o73nd1ra4.bkt.clouddn.com/ML7-45.png" alt=""><br><strong>核函数的表示：</strong><br>表示定理对损失函数没有限制，对正则化项仅要求单调递增，甚至不要求是凸函数，意味着对于一般的损失函数和正则化项，优化问题的最优解都可表示为核函数的线性组合。<br><strong>核方法：</strong><br>一系列基于核函数的学习方法，统称为“核方法”（kernel methods），最常见的就是通过“核化”（即引入核函数）来将线性学习器扩展为非线性学习器。<br><strong>总结与延伸</strong><br>支持向量机在文本分类任务中显示出卓越性能，线性核SVM迄今仍是文本分类的首选技术，一个重要的原因可能是：若将每个单词作为文本数据的一个属性，则该属性空间维数很高，冗余度很大，其描述能力足以将不同文档“打散”。支持向量机的求解通常是借助凸优化技术。支持向量机是针对二分类任务设计的，对多分类任务要进行专门的推广。核函数直接决定了支持向量机与核方法的最终性能。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-	  
-	  <!-- 百度分享 Start -->
-	  <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a><a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a></div>
-	  <!-- 百度分享 End -->
-	  
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ML/">ML</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SVM/">SVM</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/机器学习/">机器学习</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/核方法/">核方法</a></li></ul>
-
-	  
-<span>
-Updated:<time datetime="2017-02-28T11:57:43.784Z" itemprop="dateModified">2017-02-28</time>
-</span>
-
-
-    </footer>
-  </div>
-  
-    
-<nav id="article-nav">
-  
-    <a href="/2017/02/27/机器学习系列—9-集成学习/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">上一篇</strong>
-      <div class="article-nav-title">
-        
-          机器学习系列—9.集成学习
-        
-      </div>
-    </a>
-  
-  
-    <a href="/2017/02/27/机器学习系列—6-拉格朗日乘子法/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">下一篇</strong>
-      <div class="article-nav-title">机器学习系列—6.拉格朗日乘子法</div>
-    </a>
-  
-</nav>
-
-  
-</article>
-
-
-
-
-</section>
+        <section id="main"></section>
         
           
   <div id="toc" class="toc-aside">
-  <h2 class="toc-title">Contents</h2>
+  <h2 class="toc-title">文章目录</h2>
     
         <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#间隔与支持向量"><span class="toc-number">1.</span> <span class="toc-text">间隔与支持向量</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#对偶问题"><span class="toc-number">2.</span> <span class="toc-text">对偶问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#核函数"><span class="toc-number">3.</span> <span class="toc-text">核函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#软间隔与正则化"><span class="toc-number">4.</span> <span class="toc-text">软间隔与正则化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#支持向量回归"><span class="toc-number">5.</span> <span class="toc-text">支持向量回归</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#核方法"><span class="toc-number">6.</span> <span class="toc-text">核方法</span></a></li></ol>
     
@@ -252,7 +161,7 @@ Updated:<time datetime="2017-02-28T11:57:43.784Z" itemprop="dateModified">2017-0
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Categories</h3>
+    <h3 class="widget-title">Categorías</h3>
     <div class="widget">
       <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Deep-Learning/">Deep Learning</a><span class="category-list-count">7</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Deep-Learning/Caffe/">Caffe</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hadoop/">Hadoop</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a><span class="category-list-count">15</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Python/Scrapy/">Scrapy</a><span class="category-list-count">1</span></li></ul></li></ul>
     </div>
@@ -262,7 +171,7 @@ Updated:<time datetime="2017-02-28T11:57:43.784Z" itemprop="dateModified">2017-0
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Tag Cloud</h3>
+    <h3 class="widget-title">Nube de Tags</h3>
     <div class="widget tagcloud">
       <a href="/tags/AlexNet/" style="font-size: 13px; color: #7dc3de">AlexNet</a> <a href="/tags/BE/" style="font-size: 13px; color: #7dc3de">BE</a> <a href="/tags/Bagging/" style="font-size: 13px; color: #7dc3de">Bagging</a> <a href="/tags/Bayes/" style="font-size: 14.17px; color: #6dc1b9">Bayes</a> <a href="/tags/Boosting/" style="font-size: 13px; color: #7dc3de">Boosting</a> <a href="/tags/Caffe/" style="font-size: 17.67px; color: #3db94a">Caffe</a> <a href="/tags/Deep-Learning/" style="font-size: 18.83px; color: #2db725">Deep Learning</a> <a href="/tags/Faster-RCNN/" style="font-size: 13px; color: #7dc3de">Faster-RCNN</a> <a href="/tags/Fine-tuning/" style="font-size: 13px; color: #7dc3de">Fine-tuning</a> <a href="/tags/GC/" style="font-size: 13px; color: #7dc3de">GC</a> <a href="/tags/HDFS/" style="font-size: 13px; color: #7dc3de">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 16.5px; color: #4dbc6f">Hadoop</a> <a href="/tags/JMM/" style="font-size: 13px; color: #7dc3de">JMM</a> <a href="/tags/JVM/" style="font-size: 13px; color: #7dc3de">JVM</a> <a href="/tags/Java/" style="font-size: 15.33px; color: #5dbe94">Java</a> <a href="/tags/K近邻/" style="font-size: 13px; color: #7dc3de">K近邻</a> <a href="/tags/ML/" style="font-size: 20px; color: #1db400">ML</a> <a href="/tags/MLE/" style="font-size: 13px; color: #7dc3de">MLE</a> <a href="/tags/MapReduce/" style="font-size: 13px; color: #7dc3de">MapReduce</a> <a href="/tags/NaiveBayes/" style="font-size: 13px; color: #7dc3de">NaiveBayes</a> <a href="/tags/Object-Detection/" style="font-size: 13px; color: #7dc3de">Object Detection</a> <a href="/tags/PCA/" style="font-size: 13px; color: #7dc3de">PCA</a> <a href="/tags/Python/" style="font-size: 14.17px; color: #6dc1b9">Python</a> <a href="/tags/RPC/" style="font-size: 13px; color: #7dc3de">RPC</a> <a href="/tags/SVM/" style="font-size: 13px; color: #7dc3de">SVM</a> <a href="/tags/Scrapy/" style="font-size: 13px; color: #7dc3de">Scrapy</a> <a href="/tags/Stacking/" style="font-size: 13px; color: #7dc3de">Stacking</a> <a href="/tags/决策树/" style="font-size: 13px; color: #7dc3de">决策树</a> <a href="/tags/分布式技术/" style="font-size: 13px; color: #7dc3de">分布式技术</a> <a href="/tags/分布式文件系统/" style="font-size: 13px; color: #7dc3de">分布式文件系统</a> <a href="/tags/半监督学习/" style="font-size: 13px; color: #7dc3de">半监督学习</a> <a href="/tags/多线程/" style="font-size: 13px; color: #7dc3de">多线程</a> <a href="/tags/大数据/" style="font-size: 13px; color: #7dc3de">大数据</a> <a href="/tags/感知机/" style="font-size: 14.17px; color: #6dc1b9">感知机</a> <a href="/tags/拉格朗日乘子法/" style="font-size: 13px; color: #7dc3de">拉格朗日乘子法</a> <a href="/tags/机器学习/" style="font-size: 20px; color: #1db400">机器学习</a> <a href="/tags/核方法/" style="font-size: 13px; color: #7dc3de">核方法</a> <a href="/tags/概率图模型/" style="font-size: 13px; color: #7dc3de">概率图模型</a> <a href="/tags/深度学习/" style="font-size: 14.17px; color: #6dc1b9">深度学习</a> <a href="/tags/爬虫/" style="font-size: 13px; color: #7dc3de">爬虫</a> <a href="/tags/特征选择/" style="font-size: 13px; color: #7dc3de">特征选择</a> <a href="/tags/神经网络/" style="font-size: 13px; color: #7dc3de">神经网络</a> <a href="/tags/聚类/" style="font-size: 13px; color: #7dc3de">聚类</a> <a href="/tags/阅读/" style="font-size: 14.17px; color: #6dc1b9">阅读</a> <a href="/tags/降维/" style="font-size: 13px; color: #7dc3de">降维</a> <a href="/tags/集成方法/" style="font-size: 13px; color: #7dc3de">集成方法</a>
     </div>
@@ -272,7 +181,7 @@ Updated:<time datetime="2017-02-28T11:57:43.784Z" itemprop="dateModified">2017-0
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
+    <h3 class="widget-title">Archivos</h3>
     <div class="widget">
       <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">5</span></li></ul>
     </div>
@@ -282,7 +191,7 @@ Updated:<time datetime="2017-02-28T11:57:43.784Z" itemprop="dateModified">2017-0
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
+    <h3 class="widget-title">Posts recientes</h3>
     <div class="widget">
       <ul>
         
@@ -317,7 +226,7 @@ Updated:<time datetime="2017-02-28T11:57:43.784Z" itemprop="dateModified">2017-0
   
     
 <div class="widget-wrap">
-  <h3 class="widget-title">Links</h3>
+  <h3 class="widget-title">友情链接</h3>
   <ul class="widget">
     
     <li><a href="http://yibo.iyiyun.com/js/yibo404/key/1" target="_BLANK">404 page</a></li>

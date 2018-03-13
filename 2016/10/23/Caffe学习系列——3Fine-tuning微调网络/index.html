@@ -72,7 +72,7 @@ var _hmt = _hmt || [];
           <a id="nav-github-link" class="nav-icon" href="https://github.com/BeaLin" title="Github" target="_blank"></a>
         
         
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Buscar"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -82,116 +82,11 @@ var _hmt = _hmt || [];
 </header>
 
       <div class="outer">
-        <section id="main"><article id="post-Caffe学习系列——3Fine-tuning微调网络" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    
-<a href="/2016/10/23/Caffe学习系列——3Fine-tuning微调网络/" class="article-date">
-  <time datetime="2016-10-23T02:31:58.000Z" itemprop="datePublished">2016-10-23</time>
-</a>
-
-
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Deep-Learning/">Deep Learning</a>►<a class="article-category-link" href="/categories/Deep-Learning/Caffe/">Caffe</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="article-title" itemprop="name">
-      Caffe学习系列——3Fine-tuning微调网络
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-		
-		<div id="toc" class="toc-article">
-			<h2 class="toc-title"><span>Contents</span></h2>
-		
-			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#fine-tuning流程"><span class="toc-number">1.</span> <span class="toc-text">fine-tuning流程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Caffe调参"><span class="toc-number">2.</span> <span class="toc-text">Caffe调参</span></a></li></ol>
-		
-		</div>
-		
-        <p>本文主要介绍如何在Caffe上微调网络，来适应我们自己特定的新任务。一般来说我们通常都是需要在一些特定的领域里来识别分类，比如服装类、标志等等，但是深度学习中数据集的准备一直是最令人头疼的一件事。我们很难拿到大量的数据。在这种情况下重新训练的一个新的网络是比较复杂，且参数也不好调整，因此数据集为图像时，通过fine-tuning微调是一个比较理想的选择。Fine-tuning的整体思路就是，ImageNet是一个千万级的图像数据库，现已经在ImageNet上训练了一个很牛的网络，我们可以把pretrain的网络拿过来，然后只重新训练最后几层。意思就是以前需要分成1000类，现在只需要识别是狗还是猫，或者衣服是上衣还是裤子。故就只需要把最后一层softmax从4096<em>1000的分类器变成4092</em>2的分类器。微调网络需要一个已初始化的模型参数文件，这里不同于用某某网络训练自己的数据集方法。后者在训练过程中，这些参数都被随机的初始化。而fine-tuning是在已训练好的参数的基础上，根据我们的分类识别任务进行特定的微调。总而言之，fine-tuning这种策略目前在应用中是非常好使的。接下来介绍一下fine-tuning流程以及简单介绍一下该如何调参。<br><a id="more"></a></p>
-<h2 id="fine-tuning流程"><a href="#fine-tuning流程" class="headerlink" title="fine-tuning流程"></a>fine-tuning流程</h2><p>对网络进行微调的整个流程可以分为以下几步：</p>
-<ol>
-<li>准备数据集（包括训练数据和测试数据）</li>
-<li>计算数据集的均值文件，因为某个特定领域的图像均值文件会跟ImageNet上的数据均值不太一样</li>
-<li>修改网络最后一层的输出类别数，以及最后一层网络的名称，加大最后一层的参数学习速率</li>
-<li>调整solver的配置参数</li>
-<li>加载预训练模型的参数，启动训练</li>
-</ol>
-<p><strong>1. 准备数据集（建立与下载）</strong><br>（1）建立数据集：<br>这一步在上一篇的博文中已经详细说明，传送门在此（），因此这里就不再赘述。这里的数据格式依然是一个图像路径之后一个空格和类别的ID。再一次提醒，这里ID必须从0开始（即必须是0，1,2,3.。。，而不能是2,4,6），要连续，否则会出现loss不下降的情况。格式如下：<br>/home/linbiyuan/caffe/data/blog<em>img/streetsnap/Jillian-harris</em>&amp;_118db71d65c96133.jpg 0<br>也可以下载。<br><strong>2. 计算数据集的均值文件</strong><br>可以使用caffe下的convert_imagset工具<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/home/linbiyuan/caffe/build/tools/convert_imageset    /home/linbiyuan/caffe/data/blog_img/    /home/linbiyuan/caffe/data/blog_img /train.txt     /home/linbiyuan/caffe/examples/blog_img/train_lmsb   -resize_width=227   -resize_height=227   -check_size    -shuffle true</span><br></pre></td></tr></table></figure></p>
-<p>其中第一个参数是图片的路径，用于拼接的，第二个是label文件，第三个是生成的数据库文件，支持lmdb（如何生成见上一篇博文）和leveldb，第四个和第五个参数是resize的大小，最后一个是是否随机图片的顺序。<br>当然，你也可以使用imagenet的均值，其均值文件路径是$Caffe_Root/data/ilsvrc12/imagenet_mean.binaryproto<br><strong>3. 调整网络参数</strong><br>参照caffe上的例程，可以使用CaffeNet，复制caffenet的train_val.prototxt到自己的目录下，或者复制官网给出的例子——<a href="http://caffe.berkeleyvision.org/gathered/examples/finetune_flickr_style.html" target="_blank" rel="external">Fine-tuning CaffeNet for Style Recognition on “Flickr Style” Data</a>，下载完之后，模型会放在models的finetune_flickr_style中，可以参考里面的那些文件，适当修改一些地方即可。个人建议：不管训练什么模型，最好自己新建一个目录，然后把所有需要的文件拷贝到该目录下，然后根据自己的需求更改。本文是在examples/下新建了一个blog_img目录。该文件需要修改的地方如下：<br><strong>train_val.prototxt</strong><br>(1)修改source和meanfile<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">name: &quot;BlogNet&quot; #这里的名字可修改可不修改，根据自己的意愿，建议还是命名一下</span><br><span class="line">layer &#123;</span><br><span class="line">  name: &quot;data&quot;</span><br><span class="line">  type: &quot;ImageData&quot;</span><br><span class="line">  top: &quot;data&quot;</span><br><span class="line">  top: &quot;label&quot;</span><br><span class="line">  include &#123;</span><br><span class="line">    phase: TRAIN</span><br><span class="line">  &#125;</span><br><span class="line">  transform_param &#123;</span><br><span class="line">    mirror: true</span><br><span class="line">    crop_size: 227</span><br><span class="line">    mean_file: &quot;data/blog_img/blogimg_mean.binaryproto&quot; #这里是第二步求得的均值文件所在的地方</span><br><span class="line">  &#125;</span><br><span class="line">  image_data_param &#123;</span><br><span class="line">    source: &quot;data/blog_img/train.txt&quot; #训练标签所在的地方</span><br><span class="line">    batch_size: 512       #可根据自己内存情况调整，最好是8的倍数</span><br><span class="line">    new_height: 256 #在finetuning的时候，新问题的图像大小不同于pretraining的图像大小时，只能缩放到同样的大小</span><br><span class="line">    new_width: 256</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">layer &#123;</span><br><span class="line">  name: &quot;data&quot;</span><br><span class="line">  type: &quot;ImageData&quot;</span><br><span class="line">  top: &quot;data&quot;</span><br><span class="line">  top: &quot;label&quot;</span><br><span class="line">  include &#123;</span><br><span class="line">    phase: TEST</span><br><span class="line">  &#125;</span><br><span class="line">  transform_param &#123;</span><br><span class="line">    mirror: false</span><br><span class="line">    crop_size: 227</span><br><span class="line">    mean_file: &quot;data/blog_img/blogimg_mean.binaryproto &quot;</span><br><span class="line">  &#125;</span><br><span class="line">  image_data_param &#123;</span><br><span class="line">    source: &quot;data/blog_img/test.txt&quot; #测试集所在的地方</span><br><span class="line">    batch_size: 128</span><br><span class="line">    new_height: 256</span><br><span class="line">    new_width: 256</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>(2)修改输出层fc8<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">layer &#123;</span><br><span class="line">  name: &quot;fc8_bogimg&quot;  #修改名字，这样预训练模型赋值时会因为名字不匹配从而重新训练，也就达到了适应新任务的目的</span><br><span class="line">  type: &quot;InnerProduct&quot;</span><br><span class="line">  bottom: &quot;fc7&quot;</span><br><span class="line">  top: &quot;fc8_blogimg&quot;</span><br><span class="line">  # lr_mult is set to higher than for other layers, because this layer is starting from random while the others are already trained</span><br><span class="line">  param &#123;</span><br><span class="line">    lr_mult: 10  #调整学习率，因为最后一层是重新学习的，因此需要比其他层更快的学习速率，因此将weight和bias都增加10倍，其他层为1或2，如果</span><br><span class="line">    decay_mult: 1  #数据集过小，可以将其他层的学习率置为0，只训练最后一层</span><br><span class="line">  &#125;</span><br><span class="line">  param &#123;</span><br><span class="line">    lr_mult: 20 #上同</span><br><span class="line">    decay_mult: 0</span><br><span class="line">  &#125;</span><br><span class="line">  inner_product_param &#123;</span><br><span class="line">    num_output: 5 #修改为你想识别的类别数</span><br><span class="line">    weight_filler &#123;</span><br><span class="line">      type: &quot;gaussian&quot;</span><br><span class="line">      std: 0.01</span><br><span class="line">    &#125;</span><br><span class="line">    bias_filler &#123;</span><br><span class="line">      type: &quot;constant&quot;</span><br><span class="line">      value: 0</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">layer &#123;</span><br><span class="line">  name: &quot;accuracy&quot;</span><br><span class="line">  type: &quot;Accuracy&quot;</span><br><span class="line">  bottom: &quot;fc8_blogimg&quot; #别忘了还有这里的名字（fc8层的名字）</span><br><span class="line">  bottom: &quot;label&quot;</span><br><span class="line">  top: &quot;accuracy&quot;</span><br><span class="line">  include &#123;</span><br><span class="line">    phase: TEST</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">layer &#123;</span><br><span class="line">  name: &quot;loss&quot;</span><br><span class="line">  type: &quot;SoftmaxWithLoss&quot;</span><br><span class="line">  bottom: &quot;fc8_blogimg&quot; #别忘了还有这里的名字（fc8层的名字）</span><br><span class="line"></span><br><span class="line">  bottom: &quot;label&quot;</span><br><span class="line">  top: &quot;loss&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p><strong>solver.prototxt</strong><br>微调，顾名思义微微调整，所以一般来说，相比较于用某网络结构直接训练自己的数据集来说，学习速率、步长、迭代次数都减小。修改地方如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">net: &quot;examples/blog_img/train_val.prototxt&quot;</span><br><span class="line">test_iter: 100  </span><br><span class="line">test_interval: 1000</span><br><span class="line"># lr for fine-tuning should be lower than when starting from scratch</span><br><span class="line">base_lr: 0.001  </span><br><span class="line">lr_policy: &quot;step&quot;</span><br><span class="line">gamma: 0.1</span><br><span class="line"># stepsize should also be lower, as we&apos;re closer to being done</span><br><span class="line">stepsize: 5000 </span><br><span class="line">display: 100</span><br><span class="line">max_iter: 10000 </span><br><span class="line">momentum: 0.9</span><br><span class="line">weight_decay: 0.0005</span><br><span class="line">snapshot: 5000</span><br><span class="line">snapshot_prefix: &quot;examples/blog_img/img_type&quot;</span><br><span class="line"># uncomment the following to default to CPU mode solving</span><br><span class="line">solver_mode: GPU</span><br></pre></td></tr></table></figure></p>
-<p><strong>4. 开始训练</strong><br>(1)下载训练好的模型参数文件<br>执行命令：<br>    ./scripts/download_model_binary.py models/bvlc_reference_caffenet<br>训练命令如下：<br>    ./build/tools/caffe train -solver examples/blog_img/solver.prototxt -weights models/bvlc_reference_caffenet /bvlc_reference_caffenet .caffemodel -gpu 0 &gt; /home/linbiyuan/log/blogimgtrain.log 2&gt;&amp;1<br>最后照例是将控制台输出重定向到日志中，以便查看。<br>最后达到的accuray是0.92，效果还是不错的。<br><img src="http://o73nd1ra4.bkt.clouddn.com/Caffe2-4.png" alt=""></p>
-<h2 id="Caffe调参"><a href="#Caffe调参" class="headerlink" title="Caffe调参"></a>Caffe调参</h2><p>一般fine tuning的方式，都是把learning rate（solver.prototxt）调低（为原来的十分之一），之后把训练模型的最后一层或者两层的学习速率调大一点————这就相当于，把模型的前面那些层的学习调低，使得参数更新的慢一点以达到微调的目的。但有可能会导致整个收敛速度变慢，因此还需要增加最大迭代次数。<br>关于调参，个人感觉很多时候都是经验，在这个情景下，增加一个模块效果是好的，在另一个场景可能就是不好的。没有一个很好的理论支持你，应该怎么调整。简单来讲就是修改学习速率、batchsize等参数。<br>需要调节的参数(solver.prototxt)主要包括：<br><strong>base_lr:</strong>初始学习率，这个是非常重要的一个参数；momentum:一般设置为0.9，如果base_lr特别低的话也可以设置为0.99或0.999等 weight_decay:默认0.005，可以适当调整，类似于正则化项；<br><strong>lr_policy:</strong>学习率变化策略，常见的有fixed（固定）， inv，step等，详细的说明见<a href="http://stackoverflow.com/questions/30033096/what-is-lr-policy-in-caffe" target="_blank" rel="external">http://stackoverflow.com/questions/30033096/what-is-lr-policy-in-caffe</a><br>最后如果loss出现不收敛的情况，可以尝试一下以下几种方法：</p>
-<ol>
-<li>调小solver里的初始学习率</li>
-<li>数据量小的话，可以只对最后几层的权重进行调整，前面权重保持不变，即把前面的学习率置为0，一定程度上限制了激活的大小，这样就限制了某一过大的误差的影响，这样可以避免迭代方向出现过大的变化。</li>
-<li>在GPU可承受的范围内调大batch_size的大小（贾扬清的解释：理论上batch小是不会影响收敛的。小batch主要的问题是在FC层的计算可能会不是很efficient，如果实在无计可施，可以试试 ；网上其他博主的解释：batch比较小 ，导致样本覆盖面过低，产生了非常多的局部极小点，在步长和方向的共同作用下，导致数据产生了震荡，导致了不收敛 ）</li>
-</ol>
-<p>总而言之，一般策略是先试一试参数，把display设小一点，多看看结果，找到合适的参数，再整个跑。这里有几篇关于调参的论文(<img src="http://www.thinkface.cn/thread-4402-1-1.html" alt="">)，可以看一下，基于理解和有合理解释的调参才不会变为无意义的工作。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-	  
-	  <!-- 百度分享 Start -->
-	  <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a><a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a></div>
-	  <!-- 百度分享 End -->
-	  
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Caffe/">Caffe</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Deep-Learning/">Deep Learning</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Fine-tuning/">Fine-tuning</a></li></ul>
-
-	  
-<span>
-Updated:<time datetime="2017-03-01T05:55:57.555Z" itemprop="dateModified">2017-03-01</time>
-</span>
-
-
-    </footer>
-  </div>
-  
-    
-<nav id="article-nav">
-  
-    <a href="/2016/10/23/Caffe学习系列——4使用训练好的模型进行分类/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">上一篇</strong>
-      <div class="article-nav-title">
-        
-          Caffe学习系列——4使用训练好的模型进行分类
-        
-      </div>
-    </a>
-  
-  
-    <a href="/2016/10/23/Caffe学习系列——2用AlexNet训练自己的数据集/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">下一篇</strong>
-      <div class="article-nav-title">Caffe学习系列——2用AlexNet训练自己的数据集</div>
-    </a>
-  
-</nav>
-
-  
-</article>
-
-
-
-
-</section>
+        <section id="main"></section>
         
           
   <div id="toc" class="toc-aside">
-  <h2 class="toc-title">Contents</h2>
+  <h2 class="toc-title">文章目录</h2>
     
         <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#fine-tuning流程"><span class="toc-number">1.</span> <span class="toc-text">fine-tuning流程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Caffe调参"><span class="toc-number">2.</span> <span class="toc-text">Caffe调参</span></a></li></ol>
     
@@ -223,7 +118,7 @@ Updated:<time datetime="2017-03-01T05:55:57.555Z" itemprop="dateModified">2017-0
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Categories</h3>
+    <h3 class="widget-title">Categorías</h3>
     <div class="widget">
       <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Deep-Learning/">Deep Learning</a><span class="category-list-count">7</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Deep-Learning/Caffe/">Caffe</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hadoop/">Hadoop</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a><span class="category-list-count">15</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Python/Scrapy/">Scrapy</a><span class="category-list-count">1</span></li></ul></li></ul>
     </div>
@@ -233,7 +128,7 @@ Updated:<time datetime="2017-03-01T05:55:57.555Z" itemprop="dateModified">2017-0
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Tag Cloud</h3>
+    <h3 class="widget-title">Nube de Tags</h3>
     <div class="widget tagcloud">
       <a href="/tags/AlexNet/" style="font-size: 13px; color: #7dc3de">AlexNet</a> <a href="/tags/BE/" style="font-size: 13px; color: #7dc3de">BE</a> <a href="/tags/Bagging/" style="font-size: 13px; color: #7dc3de">Bagging</a> <a href="/tags/Bayes/" style="font-size: 14.17px; color: #6dc1b9">Bayes</a> <a href="/tags/Boosting/" style="font-size: 13px; color: #7dc3de">Boosting</a> <a href="/tags/Caffe/" style="font-size: 17.67px; color: #3db94a">Caffe</a> <a href="/tags/Deep-Learning/" style="font-size: 18.83px; color: #2db725">Deep Learning</a> <a href="/tags/Faster-RCNN/" style="font-size: 13px; color: #7dc3de">Faster-RCNN</a> <a href="/tags/Fine-tuning/" style="font-size: 13px; color: #7dc3de">Fine-tuning</a> <a href="/tags/GC/" style="font-size: 13px; color: #7dc3de">GC</a> <a href="/tags/HDFS/" style="font-size: 13px; color: #7dc3de">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 16.5px; color: #4dbc6f">Hadoop</a> <a href="/tags/JMM/" style="font-size: 13px; color: #7dc3de">JMM</a> <a href="/tags/JVM/" style="font-size: 13px; color: #7dc3de">JVM</a> <a href="/tags/Java/" style="font-size: 15.33px; color: #5dbe94">Java</a> <a href="/tags/K近邻/" style="font-size: 13px; color: #7dc3de">K近邻</a> <a href="/tags/ML/" style="font-size: 20px; color: #1db400">ML</a> <a href="/tags/MLE/" style="font-size: 13px; color: #7dc3de">MLE</a> <a href="/tags/MapReduce/" style="font-size: 13px; color: #7dc3de">MapReduce</a> <a href="/tags/NaiveBayes/" style="font-size: 13px; color: #7dc3de">NaiveBayes</a> <a href="/tags/Object-Detection/" style="font-size: 13px; color: #7dc3de">Object Detection</a> <a href="/tags/PCA/" style="font-size: 13px; color: #7dc3de">PCA</a> <a href="/tags/Python/" style="font-size: 14.17px; color: #6dc1b9">Python</a> <a href="/tags/RPC/" style="font-size: 13px; color: #7dc3de">RPC</a> <a href="/tags/SVM/" style="font-size: 13px; color: #7dc3de">SVM</a> <a href="/tags/Scrapy/" style="font-size: 13px; color: #7dc3de">Scrapy</a> <a href="/tags/Stacking/" style="font-size: 13px; color: #7dc3de">Stacking</a> <a href="/tags/决策树/" style="font-size: 13px; color: #7dc3de">决策树</a> <a href="/tags/分布式技术/" style="font-size: 13px; color: #7dc3de">分布式技术</a> <a href="/tags/分布式文件系统/" style="font-size: 13px; color: #7dc3de">分布式文件系统</a> <a href="/tags/半监督学习/" style="font-size: 13px; color: #7dc3de">半监督学习</a> <a href="/tags/多线程/" style="font-size: 13px; color: #7dc3de">多线程</a> <a href="/tags/大数据/" style="font-size: 13px; color: #7dc3de">大数据</a> <a href="/tags/感知机/" style="font-size: 14.17px; color: #6dc1b9">感知机</a> <a href="/tags/拉格朗日乘子法/" style="font-size: 13px; color: #7dc3de">拉格朗日乘子法</a> <a href="/tags/机器学习/" style="font-size: 20px; color: #1db400">机器学习</a> <a href="/tags/核方法/" style="font-size: 13px; color: #7dc3de">核方法</a> <a href="/tags/概率图模型/" style="font-size: 13px; color: #7dc3de">概率图模型</a> <a href="/tags/深度学习/" style="font-size: 14.17px; color: #6dc1b9">深度学习</a> <a href="/tags/爬虫/" style="font-size: 13px; color: #7dc3de">爬虫</a> <a href="/tags/特征选择/" style="font-size: 13px; color: #7dc3de">特征选择</a> <a href="/tags/神经网络/" style="font-size: 13px; color: #7dc3de">神经网络</a> <a href="/tags/聚类/" style="font-size: 13px; color: #7dc3de">聚类</a> <a href="/tags/阅读/" style="font-size: 14.17px; color: #6dc1b9">阅读</a> <a href="/tags/降维/" style="font-size: 13px; color: #7dc3de">降维</a> <a href="/tags/集成方法/" style="font-size: 13px; color: #7dc3de">集成方法</a>
     </div>
@@ -243,7 +138,7 @@ Updated:<time datetime="2017-03-01T05:55:57.555Z" itemprop="dateModified">2017-0
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
+    <h3 class="widget-title">Archivos</h3>
     <div class="widget">
       <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">5</span></li></ul>
     </div>
@@ -253,7 +148,7 @@ Updated:<time datetime="2017-03-01T05:55:57.555Z" itemprop="dateModified">2017-0
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
+    <h3 class="widget-title">Posts recientes</h3>
     <div class="widget">
       <ul>
         
@@ -288,7 +183,7 @@ Updated:<time datetime="2017-03-01T05:55:57.555Z" itemprop="dateModified">2017-0
   
     
 <div class="widget-wrap">
-  <h3 class="widget-title">Links</h3>
+  <h3 class="widget-title">友情链接</h3>
   <ul class="widget">
     
     <li><a href="http://yibo.iyiyun.com/js/yibo404/key/1" target="_BLANK">404 page</a></li>

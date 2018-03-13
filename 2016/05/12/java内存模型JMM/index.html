@@ -77,7 +77,7 @@ var _hmt = _hmt || [];
           <a id="nav-github-link" class="nav-icon" href="https://github.com/BeaLin" title="Github" target="_blank"></a>
         
         
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Buscar"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -87,164 +87,11 @@ var _hmt = _hmt || [];
 </header>
 
       <div class="outer">
-        <section id="main"><article id="post-java内存模型JMM" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    
-<a href="/2016/05/12/java内存模型JMM/" class="article-date">
-  <time datetime="2016-05-12T11:54:38.000Z" itemprop="datePublished">2016-05-12</time>
-</a>
-
-
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Java/">Java</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="article-title" itemprop="name">
-      Java内存模型JMM
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-		
-		<div id="toc" class="toc-article">
-			<h2 class="toc-title"><span>Contents</span></h2>
-		
-			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#java内存模型"><span class="toc-number">1.</span> <span class="toc-text">java内存模型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#什么是内存模型？"><span class="toc-number">1.1.</span> <span class="toc-text">什么是内存模型？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Java内存模型JMM？"><span class="toc-number">1.2.</span> <span class="toc-text">Java内存模型JMM？</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#重排序"><span class="toc-number">1.2.1.</span> <span class="toc-text">重排序</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#写缓存区"><span class="toc-number">1.2.2.</span> <span class="toc-text">写缓存区</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#内存屏障"><span class="toc-number">1.2.3.</span> <span class="toc-text">内存屏障</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#happens-before规则"><span class="toc-number">1.2.4.</span> <span class="toc-text">happens-before规则</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#JAVA语言层面上实现可见性：synchronized"><span class="toc-number">1.2.5.</span> <span class="toc-text">JAVA语言层面上实现可见性：synchronized</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#JAVA语言层面上实现可见性：volatile"><span class="toc-number">1.2.6.</span> <span class="toc-text">JAVA语言层面上实现可见性：volatile</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#volatile与synchronized的比较"><span class="toc-number">1.2.7.</span> <span class="toc-text">volatile与synchronized的比较</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考资料"><span class="toc-number">2.</span> <span class="toc-text">参考资料</span></a></li></ol>
-		
-		</div>
-		
-        <p>在并发编程中，有两个关键问题需要处理：线程之间如何通信以及线程之间如何同步。在命令式编程中，线程之间的通信机制有两种：共享内存和消息传递。在共享内存的并发模型里，线程之间共享程序的公共状态，线程之间通过写-读内存中的公共状态来隐式进行通信。java的并发采用的是共享内存模型。本文主要介绍Java内存模型JMM以及其实现内存可见性的方式。<br>本文是在看了《Think in JAVA》、《JAVA核心技术卷》以及相关的一些博客后的总结笔记，纯属个人理解。若有错误，望指出。文末会贴出参考资料的链接。</p>
-<a id="more"></a>
-<p><br></p>
-<h2 id="java内存模型"><a href="#java内存模型" class="headerlink" title="java内存模型"></a>java内存模型</h2><h3 id="什么是内存模型？"><a href="#什么是内存模型？" class="headerlink" title="什么是内存模型？"></a>什么是内存模型？</h3><p>参考文章：<a href="http://ifeve.com/memory-model/" title="http://ifeve.com/memory-model/" target="_blank" rel="external">http://ifeve.com/memory-model/</a><br>根据这篇译文以及参考资料总结：</p>
-<blockquote>
-<p>多核系统中的处理器一般有一层或多层的缓存，这些缓存通过加速数据访问和降低共享内存在总线上的通信来提供CPU性能，的同时，也会导致内存可见性的问题。因此内存模型定义了一个充要条件：“让当前的处理器可以看到其他处理器写入到内存的数据”以及“其他处理器可以看到当前处理器写入到内存的数据”。</p>
-</blockquote>
-<p>内存模型分为强内存模型和弱内存模型。<br><strong>强内存模型（strong memory model）：</strong>能够让所有的处理器在任何时候任何指定的内存地址上都可以看到完全相同的值。<br><strong>弱内存模型（weaker memory model）：</strong>需使用内存屏障来刷新本地处理器缓存并使本地处理器缓存无效。内存屏障通常在lock和unlock操作的时候完成。  </p>
-<h3 id="Java内存模型JMM？"><a href="#Java内存模型JMM？" class="headerlink" title="Java内存模型JMM？"></a>Java内存模型JMM？</h3><p><strong>JMM决定一个线程对共享变量的写入何时对另一个线程可见。</strong><br>线程之间的共享变量存储在主内存（main memory）中，每个线程都有一个私有的本地内存（local memory），本地内存中存储了该线程以读/写共享变量的副本。本地内存是JMM的一个抽象概念，并不真实存在。它涵盖了缓存，写缓冲区，寄存器以及其他的硬件和编译器优化。JMM的原理如下图所示：<br><img src="http://o73nd1ra4.bkt.clouddn.com/JMM.png" alt=""><br><img src="http://o73nd1ra4.bkt.clouddn.com/JMM1.png" alt=""><br>线程A对共享变量的修改要想被线程2及时看到，必须要经过2个步骤：<br>step1：把工作内存A中更新过的共享变量刷新到主内存中。<br>step2：强主内存中最新的共享变量的值更新到工作内存B中。<br>1.JMM对正确同步的多线程程序的内存一致性做了保证；<br>2.顺序一致性内存模型： 理论参考模型， 一个线程中的所有操作必须按照程序的顺序来执行， （不管程序是否同步）所有线程都只能看到一个单一的操作执行顺序。<br>~~在顺序一致性模型中，所有操作完全按程序的顺序串行执行。而在JMM中，临界区内的代码可以重排序<br>~~JMM不保证对64位的long型和double型变量的读/写操作具有原子性（解决方法：使用volatile变量），而顺序一致性模型保证对所有的内存读/写操作都具有原子性。  </p>
-<h4 id="重排序"><a href="#重排序" class="headerlink" title="重排序"></a>重排序</h4><p><strong>在执行程序时为了提高性能，编译器和处理器常常会对指令做重排序。</strong><br><img src="http://o73nd1ra4.bkt.clouddn.com/resort.png" alt=""><br>重排序分三种类型：<br><strong>1. 编译器优化的重排序：</strong>编译器在不改变单线程程序语义的前提下，可以重新安排语句的执行顺序。<strong>（编译器重排序）</strong><br><strong>2. 指令级并行的重排序：</strong>现代处理器采用了指令级并行技术（Instruction-Level Parallelism， ILP）来将多条指令重叠执行。如果不存在数据依赖性，处理器可以改变语句对应机器指令的执行顺序。<strong>（处理器重排序）</strong><br><strong>3. 内存系统的重排序：</strong>由于处理器使用缓存和读/写缓冲区，这使得加载和存储操作看上去可能是在乱序执行。<strong>（处理器重排序）</strong><br>重排序导致多线程程序出现内存可见性问题。<br><strong>内存可见性：</strong>一个线程对共享变量值得修改，能够及时地被其他线程看到。<br><strong>共享变量：</strong>如果一个变量在多个线程的工作内存中都存在副本，那么这个变量就是这几个线程的共享变量。<br><em>编译器和处理器在重排序的时候，会遵守数据依赖性，不会改变存在数据依赖性的两个操作的执行顺序。</em><br><strong>as-if-serial语义</strong>：指：不管怎么重排序（编译器和处理器为了提高并行度），（单线程）程序的执行结果不能被改变。编译器，runtime 和处理器都必须遵守as-if-serial语义。</p>
-<h4 id="写缓存区"><a href="#写缓存区" class="headerlink" title="写缓存区"></a>写缓存区</h4><p>现代的处理器使用写缓冲区来临时保存向内存写入的数据。  </p>
-<ol>
-<li>写缓冲区可以保证指令流水线持续运行，</li>
-<li>它可以避免由于处理器停顿下来等待向内存写入数据而产生的延迟。</li>
-<li>可以减少对内存总线的占用。 通过以批处理的方式刷新写缓冲区，以及合并写缓冲区中对同一内存地址的多次写。    </li>
-</ol>
-<p><strong>写缓冲区仅仅对它所在的处理器可见</strong></p>
-<h4 id="内存屏障"><a href="#内存屏障" class="headerlink" title="内存屏障"></a>内存屏障</h4><p>为了保证内存可见性，java编译器在生成指令序列的适当位置会插入内存屏障指令来禁止特定类型的处理器重排序。<br>JMM把内存屏障指令分为四类：<br><img src="http://o73nd1ra4.bkt.clouddn.com/memeory.png" alt=""><br><strong>StoreLoad Barriers是一个“全能型”的屏障，它同时具有其他三个屏障的效果。</strong>  </p>
-<h4 id="happens-before规则"><a href="#happens-before规则" class="headerlink" title="happens-before规则"></a>happens-before规则</h4><p>happens-before的概念阐述操作之间的内存可见性  </p>
-<ul>
-<li>程序顺序规则：一个线程中的每个操作，happensbefore 于该线程中的任意后续操作。  </li>
-<li>监视器锁规则：对一个监视器锁的解锁，happensbefore 于随后对这个监视器锁的加锁。  </li>
-<li>volatile变量规则：对一个volatile域的写，happensbefore 于任意后续对这个volatile域的读。  </li>
-<li>传递性：如果A happensbefore B，且B happensbefore C，那么A happensbefore C。  </li>
-</ul>
-<p>两个操作之间具有happens-before关系，并不意味着前一个操作必须要在后一个操作之前执行！happens-before仅仅要求前一个操作（执行的结果）对后一个操作可见，且前一个操作按顺序排在第二个操作之前。    </p>
-<h4 id="JAVA语言层面上实现可见性：synchronized"><a href="#JAVA语言层面上实现可见性：synchronized" class="headerlink" title="JAVA语言层面上实现可见性：synchronized"></a>JAVA语言层面上实现可见性：synchronized</h4><p>synchronized：解锁前：将共享变量的最新值刷新到主内存中；加锁时，清空工作内存共享变量的值，从主内存读取最新值。（加锁与解锁是同一把锁）<br>线程解锁前对共享变量的修改在下次加锁时对其他线程可见<br>（1）获得互斥锁<br>（2）清空工作内存<br>（3）从主内存拷贝变量的最新复本到工作内存<br>（4）执行代码<br>（5）将更改后的共享变量的值刷新到主内存<br>（6）释放互斥锁<br><strong>锁</strong><br>锁是java并发编程中最重要的同步机制， 锁除了让临界区互斥执行外，还可以让释放锁的线程向获取同一个锁的线程发送消息。    </p>
-<ol>
-<li>当线程获取锁时，JMM把该线程对应的本地内存置为无效。从而使得被监视器保护的临界区代码必须要从主内存中去读取共享变量。  </li>
-<li>当线程释放锁时，JMM会把该线程对应的本地内存中的共享变量刷新到主内存中。  </li>
-</ol>
-<p>具体锁相关的知识点归纳在<a href="http://bealin.github.io/2016/05/13/java%E5%A4%9A%E7%BA%BF%E7%A8%8B/" target="_blank" rel="external">java多线程</a> 这篇博文中。    </p>
-<h4 id="JAVA语言层面上实现可见性：volatile"><a href="#JAVA语言层面上实现可见性：volatile" class="headerlink" title="JAVA语言层面上实现可见性：volatile"></a>JAVA语言层面上实现可见性：volatile</h4><p>volatile：通过加入内存屏障和禁止重排序优化来实现的。<br>volatile内存语义的实现  </p>
-<ol>
-<li>线程写volatile变量过程：<br>(1)改变线程工作内存中volatile变量副本的值<br>(2)将改变后的副本的值从工作内存刷新到主内存  </li>
-<li>线程读volatile变量的过程：<br>(1)从主内存中读取最新值到线程的工作内存中<br>(2)从工作内存中读取volatile变量的副本<br>JMM针对编译器制定的volatile重排序规则表：<br><img src="http://o73nd1ra4.bkt.clouddn.com/volatile_resort.png" alt="">  </li>
-</ol>
-<ul>
-<li>当第二个操作是volatile写时，不管第一个操作是什么，都不能重排序。  </li>
-<li>当第一个操作是volatile读时，不管第二个操作是什么，都不能重排序。  </li>
-<li>当第一个操作是volatile写，第二个操作是volatile读时，不能重排序。  </li>
-</ul>
-<ol>
-<li>volatile写之前的操作不会被编译器重排序到volatile写之后。  </li>
-<li>volatile读之后的操作不会被编译器重排序到volatile读之前。  </li>
-<li>volatile：通过加入内存屏障和禁止重排序优化来实现的。JMM采取保守策略:  </li>
-</ol>
-<ul>
-<li>在每个volatile写操作的前面插入一个StoreStore屏障。  </li>
-<li>在每个volatile写操作的后面插入一个StoreLoad屏障。  </li>
-<li>在每个volatile读操作的后面插入一个LoadLoad屏障。  </li>
-<li>在每个volatile读操作的后面插入一个LoadStore屏障<br>保守策略下，volatile写插入内存屏障后生成的指令序列示意图：<br><img src="http://o73nd1ra4.bkt.clouddn.com/volatile_write.png" alt=""><br>保守策略下，volatile读插入内存屏障后生成的指令序列示意图：<br><img src="http://o73nd1ra4.bkt.clouddn.com/volatile_read.png" alt=""></li>
-</ul>
-<p><strong>volatile不能保证复合操作的原子性</strong><br>解决方法：</p>
-<ol>
-<li>使用Lock</li>
-<li>使用synchronized<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">increase</span><span class="params">()</span></span>&#123;</span><br><span class="line"> 	<span class="comment">//first method</span></span><br><span class="line"> 	<span class="comment">/*lock.lock();</span><br><span class="line">	try &#123;</span><br><span class="line">  		this.number++;</span><br><span class="line">	&#125; finally &#123;</span><br><span class="line">  		lock.unlock();</span><br><span class="line">	&#125; */</span></span><br><span class="line"> 	<span class="comment">//second method  减少锁粒度</span></span><br><span class="line"> 	<span class="comment">/*synchronized (this) &#123;</span><br><span class="line">  		this.number++;</span><br><span class="line">	&#125;*/</span></span><br><span class="line"> 	<span class="keyword">this</span>. number++;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<p><strong>volatile适用场合</strong></p>
-<ol>
-<li>对变量的写入操作不依赖其当前值</li>
-<li>该变量没有包含在具有其他变量的不变式中</li>
-</ol>
-<h4 id="volatile与synchronized的比较"><a href="#volatile与synchronized的比较" class="headerlink" title="volatile与synchronized的比较"></a>volatile与synchronized的比较</h4><ol>
-<li>volatile不需要加锁，比synchronized更轻量级，不会阻塞线程</li>
-<li>从内存可见性角度，volatile读相当于加锁，volatile写相当于解锁</li>
-<li>volatile仅能使用在变量级别；synchronized则可以使用在变量、方法、和类级别的</li>
-<li>synchronized保证可见性和原子性；volatile保证可见性，不能保证原子性</li>
-<li>volatile只是在线程内存和“主”内存间同步某个变量的值，而synchronized通过锁定和解锁某个监视器同步所有变量的值；</li>
-<li>volatile标记的变量不会被编译器优化；synchronized标记的变量可以被编译器优化<br>当volatile能够保证线程安全时，尽量考虑volatile</li>
-</ol>
-<hr>
-<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p>书本：<br><a href="https://www.amazon.cn/Java%E7%BC%96%E7%A8%8B%E6%80%9D%E6%83%B3-%E5%9F%83%E5%8F%B2%E5%B0%94/dp/B0011F7WU4?ie=UTF8&amp;camp=536&amp;creative=3132&amp;creativeASIN=B0011F7WU4&amp;linkCode=as2&amp;ref_=as_li_ss_tl&amp;tag=jtianlinsblog-23" target="_blank" rel="external">《Think in Java》</a><br>网址：<br><a href="http://www.hollischuang.com/archives/1003" target="_blank" rel="external">http://www.hollischuang.com/archives/1003</a><br><a href="http://ifeve.com/memory-model/" target="_blank" rel="external">http://ifeve.com/memory-model/</a><br><a href="http://ifeve.com/jmm-faq/" target="_blank" rel="external">http://ifeve.com/jmm-faq/</a><br><a href="http://blog.csdn.net/zhangerqing/article/details/8214365" target="_blank" rel="external">http://blog.csdn.net/zhangerqing/article/details/8214365</a>  </p>
-
-      
-    </div>
-    <footer class="article-footer">
-	  
-	  <!-- 百度分享 Start -->
-	  <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a><a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a></div>
-	  <!-- 百度分享 End -->
-	  
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JMM/">JMM</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
-
-	  
-<span>
-Updated:<time datetime="2016-05-23T06:07:38.555Z" itemprop="dateModified">2016-05-23</time>
-</span>
-
-
-    </footer>
-  </div>
-  
-    
-<nav id="article-nav">
-  
-    <a href="/2016/05/13/Python学习笔记/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">上一篇</strong>
-      <div class="article-nav-title">
-        
-          Python学习笔记
-        
-      </div>
-    </a>
-  
-  
-</nav>
-
-  
-</article>
-
-
-
-
-</section>
+        <section id="main"></section>
         
           
   <div id="toc" class="toc-aside">
-  <h2 class="toc-title">Contents</h2>
+  <h2 class="toc-title">文章目录</h2>
     
         <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#java内存模型"><span class="toc-number">1.</span> <span class="toc-text">java内存模型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#什么是内存模型？"><span class="toc-number">1.1.</span> <span class="toc-text">什么是内存模型？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Java内存模型JMM？"><span class="toc-number">1.2.</span> <span class="toc-text">Java内存模型JMM？</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#重排序"><span class="toc-number">1.2.1.</span> <span class="toc-text">重排序</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#写缓存区"><span class="toc-number">1.2.2.</span> <span class="toc-text">写缓存区</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#内存屏障"><span class="toc-number">1.2.3.</span> <span class="toc-text">内存屏障</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#happens-before规则"><span class="toc-number">1.2.4.</span> <span class="toc-text">happens-before规则</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#JAVA语言层面上实现可见性：synchronized"><span class="toc-number">1.2.5.</span> <span class="toc-text">JAVA语言层面上实现可见性：synchronized</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#JAVA语言层面上实现可见性：volatile"><span class="toc-number">1.2.6.</span> <span class="toc-text">JAVA语言层面上实现可见性：volatile</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#volatile与synchronized的比较"><span class="toc-number">1.2.7.</span> <span class="toc-text">volatile与synchronized的比较</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考资料"><span class="toc-number">2.</span> <span class="toc-text">参考资料</span></a></li></ol>
     
@@ -276,7 +123,7 @@ Updated:<time datetime="2016-05-23T06:07:38.555Z" itemprop="dateModified">2016-0
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Categories</h3>
+    <h3 class="widget-title">Categorías</h3>
     <div class="widget">
       <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Deep-Learning/">Deep Learning</a><span class="category-list-count">7</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Deep-Learning/Caffe/">Caffe</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hadoop/">Hadoop</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a><span class="category-list-count">15</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Python/Scrapy/">Scrapy</a><span class="category-list-count">1</span></li></ul></li></ul>
     </div>
@@ -286,7 +133,7 @@ Updated:<time datetime="2016-05-23T06:07:38.555Z" itemprop="dateModified">2016-0
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Tag Cloud</h3>
+    <h3 class="widget-title">Nube de Tags</h3>
     <div class="widget tagcloud">
       <a href="/tags/AlexNet/" style="font-size: 13px; color: #7dc3de">AlexNet</a> <a href="/tags/BE/" style="font-size: 13px; color: #7dc3de">BE</a> <a href="/tags/Bagging/" style="font-size: 13px; color: #7dc3de">Bagging</a> <a href="/tags/Bayes/" style="font-size: 14.17px; color: #6dc1b9">Bayes</a> <a href="/tags/Boosting/" style="font-size: 13px; color: #7dc3de">Boosting</a> <a href="/tags/Caffe/" style="font-size: 17.67px; color: #3db94a">Caffe</a> <a href="/tags/Deep-Learning/" style="font-size: 18.83px; color: #2db725">Deep Learning</a> <a href="/tags/Faster-RCNN/" style="font-size: 13px; color: #7dc3de">Faster-RCNN</a> <a href="/tags/Fine-tuning/" style="font-size: 13px; color: #7dc3de">Fine-tuning</a> <a href="/tags/GC/" style="font-size: 13px; color: #7dc3de">GC</a> <a href="/tags/HDFS/" style="font-size: 13px; color: #7dc3de">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 16.5px; color: #4dbc6f">Hadoop</a> <a href="/tags/JMM/" style="font-size: 13px; color: #7dc3de">JMM</a> <a href="/tags/JVM/" style="font-size: 13px; color: #7dc3de">JVM</a> <a href="/tags/Java/" style="font-size: 15.33px; color: #5dbe94">Java</a> <a href="/tags/K近邻/" style="font-size: 13px; color: #7dc3de">K近邻</a> <a href="/tags/ML/" style="font-size: 20px; color: #1db400">ML</a> <a href="/tags/MLE/" style="font-size: 13px; color: #7dc3de">MLE</a> <a href="/tags/MapReduce/" style="font-size: 13px; color: #7dc3de">MapReduce</a> <a href="/tags/NaiveBayes/" style="font-size: 13px; color: #7dc3de">NaiveBayes</a> <a href="/tags/Object-Detection/" style="font-size: 13px; color: #7dc3de">Object Detection</a> <a href="/tags/PCA/" style="font-size: 13px; color: #7dc3de">PCA</a> <a href="/tags/Python/" style="font-size: 14.17px; color: #6dc1b9">Python</a> <a href="/tags/RPC/" style="font-size: 13px; color: #7dc3de">RPC</a> <a href="/tags/SVM/" style="font-size: 13px; color: #7dc3de">SVM</a> <a href="/tags/Scrapy/" style="font-size: 13px; color: #7dc3de">Scrapy</a> <a href="/tags/Stacking/" style="font-size: 13px; color: #7dc3de">Stacking</a> <a href="/tags/决策树/" style="font-size: 13px; color: #7dc3de">决策树</a> <a href="/tags/分布式技术/" style="font-size: 13px; color: #7dc3de">分布式技术</a> <a href="/tags/分布式文件系统/" style="font-size: 13px; color: #7dc3de">分布式文件系统</a> <a href="/tags/半监督学习/" style="font-size: 13px; color: #7dc3de">半监督学习</a> <a href="/tags/多线程/" style="font-size: 13px; color: #7dc3de">多线程</a> <a href="/tags/大数据/" style="font-size: 13px; color: #7dc3de">大数据</a> <a href="/tags/感知机/" style="font-size: 14.17px; color: #6dc1b9">感知机</a> <a href="/tags/拉格朗日乘子法/" style="font-size: 13px; color: #7dc3de">拉格朗日乘子法</a> <a href="/tags/机器学习/" style="font-size: 20px; color: #1db400">机器学习</a> <a href="/tags/核方法/" style="font-size: 13px; color: #7dc3de">核方法</a> <a href="/tags/概率图模型/" style="font-size: 13px; color: #7dc3de">概率图模型</a> <a href="/tags/深度学习/" style="font-size: 14.17px; color: #6dc1b9">深度学习</a> <a href="/tags/爬虫/" style="font-size: 13px; color: #7dc3de">爬虫</a> <a href="/tags/特征选择/" style="font-size: 13px; color: #7dc3de">特征选择</a> <a href="/tags/神经网络/" style="font-size: 13px; color: #7dc3de">神经网络</a> <a href="/tags/聚类/" style="font-size: 13px; color: #7dc3de">聚类</a> <a href="/tags/阅读/" style="font-size: 14.17px; color: #6dc1b9">阅读</a> <a href="/tags/降维/" style="font-size: 13px; color: #7dc3de">降维</a> <a href="/tags/集成方法/" style="font-size: 13px; color: #7dc3de">集成方法</a>
     </div>
@@ -296,7 +143,7 @@ Updated:<time datetime="2016-05-23T06:07:38.555Z" itemprop="dateModified">2016-0
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
+    <h3 class="widget-title">Archivos</h3>
     <div class="widget">
       <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">5</span></li></ul>
     </div>
@@ -306,7 +153,7 @@ Updated:<time datetime="2016-05-23T06:07:38.555Z" itemprop="dateModified">2016-0
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
+    <h3 class="widget-title">Posts recientes</h3>
     <div class="widget">
       <ul>
         
@@ -341,7 +188,7 @@ Updated:<time datetime="2016-05-23T06:07:38.555Z" itemprop="dateModified">2016-0
   
     
 <div class="widget-wrap">
-  <h3 class="widget-title">Links</h3>
+  <h3 class="widget-title">友情链接</h3>
   <ul class="widget">
     
     <li><a href="http://yibo.iyiyun.com/js/yibo404/key/1" target="_BLANK">404 page</a></li>

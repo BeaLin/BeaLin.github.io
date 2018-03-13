@@ -73,7 +73,7 @@ var _hmt = _hmt || [];
           <a id="nav-github-link" class="nav-icon" href="https://github.com/BeaLin" title="Github" target="_blank"></a>
         
         
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Buscar"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -83,147 +83,11 @@ var _hmt = _hmt || [];
 </header>
 
       <div class="outer">
-        <section id="main"><article id="post-Caffe学习系列——2用AlexNet训练自己的数据集" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    
-<a href="/2016/10/23/Caffe学习系列——2用AlexNet训练自己的数据集/" class="article-date">
-  <time datetime="2016-10-23T02:31:28.000Z" itemprop="datePublished">2016-10-23</time>
-</a>
-
-
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Deep-Learning/">Deep Learning</a>►<a class="article-category-link" href="/categories/Deep-Learning/Caffe/">Caffe</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="article-title" itemprop="name">
-      Caffe学习系列——2用AlexNet训练自己的数据集
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-		
-		<div id="toc" class="toc-article">
-			<h2 class="toc-title"><span>Contents</span></h2>
-		
-			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#AlexNet的结构"><span class="toc-number">1.</span> <span class="toc-text">AlexNet的结构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-ReLu激活函数"><span class="toc-number">1.1.</span> <span class="toc-text">1.ReLu激活函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-数据增强"><span class="toc-number">1.2.</span> <span class="toc-text">2.数据增强</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-DropOut"><span class="toc-number">1.3.</span> <span class="toc-text">3.DropOut</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-多GPU训练"><span class="toc-number">1.4.</span> <span class="toc-text">4.多GPU训练</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-LRN归一化层"><span class="toc-number">1.5.</span> <span class="toc-text">5.LRN归一化层</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用AlexNet训练自己的数据集"><span class="toc-number">2.</span> <span class="toc-text">使用AlexNet训练自己的数据集</span></a></li></ol>
-		
-		</div>
-		
-        <p>本文主要介绍AlexNet网络结构以及如何使用AlexNet来训练自己的数据集。<br>讲到AlexNet，就不得不提ImageNet以及ImageNet LSVRC大赛，ImageNet是一项大型计算机视觉系统识别项目，是目前世界上图像识别最大的数据库，截止2016年，ImageNet提供超过10亿张手工标记的图片。从2010年，ImageNet组开始一年一度的the ImageNet Large Scale Visual Recognition Challenge (大规模视觉识别大赛，简称ILSVRC)。本文要介绍的AlexNet就是由Alex提出的网络结构模型，此网络结构赢得了2112届的冠军，同时刷新了image classification的记录，奠定了deep learning在计算机视觉中的地位。<br>Alex是一个大型深度卷积神经网络，其优势在于：网络增大（5个卷积层+3个全连接层+1个softmax层），同时解决过拟合（dropout，data augmentation，LRN），并且利用多GPU加速计算，在ILSVRC-2012大赛中，以top-5测试误差率15.3%取得了胜利。<br><a id="more"></a></p>
-<h2 id="AlexNet的结构"><a href="#AlexNet的结构" class="headerlink" title="AlexNet的结构"></a>AlexNet的结构</h2><p>该网络包括八个带权层；前五层是卷积层，剩下三层是全连接层。最后一个全连接层的输出被送到一个1000-way的softmax层，其产生一个覆盖1000类标签的分布。这使得多分类的Logistic回归目标最大化，相当于最大化了预测分布下训练样本中正确标签的对数概率平均值。<br><img src="http://o73nd1ra4.bkt.clouddn.com/Caffe2-1.png" alt="CNN体系结构示意图"><br>AlexNet的成功原因在于：</p>
-<ol>
-<li>每个卷积层及全连接层的输出都应用了ReLU非线性激活函数</li>
-<li>使用数据增强和Dropout来防止过拟合</li>
-<li>大数据训练：百万级ImageNet图像数据</li>
-<li>多GPU的训练以及LRN归一化层的使用</li>
-</ol>
-<p>接下来一一介绍上诉提到的AlexNet的重要之处。</p>
-<h3 id="1-ReLu激活函数"><a href="#1-ReLu激活函数" class="headerlink" title="1.ReLu激活函数"></a>1.ReLu激活函数</h3><p>Sigmoid是一种常用的非线性激活函数，它能够把输入的连续值压缩到0和1之间，如果是非常大的负数，那么输出为0，如果是非常大的正数，输出为1.但它有一一些致命的缺点：</p>
-<ol>
-<li>就是当输入非常大或者非常小的时候，会有饱和现象，这些神经元的梯度是接近于0的。如果你的初始值很大的话，梯度在反向传播的时候因为需要乘上一个sigmoid的导数，所以会使得梯度越来越小，这会导致网络变的很难学习</li>
-<li>Sigmoid的output不是0均值，这会导致后一层的神经元将得到上一层输出的非0均值的信号作为输入。</li>
-</ol>
-<p>ReLU的数学表达式f(x)=max(0,x)，由于ReLU的线性，而且不可导（ReLU的导数始终为1），所以相比于sigmoid/tanh，ReLU只需要一个阈值就可以得到激活值，而不用去计算一大堆的复杂运算，使用ReLu得到的SGD的收敛速度会比sigmoid/tanh快很多。<br>sigmoid：<img src="http://o73nd1ra4.bkt.clouddn.com/Caffe2-2.png" alt="sigmoid"><br>tanh：<img src="http://o73nd1ra4.bkt.clouddn.com/Caffe2-3.png" alt="tanh"></p>
-<h3 id="2-数据增强"><a href="#2-数据增强" class="headerlink" title="2.数据增强"></a>2.数据增强</h3><p>减少图像数据过拟合最简单最常用的方法是使用标签-保留转换，人为地扩大数据库。AlexNet使用了数据增强的两种不同形式，这两种形式都允许转换图像用很少的计算量从原始图像中产生。第一种形式是对图像进行翻转和平移变换。训练时候，对256<em>256的图片进行随机crop到224</em>224，然后允许水平翻转，这样相当于将样本倍增到((256-224)^2)*2=2048。测试时候，对左上、右上、左下、右下、中间做了5次crop，然后翻转，共10个crop。之后对结果求平均。第二种形式改变训练图像中RGB通道的强度。Alex对RGB空间做PCA，然后对主成分做一个(0,0.1)的高斯扰动。使用这种方案大大增加了数据集，这样就可以增大网络结构，否则会因为数据集过小而导致过拟合，从而只能使用小的网络结构。</p>
-<h3 id="3-DropOut"><a href="#3-DropOut" class="headerlink" title="3.DropOut"></a>3.DropOut</h3><p>结合预先训练好的许多不同模型。来进行预测是一种非常成功的减少测试误差的方式，但因为每一个模型的训练都需要花费好长时间，所以这种做法对于大型神经网络来说太过昂贵，AlexNet采用了Dropout技术，使得在训练中只需要花费两倍于单模型的时间。其核心思想就是以0.5的概率，将每个隐层神经元的输出设置为0，以这种方式“droppedout”的神经元既不参与前向传播，也不参与反向传播。所以每次输入一个样本就相当于该神经网络尝试了一个新的结构，并且所有这些结构之间共享权重。因为神经元不依赖于其他特定神经元而存在，所以这种技术降低了神经元复杂的互适应关系。也正因为如此，网络需要被迫学习更为鲁邦的特征，这些特征在结合其他神经元的一些不同随机子集时是有用的。在测试时，AlexNet将所神经元的输出都乘以0.5，对于获取指数级dropout网络产生的预测分布的几何平均值，这是一个合理的近似方法。AlexNet中有两个全连接层使用dropout，使收敛所需要的迭代次数大致增加了一倍，避免了大量的过拟合</p>
-<h3 id="4-多GPU训练"><a href="#4-多GPU训练" class="headerlink" title="4.多GPU训练"></a>4.多GPU训练</h3><p>单个GTX580GPU只有3GB内存，这限制了可以在其上训练的网络的最大规模。事实证明，120万个训练样本才足以训练网络，这个网络太大了，所以不适合在一个GPU上训练，因此他们将网络分布在两个GPU上。目前的GPU特别适合跨GPU并行化，因为它们能够直接从另一个GPU的内存中读出和写入，不需要通过主机内存。AlexNet采用的并行方案是在每个GPU中放置一半核（或神经元）。还有一个额外的技巧是GPU间的通讯只在某些层进行。例如图2所示，第3层的核需要从低层中所有核映射输入，然而，第4层的核只需要从第3层中位于同一GPU的那些核映射输入。</p>
-<h3 id="5-LRN归一化层"><a href="#5-LRN归一化层" class="headerlink" title="5.LRN归一化层"></a>5.LRN归一化层</h3><p>（Local Response Normalization）局部响应归一化，这个层是为了防止激活函数的饱和的。与ReLU具有相同的功能，使用局部归一化方案有助于一般化。L 这种响应归一化实现了一种侧向抑制，在使用不同核计算神经元输出的过程中创造对大激活度的竞争。 从试验结果看，LRN操作可以提高网络的泛化能力，将错误率降低了大约1个百分点。</p>
-<h2 id="使用AlexNet训练自己的数据集"><a href="#使用AlexNet训练自己的数据集" class="headerlink" title="使用AlexNet训练自己的数据集"></a>使用AlexNet训练自己的数据集</h2><p>Caffe中AlexNet的网络结构及其相应的solver文件在$CaffeRoot/models/bvlc_alecnet目录下，train_val.prototxt是网络结构定义文件，里面使用标签的形式来描述，这里推荐一个网址（<a href="http://ethereon.github.io/netscope/#/preset/alexnet" target="_blank" rel="external">http://ethereon.github.io/netscope/#/preset/alexnet</a>，该网址实现了使用图的形式来显示网络结构。solver.prototxt是训练时的一些配置，包括迭代次数，初始学习率，输出caffemodel的地址，测试间隔等等。</p>
-<ol>
-<li>创建自己的图片数据集，放在$CaffeRoot/data下，这样便于管理。生成标签txt文本，文本的格式如下：<br>/home/linbiyuan/caffe/data/wow_style/images/8796f8b306157272353df8709083a36ec0af61c2.jpg 0<br>需要说明一点就是，类别标签需要从0开始（即将你相应的类别转成数字，从0往上累加），否则会出现一些问题<br>由于我的图片时网站上爬下来的，所以爬的时候同时进行了处理，爬取的过程传送门见这里（）。你也可以自己写Python代码，或者shell脚本生成上述文本。<br>shell参考：<br>获取文件夹下所有的图片名称<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">image_path=&apos;/home/linbiyuan/caffe/data/wow_style/img/*.jpg&apos;</span><br><span class="line">image_label=&apos;0&apos;</span><br><span class="line">for image_name in $image_path;do python inputTxt.py $image_name $image_label;done</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>python代码<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> argparse</span><br><span class="line"><span class="keyword">import</span> sys,os</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">writeouput</span><span class="params">(result,path)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> os.path.isfile(path):</span><br><span class="line">        f=open(path,<span class="string">'a'</span>)</span><br><span class="line">        f.write(result+<span class="string">'\n'</span>)</span><br><span class="line">        f.close()</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        f=open(path,<span class="string">'w'</span>)</span><br><span class="line">        f.write(result+<span class="string">'\n'</span>)</span><br><span class="line">        f.close()</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">(argv)</span>:</span></span><br><span class="line">    parser = argparse.ArgumentParser()</span><br><span class="line">    parser.add_argument(</span><br><span class="line">        <span class="string">"image_name"</span>,</span><br><span class="line">        help=<span class="string">"Input image, directory, or npy."</span></span><br><span class="line">    )</span><br><span class="line">    parser.add_argument(</span><br><span class="line">        <span class="string">"image_label"</span>,</span><br><span class="line">        help=<span class="string">"Output npy filename."</span></span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line">    args=parser.parse_args()</span><br><span class="line">    writeouput(args.image_name+<span class="string">" "</span>+args.image_label,<span class="string">'/home/linbiyuan/caffe/data/wow_style/all.txt'</span>)</span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    main(sys.argv)</span><br></pre></td></tr></table></figure></p>
-<ol>
-<li><p>生成训练集和测试集<br>可以将整个数据集按3:1的比例划分成训练集和测试集，python代码如下：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> numpy.matlib <span class="keyword">import</span>  random</span><br><span class="line"></span><br><span class="line">dataSet=[]</span><br><span class="line">fileIn=open(<span class="string">'/home/linbiyuan/caffe/data/wow_style/all.txt'</span>)</span><br><span class="line"><span class="keyword">for</span> line <span class="keyword">in</span> fileIn.readlines():</span><br><span class="line">    dataSet.append(line.strip())</span><br><span class="line"></span><br><span class="line">random.shuffle(dataSet)</span><br><span class="line">pos=int(len(dataSet)*<span class="number">.75</span>)</span><br><span class="line">traindata=dataSet[:pos]</span><br><span class="line">testdata=dataSet[pos:]</span><br><span class="line"></span><br><span class="line">f=open(<span class="string">'/home/linbiyuan/caffe/data/wow_style/pictrain.txt'</span>,<span class="string">'w'</span>)</span><br><span class="line"><span class="keyword">for</span> row <span class="keyword">in</span> traindata:</span><br><span class="line">    f.write(row+<span class="string">'\n'</span>)</span><br><span class="line">f.close()</span><br><span class="line">f=open(<span class="string">'/home/linbiyuan/caffe/data/wow_style/pictest.txt'</span>,<span class="string">'w'</span>)</span><br><span class="line"><span class="keyword">for</span> row <span class="keyword">in</span> testdata:</span><br><span class="line">    f.write(row+<span class="string">'\n'</span>)</span><br><span class="line">f.close()</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>生成lmdb文件<br>在$CaffeRoot/examples/imagenet下创建一个目录，将接下来要生成或要用到的文件都放在这个目录下，便于管理<br>使用imagenet下的create_imagenet.sh文件生成lmdb文件，将这个文件拷贝到自己的目录下，修改一些地方，如下：</p>
-</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line">#!/usr/bin/env sh</span><br><span class="line"># Create the imagenet lmdb inputs</span><br><span class="line"># N.B. set the path to the imagenet train + val data dirs</span><br><span class="line">set -e</span><br><span class="line"></span><br><span class="line">EXAMPLE=examples/imagenet/wowpic</span><br><span class="line">#DATA=examples/imagenet/wowpic</span><br><span class="line">TOOLS=build/tools</span><br><span class="line"></span><br><span class="line">TRAIN_DATA_ROOT=examples/imagenet/wowpic/ #训练样本的存放路径</span><br><span class="line">VAL_DATA_ROOT=examples/imagenet/wowpic/     #测试样本的存放路径</span><br><span class="line"></span><br><span class="line"># Set RESIZE=true to resize the images to 256x256. Leave as false if images have</span><br><span class="line"># already been resized using another tool.</span><br><span class="line">RESIZE=false</span><br><span class="line">if $RESIZE; then</span><br><span class="line">  RESIZE_HEIGHT=256   #改变图片的大小为256*256</span><br><span class="line"></span><br><span class="line">  RESIZE_WIDTH=256</span><br><span class="line">else</span><br><span class="line">  RESIZE_HEIGHT=0</span><br><span class="line">  RESIZE_WIDTH=0</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line">if [ ! -d &quot;$TRAIN_DATA_ROOT&quot; ]; then</span><br><span class="line">  echo &quot;Error: TRAIN_DATA_ROOT is not a path to a directory: $TRAIN_DATA_ROOT&quot;</span><br><span class="line">  echo &quot;Set the TRAIN_DATA_ROOT variable in create_imagenet.sh to the path&quot; \</span><br><span class="line">       &quot;where the ImageNet training data is stored.&quot;</span><br><span class="line">  exit 1</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line">if [ ! -d &quot;$VAL_DATA_ROOT&quot; ]; then</span><br><span class="line">  echo &quot;Error: VAL_DATA_ROOT is not a path to a directory: $VAL_DATA_ROOT&quot;</span><br><span class="line">  echo &quot;Set the VAL_DATA_ROOT variable in create_imagenet.sh to the path&quot; \</span><br><span class="line">       &quot;where the ImageNet validation data is stored.&quot;</span><br><span class="line">  exit 1</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line">echo &quot;Creating train lmdb...&quot;</span><br><span class="line">#调用convert_imageset文件转换文件格式，后面为输入参</span><br><span class="line"></span><br><span class="line">GLOG_logtostderr=1 $TOOLS/convert_imageset \</span><br><span class="line">    --resize_height=$RESIZE_HEIGHT \</span><br><span class="line">    --resize_width=$RESIZE_WIDTH \</span><br><span class="line">    --shuffle \</span><br><span class="line">    $TRAIN_DATA_ROOT \</span><br><span class="line">    $EXAMPLE/pictrain.txt \</span><br><span class="line">    $EXAMPLE/train_lmdb</span><br><span class="line"></span><br><span class="line">echo &quot;Creating val lmdb...&quot;</span><br><span class="line"></span><br><span class="line">GLOG_logtostderr=1 $TOOLS/convert_imageset \</span><br><span class="line">    --resize_height=$RESIZE_HEIGHT \</span><br><span class="line">    --resize_width=$RESIZE_WIDTH \</span><br><span class="line">    --shuffle \</span><br><span class="line">    $VAL_DATA_ROOT \</span><br><span class="line">    $EXAMPLE/pictest.txt \</span><br><span class="line">    $EXAMPLE/test_lmdb</span><br><span class="line"></span><br><span class="line">echo &quot;Done.&quot;</span><br></pre></td></tr></table></figure>
-<p>在caffe根目录下运行该shell，文件夹中就会多出两个lmdb的文件夹<br>./examples/imagenet/wowpic /create_imagenet.sh</p>
-<ol>
-<li>对现有图片求均值<br>使用imagenet中的make_imagenet_mean.sh对训练图片数据求均值，将其拷贝到你的文件目录下，修改下路径：<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env sh</span></span><br><span class="line"><span class="comment"># Compute the mean image from the imagenet training lmdb</span></span><br><span class="line"><span class="comment"># N.B. this is available in data/ilsvrc12</span></span><br><span class="line"></span><br><span class="line">EXAMPLE=examples/imagenet/wowpic</span><br><span class="line"><span class="comment"># DATA=data/ilsvrc12</span></span><br><span class="line">TOOLS=build/tools</span><br><span class="line"></span><br><span class="line">$TOOLS/compute_image_mean $EXAMPLE/train_lmdb \  \ <span class="comment">#调用compute_iamge_mean计算均值，其cpp代码在tool目录下</span></span><br><span class="line"></span><br><span class="line">  $EXAMPLE/imagenet_mean.binaryproto</span><br><span class="line"></span><br><span class="line">echo <span class="string">"Done."</span></span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>在caffe根目录下运行：<br>    ./examples/imagenet/wowpic /make_imagenet_mean.sh</p>
-<ol>
-<li>修改网络的训练参数<br>都需要将要修改的文件拷贝到自己的目录下，再修改。<br>(1)修改train_val.prototxt<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">name: <span class="string">"AlexNet"</span></span><br><span class="line">layer &#123;</span><br><span class="line">  name: <span class="string">"data"</span></span><br><span class="line">  type: <span class="string">"Data"</span></span><br><span class="line">  top: <span class="string">"data"</span></span><br><span class="line">  top: <span class="string">"label"</span></span><br><span class="line">  include &#123;</span><br><span class="line">    phase: TRAIN</span><br><span class="line">  &#125;</span><br><span class="line">  transform_param &#123;</span><br><span class="line">    mirror: true</span><br><span class="line">    crop_size: <span class="number">227</span></span><br><span class="line">    mean_file: <span class="string">"examples/imagenet/wowpic/imagenet_mean.binaryproto"</span>  <span class="comment">#均值二进制文件的存放目录</span></span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line">  data_param &#123;</span><br><span class="line">    source: <span class="string">"examples/imagenet/wowpic/train_lmdb"</span>  <span class="comment">#数据的存放目录</span></span><br><span class="line"></span><br><span class="line">    batch_size: <span class="number">50</span>  <span class="comment">#批处理的数据的量,可根据你的GPU大小来更改。理论上batch小是不会影响收敛的。小batch主要的问题是在FC层的计算可能会不是很efficient，但是数学上没有问题</span></span><br><span class="line">    backend: LMDB</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">layer &#123;</span><br><span class="line">  name: <span class="string">"data"</span></span><br><span class="line">  type: <span class="string">"Data"</span></span><br><span class="line">  top: <span class="string">"data"</span></span><br><span class="line">  top: <span class="string">"label"</span></span><br><span class="line">  include &#123;</span><br><span class="line">    phase: TEST</span><br><span class="line">  &#125;</span><br><span class="line">  transform_param &#123;</span><br><span class="line">    mirror: false</span><br><span class="line">    crop_size: <span class="number">227</span></span><br><span class="line">    mean_file: <span class="string">"examples/imagenet/wowpic/imagenet_mean.binaryproto"</span> <span class="comment">#上同</span></span><br><span class="line">  &#125;</span><br><span class="line">  data_param &#123;</span><br><span class="line">    source: <span class="string">"examples/imagenet/wowpic/test_lmdb"</span> <span class="comment">#上同</span></span><br><span class="line">    batch_size: <span class="number">5</span></span><br><span class="line">    backend: LMDB</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>(2)修改solver.prototxt，根据自己的情况修改<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">net: <span class="string">"examples/imagenet/wowpic/train_val.prototxt"</span>  <span class="comment">#网络模型文件路径</span></span><br><span class="line"></span><br><span class="line">test_iter: <span class="number">100</span>                                      <span class="comment">#test的迭代次数，批处理大小为50，　100*50为测试集个数</span></span><br><span class="line"></span><br><span class="line">test_interval: <span class="number">100</span>                                  <span class="comment">#训练时每迭代500次测试一次</span></span><br><span class="line"></span><br><span class="line">base_lr: <span class="number">0.01</span>                                       <span class="comment">#学习率</span></span><br><span class="line"></span><br><span class="line">lr_policy: <span class="string">"step"</span>                                   <span class="comment">#学习率的改变策略</span></span><br><span class="line">gamma: <span class="number">0.1</span>                                          <span class="comment">#学习率每次改变的值</span></span><br><span class="line">stepsize: <span class="number">500</span>                                        <span class="comment">#步长，即没迭代500，base_lr=base_lr*gamma</span></span><br><span class="line">display: <span class="number">20</span>                                          <span class="comment">#每迭代20次显示，前面调参的时候，可以多显示，真正训练可调高该数值</span></span><br><span class="line">max_iter: <span class="number">1000</span>                                       <span class="comment">#最大迭代次数</span></span><br><span class="line"></span><br><span class="line">momentum: <span class="number">0.9</span>                                        <span class="comment">#动量</span></span><br><span class="line"></span><br><span class="line">weight_decay: <span class="number">0.0005</span>                                 <span class="comment">#权重衰减</span></span><br><span class="line"></span><br><span class="line">snapshot: <span class="number">200</span>                                        <span class="comment">#每迭代200次存储一次Caffemodel。即训练好的模型</span></span><br><span class="line">snapshot_prefix: <span class="string">"examples/imagenet/wowpic"</span>          <span class="comment">#训练好的模型存放的位置</span></span><br><span class="line">solver_mode: GPU                                     <span class="comment">#使用GPU 训练</span></span><br></pre></td></tr></table></figure></p>
-<ol>
-<li>开始训练<br>将train_caffenet.sh放到自己的文件目录下:<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env sh</span></span><br><span class="line"><span class="comment">#set -e</span></span><br><span class="line">./build/tools/caffe train --solver=examples/imagenet/wowpic/solver.prototxt</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>在CAFFE根目录下运行：./examples/imagenet/wowpic/train_caffenet.sh。至此训练过程就开始。执行过程是：首先初始化参数，输出solver.prototxt中的内容；然后，初始化网络结构，即train_val中的内容，接下来就是进入训练过程。可以看到，在经过一段时间的迭代后：loss减少，准确率提高，说明训练正在收敛。</p>
-<ol>
-<li>训练过程遇到的问题<br>Check failed: error == cudaSuccess (2 vs. 0)  out of memory<br>这个问题的原因是内存不够用，可以改小网络结构中的batch_size值</li>
-</ol>
-
-      
-    </div>
-    <footer class="article-footer">
-	  
-	  <!-- 百度分享 Start -->
-	  <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a><a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a></div>
-	  <!-- 百度分享 End -->
-	  
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AlexNet/">AlexNet</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Caffe/">Caffe</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Deep-Learning/">Deep Learning</a></li></ul>
-
-	  
-<span>
-Updated:<time datetime="2017-03-01T05:56:10.735Z" itemprop="dateModified">2017-03-01</time>
-</span>
-
-
-    </footer>
-  </div>
-  
-    
-<nav id="article-nav">
-  
-    <a href="/2016/10/23/Caffe学习系列——3Fine-tuning微调网络/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">上一篇</strong>
-      <div class="article-nav-title">
-        
-          Caffe学习系列——3Fine-tuning微调网络
-        
-      </div>
-    </a>
-  
-  
-    <a href="/2016/10/23/Caffe学习系列——1介绍与安装过程/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">下一篇</strong>
-      <div class="article-nav-title">Caffe学习系列——1介绍与安装过程</div>
-    </a>
-  
-</nav>
-
-  
-</article>
-
-
-
-
-</section>
+        <section id="main"></section>
         
           
   <div id="toc" class="toc-aside">
-  <h2 class="toc-title">Contents</h2>
+  <h2 class="toc-title">文章目录</h2>
     
         <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#AlexNet的结构"><span class="toc-number">1.</span> <span class="toc-text">AlexNet的结构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-ReLu激活函数"><span class="toc-number">1.1.</span> <span class="toc-text">1.ReLu激活函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-数据增强"><span class="toc-number">1.2.</span> <span class="toc-text">2.数据增强</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-DropOut"><span class="toc-number">1.3.</span> <span class="toc-text">3.DropOut</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-多GPU训练"><span class="toc-number">1.4.</span> <span class="toc-text">4.多GPU训练</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-LRN归一化层"><span class="toc-number">1.5.</span> <span class="toc-text">5.LRN归一化层</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用AlexNet训练自己的数据集"><span class="toc-number">2.</span> <span class="toc-text">使用AlexNet训练自己的数据集</span></a></li></ol>
     
@@ -255,7 +119,7 @@ Updated:<time datetime="2017-03-01T05:56:10.735Z" itemprop="dateModified">2017-0
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Categories</h3>
+    <h3 class="widget-title">Categorías</h3>
     <div class="widget">
       <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Deep-Learning/">Deep Learning</a><span class="category-list-count">7</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Deep-Learning/Caffe/">Caffe</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hadoop/">Hadoop</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a><span class="category-list-count">15</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Python/Scrapy/">Scrapy</a><span class="category-list-count">1</span></li></ul></li></ul>
     </div>
@@ -265,7 +129,7 @@ Updated:<time datetime="2017-03-01T05:56:10.735Z" itemprop="dateModified">2017-0
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Tag Cloud</h3>
+    <h3 class="widget-title">Nube de Tags</h3>
     <div class="widget tagcloud">
       <a href="/tags/AlexNet/" style="font-size: 13px; color: #7dc3de">AlexNet</a> <a href="/tags/BE/" style="font-size: 13px; color: #7dc3de">BE</a> <a href="/tags/Bagging/" style="font-size: 13px; color: #7dc3de">Bagging</a> <a href="/tags/Bayes/" style="font-size: 14.17px; color: #6dc1b9">Bayes</a> <a href="/tags/Boosting/" style="font-size: 13px; color: #7dc3de">Boosting</a> <a href="/tags/Caffe/" style="font-size: 17.67px; color: #3db94a">Caffe</a> <a href="/tags/Deep-Learning/" style="font-size: 18.83px; color: #2db725">Deep Learning</a> <a href="/tags/Faster-RCNN/" style="font-size: 13px; color: #7dc3de">Faster-RCNN</a> <a href="/tags/Fine-tuning/" style="font-size: 13px; color: #7dc3de">Fine-tuning</a> <a href="/tags/GC/" style="font-size: 13px; color: #7dc3de">GC</a> <a href="/tags/HDFS/" style="font-size: 13px; color: #7dc3de">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 16.5px; color: #4dbc6f">Hadoop</a> <a href="/tags/JMM/" style="font-size: 13px; color: #7dc3de">JMM</a> <a href="/tags/JVM/" style="font-size: 13px; color: #7dc3de">JVM</a> <a href="/tags/Java/" style="font-size: 15.33px; color: #5dbe94">Java</a> <a href="/tags/K近邻/" style="font-size: 13px; color: #7dc3de">K近邻</a> <a href="/tags/ML/" style="font-size: 20px; color: #1db400">ML</a> <a href="/tags/MLE/" style="font-size: 13px; color: #7dc3de">MLE</a> <a href="/tags/MapReduce/" style="font-size: 13px; color: #7dc3de">MapReduce</a> <a href="/tags/NaiveBayes/" style="font-size: 13px; color: #7dc3de">NaiveBayes</a> <a href="/tags/Object-Detection/" style="font-size: 13px; color: #7dc3de">Object Detection</a> <a href="/tags/PCA/" style="font-size: 13px; color: #7dc3de">PCA</a> <a href="/tags/Python/" style="font-size: 14.17px; color: #6dc1b9">Python</a> <a href="/tags/RPC/" style="font-size: 13px; color: #7dc3de">RPC</a> <a href="/tags/SVM/" style="font-size: 13px; color: #7dc3de">SVM</a> <a href="/tags/Scrapy/" style="font-size: 13px; color: #7dc3de">Scrapy</a> <a href="/tags/Stacking/" style="font-size: 13px; color: #7dc3de">Stacking</a> <a href="/tags/决策树/" style="font-size: 13px; color: #7dc3de">决策树</a> <a href="/tags/分布式技术/" style="font-size: 13px; color: #7dc3de">分布式技术</a> <a href="/tags/分布式文件系统/" style="font-size: 13px; color: #7dc3de">分布式文件系统</a> <a href="/tags/半监督学习/" style="font-size: 13px; color: #7dc3de">半监督学习</a> <a href="/tags/多线程/" style="font-size: 13px; color: #7dc3de">多线程</a> <a href="/tags/大数据/" style="font-size: 13px; color: #7dc3de">大数据</a> <a href="/tags/感知机/" style="font-size: 14.17px; color: #6dc1b9">感知机</a> <a href="/tags/拉格朗日乘子法/" style="font-size: 13px; color: #7dc3de">拉格朗日乘子法</a> <a href="/tags/机器学习/" style="font-size: 20px; color: #1db400">机器学习</a> <a href="/tags/核方法/" style="font-size: 13px; color: #7dc3de">核方法</a> <a href="/tags/概率图模型/" style="font-size: 13px; color: #7dc3de">概率图模型</a> <a href="/tags/深度学习/" style="font-size: 14.17px; color: #6dc1b9">深度学习</a> <a href="/tags/爬虫/" style="font-size: 13px; color: #7dc3de">爬虫</a> <a href="/tags/特征选择/" style="font-size: 13px; color: #7dc3de">特征选择</a> <a href="/tags/神经网络/" style="font-size: 13px; color: #7dc3de">神经网络</a> <a href="/tags/聚类/" style="font-size: 13px; color: #7dc3de">聚类</a> <a href="/tags/阅读/" style="font-size: 14.17px; color: #6dc1b9">阅读</a> <a href="/tags/降维/" style="font-size: 13px; color: #7dc3de">降维</a> <a href="/tags/集成方法/" style="font-size: 13px; color: #7dc3de">集成方法</a>
     </div>
@@ -275,7 +139,7 @@ Updated:<time datetime="2017-03-01T05:56:10.735Z" itemprop="dateModified">2017-0
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
+    <h3 class="widget-title">Archivos</h3>
     <div class="widget">
       <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">5</span></li></ul>
     </div>
@@ -285,7 +149,7 @@ Updated:<time datetime="2017-03-01T05:56:10.735Z" itemprop="dateModified">2017-0
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
+    <h3 class="widget-title">Posts recientes</h3>
     <div class="widget">
       <ul>
         
@@ -320,7 +184,7 @@ Updated:<time datetime="2017-03-01T05:56:10.735Z" itemprop="dateModified">2017-0
   
     
 <div class="widget-wrap">
-  <h3 class="widget-title">Links</h3>
+  <h3 class="widget-title">友情链接</h3>
   <ul class="widget">
     
     <li><a href="http://yibo.iyiyun.com/js/yibo404/key/1" target="_BLANK">404 page</a></li>
