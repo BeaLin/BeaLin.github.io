@@ -80,6 +80,71 @@ var _hmt = _hmt || [];
       <div class="outer">
         <section id="main">
   
+    <article id="post-Caffe学习系列——5使用R-CNN进行目标检测" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    
+<a href="/2016/10/23/Caffe学习系列——5使用R-CNN进行目标检测/" class="article-date">
+  <time datetime="2016-10-23T02:34:12.000Z" itemprop="datePublished">2016-10-23</time>
+</a>
+
+
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Deep-Learning/">Deep Learning</a>►<a class="article-category-link" href="/categories/Deep-Learning/Caffe/">Caffe</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/10/23/Caffe学习系列——5使用R-CNN进行目标检测/">Caffe学习系列——5使用R-CNN进行目标检测</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>RCNN是一个比较经典的目标检测算法，由此后续衍生出的一系列fast-rcnn、faster-rcnn都对目标检测产生了很大的影响。对于RCNN、Fast-RCNN、Faster-RCNN的介绍请看我的这篇博文（）<br>本文主要介绍如何使用caffe实现RCNN目标检测，这也是caffe文档中Notebook Examples的倒数第二个例子，链接在此： <a href="http://nbviewer.jupyter.org/github/BVLC/caffe/blob/master/examples/detection.ipynb">http://nbviewer.jupyter.org/github/BVLC/caffe/blob/master/examples/detection.ipynb</a>在这个例子，预训练模型是基于Imagnet数据集的，并在ILSVRC13上进行了微调。一共有200个类。需要注意的是：本例中一个原始数据对应的所有SVM分类的得分是没有概率校准和类间比较的。并且使用现成的模型只是为了简便，并不是完整的R-CNN模型。<br>首先，我们需要做一些准备工作：<br>
+        
+          <p class="article-more-link">
+            <a href="/2016/10/23/Caffe学习系列——5使用R-CNN进行目标检测/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+	  
+	  <a data-url="http://yoursite.com/2016/10/23/Caffe学习系列——5使用R-CNN进行目标检测/" data-id="cjep5omgb0009e8uyzqd1p7l1" data_title="Caffe学习系列——5使用R-CNN进行目标检测" data_summary="RCNN是一个比较经典的目标检测算法，由此后续衍生出的..." class="article-share-link">Share</a>
+      
+
+      
+        <a href="http://yoursite.com/2016/10/23/Caffe学习系列——5使用R-CNN进行目标检测/#ds-thread" class="ds-thread-count article-comment-link" data-thread-key="/2016/10/23/Caffe学习系列——5使用R-CNN进行目标检测/">暂无评论</a>
+      
+	  
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Caffe/">Caffe</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Deep-Learning/">Deep Learning</a></li></ul>
+
+	  
+<span>
+Updated:<time datetime="2017-03-01T05:59:47.886Z" itemprop="dateModified">2017-03-01</time>
+</span>
+
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+
+  
     <article id="post-目标检测方法——从RCNN、Fast-RCNN到Faster-RCNN" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     
@@ -119,7 +184,7 @@ var _hmt = _hmt || [];
     </div>
     <footer class="article-footer">
 	  
-	  <a data-url="http://yoursite.com/2016/10/23/目标检测方法——从RCNN、Fast-RCNN到Faster-RCNN/" data-id="cjc8w979m002cy4uy0kxhbctt" data_title="目标检测方法——从RCNN、Fast-RCNN到Faster-RCNN" data_summary="什么是目标检测？目标检测主要是明确从图中看到了什么物体..." class="article-share-link">Share</a>
+	  <a data-url="http://yoursite.com/2016/10/23/目标检测方法——从RCNN、Fast-RCNN到Faster-RCNN/" data-id="cjep5omkz005ge8uy98ilgkvv" data_title="目标检测方法——从RCNN、Fast-RCNN到Faster-RCNN" data_summary="什么是目标检测？目标检测主要是明确从图中看到了什么物体..." class="article-share-link">Share</a>
       
 
       
@@ -186,7 +251,7 @@ Updated:<time datetime="2017-03-03T02:05:12.598Z" itemprop="dateModified">2017-0
     </div>
     <footer class="article-footer">
 	  
-	  <a data-url="http://yoursite.com/2016/10/23/Caffe学习系列——4使用训练好的模型进行分类/" data-id="cjc8w979p002gy4uynokqa7mx" data_title="Caffe学习系列——4使用训练好的模型进行分类" data_summary="本文主要介绍如何用训练好的模型进行分类，如何训练模型可..." class="article-share-link">Share</a>
+	  <a data-url="http://yoursite.com/2016/10/23/Caffe学习系列——4使用训练好的模型进行分类/" data-id="cjep5omg60004e8uyss6rsfcd" data_title="Caffe学习系列——4使用训练好的模型进行分类" data_summary="本文主要介绍如何用训练好的模型进行分类，如何训练模型可..." class="article-share-link">Share</a>
       
 
       
@@ -251,7 +316,7 @@ Updated:<time datetime="2017-03-01T05:58:11.688Z" itemprop="dateModified">2017-0
     </div>
     <footer class="article-footer">
 	  
-	  <a data-url="http://yoursite.com/2016/10/23/Caffe学习系列——3Fine-tuning微调网络/" data-id="cjc8w977t0004y4uy32f9rad2" data_title="Caffe学习系列——3Fine-tuning微调网络" data_summary="本文主要介绍如何在Caffe上微调网络，来适应我们自己..." class="article-share-link">Share</a>
+	  <a data-url="http://yoursite.com/2016/10/23/Caffe学习系列——3Fine-tuning微调网络/" data-id="cjep5omg70005e8uyobb3gzug" data_title="Caffe学习系列——3Fine-tuning微调网络" data_summary="本文主要介绍如何在Caffe上微调网络，来适应我们自己..." class="article-share-link">Share</a>
       
 
       
@@ -316,7 +381,7 @@ Updated:<time datetime="2017-03-01T05:55:57.555Z" itemprop="dateModified">2017-0
     </div>
     <footer class="article-footer">
 	  
-	  <a data-url="http://yoursite.com/2016/10/23/Caffe学习系列——2用AlexNet训练自己的数据集/" data-id="cjc8w977o0001y4uyqmvltnar" data_title="Caffe学习系列——2用AlexNet训练自己的数据集" data_summary="本文主要介绍AlexNet网络结构以及如何使用Alex..." class="article-share-link">Share</a>
+	  <a data-url="http://yoursite.com/2016/10/23/Caffe学习系列——2用AlexNet训练自己的数据集/" data-id="cjep5omg20001e8uy6nevhqc1" data_title="Caffe学习系列——2用AlexNet训练自己的数据集" data_summary="本文主要介绍AlexNet网络结构以及如何使用Alex..." class="article-share-link">Share</a>
       
 
       
@@ -389,7 +454,7 @@ Updated:<time datetime="2017-03-01T05:56:10.735Z" itemprop="dateModified">2017-0
     </div>
     <footer class="article-footer">
 	  
-	  <a data-url="http://yoursite.com/2016/10/23/Caffe学习系列——1介绍与安装过程/" data-id="cjc8w977j0000y4uyooltc3gf" data_title="Caffe学习系列——1介绍与安装过程" data_summary="Caffe是一个高效，模块化的深度学习框架，其作者是毕..." class="article-share-link">Share</a>
+	  <a data-url="http://yoursite.com/2016/10/23/Caffe学习系列——1介绍与安装过程/" data-id="cjep5omfx0000e8uydvl1uc4u" data_title="Caffe学习系列——1介绍与安装过程" data_summary="Caffe是一个高效，模块化的深度学习框架，其作者是毕..." class="article-share-link">Share</a>
       
 
       
@@ -455,7 +520,7 @@ Updated:<time datetime="2017-03-01T05:50:32.634Z" itemprop="dateModified">2017-0
     </div>
     <footer class="article-footer">
 	  
-	  <a data-url="http://yoursite.com/2016/08/04/Hadoop伪分布式搭建/" data-id="cjc8w977z0009y4uy2y0s158t" data_title="Hadoop伪分布式搭建" data_summary="准备Linux环境
+	  <a data-url="http://yoursite.com/2016/08/04/Hadoop伪分布式搭建/" data-id="cjep5omgg000ee8uyjwnapg4i" data_title="Hadoop伪分布式搭建" data_summary="准备Linux环境
 点击VMware快捷方式，右键打开..." class="article-share-link">Share</a>
       
 
@@ -529,7 +594,7 @@ Updated:<time datetime="2017-03-01T13:26:07.306Z" itemprop="dateModified">2017-0
     </div>
     <footer class="article-footer">
 	  
-	  <a data-url="http://yoursite.com/2016/08/03/HDFS介绍/" data-id="cjc8w977w0007y4uyw8bsspuy" data_title="HDFS介绍" data_summary="分布式文件系统是管理网络中跨多台计算机存储的文件系统。..." class="article-share-link">Share</a>
+	  <a data-url="http://yoursite.com/2016/08/03/HDFS介绍/" data-id="cjep5omgi000ge8uy2soc0rg6" data_title="HDFS介绍" data_summary="分布式文件系统是管理网络中跨多台计算机存储的文件系统。..." class="article-share-link">Share</a>
       
 
       
@@ -594,7 +659,7 @@ Updated:<time datetime="2017-03-02T03:13:40.836Z" itemprop="dateModified">2017-0
     </div>
     <footer class="article-footer">
 	  
-	  <a data-url="http://yoursite.com/2016/07/30/Hadoop简介/" data-id="cjc8w9785000gy4uynxkj270g" data_title="Hadoop简介" data_summary="Hadoop是Apache基金会下的一个开源分布式计算..." class="article-share-link">Share</a>
+	  <a data-url="http://yoursite.com/2016/07/30/Hadoop简介/" data-id="cjep5omgl000ke8uy0ues7tfq" data_title="Hadoop简介" data_summary="Hadoop是Apache基金会下的一个开源分布式计算..." class="article-share-link">Share</a>
       
 
       
@@ -659,7 +724,7 @@ Updated:<time datetime="2016-08-03T14:13:24.406Z" itemprop="dateModified">2016-0
     </div>
     <footer class="article-footer">
 	  
-	  <a data-url="http://yoursite.com/2016/05/18/java内存管理及垃圾回收机制/" data-id="cjc8w978c000ny4uyvnpkfd0i" data_title="Java内存管理及垃圾回收机制" data_summary="Java语言的一大特点就是会自动进行垃圾回收处理，不像..." class="article-share-link">Share</a>
+	  <a data-url="http://yoursite.com/2016/05/18/java内存管理及垃圾回收机制/" data-id="cjep5omgp000pe8uy3v9vxtiu" data_title="Java内存管理及垃圾回收机制" data_summary="Java语言的一大特点就是会自动进行垃圾回收处理，不像..." class="article-share-link">Share</a>
       
 
       
@@ -672,71 +737,6 @@ Updated:<time datetime="2016-08-03T14:13:24.406Z" itemprop="dateModified">2016-0
 	  
 <span>
 Updated:<time datetime="2016-05-23T06:07:37.231Z" itemprop="dateModified">2016-05-23</time>
-</span>
-
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-
-  
-    <article id="post-java多线程" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    
-<a href="/2016/05/13/java多线程/" class="article-date">
-  <time datetime="2016-05-13T03:25:51.000Z" itemprop="datePublished">2016-05-13</time>
-</a>
-
-
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Java/">Java</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/05/13/java多线程/">java多线程</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>多线程是java的一个很重要的高级特性，本文主要归纳了线程的相关概念，包括线程的定义，与进程的区别，线程的状态和属性。同时介绍了线程中很重要的一个知识点——如何实现线程安全:1使线程同步、使用阻塞队列或线程安全的集合。除此之外，还介绍了用于管理线程，提高线程执行效率的执行器(线程池)和同步器。<br>本文是在看了《Think in JAVA》、《JAVA核心技术卷》以及相关的一些博客后的总结笔记，纯属个人理解。若有错误，望指出。文末会贴出参考资料的链接。</p>
-        
-          <p class="article-more-link">
-            <a href="/2016/05/13/java多线程/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-	  
-	  <a data-url="http://yoursite.com/2016/05/13/java多线程/" data-id="cjc8w978h000sy4uynbshpbna" data_title="java多线程" data_summary="多线程是java的一个很重要的高级特性，本文主要归纳了..." class="article-share-link">Share</a>
-      
-
-      
-        <a href="http://yoursite.com/2016/05/13/java多线程/#ds-thread" class="ds-thread-count article-comment-link" data-thread-key="/2016/05/13/java多线程/">暂无评论</a>
-      
-	  
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/多线程/">多线程</a></li></ul>
-
-	  
-<span>
-Updated:<time datetime="2016-05-23T06:07:36.091Z" itemprop="dateModified">2016-05-23</time>
 </span>
 
 
@@ -790,7 +790,7 @@ Updated:<time datetime="2016-05-23T06:07:36.091Z" itemprop="dateModified">2016-0
   <div class="widget-wrap">
     <h3 class="widget-title">Categories</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Deep-Learning/">Deep Learning</a><span class="category-list-count">7</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Deep-Learning/Caffe/">Caffe</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hadoop/">Hadoop</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a><span class="category-list-count">15</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Python/Scrapy/">Scrapy</a><span class="category-list-count">1</span></li></ul></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Deep-Learning/">Deep Learning</a><span class="category-list-count">7</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Deep-Learning/Caffe/">Caffe</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hadoop/">Hadoop</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a><span class="category-list-count">15</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Python/Scrapy/">Scrapy</a><span class="category-list-count">1</span></li></ul></li></ul>
     </div>
   </div>
 
@@ -800,7 +800,7 @@ Updated:<time datetime="2016-05-23T06:07:36.091Z" itemprop="dateModified">2016-0
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/AlexNet/" style="font-size: 13px; color: #7dc3de">AlexNet</a> <a href="/tags/BE/" style="font-size: 13px; color: #7dc3de">BE</a> <a href="/tags/Bagging/" style="font-size: 13px; color: #7dc3de">Bagging</a> <a href="/tags/Bayes/" style="font-size: 14.17px; color: #6dc1b9">Bayes</a> <a href="/tags/Boosting/" style="font-size: 13px; color: #7dc3de">Boosting</a> <a href="/tags/Caffe/" style="font-size: 17.67px; color: #3db94a">Caffe</a> <a href="/tags/Deep-Learning/" style="font-size: 18.83px; color: #2db725">Deep Learning</a> <a href="/tags/Faster-RCNN/" style="font-size: 13px; color: #7dc3de">Faster-RCNN</a> <a href="/tags/Fine-tuning/" style="font-size: 13px; color: #7dc3de">Fine-tuning</a> <a href="/tags/GC/" style="font-size: 13px; color: #7dc3de">GC</a> <a href="/tags/HDFS/" style="font-size: 13px; color: #7dc3de">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 16.5px; color: #4dbc6f">Hadoop</a> <a href="/tags/JMM/" style="font-size: 13px; color: #7dc3de">JMM</a> <a href="/tags/JVM/" style="font-size: 13px; color: #7dc3de">JVM</a> <a href="/tags/Java/" style="font-size: 15.33px; color: #5dbe94">Java</a> <a href="/tags/K近邻/" style="font-size: 13px; color: #7dc3de">K近邻</a> <a href="/tags/ML/" style="font-size: 20px; color: #1db400">ML</a> <a href="/tags/MLE/" style="font-size: 13px; color: #7dc3de">MLE</a> <a href="/tags/MapReduce/" style="font-size: 13px; color: #7dc3de">MapReduce</a> <a href="/tags/NaiveBayes/" style="font-size: 13px; color: #7dc3de">NaiveBayes</a> <a href="/tags/Object-Detection/" style="font-size: 13px; color: #7dc3de">Object Detection</a> <a href="/tags/PCA/" style="font-size: 13px; color: #7dc3de">PCA</a> <a href="/tags/Python/" style="font-size: 14.17px; color: #6dc1b9">Python</a> <a href="/tags/RPC/" style="font-size: 13px; color: #7dc3de">RPC</a> <a href="/tags/SVM/" style="font-size: 13px; color: #7dc3de">SVM</a> <a href="/tags/Scrapy/" style="font-size: 13px; color: #7dc3de">Scrapy</a> <a href="/tags/Stacking/" style="font-size: 13px; color: #7dc3de">Stacking</a> <a href="/tags/决策树/" style="font-size: 13px; color: #7dc3de">决策树</a> <a href="/tags/分布式技术/" style="font-size: 13px; color: #7dc3de">分布式技术</a> <a href="/tags/分布式文件系统/" style="font-size: 13px; color: #7dc3de">分布式文件系统</a> <a href="/tags/半监督学习/" style="font-size: 13px; color: #7dc3de">半监督学习</a> <a href="/tags/多线程/" style="font-size: 13px; color: #7dc3de">多线程</a> <a href="/tags/大数据/" style="font-size: 13px; color: #7dc3de">大数据</a> <a href="/tags/感知机/" style="font-size: 14.17px; color: #6dc1b9">感知机</a> <a href="/tags/拉格朗日乘子法/" style="font-size: 13px; color: #7dc3de">拉格朗日乘子法</a> <a href="/tags/机器学习/" style="font-size: 20px; color: #1db400">机器学习</a> <a href="/tags/核方法/" style="font-size: 13px; color: #7dc3de">核方法</a> <a href="/tags/概率图模型/" style="font-size: 13px; color: #7dc3de">概率图模型</a> <a href="/tags/深度学习/" style="font-size: 14.17px; color: #6dc1b9">深度学习</a> <a href="/tags/爬虫/" style="font-size: 13px; color: #7dc3de">爬虫</a> <a href="/tags/特征选择/" style="font-size: 13px; color: #7dc3de">特征选择</a> <a href="/tags/神经网络/" style="font-size: 13px; color: #7dc3de">神经网络</a> <a href="/tags/聚类/" style="font-size: 13px; color: #7dc3de">聚类</a> <a href="/tags/阅读/" style="font-size: 13px; color: #7dc3de">阅读</a> <a href="/tags/降维/" style="font-size: 13px; color: #7dc3de">降维</a> <a href="/tags/集成方法/" style="font-size: 13px; color: #7dc3de">集成方法</a>
+      <a href="/tags/AlexNet/" style="font-size: 13px; color: #7dc3de">AlexNet</a> <a href="/tags/BE/" style="font-size: 13px; color: #7dc3de">BE</a> <a href="/tags/Bagging/" style="font-size: 13px; color: #7dc3de">Bagging</a> <a href="/tags/Bayes/" style="font-size: 14.17px; color: #6dc1b9">Bayes</a> <a href="/tags/Boosting/" style="font-size: 13px; color: #7dc3de">Boosting</a> <a href="/tags/Caffe/" style="font-size: 17.67px; color: #3db94a">Caffe</a> <a href="/tags/Deep-Learning/" style="font-size: 18.83px; color: #2db725">Deep Learning</a> <a href="/tags/Faster-RCNN/" style="font-size: 13px; color: #7dc3de">Faster-RCNN</a> <a href="/tags/Fine-tuning/" style="font-size: 13px; color: #7dc3de">Fine-tuning</a> <a href="/tags/GC/" style="font-size: 13px; color: #7dc3de">GC</a> <a href="/tags/HDFS/" style="font-size: 13px; color: #7dc3de">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 16.5px; color: #4dbc6f">Hadoop</a> <a href="/tags/JMM/" style="font-size: 13px; color: #7dc3de">JMM</a> <a href="/tags/JVM/" style="font-size: 13px; color: #7dc3de">JVM</a> <a href="/tags/Java/" style="font-size: 15.33px; color: #5dbe94">Java</a> <a href="/tags/K近邻/" style="font-size: 13px; color: #7dc3de">K近邻</a> <a href="/tags/ML/" style="font-size: 20px; color: #1db400">ML</a> <a href="/tags/MLE/" style="font-size: 13px; color: #7dc3de">MLE</a> <a href="/tags/MapReduce/" style="font-size: 13px; color: #7dc3de">MapReduce</a> <a href="/tags/NaiveBayes/" style="font-size: 13px; color: #7dc3de">NaiveBayes</a> <a href="/tags/Object-Detection/" style="font-size: 13px; color: #7dc3de">Object Detection</a> <a href="/tags/PCA/" style="font-size: 13px; color: #7dc3de">PCA</a> <a href="/tags/Python/" style="font-size: 14.17px; color: #6dc1b9">Python</a> <a href="/tags/RPC/" style="font-size: 13px; color: #7dc3de">RPC</a> <a href="/tags/SVM/" style="font-size: 13px; color: #7dc3de">SVM</a> <a href="/tags/Scrapy/" style="font-size: 13px; color: #7dc3de">Scrapy</a> <a href="/tags/Stacking/" style="font-size: 13px; color: #7dc3de">Stacking</a> <a href="/tags/决策树/" style="font-size: 13px; color: #7dc3de">决策树</a> <a href="/tags/分布式技术/" style="font-size: 13px; color: #7dc3de">分布式技术</a> <a href="/tags/分布式文件系统/" style="font-size: 13px; color: #7dc3de">分布式文件系统</a> <a href="/tags/半监督学习/" style="font-size: 13px; color: #7dc3de">半监督学习</a> <a href="/tags/多线程/" style="font-size: 13px; color: #7dc3de">多线程</a> <a href="/tags/大数据/" style="font-size: 13px; color: #7dc3de">大数据</a> <a href="/tags/感知机/" style="font-size: 14.17px; color: #6dc1b9">感知机</a> <a href="/tags/拉格朗日乘子法/" style="font-size: 13px; color: #7dc3de">拉格朗日乘子法</a> <a href="/tags/机器学习/" style="font-size: 20px; color: #1db400">机器学习</a> <a href="/tags/核方法/" style="font-size: 13px; color: #7dc3de">核方法</a> <a href="/tags/概率图模型/" style="font-size: 13px; color: #7dc3de">概率图模型</a> <a href="/tags/深度学习/" style="font-size: 14.17px; color: #6dc1b9">深度学习</a> <a href="/tags/爬虫/" style="font-size: 13px; color: #7dc3de">爬虫</a> <a href="/tags/特征选择/" style="font-size: 13px; color: #7dc3de">特征选择</a> <a href="/tags/神经网络/" style="font-size: 13px; color: #7dc3de">神经网络</a> <a href="/tags/聚类/" style="font-size: 13px; color: #7dc3de">聚类</a> <a href="/tags/阅读/" style="font-size: 14.17px; color: #6dc1b9">阅读</a> <a href="/tags/降维/" style="font-size: 13px; color: #7dc3de">降维</a> <a href="/tags/集成方法/" style="font-size: 13px; color: #7dc3de">集成方法</a>
     </div>
   </div>
 
@@ -810,7 +810,7 @@ Updated:<time datetime="2016-05-23T06:07:36.091Z" itemprop="dateModified">2016-0
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">5</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">5</span></li></ul>
     </div>
   </div>
 
@@ -821,6 +821,10 @@ Updated:<time datetime="2016-05-23T06:07:36.091Z" itemprop="dateModified">2016-0
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2018/03/13/读《厚黑学》/">读《厚黑学》</a>
+          </li>
         
           <li>
             <a href="/2018/01/08/关于阅读/">关于阅读</a>
@@ -836,10 +840,6 @@ Updated:<time datetime="2016-05-23T06:07:36.091Z" itemprop="dateModified">2016-0
         
           <li>
             <a href="/2017/02/27/机器学习系列—8-神经网络/">机器学习系列—8.神经网络</a>
-          </li>
-        
-          <li>
-            <a href="/2017/02/27/机器学习系列—15-概率图模型/">机器学习系列—15.概率图模型</a>
           </li>
         
       </ul>
